@@ -11,6 +11,8 @@ from hashlib import sha256
 from types import MappingProxyType
 from typing import Any
 
+from .lifecycle import LifecycleStateError, parse_spec_state
+
 SPECNODE_SCHEMA_VERSION = 1
 _SPEC_ID_RE = re.compile(r"^SG-\d{6}$")
 _EMPTY_OBJECT = MappingProxyType({})
@@ -111,8 +113,8 @@ def _thaw_json(value: object) -> Any:
 class SpecNode:
     """Immutable recursive specification primitive for SpecGrain.
 
-    Specification 001 intentionally stores lifecycle ``state`` as an opaque string.
-    Legal states and transition rules belong to Specification 002.
+    Lifecycle state names are validated by Specification 002. Transition authorization
+    remains the responsibility of later gate-owning specifications.
     """
 
     id: str
@@ -183,7 +185,12 @@ class SpecNode:
         object.__setattr__(self, "metadata", _freeze_object(self.metadata, "metadata"))
 
         object.__setattr__(self, "method", _require_text(self.method, "method"))
-        object.__setattr__(self, "state", _require_text(self.state, "state"))
+        state_text = _require_text(self.state, "state")
+        try:
+            state = parse_spec_state(state_text)
+        except LifecycleStateError as exc:
+            raise SpecValidationError(str(exc)) from exc
+        object.__setattr__(self, "state", state.value)
 
     def to_dict(self) -> dict[str, Any]:
         """Return a detached JSON-compatible representation of this node."""
