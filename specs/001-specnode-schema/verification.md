@@ -15,10 +15,10 @@
 
 ```text
 python -m pytest -q
-..................                                                       [100%]
+.......................                                                  [100%]
 ```
 
-Result: **18 tests passed**.
+Result: **23 tests passed**.
 
 ### Compile check
 
@@ -30,12 +30,12 @@ Result: **PASS**.
 
 ### Digest process determinism smoke check
 
-The same Unicode-containing SpecNode was serialized and hashed in separate Python processes with `PYTHONHASHSEED=1` and `PYTHONHASHSEED=777`.
+The same Unicode-containing SpecNode was serialized and hashed in separate Python processes with `PYTHONHASHSEED=1` and `PYTHONHASHSEED=777` after adding `schema_version=1` to canonical content.
 
 Both produced:
 
 ```text
-sha256:2dfd8aa6605d8632292008bb994e984b289b1c0d12d2961e6ba83d95211f9fcb
+sha256:3990c4fc3dc00d51baa33e58d424d70da5fc0d34bf6ac737763444fa45549a9a
 ```
 
 Result: **PASS** for this deterministic smoke case.
@@ -47,6 +47,10 @@ Result: **PASS** for this deterministic smoke case.
 Result: **NOT RUN — tool unavailable**.
 
 This is not reported as PASS. Source was manually reconciled to the configured 100-character line limit and standard-library import grouping before upload. Repository/CI or external review remains responsible for the exact-head lint gate if available.
+
+## Review finding remediated
+
+The first uploaded implementation did not version the canonicalization contract. Review finding F-001 added public `SPECNODE_SCHEMA_VERSION = 1`, required `schema_version=1` on nodes, rejected unsupported versions, and included the version in canonical content/digest. See `review.md`.
 
 ## Scope review before upload
 

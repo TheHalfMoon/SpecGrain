@@ -24,6 +24,10 @@ No CLI module is added in this spec.
 
 One public validation exception for contract failures in 001.
 
+### Schema/canonicalization version
+
+Expose `SPECNODE_SCHEMA_VERSION = 1` and store `schema_version` on every node. Version 001 rejects unsupported values. The version is part of canonical semantic content so a digest cannot be detached from the canonicalization contract that produced it.
+
 ### JSON freezing
 
 A private recursive helper converts:
@@ -48,6 +52,8 @@ Required human strings are validated without prose rewriting. Set-like sequence 
 - `revision_digest` returns SHA-256 over `canonical_content_json()`.
 - `from_dict()` accepts the documented external field names and converts them into a `SpecNode`.
 
+`schema_version` remains in canonical content and is digest-significant. `state` is intentionally excluded.
+
 ## Packaging
 
 Create a minimal `pyproject.toml` with:
@@ -67,6 +73,7 @@ Focused tests must cover:
 
 - valid/invalid IDs;
 - required strings;
+- schema-version validation;
 - duplicate set-like values;
 - caller mutation isolation;
 - nested mappings/lists;

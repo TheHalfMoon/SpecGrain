@@ -11,7 +11,7 @@ from hashlib import sha256
 from types import MappingProxyType
 from typing import Any
 
-
+SPECNODE_SCHEMA_VERSION = 1
 _SPEC_ID_RE = re.compile(r"^SG-\d{6}$")
 _EMPTY_OBJECT = MappingProxyType({})
 _SET_LIKE_FIELDS = (
@@ -118,6 +118,7 @@ class SpecNode:
     id: str
     title: str
     outcome: str
+    schema_version: int = SPECNODE_SCHEMA_VERSION
     rationale: str = ""
     parent_id: str | None = None
     scope_in: tuple[str, ...] = ()
@@ -138,6 +139,15 @@ class SpecNode:
         object.__setattr__(self, "id", _require_spec_id(self.id, "id"))
         object.__setattr__(self, "title", _require_text(self.title, "title"))
         object.__setattr__(self, "outcome", _require_text(self.outcome, "outcome"))
+
+        if isinstance(self.schema_version, bool) or not isinstance(self.schema_version, int):
+            raise SpecValidationError("schema_version must be an integer")
+        if self.schema_version != SPECNODE_SCHEMA_VERSION:
+            raise SpecValidationError(
+                f"unsupported schema_version {self.schema_version}; "
+                f"expected {SPECNODE_SCHEMA_VERSION}"
+            )
+
         object.__setattr__(
             self, "rationale", _require_text(self.rationale, "rationale", allow_empty=True)
         )
@@ -182,6 +192,7 @@ class SpecNode:
             "id": self.id,
             "title": self.title,
             "outcome": self.outcome,
+            "schema_version": self.schema_version,
             "rationale": self.rationale,
             "parent_id": self.parent_id,
             "scope_in": list(self.scope_in),
@@ -234,7 +245,8 @@ class SpecNode:
         """Return normalized semantic content used for revision hashing.
 
         ``state`` is intentionally excluded because lifecycle movement is operational
-        state, not a change to specification meaning.
+        state, not a change to specification meaning. ``schema_version`` remains in
+        the content to bind the digest to its canonicalization contract.
         """
 
         content = self.to_dict()

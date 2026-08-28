@@ -11,13 +11,14 @@ SpecGrain requires one recursive specification primitive before it can implement
 
 ## Outcome
 
-Provide a dependency-light Python model for `SpecNode` with deterministic validation, normalized serialization, and a content revision digest that is stable across semantically irrelevant ordering differences.
+Provide a dependency-light Python model for `SpecNode` with deterministic validation, normalized serialization, and a versioned content revision digest that is stable across semantically irrelevant ordering differences.
 
 ## In scope
 
 - Python package scaffold for the deterministic core;
 - canonical SpecGrain ID syntax validation;
 - immutable `SpecNode` construction;
+- explicit schema/canonicalization versioning;
 - the foundation-defined SpecNode fields;
 - JSON-safe nested metadata validation/freezing;
 - deterministic mapping-key normalization;
@@ -49,6 +50,7 @@ A `SpecNode` contains these fields in 001:
 - `id: str`
 - `title: str`
 - `outcome: str`
+- `schema_version: int` (exactly `1` in schema 001)
 - `rationale: str`
 - `parent_id: str | None`
 - `scope_in: tuple[str, ...]`
@@ -116,17 +118,23 @@ Canonical JSON MUST:
 - reject non-finite numeric values;
 - produce identical bytes for semantically equivalent SpecNodes under the normalization rules above.
 
-### FR-008 Content revision digest
+### FR-008 Versioned canonicalization contract
+
+`schema_version` MUST be an integer and MUST equal `1` in Specification 001. Unsupported versions MUST fail explicitly.
+
+`schema_version` MUST be included in canonical semantic content and therefore in the revision digest. This binds each digest to the schema/canonicalization interpretation that produced it.
+
+### FR-009 Content revision digest
 
 `revision_digest` MUST be `sha256:<lowercase hex>` over canonical semantic content.
 
-The operational `state` field MUST be excluded from the content digest so lifecycle movement does not create a new specification-content revision. All other 001 fields are content-significant.
+The operational `state` field MUST be excluded from the content digest so lifecycle movement does not create a new specification-content revision. All other 001 fields, including `schema_version`, are content-significant.
 
-### FR-009 Round trip
+### FR-010 Round trip
 
 `SpecNode.from_dict(node.to_dict())` MUST preserve the same authored values under the model's normalization contract and MUST produce the same revision digest.
 
-### FR-010 Explicit failures
+### FR-011 Explicit failures
 
 Invalid inputs MUST raise a stable `SpecValidationError` (or documented subclass) rather than leaking incidental low-level exceptions as the public contract.
 
@@ -143,13 +151,14 @@ Invalid inputs MUST raise a stable `SpecValidationError` (or documented subclass
 1. Two nodes differing only in order of set-like fields have identical canonical semantic JSON and revision digests.
 2. Two nodes differing in a content-significant field have different revision digests.
 3. Two otherwise identical nodes differing only in `state` have the same revision digest.
-4. Mutating caller-owned input dictionaries/lists after construction cannot change the node's serialized value or digest.
-5. Nested Unicode content round-trips deterministically.
-6. Non-string object keys and non-finite floats are rejected.
-7. Duplicate set-like values are rejected.
-8. Invalid IDs are rejected while valid `SG-000001` style IDs pass.
-9. The test suite passes on the supported local Python baseline.
+4. `schema_version=1` is explicit in serialized/canonical content and unsupported versions are rejected.
+5. Mutating caller-owned input dictionaries/lists after construction cannot change the node's serialized value or digest.
+6. Nested Unicode content round-trips deterministically.
+7. Non-string object keys and non-finite floats are rejected.
+8. Duplicate set-like values are rejected.
+9. Invalid IDs are rejected while valid `SG-000001` style IDs pass.
+10. The test suite passes on the supported local Python baseline.
 
 ## Success criterion
 
-The exact implementation revision provides a trustworthy immutable content object that later lifecycle, refinement, graph, WorkPacket, and evidence specs can build on without redefining serialization or revision semantics.
+The exact implementation revision provides a trustworthy immutable and versioned content object that later lifecycle, refinement, graph, WorkPacket, and evidence specs can build on without redefining serialization or revision semantics.

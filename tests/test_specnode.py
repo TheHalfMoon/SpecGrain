@@ -4,7 +4,7 @@ import math
 
 import pytest
 
-from specgrain import SpecNode, SpecValidationError, is_spec_id
+from specgrain import SPECNODE_SCHEMA_VERSION, SpecNode, SpecValidationError, is_spec_id
 
 
 def make_node(**overrides: object) -> SpecNode:
@@ -166,3 +166,16 @@ def test_from_dict_rejects_unknown_and_missing_fields() -> None:
 def test_from_dict_rejects_non_string_root_key() -> None:
     with pytest.raises(SpecValidationError, match="non-string object key"):
         SpecNode.from_dict({"id": "SG-000001", "title": "x", "outcome": "y", 1: "bad"})
+
+
+def test_schema_version_is_explicit_and_digest_significant() -> None:
+    node = make_node()
+    assert node.schema_version == SPECNODE_SCHEMA_VERSION == 1
+    assert node.to_dict()["schema_version"] == 1
+    assert node.canonical_content_dict()["schema_version"] == 1
+
+
+@pytest.mark.parametrize("value", [2, 0, True, "1"])
+def test_unsupported_schema_version_is_rejected(value: object) -> None:
+    with pytest.raises(SpecValidationError, match="schema_version|unsupported"):
+        make_node(schema_version=value)

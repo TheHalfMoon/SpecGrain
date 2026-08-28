@@ -20,15 +20,15 @@ Tasks are intentionally small and ordered.
 - [x] T008 Implement immutable `SpecNode` construction and field validation.
 - [x] T009 Implement detached `to_dict()` and `from_dict()` round trip.
 - [x] T010 Implement canonical semantic content dictionary/JSON normalization.
-- [x] T011 Implement state-excluded SHA-256 `revision_digest`.
+- [x] T011 Implement state-excluded, schema-version-bound SHA-256 `revision_digest`.
 
 ## Verification
 
 - [x] T012 Add focused unit tests for ID/string/duplicate validation.
 - [x] T013 Add mutation-isolation and nested JSON-safety tests.
-- [x] T014 Add canonical ordering, Unicode, and round-trip tests.
+- [x] T014 Add canonical ordering, Unicode, round-trip, and schema-version tests.
 - [x] T015 Add digest equivalence/difference tests, including state exclusion.
-- [x] T016 Run available local verification: 18 pytest tests PASS, compileall PASS, digest seed smoke PASS; ruff explicitly NOT RUN because unavailable. See `verification.md`.
+- [x] T016 Run available local verification: 23 pytest tests PASS, compileall PASS, digest seed smoke PASS; ruff explicitly NOT RUN because unavailable. See `verification.md`.
 - [ ] T017 Review exact branch diff against 001 scope and confirm no lifecycle/graph/CLI/readiness creep.
 
 ## PR closeout
