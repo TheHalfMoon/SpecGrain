@@ -122,6 +122,20 @@ from .verification import (
     load_proof,
     verify_execution,
 )
+from .speckit import (
+    DEFAULT_ARTIFACT_LIMIT_BYTES,
+    SPECKIT_IMPORT_VERSION,
+    ImportNotice,
+    ImportedItem,
+    ImportedStory,
+    LegacyTask,
+    SourceArtifact,
+    SpecKitImportError,
+    SpecKitImportReport,
+    TechnicalContextField,
+    import_spec_kit_artifacts,
+    load_spec_kit_feature,
+)
 from .store import (
     POLICY_VERSION,
     STORE_VERSION,
@@ -139,6 +153,18 @@ from .store import (
 )
 
 __all__ = [
+    "DEFAULT_ARTIFACT_LIMIT_BYTES",
+    "SPECKIT_IMPORT_VERSION",
+    "ImportNotice",
+    "ImportedItem",
+    "ImportedStory",
+    "LegacyTask",
+    "SourceArtifact",
+    "SpecKitImportError",
+    "SpecKitImportReport",
+    "TechnicalContextField",
+    "import_spec_kit_artifacts",
+    "load_spec_kit_feature",
     "METRICS_VERSION",
     "ChangeScopeReport",
     "DeliveryMetrics",
