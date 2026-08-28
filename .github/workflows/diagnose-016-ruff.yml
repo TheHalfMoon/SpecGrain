@@ -18,39 +18,18 @@ jobs:
           python-version: "3.11"
       - name: Install editable development environment
         run: python -m pip install -e ".[dev]"
-      - name: Ruff combined after editable install
-        continue-on-error: true
+      - name: Ruff before pytest
         run: python -m ruff check src tests examples
-      - name: Ruff explicit files after editable install
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          import subprocess
-          import sys
-
-          files = sorted(
-              str(path)
-              for root in (Path("src/specgrain"), Path("tests"), Path("examples"))
-              for path in root.rglob("*.py")
-          )
-          subprocess.check_call([sys.executable, "-m", "ruff", "check", *files])
-          PY
       - name: Full regression
         run: python -m pytest
-      - name: Ruff combined after pytest
+      - name: Tracked tree unchanged after pytest
+        run: git diff --exit-code
+      - name: Untracked Python after pytest diagnostic
+        continue-on-error: true
+        shell: bash
+        run: |
+          files="$(git ls-files --others --exclude-standard -- 'src/**/*.py' 'tests/**/*.py' 'examples/**/*.py')"
+          test -z "$files"
+      - name: Ruff after pytest diagnostic
         continue-on-error: true
         run: python -m ruff check src tests examples
-      - name: Ruff explicit files after pytest
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          import subprocess
-          import sys
-
-          files = sorted(
-              str(path)
-              for root in (Path("src/specgrain"), Path("tests"), Path("examples"))
-              for path in root.rglob("*.py")
-          )
-          subprocess.check_call([sys.executable, "-m", "ruff", "check", *files])
-          PY
