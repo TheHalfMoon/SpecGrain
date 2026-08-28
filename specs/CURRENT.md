@@ -6,7 +6,7 @@
 **Closed specification:** `specs/006-dependency-graph/` — `CLOSED_CANONICAL`  
 **Active specification:** `specs/007-repository-scan/`  
 **Active branch:** `feat/007-repository-scan`  
-**Active status:** `LOCAL_IMPLEMENTATION_VERIFIED_NOT_COMMITTED`
+**Active status:** `PR_READY`
 
 ## Canonical continuation references
 
@@ -16,7 +16,7 @@ Live GitHub truth always overrides this state file if the branch, PRs, checks, o
 
 ## Current objective
 
-Commit, review, and close the first deterministic brownfield repository map without executing repository code, following symlinks, requiring `.specgrain/`, or using an LLM. Then re-read canonical `main` and begin `008-context-budget`.
+Open, review, and canonically close the first deterministic brownfield repository map without executing repository code, following symlinks, requiring `.specgrain/`, or using an LLM. Then re-read canonical `main` and begin `008-context-budget`.
 
 ## 007 boundary
 
@@ -32,48 +32,49 @@ Repository Scan v1 owns:
 
 It does not perform AST/semantic indexing, embeddings, arbitrary content indexing, package resolution, context selection, lifecycle mutation, dependency scheduling changes, evidence verification, or subprocess execution.
 
-## GitHub state at handoff
+## Exact verified 007 product state
 
-Specification 007 planning is committed on `feat/007-repository-scan`. The original 007 planning commit is:
+The exact reviewed product commit is:
 
-`a879c0f76345dd82b9f3719831f952a25777461a`
+`20d36002720fe5c7183e8e7defd02451c134516f`
 
-The active branch also contains durable handoff documentation, including `docs/execution-master-plan.md` and this refreshed state. A fresh session MUST fetch the live branch head instead of assuming the planning commit remains the head.
-
-No 007 implementation PR is open at this handoff, and 007 is not merged or closed canonical.
-
-## Local verified candidate — not canonical
-
-A reconstructed local workspace contains a 007 implementation candidate with these exact Git blob hashes:
+Exact product/test blobs:
 
 ```text
-src/specgrain/repository.py      f87f14bb75af6bcbf5de383e30da4d88db02e9a5
-src/specgrain/cli.py             d80d146aafa8c909eb8daf76eb06f9b2001a7ec2
-src/specgrain/__init__.py        8fbe2faaa990831f487d26c46d56170787af22b8
-tests/test_repository.py         1a9d845080b4677efa0090f6ba1f3bb9e130a3c5
-tests/test_repository_cli.py     af781b905868179a3c6a68e20ce55582c541a561
+src/specgrain/repository.py      20d6068a53965c776b7eddd359fbdeb9960b15c8
+src/specgrain/cli.py             93614f13c01cc70cfb55c0dd2e9e1dda463c09cb
+src/specgrain/__init__.py        2bcff16c1db87a564a96f45054d233f4646f0b10
+tests/test_repository.py         4ce1600e1d1fe126f5e4e04a9639fbef649bc8a9
+tests/test_repository_cli.py     5f6922be235b2c746a6e6ce813d5a7d5c2b4b95b
 ```
 
-Local verification for those bytes:
+Verification for those exact uploaded bytes:
 
-- 304 tests collected / PASS;
+- 304 pytest tests PASS;
 - `python -m compileall -q src tests` PASS;
 - editable install PASS;
 - `specgrain --help` and `python -m specgrain --help` parity PASS;
 - 0 changed source/test lines over 100 characters;
-- Ruff NOT RUN because unavailable/offline.
+- Ruff NOT RUN because unavailable in the execution environment.
 
-This is continuation evidence only. The candidate bytes are **not committed to GitHub** in this state. A new session must recover/reproduce the candidate or implement from the canonical 007 spec and rerun verification before creating a commit. Never infer PASS/MERGED/CLOSED_CANONICAL from local evidence alone.
+The exact implementation review also repaired the selected-manifest/Git metadata bounded-read race before this PR-ready state. The net implementation diff from planning head `b720b321510204eb463602e418dbef7fc65a077d` contains only the five planned implementation/test files.
+
+## Review records
+
+Repository-local verification and exact-diff review are recorded in:
+
+- `specs/007-repository-scan/verification.md`;
+- `specs/007-repository-scan/review.md`.
+
+The review-record commit before this state update is `8c0005ac274f726bcfb503e29a97bce0be8f4c1e`. This `CURRENT.md` update moves the branch head again; therefore every PR check/review and merge guard MUST bind to the live exact PR head, not to the product or review-record commit above.
 
 ## Immediate ordering
 
-1. Re-read live `main`, active branch head, `AGENTS.md`, constitution, execution master plan, and 007 spec/plan/tasks.
-2. Recover/reproduce the verified 007 candidate or implement the same bounded contract from repository truth.
-3. Verify exact candidate bytes against the tests and stated trust boundary.
-4. Commit 007 implementation to `feat/007-repository-scan` without rewriting published history.
-5. Review the exact uploaded diff for semantic indexing, subprocess, mutation, context, evidence, scheduler, or dependency creep.
-6. Open a bounded implementation PR with exact-head evidence.
-7. Resolve every material exact-head review/check defect.
-8. Merge only with expected-head evidence.
-9. Re-read canonical `main`, close 007 canonical task state, and immediately begin `008-context-budget`.
-10. Continue through 009–016 according to `docs/execution-master-plan.md` and `docs/roadmap.md` unless live repository evidence changes the sequence.
+1. Re-read live branch head and confirm no competing 007 PR exists.
+2. Open the bounded 007 implementation PR against canonical `main` using the live exact head.
+3. Re-read the PR diff, exact head, checks, reviews, and inline threads.
+4. Resolve every material exact-head defect using forward-only commits and repeat verification as needed.
+5. Merge only with `expected_head_sha` bound to the final reviewed PR head.
+6. Re-read canonical `main` after merge and prove the merge landed.
+7. On the next canonical planning branch, close T017–T019 from exact PR/merge evidence and mark 007 `CLOSED_CANONICAL`.
+8. Begin `008-context-budget` immediately and continue through 009–016 according to `docs/execution-master-plan.md` and `docs/roadmap.md` unless live repository evidence changes the sequence.
