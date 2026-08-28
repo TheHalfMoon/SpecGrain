@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+dist/
+build/
+*.egg-info/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local SpecGrain runtime state
+.specgrain/cache/
+.specgrain/runs/
+.specgrain/tmp/
+
+# Environment
+.env
+.env.*
+!.env.example
