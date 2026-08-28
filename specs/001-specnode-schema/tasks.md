@@ -10,25 +10,25 @@ Tasks are intentionally small and ordered.
 
 ## Package scaffold
 
-- [ ] T004 Add minimal `pyproject.toml` for Python 3.11+, src layout, pytest, and ruff dev configuration.
-- [ ] T005 Add `src/specgrain/__init__.py` public exports.
-- [ ] T006 Add `SpecValidationError` and SpecGrain ID validation in `src/specgrain/model.py`.
+- [x] T004 Add minimal `pyproject.toml` for Python 3.11+, src layout, pytest, and ruff dev configuration.
+- [x] T005 Add `src/specgrain/__init__.py` public exports.
+- [x] T006 Add `SpecValidationError` and SpecGrain ID validation in `src/specgrain/model.py`.
 
 ## SpecNode model
 
-- [ ] T007 Implement recursive JSON-safe freezing/canonicalization helpers.
-- [ ] T008 Implement immutable `SpecNode` construction and field validation.
-- [ ] T009 Implement detached `to_dict()` and `from_dict()` round trip.
-- [ ] T010 Implement canonical semantic content dictionary/JSON normalization.
-- [ ] T011 Implement state-excluded SHA-256 `revision_digest`.
+- [x] T007 Implement recursive JSON-safe freezing/canonicalization helpers.
+- [x] T008 Implement immutable `SpecNode` construction and field validation.
+- [x] T009 Implement detached `to_dict()` and `from_dict()` round trip.
+- [x] T010 Implement canonical semantic content dictionary/JSON normalization.
+- [x] T011 Implement state-excluded SHA-256 `revision_digest`.
 
 ## Verification
 
-- [ ] T012 Add focused unit tests for ID/string/duplicate validation.
-- [ ] T013 Add mutation-isolation and nested JSON-safety tests.
-- [ ] T014 Add canonical ordering, Unicode, and round-trip tests.
-- [ ] T015 Add digest equivalence/difference tests, including state exclusion.
-- [ ] T016 Run focused/full pytest suite and ruff; reconcile any defects.
+- [x] T012 Add focused unit tests for ID/string/duplicate validation.
+- [x] T013 Add mutation-isolation and nested JSON-safety tests.
+- [x] T014 Add canonical ordering, Unicode, and round-trip tests.
+- [x] T015 Add digest equivalence/difference tests, including state exclusion.
+- [x] T016 Run available local verification: 18 pytest tests PASS, compileall PASS, digest seed smoke PASS; ruff explicitly NOT RUN because unavailable. See `verification.md`.
 - [ ] T017 Review exact branch diff against 001 scope and confirm no lifecycle/graph/CLI/readiness creep.
 
 ## PR closeout
