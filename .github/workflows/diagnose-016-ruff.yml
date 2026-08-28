@@ -1,0 +1,32 @@
+name: Diagnose 016 Ruff
+
+on:
+  push:
+    branches:
+      - verify/016-ruff-diagnosis
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install Ruff
+        run: python -m pip install "ruff>=0.6"
+      - name: Ruff source baseline
+        continue-on-error: true
+        run: python -m ruff check src
+      - name: Ruff prior tests
+        continue-on-error: true
+        run: python -m ruff check tests --exclude test_launch.py
+      - name: Ruff launch test
+        continue-on-error: true
+        run: python -m ruff check tests/test_launch.py
+      - name: Ruff launch example
+        continue-on-error: true
+        run: python -m ruff check examples/zero_to_verified.py
