@@ -6,43 +6,37 @@
 **Closed specification:** `specs/002-lifecycle-state/` — `CLOSED_CANONICAL`  
 **Active specification:** `specs/003-refinement-tree/`  
 **Active branch:** `feat/003-refinement-tree`  
-**Active status:** `IMPLEMENTATION_PLANNED`
+**Active status:** `IMPLEMENTED_REVIEW_PENDING`
 
 ## Current objective
 
-Implement deterministic parent/child refinement-forest integrity so later Grain readiness can trust leaf/root structure.
+Close deterministic parent/child refinement-forest validation through exact-head review, then begin `004-grain-readiness`.
 
-## Scope boundary
+## Implemented scope
 
-Specification 003 is structural only. It MUST NOT:
+- structured refinement issue codes;
+- duplicate-ID fail-closed behavior;
+- missing/self parent-child validation;
+- reciprocal parent/child consistency;
+- deterministic cycle detection;
+- deterministic valid root query;
+- no runtime dependencies.
 
-- judge whether decomposition is semantically good;
-- decide whether children cover parent acceptance;
-- use AI to refine specs;
-- promote a node to `GRAIN`;
-- validate the separate `dependencies` DAG;
-- schedule execution;
-- add CLI/store behavior.
+## Verification front
 
-## Planned structural checks
+- pytest: **115 passed**;
+- compileall: **PASS**;
+- Ruff: **NOT RUN — unavailable locally**.
 
-- unique IDs;
-- resolved parent/child references;
-- no self-links;
-- reciprocal parent-child declarations;
-- no refinement cycles;
-- deterministic issue ordering;
-- deterministic valid roots.
+## Explicit scope boundary
 
-## Donor-planning boundary
-
-The planning synthesis from Ponytail, Karpathy-inspired guidelines, and Spec Kit is canonical on main, but donor-derived minimality/success-criteria/readiness requirements belong primarily to Specification 004 and later. 003 uses only the surgical/simple implementation discipline and does not pull those future behaviors forward.
+003 does not judge semantic decomposition quality, acceptance coverage, minimality, Grain readiness, dependency DAG ordering, execution scheduling, CLI/store behavior, or AI refinement.
 
 ## Immediate ordering
 
-1. Implement structured refinement issues and identity validation.
-2. Implement reference/reciprocity validation.
-3. Implement deterministic cycle detection.
-4. Add valid-root query.
-5. Run all 001/002/003 tests.
-6. Review a bounded exact-head PR.
+1. Review exact uploaded diff.
+2. Open bounded PR.
+3. Resolve external/exact-head defects.
+4. Merge only with expected-head evidence.
+5. Re-read canonical `main`.
+6. Begin `004-grain-readiness`, where donor-derived success-criteria/minimality/safety-floor requirements become active.
