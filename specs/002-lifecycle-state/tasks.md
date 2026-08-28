@@ -25,6 +25,8 @@
 
 ## PR closeout
 
-- [ ] T015 Open bounded PR with exact-head evidence.
-- [ ] T016 Resolve all external/exact-head review defects.
-- [ ] T017 Merge only with expected-head evidence, re-read canonical `main`, then begin `003-refinement-tree`.
+- [x] T015 Open bounded PR #3 with exact-head evidence.
+- [x] T016 Remove the unrelated domain-model wording diff, then review exact final head `d018f6b1a95c5b125b14b5b4ad3201aa2abd923d`; CodeRabbit SUCCESS and no unresolved review threads remained.
+- [x] T017 Merge PR #3 with expected-head guard; canonical merge commit is `f7f245f6352f4f587f5e384af1312547ee4fa3e2`, then re-read canonical `main` before next implementation work.
+
+**Result:** `CLOSED_CANONICAL` at merge commit `f7f245f6352f4f587f5e384af1312547ee4fa3e2`.

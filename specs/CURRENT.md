@@ -2,49 +2,38 @@
 
 **Repository:** `TheHalfMoon/SpecGrain`  
 **Canonical branch:** `main`  
-**Last verified canonical main:** `619b7501fc659588fc344af8835cc910a42bff31`  
-**Closed specification:** `specs/001-specnode-schema/` — `CLOSED_CANONICAL`  
-**Active specification:** `specs/002-lifecycle-state/`  
-**Active branch:** `feat/002-lifecycle-state`  
-**Active status:** `IMPLEMENTED_PR_PENDING`
+**Last verified canonical main:** `f7f245f6352f4f587f5e384af1312547ee4fa3e2`  
+**Closed specification:** `specs/002-lifecycle-state/` — `CLOSED_CANONICAL`  
+**Active work:** planning donor synthesis (documentation-only)  
+**Active branch:** `docs/planning-donor-synthesis`  
+**Active status:** `PLANNING_REVIEW`
 
 ## Current objective
 
-Close the bounded lifecycle implementation through exact-head PR review, then re-read canonical `main` and begin `003-refinement-tree`.
+Incorporate bounded, provenance-recorded planning lessons from Ponytail, Karpathy-inspired coding guidelines, and GitHub Spec Kit before opening the next implementation specification.
 
-## Implemented scope
+## Scope boundary
 
-Specification 002 now provides:
+This documentation-only work may refine methodology, roadmap, benchmark controls, and donor research. It MUST NOT change product source code or skip the canonical next implementation spec.
 
-- the 14 canonical lifecycle states;
-- strict state parsing;
-- terminal and exceptional classifications;
-- the complete immutable structural adjacency graph;
-- explainable illegal-transition errors;
-- SpecNode validation of canonical state names;
-- exhaustive transition-matrix tests;
-- Specification 001 digest regression coverage.
+## Canonical next implementation spec
 
-## Explicit trust boundary
+`003-refinement-tree` — implement only deterministic parent/child structural validation, forest integrity, and malformed-recursion detection. Keep semantic decomposition quality, AI refinement, and Grain readiness outside 003.
 
-Lifecycle legality is not lifecycle authorization. Specification 002 exposes no generic state-mutating API. Later gate-owning specifications must authorize protected transitions after their own evidence/preconditions pass. See `docs/adr/0004-transition-legality-vs-authorization.md`.
+## Donor-design rules
 
-## Verification front
+- Treat external projects as design references unless a separate provenance record authorizes code adaptation.
+- Convert useful agent instructions into SpecGrain-native contracts/metrics where possible instead of growing prompt text.
+- Minimality must follow understanding and must not weaken security, validation, accessibility, recovery, or acceptance.
+- Every implementation change should trace to authorized outcome/scope.
+- Benchmark methods must be isolated against cross-arm plugin/context/workspace contamination.
 
-Local available verification for the implementation:
-
-- pytest: **98 passed**;
-- compileall: **PASS**;
-- Specification 001 golden digest: **PASS**;
-- Ruff: **NOT RUN — unavailable locally**.
-
-See `specs/002-lifecycle-state/verification.md`.
+See `docs/research/planning-donor-synthesis-2026-08-28.md`.
 
 ## Immediate ordering
 
-1. Open the bounded Specification 002 PR.
-2. Review the exact PR head and external checks.
-3. Resolve every material defect without bypassing scope or gates.
-4. Merge only with expected-head evidence.
-5. Re-read canonical `main`.
-6. Begin `003-refinement-tree`.
+1. Review and merge the bounded planning-synthesis PR if exact-head checks pass.
+2. Re-read canonical `main`.
+3. Create `feat/003-refinement-tree`.
+4. Write the narrow 003 spec/plan/tasks.
+5. Implement only structural refinement-tree behavior.

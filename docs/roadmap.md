@@ -28,11 +28,13 @@ Exit: illegal transitions are rejected with explainable errors.
 
 Implement parent/child structural rules, tree integrity, child ordering semantics where needed, and detection of malformed recursive structures.
 
+Keep 003 structural and deterministic. Semantic decomposition quality, AI-generated refinements, and Grain readiness remain outside this spec.
+
 Exit: a recursive spec forest can be loaded and structurally validated without AI.
 
 ### 004 — Grain Readiness
 
-Implement the deterministic Definition of Grain contract and structured readiness failures.
+Implement the deterministic Definition of Grain contract and structured readiness failures. Include explicit success criteria, unresolved-decision checks, bounded authorized change surface, and minimality/safety-floor inputs without requiring an AI reasoning transcript.
 
 Exit: a leaf cannot become `GRAIN` unless all required machine-checkable readiness conditions pass.
 
@@ -54,7 +56,7 @@ Exit: `next` can identify only genuinely eligible Grains from local state.
 
 ### 007 — Repository Scan
 
-Implement a deterministic repository map from manifests, layout, test/config signals, and version-control facts.
+Implement a deterministic repository map from manifests, layout, test/config signals, version-control facts, and reusable existing capability/pattern signals that can support minimal-change decisions.
 
 Exit: SpecGrain can describe an existing repository without sending the whole repository to an LLM.
 
@@ -68,13 +70,13 @@ Exit: required context that cannot fit policy can block Grain readiness with an 
 
 ### 009 — Work Packet
 
-Implement immutable, digest-bound WorkPackets and a generic structured execution-result contract.
+Implement immutable, digest-bound WorkPackets and a generic structured execution-result contract. Packets carry outcome, success criteria, relevant decisions/assumptions, authorized change surface, and available reuse/minimality evidence rather than a giant procedural prompt.
 
 Exit: a human or external agent can receive all authorized Grain context without depending on SpecGrain-internal prompt text.
 
 ### 010 — Verification and Evidence
 
-Implement exact-revision evidence records, acceptance/check results, changed-scope verification, result binding, and `prove` output.
+Implement exact-revision evidence records, acceptance/check results, changed-scope verification, result binding, and `prove` output. Verification must detect unscoped/drive-by changes independently from executor self-report.
 
 Exit: executor assertion alone cannot produce `VERIFIED`.
 
@@ -88,13 +90,13 @@ Implement `quick`, `dmaic-lite`, `dmadv-lite`, `experiment`, and `controlled` pr
 
 ### 012 — Diff, Drift, and Metrics
 
-Implement spec-aware change-surface diff, basic drift signals, first-pass verification, rework ratio, Grain cycle time, context efficiency, and scope accuracy.
+Implement spec-aware change-surface diff, basic drift signals, first-pass verification, rework ratio, Grain cycle time, context efficiency, scope accuracy, and unnecessary-change measurement.
 
 ## M6 — Ecosystem interoperability
 
 ### 013 — Spec Kit Import
 
-Import relevant Spec Kit artifacts into SpecGrain state with explicit conversion reports and no silent data loss.
+Import relevant Spec Kit artifacts into SpecGrain state with explicit conversion reports and no silent data loss. Preserve useful constitution/technical-context/dependency/testability information without importing a mandatory flat-task ontology.
 
 ### 014 — Agent Adapters
 
@@ -104,7 +106,7 @@ Add thin integrations beginning with the generic packet/result protocol, then se
 
 ### 015 — SpecGrainBench
 
-Build reproducible prompt-only, Spec Kit, and SpecGrain benchmark comparisons. Add other methods only where fair automation is possible.
+Build reproducible prompt-only, Spec Kit, and SpecGrain benchmark comparisons with isolated workspaces/contexts, contamination preflight, repeated probabilistic runs, repository-diff metrics, and safety/adversarial cases where applicable. Add other methods only where fair automation is possible.
 
 ### 016 — Public Launch
 
@@ -121,3 +123,7 @@ Until evidence justifies them:
 - enterprise account system;
 - visual workflow designer;
 - large agent-persona catalog.
+
+## Planning research
+
+See `docs/research/planning-donor-synthesis-2026-08-28.md` for the pinned Ponytail, Karpathy-inspired, and GitHub Spec Kit design review that informed the refined readiness, WorkPacket, verification, and benchmark direction above.

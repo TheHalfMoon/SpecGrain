@@ -2,7 +2,7 @@
 
 ## Purpose
 
-SpecGrain combines useful ideas from Agile, Lean, PMI project-management practice, Six Sigma, DevOps, and software verification without forcing a single ceremony framework.
+SpecGrain combines useful ideas from Agile, Lean, PMI project-management practice, Six Sigma, DevOps, software verification, and evidence-backed coding-agent practice without forcing a single ceremony framework.
 
 The methodology exists to improve value, flow, clarity, evidence, and learning. Any ceremony that does not improve one of those outcomes is optional.
 
@@ -33,6 +33,30 @@ Core flow principles:
 - optimize whole-system flow rather than agent utilization.
 
 A Grain is the mechanism that turns these principles into a machine-checkable delivery boundary.
+
+### 2.1 Understand before minimizing
+
+Small does not mean careless. Before optimizing implementation size, the delivery process should understand the outcome and relevant repository flow, then prefer the first sufficient option:
+
+1. do not build work that is not necessary for the outcome;
+2. reuse an existing repository capability or pattern when it already satisfies the need;
+3. prefer standard-library or native platform capability when sufficient;
+4. prefer an already-approved/installed dependency over a redundant custom implementation when appropriate;
+5. only then add the minimum new implementation that satisfies acceptance.
+
+This ladder is a planning heuristic until deterministic repository evidence exists. It must never justify removing required security, trust-boundary validation, accessibility, data-loss protection, recovery, or explicit acceptance behavior.
+
+### 2.2 Surgical change
+
+Every changed line or file should trace to the active Grain's outcome, acceptance, or required supporting change. Adjacent cleanup, speculative abstractions, unrelated refactors, and pre-existing dead-code removal belong in separate specs unless the active change actually requires them.
+
+`change_surface`, WorkPackets, verification, and later diff tooling should make this rule machine-checkable instead of depending only on prompt discipline.
+
+### 2.3 Goal-driven execution
+
+Execution should optimize for verified success criteria rather than blindly following procedural instructions. A Grain defines the outcome and acceptance evidence; an executor may choose implementation details within authorized boundaries; verification independently determines whether the result satisfies the contract.
+
+Decision-relevant uncertainty must be surfaced before execution when it can materially change scope, safety, architecture, or acceptance. SpecGrain does not require private reasoning transcripts.
 
 ## 3. PMP-inspired governance
 
@@ -140,3 +164,7 @@ SpecGrain should eventually identify AI-delivery waste patterns such as:
 - drift: implementation or documentation no longer matches canonical specs.
 
 The first releases should measure only waste that can be computed reliably.
+
+## Research note
+
+The minimality, surgical-change, goal-driven, and benchmark implications above are derived in `docs/research/planning-donor-synthesis-2026-08-28.md`. They are design inputs, not copied donor code or mandatory vendor-specific prompt text.
