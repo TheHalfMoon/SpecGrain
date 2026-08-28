@@ -5,8 +5,8 @@ from pathlib import Path
 
 import pytest
 
-from specgrain import SpecNode
 import specgrain.cli as cli_module
+from specgrain import SpecNode
 from specgrain.cli import main
 
 
