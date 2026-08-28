@@ -8,7 +8,6 @@ from collections import Counter
 from collections.abc import Iterable
 from dataclasses import dataclass
 from enum import StrEnum
-from typing import Any
 
 BENCHMARK_VERSION = 1
 
