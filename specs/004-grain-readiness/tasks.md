@@ -24,10 +24,10 @@
 - [x] T014 Add scope/change-surface/risk/context/evidence tests.
 - [x] T015 Add readiness-version/decision/minimality/safety tests.
 - [x] T016 Add issue-order/error-report tests and run all 001–004 tests: 182 pytest tests PASS, compileall PASS, Ruff NOT RUN because unavailable.
-- [ ] T017 Review exact uploaded diff for repository scan, dependency DAG, method profile, execution, evidence-verification, or lifecycle-mutation creep.
+- [x] T017 Review initial exact PR head `f8e4e3a2e32647cc324b1c059b2c9d0c173db561`; no runtime scope creep found, but remediate F-001 contract ambiguity so a passing report cannot be treated as reusable lifecycle authority.
 
 ## PR closeout
 
-- [ ] T018 Open bounded implementation PR with exact-head evidence.
-- [ ] T019 Resolve all exact-head external/repository review defects.
+- [x] T018 Open bounded implementation PR #6 with exact-head evidence.
+- [ ] T019 Resolve all exact-head external/repository review defects on the remediated head.
 - [ ] T020 Merge only with expected-head evidence, re-read canonical `main`, then begin `005-cli-local-store`.

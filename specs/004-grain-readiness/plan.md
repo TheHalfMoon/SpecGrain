@@ -36,7 +36,7 @@ Use:
 - `GrainReadinessError` carrying exact report;
 - pure `evaluate_grain_readiness` and `require_grain_readiness` functions.
 
-No score, no LLM, no policy engine, and no lifecycle mutator.
+No score, no LLM, no policy engine, no persistence authority, and no lifecycle mutator.
 
 ## Forest/candidate binding
 
@@ -51,7 +51,20 @@ For a structurally valid forest:
 3. compare candidate/forest `revision_digest`;
 4. evaluate intrinsic readiness fields on the candidate.
 
-`revision_digest` intentionally excludes lifecycle state, so candidate binding proves semantic content identity while G3 separately checks source state.
+`revision_digest` intentionally excludes lifecycle state, so candidate binding proves semantic content identity while the source-state gate separately checks state for the supplied evaluation input.
+
+## Transition-freshness boundary
+
+A `GrainReadinessReport` is an evaluation result, not a reusable transition token.
+
+Because lifecycle state is intentionally excluded from `revision_digest`, a future state-mutating subsystem MUST NOT accept an earlier passing report as sufficient authority. Immediately before a `REFINING -> GRAIN` write it must:
+
+1. load the current candidate and current refinement forest;
+2. evaluate current Grain readiness again;
+3. verify current state is still `REFINING`;
+4. commit under that subsystem's own concurrency/precondition mechanism.
+
+Adding `source_state` to the report would only record what was observed; it would not prevent stale reuse. The smaller and stronger contract is to require fresh evaluation at the mutation boundary and keep mutation/concurrency out of 004.
 
 ## Parsing authored declarations
 
@@ -131,6 +144,8 @@ Tests must cover:
 - no node mutation/state promotion;
 - all 001–003 regressions.
 
+Transition freshness is a contract requirement for the future mutating subsystem, not a claim that 004 can test persistence/concurrency it does not implement.
+
 ## Donor synthesis mapping
 
 - **Ponytail:** minimality is explicit but safety floors cannot be simplified away.
@@ -139,4 +154,4 @@ Tests must cover:
 
 ## Risk
 
-The main risk is pretending declarations are stronger evidence than they are. Documentation and API names must remain precise: 004 verifies the **readiness contract**, while later repository intelligence and verification prove external facts.
+The main risks are pretending declarations are stronger evidence than they are and treating a historical readiness result as current authorization. Documentation and API names must remain precise: 004 evaluates the **readiness contract** for supplied inputs, while later repository intelligence, persistence/concurrency, and verification prove external/current facts.

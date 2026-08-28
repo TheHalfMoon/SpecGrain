@@ -9,11 +9,11 @@
 
 A structurally valid leaf is not automatically a Grain. SpecGrain needs a deterministic, explainable readiness contract that prevents humans or agents from labeling work "atomic" merely because it is small or because implementation has begun.
 
-The contract must encode enough explicit information to make execution bounded and verifiable while preserving later ownership boundaries for dependency scheduling, repository scanning, context computation, method profiles, execution, and evidence verification.
+The contract must encode enough explicit information to make execution bounded and verifiable while preserving later ownership boundaries for dependency scheduling, repository scanning, context computation, method profiles, execution, state mutation, and evidence verification.
 
 ## Outcome
 
-Implement a versioned, binary Grain-readiness report for one `SpecNode` revision inside a valid refinement forest. A passing report is the deterministic precondition for authorizing the structurally legal `REFINING -> GRAIN` transition; Specification 004 does not mutate lifecycle state itself.
+Implement a versioned, binary Grain-readiness evaluation for one `SpecNode` revision inside a valid refinement forest. A **fresh passing evaluation of the current candidate and current forest** is a deterministic precondition for any future authority that attempts the structurally legal `REFINING -> GRAIN` transition. Specification 004 does not mutate lifecycle state and its report is not a reusable transition capability.
 
 ## Core rule
 
@@ -44,7 +44,7 @@ change_surface_exception: non-empty string
 
 `readiness.version` is independent from `SPECNODE_SCHEMA_VERSION`. Changing readiness semantics may require a future readiness-version change without changing SpecNode canonicalization.
 
-Because metadata participates in the Specification 001 content digest, readiness declarations are bound to the exact spec revision.
+Because metadata participates in the Specification 001 content digest, readiness declarations are bound to the exact semantic spec revision.
 
 ## Other required declarations
 
@@ -129,13 +129,15 @@ Immutable issue with:
 
 ### `GrainReadinessReport`
 
-Immutable report containing:
+Immutable evaluation result containing:
 
 - `node_id`;
-- `revision_digest`;
+- semantic `revision_digest`;
 - ordered `issues`.
 
 It exposes `is_ready: bool` as `not issues`.
+
+The report records the result of one evaluation. It is **not** a durable authorization token, lease, lock, or compare-and-swap precondition for a later state write.
 
 ### `evaluate_grain_readiness(node, forest)`
 
@@ -145,7 +147,13 @@ Returns a report and never mutates state.
 
 Returns the passing report or raises `GrainReadinessError` containing it.
 
-A passing report plus lifecycle structural legality authorizes the caller to perform `REFINING -> GRAIN`. The actual state mutation/store transaction belongs to later repository-state work.
+Neither helper grants mutation authority. A future state-mutating subsystem MUST evaluate readiness against the **current** candidate and **current** forest and MUST verify that current state is still `REFINING` immediately before committing the write, under that subsystem's concurrency/precondition rules. A previously passing report by itself MUST NOT authorize `REFINING -> GRAIN`.
+
+## Why freshness is separate from the semantic digest
+
+Specification 001 intentionally excludes lifecycle `state` from `revision_digest`; changing only state does not change specification meaning. Therefore the digest proves semantic-content identity, not lifecycle freshness.
+
+Specification 004 keeps that contract intact. It does not add state to the digest and does not add a report field that pretends to make stale reports safe. Freshness belongs to the future mutation boundary, which must re-read/re-evaluate current state rather than trust an earlier report.
 
 ## Deterministic gates
 
@@ -160,6 +168,8 @@ The candidate ID MUST exist exactly once in the valid forest and the forest copy
 ### G3 — Promotion source state
 
 Candidate `state` MUST be `REFINING`, the only lifecycle source structurally permitted to enter `GRAIN` under Specification 002.
+
+This gate is true only for the evaluation inputs supplied to 004. A future mutation authority must re-check it against current repository state at write time.
 
 ### G4 — Leaf
 
@@ -212,7 +222,8 @@ A valid safety status and internally consistent requirements collection MUST be 
 - validate the separate dependency DAG or dependency satisfaction;
 - apply method-profile-specific risk requirements;
 - execute tests/evidence;
-- mutate lifecycle state.
+- persist or mutate lifecycle state;
+- provide concurrency control, compare-and-swap, locks, or durable transition authorization.
 
 Those are owned by later specifications. 004 makes the current readiness boundary explicit instead of pretending deterministic code can prove facts it cannot yet observe.
 
@@ -230,8 +241,9 @@ Those are owned by later specifications. 004 makes the current readiness boundar
 10. issue ordering is deterministic.
 11. `require_grain_readiness` exposes the exact report and never mutates the node.
 12. passing readiness does not itself change `REFINING` to `GRAIN`.
-13. Specifications 001–003 regressions remain green.
+13. a previously passing report alone is insufficient authority for any future lifecycle write; current readiness and current `REFINING` state must be re-evaluated at the mutation boundary.
+14. Specifications 001–003 regressions remain green.
 
 ## Success criterion
 
-For the first time in the repository, "this spec is a Grain" has a deterministic, versioned, explainable contract rather than being an agent/human label.
+For the first time in the repository, "this spec is a Grain" has a deterministic, versioned, explainable evaluation contract rather than being an agent/human label, without turning that evaluation into stale or implicit lifecycle authority.

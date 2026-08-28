@@ -6,11 +6,11 @@
 **Closed specification:** `specs/003-refinement-tree/` — `CLOSED_CANONICAL`  
 **Active specification:** `specs/004-grain-readiness/`  
 **Active branch:** `feat/004-grain-readiness`  
-**Active status:** `IMPLEMENTED_REVIEW_PENDING`
+**Active status:** `CONTRACT_REMEDIATED_PR_REVIEW_PENDING`
 
 ## Current objective
 
-Close Grain readiness through exact-head review without allowing a readiness report to become a lifecycle mutation or external-fact proof.
+Close Grain readiness through fresh exact-head review after clarifying that readiness evaluation is not reusable lifecycle authority.
 
 ## Implemented readiness-v1 boundary
 
@@ -34,16 +34,18 @@ The readiness declaration lives in content-significant `metadata.readiness` and 
 - compileall: **PASS**;
 - Ruff: **NOT RUN — unavailable locally**.
 
-See `specs/004-grain-readiness/verification.md`.
+The F-001 remediation after this test run changes documentation/contracts only; product source and tests are unchanged. See `specs/004-grain-readiness/verification.md` and `review.md`.
 
 ## Trust boundary
 
-004 verifies deterministic authored readiness content. It does not prove repository reuse claims, compute context-source sizes, validate dependency DAGs, run evidence, apply method-specific policies, or mutate lifecycle state.
+004 verifies deterministic authored readiness content for supplied inputs. A report is not a durable transition token. Any future lifecycle mutator must re-read current candidate/current forest, re-evaluate readiness, and verify current state remains `REFINING` immediately before the write under its own concurrency/precondition rules.
+
+004 does not prove repository reuse claims, compute context-source sizes, validate dependency DAGs, run evidence, apply method-specific policies, or persist/mutate lifecycle state.
 
 ## Immediate ordering
 
-1. Review exact uploaded diff for scope/trust-boundary defects.
-2. Open bounded PR with exact-head evidence.
-3. Resolve all external/exact-head defects.
+1. Commit the F-001 contract remediation to PR #6.
+2. Re-run exact-head external/repository checks.
+3. Resolve every remaining material defect.
 4. Merge only with expected-head guard.
 5. Re-read canonical `main` and begin `005-cli-local-store`.
