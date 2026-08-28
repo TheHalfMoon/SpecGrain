@@ -11,9 +11,12 @@ The benchmark is also the primary mechanism for validating SpecGrain's product c
 - Same task, repository baseline, and acceptance oracle across compared methods.
 - Same model/provider configuration when model-based systems are compared.
 - Multiple repetitions for probabilistic systems.
+- Each arm receives a fresh repository workspace and fresh agent context/process.
+- Method-specific plugins, hooks, skills, rules, and global configuration must be isolated and recorded.
 - Raw run metadata and evaluation logic should be publishable when licenses permit.
 - No benchmark claim without a reproducible harness.
-- Prefer outcome metrics over document-volume metrics.
+- Prefer repository outcome metrics over answer/prose volume.
+- Publish ties, losses, failed runs, limitations, and corrected claims rather than filtering them away.
 
 ## Initial methods
 
@@ -33,7 +36,8 @@ Later, add OpenSpec, BMAD, OpenAgile.AI, or other methods only where a fair auto
 - refactor with behavioral invariants;
 - brownfield change in an unfamiliar repository;
 - dependency or migration change;
-- specification change after partial implementation.
+- specification change after partial implementation;
+- safety-sensitive surgical change where minimizing code could remove a required guard.
 
 ## Metrics
 
@@ -43,7 +47,8 @@ Later, add OpenSpec, BMAD, OpenAgile.AI, or other methods only where a fair auto
 - regression rate;
 - hidden-test correctness where legally and technically appropriate;
 - scope compliance;
-- requirement coverage.
+- requirement coverage;
+- explicit safety/adversarial check pass rate for applicable cases.
 
 ### Delivery efficiency
 
@@ -51,7 +56,7 @@ Later, add OpenSpec, BMAD, OpenAgile.AI, or other methods only where a fair auto
 - model input/output tokens where available;
 - number of retries;
 - number of human interventions;
-- changed lines/files;
+- changed lines/files measured from repository diff;
 - rework ratio.
 
 ### Process quality
@@ -75,7 +80,23 @@ Each benchmark case should define:
 - time/resource caps;
 - model configuration;
 - seed/repetition policy;
-- scoring code version.
+- scoring code version;
+- exact method/plugin/skill configuration;
+- inherited/global configuration policy.
+
+Each `(task, method, repetition)` cell should use a fresh workspace and fresh agent context. No conversation history, method-specific hook, plugin state, or generated artifact may leak from another arm unless the experiment explicitly studies persistence.
+
+## Contamination preflight
+
+Before expensive benchmark runs, the harness should perform a self-test that can detect obvious arm contamination, including:
+
+- a baseline unexpectedly loading a method-specific plugin/skill/hook;
+- shared writable state between arms;
+- reused agent conversation/session identifiers;
+- repository workspaces that are not reset to the pinned snapshot;
+- scorer fixtures visible to the implementation agent when they should be hidden.
+
+A contamination failure invalidates the affected comparison; it must not be averaged into published results.
 
 ## Anti-gaming rules
 
@@ -83,8 +104,10 @@ Each benchmark case should define:
 - Hidden evaluation data must not be shipped to the implementation agent when secrecy is necessary for validity.
 - Method-specific manual rescue should be recorded as intervention, not silently normalized away.
 - Failed runs remain in the dataset.
+- Do not score generated prose length as a proxy for implementation size; use repository artifacts/diffs.
+- Safety-sensitive cases must not reward smaller changes that fail the required safety oracle.
 
-## Early benchmark hypothesis
+## Early benchmark hypotheses
 
 SpecGrain should first attempt to validate narrow hypotheses rather than claim universal superiority:
 
@@ -93,5 +116,11 @@ SpecGrain should first attempt to validate narrow hypotheses rather than claim u
 3. Context-scoped packets reduce irrelevant context compared with whole-feature execution.
 4. Independent verification catches self-declared completion failures.
 5. Progressive refinement reduces stale detailed work in changing requirements.
+6. Explicit authorized change surfaces reduce drive-by edits without reducing acceptance pass rate.
+7. Minimality/reuse discipline can reduce implementation size without reducing safety/validation pass rates.
 
 A hypothesis that fails should change the product, not be hidden.
+
+## Research influence
+
+The benchmark-isolation and repository-diff principles are strengthened by the Ponytail agentic benchmark review recorded in `docs/research/planning-donor-synthesis-2026-08-28.md`, especially its documented baseline-contamination failure and subsequent correction.

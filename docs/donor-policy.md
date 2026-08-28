@@ -10,6 +10,18 @@ GitHub Spec Kit is licensed under MIT and is an important donor/reference candid
 
 Reference: <https://github.com/github/spec-kit>
 
+## Current design references
+
+The following projects have influenced planning/research without code adoption:
+
+- `DietrichGebert/ponytail` at `2ed6c52c9d7e5e56942508591085fd45dea277d3`;
+- `multica-ai/andrej-karpathy-skills` at `2c606141936f1eeef17fa3043a72095b4765b9c2`;
+- `github/spec-kit` at `5aa8bea7823dcd056f111f847bf2d576bad3f0a5`.
+
+The design synthesis and exact reviewed paths are recorded in `docs/research/planning-donor-synthesis-2026-08-28.md`.
+
+No source code from these reviews is copied by that research change. Future copied or closely adapted material still requires the provenance process below.
+
 ## Rules before adopting donor material
 
 For any non-trivial copied or closely adapted code, template, test, or documentation:
