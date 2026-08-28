@@ -67,13 +67,13 @@ The deterministic kernel owns schema, lifecycle legality, structural validation,
 
 ## Completed program frontier
 
-Specifications `000` through `006` are closed canonically on `main`.
+Specifications `000` through `007` are closed canonically on `main`.
 
 Current verified canonical `main` at the time this plan was refreshed:
 
-`85d1bef8ee5c1c8e8d78baa52f509803a78a43d8`
+`197ddfb68d94bf8998d68d1371c26431f3816ca0`
 
-This is the merge of PR #8 for Specification 006.
+This is the merge of PR #9 for Specification 007. The merge commit's second parent is final reviewed PR head `35571d5cdcbe441b04a8e975c5eb6be0fe088698`.
 
 Completed capabilities include:
 
@@ -85,83 +85,39 @@ Completed capabilities include:
 - dependency-free JSON local store;
 - `specgrain init` and `specgrain check`;
 - dependency graph validation, transitive blockers, eligible Grain computation, advisory dependency-only waves;
-- `specgrain next`.
+- `specgrain next`;
+- deterministic bounded brownfield repository map and `specgrain scan`.
 
-## Active frontier — 007 Repository Scan
+## Active frontier — 008 Context Budget
 
 Active branch:
 
-`feat/007-repository-scan`
+`feat/008-context-budget`
 
-Planning head used for the implementation net-diff review:
+Read `specs/008-context-budget/spec.md`, `plan.md`, `tasks.md`, and ADR-0008 before implementing.
 
-`b720b321510204eb463602e418dbef7fc65a077d`
+### 008 outcome
 
-Read `specs/007-repository-scan/spec.md`, `plan.md`, `tasks.md`, `verification.md`, `review.md`, and ADR-0007 before changing this slice.
+Build a deterministic revision-bound context plan without loading arbitrary repository content into the control plane, executing a tokenizer, or letting optional context hide required-context overflow.
 
-### 007 outcome
+Context Budget v1 owns:
 
-Build a deterministic brownfield repository map without requiring `.specgrain/`, executing repository code, running Git subprocesses, following symlinks, or using an LLM.
+- immutable source records with provenance, selection reason, revision, byte size, explicit token cost, requirement class, and priority;
+- token/byte/source-count policy ceilings;
+- required-context non-omission and explainable overflow blockers;
+- deterministic optional packing by `(priority, source_id)`;
+- normalized context-plan digest;
+- repository-map source integration bound to the 007 normalized map digest.
 
-Repository Scan v1 owns:
+It must not retrieve arbitrary file contents, execute a tokenizer/LLM/embedding service, mutate lifecycle/store state, alter dependency scheduling, construct WorkPackets/evidence, or add a runtime dependency.
 
-- bounded lexical filesystem traversal;
-- generated/vendor/control-directory skipping;
-- manifest/config/test/language/component signals;
-- bounded declared dependency/reuse signals from selected manifests;
-- safe ordinary/indirect/absent Git metadata facts;
-- deterministic normalized map digest;
-- standalone `specgrain scan [PATH] [--json]`.
+### 008 execution rule
 
-It must not perform AST/semantic indexing, embeddings, arbitrary content indexing, package resolution, context selection, lifecycle mutation, scheduler changes, evidence verification, or subprocess execution.
-
-### Exact verified PR-ready product state
-
-The exact reviewed product commit is:
-
-`20d36002720fe5c7183e8e7defd02451c134516f`
-
-Exact product/test blobs:
-
-```text
-src/specgrain/repository.py      20d6068a53965c776b7eddd359fbdeb9960b15c8
-src/specgrain/cli.py             93614f13c01cc70cfb55c0dd2e9e1dda463c09cb
-src/specgrain/__init__.py        2bcff16c1db87a564a96f45054d233f4646f0b10
-tests/test_repository.py         4ce1600e1d1fe126f5e4e04a9639fbef649bc8a9
-tests/test_repository_cli.py     5f6922be235b2c746a6e6ce813d5a7d5c2b4b95b
-```
-
-Verification for those exact uploaded bytes:
-
-- 304 pytest tests PASS;
-- `compileall` PASS;
-- editable install PASS;
-- console/module help parity PASS;
-- 0 changed source/test lines over 100 characters;
-- Ruff NOT RUN because it is unavailable in the execution environment.
-
-The exact-diff review repaired the selected-manifest/Git metadata bounded-read race before the PR-ready state. The net implementation diff from the planning head contains only the five planned implementation/test files.
-
-PR #9 is the bounded closeout PR for 007. Its live exact head, statuses, reviews, threads, and mergeability MUST be re-read from GitHub before any merge because documentation/review commits may move the head after the product commit above. Never infer `MERGED` or `CLOSED_CANONICAL` from the product verification alone.
+`token_cost` is an explicit revision-bound accounting input. The deterministic kernel validates and sums it but does not pretend to know a model-specific tokenization. Required sources are never dropped to make a plan fit. Optional sources may be omitted only through the canonical deterministic packing rule.
 
 ## Remaining program sequence
 
 The sequence below is canonical at milestone level. Per repository planning rules, only the nearest work should be refined to implementation detail; distant work remains deliberately coarse until its dependencies are real.
-
-### 008 — Context Budget
-
-Implement deterministic context-source records and budget accounting.
-
-Required capabilities:
-
-- source records with provenance and selection reason;
-- mandatory vs optional context classification;
-- deterministic size/token-cost accounting boundary;
-- context budget policy;
-- explainable overflow/blocker results;
-- integration with repository-map facts without sending the full repository to an LLM.
-
-Exit: required context that cannot fit policy can block progress with an explainable deterministic result.
 
 ### 009 — Work Packet
 
