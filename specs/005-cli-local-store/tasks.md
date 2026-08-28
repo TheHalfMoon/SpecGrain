@@ -29,6 +29,8 @@
 
 ## PR closeout
 
-- [ ] T019 Open bounded implementation PR with exact-head evidence.
-- [ ] T020 Resolve every exact-head external/repository review defect.
-- [ ] T021 Merge only with expected-head evidence, re-read canonical `main`, then begin `006-dependency-graph`.
+- [x] T019 Open bounded PR #7; final exact head `ced3084cdfd4c8eda6b206592ab0435fc7b04868`.
+- [x] T020 Exact head had CodeRabbit SUCCESS, no unresolved review threads, mergeable state, and internal exact-head COMMENT review; no material defect remained.
+- [x] T021 Merge PR #7 with expected-head guard; canonical merge commit is `ccd4a825c2a951a8000a2833ede05cdb3218d477`, then re-read canonical `main` before beginning 006.
+
+**Result:** `CLOSED_CANONICAL` at merge commit `ccd4a825c2a951a8000a2833ede05cdb3218d477`.

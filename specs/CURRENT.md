@@ -2,61 +2,45 @@
 
 **Repository:** `TheHalfMoon/SpecGrain`  
 **Canonical branch:** `main`  
-**Last verified canonical main:** `2a719a8ed2a7c22c0f65402c95361b32b230b511`  
-**Closed specification:** `specs/004-grain-readiness/` — `CLOSED_CANONICAL`  
-**Active specification:** `specs/005-cli-local-store/`  
-**Active branch:** `feat/005-cli-local-store`  
-**Active status:** `PR_READY`
+**Last verified canonical main:** `ccd4a825c2a951a8000a2833ede05cdb3218d477`  
+**Closed specification:** `specs/005-cli-local-store/` — `CLOSED_CANONICAL`  
+**Active specification:** `specs/006-dependency-graph/`  
+**Active branch:** `feat/006-dependency-graph`  
+**Active status:** `IMPLEMENTATION_PLANNED`
 
 ## Current objective
 
-Open and close the bounded Specification 005 PR from the reviewed local-store/CLI implementation, then re-read canonical `main` and begin `006-dependency-graph`.
+Make `SpecNode.dependencies` an enforceable deterministic DAG contract and expose the first read-only eligibility surface through `specgrain next`.
 
-## Implemented store-v1 boundary
+## Dependency semantics
 
-Canonical state:
+ADR-0006 defines:
 
-```text
-.specgrain/
-  project.json
-  specs/*.json
-  policies/default.json
-```
+- satisfied: `VERIFIED`, `CONTROLLED`;
+- hard blockers: `BLOCKED`, `FAILED`, `STALE`, `CANCELLED`, `SUPERSEDED`;
+- all other lifecycle states: waiting.
 
-005 owns strict JSON/store parsing, safe path/symlink rules, staged initialization, project/policy loading, refinement validation, readiness report/enforce policy, and CLI rendering/exit codes.
+Only current `GRAIN` nodes are candidates for the ready set. Eligibility analysis never mutates `GRAIN -> READY`.
 
-ADR-0005 replaces the earlier provisional YAML preference for M2 with dependency-free JSON v1. YAML remains a possible later adapter, not a 005 dependency.
+## 006 boundary
 
-## Verification front
+006 owns:
 
-- pytest: **236 passed** (182 existing + 54 005 tests);
-- compileall: **PASS**;
-- editable install: **PASS**;
-- `specgrain` and `python -m specgrain` entry points: **PASS**;
-- fresh `init -> check -> JSON` smoke: **PASS**;
-- console/module JSON equivalence: **PASS**;
-- line-length preflight for new/changed source/tests: **0 lines over 100**;
-- Ruff: **NOT RUN — unavailable locally; installation attempt blocked by offline DNS/network**.
+- duplicate/missing/self dependency validation;
+- deterministic dependency cycle detection;
+- direct waiting + transitive hard-blocker reporting;
+- current eligible Grain computation;
+- advisory dependency-only Grain wave projection;
+- dependency validation integration into local `check`;
+- read-only `next` text/JSON output.
 
-Exact implementation review found no material defect. `review.md` records accepted non-blocking concurrency boundary R-001; 005 does not claim cross-process transaction/locking semantics.
-
-## Trust boundary
-
-005 remains read-only during `check` and does not:
-
-- mutate lifecycle state;
-- treat readiness reports as transition tokens;
-- validate the dependency DAG;
-- scan repository source;
-- execute subprocesses/agents;
-- create evidence-ledger semantics;
-- add generic spec mutation APIs.
+It does not infer dependencies, scan repository source, analyze file conflicts, execute work, store evidence, or mutate lifecycle state.
 
 ## Immediate ordering
 
-1. Commit the review record and PR-ready state.
-2. Open PR #7 with exact-head evidence.
-3. Run fresh exact-head external/repository checks.
-4. Resolve every material defect.
-5. Merge only with expected-head guard.
-6. Re-read canonical `main` and begin `006-dependency-graph`.
+1. Implement dependency structural validation and deterministic cycles.
+2. Implement current Grain dependency reports, blocker propagation, ready set, and waves.
+3. Integrate dependency validation into local `check`.
+4. Add `next_project` and `specgrain next` as read-only surfaces.
+5. Run all regressions and exact-scope review.
+6. Close a bounded expected-head PR before beginning 007.
