@@ -18,12 +18,31 @@ jobs:
           python-version: "3.11"
       - name: Install verification tools
         run: python -m pip install "pytest>=8.0" "ruff==0.6.9"
-      - name: Apply mechanical Ruff fixes
-        run: python -m ruff check src --fix --unsafe-fixes
+      - name: Apply automatic mechanical Ruff fixes
+        shell: bash
+        run: python -m ruff check src --fix --unsafe-fixes || true
+      - name: Resolve remaining SIM102 mechanically
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("src/specgrain/method.py")
+          text = path.read_text(encoding="utf-8")
+          old = '''    if isinstance(raw, Sequence) and not isinstance(raw, str | bytes | bytearray):\n        if all(isinstance(item, str) for item in raw):\n            return tuple(raw)\n'''
+          new = '''    if (\n        isinstance(raw, Sequence)\n        and not isinstance(raw, str | bytes | bytearray)\n        and all(isinstance(item, str) for item in raw)\n    ):\n        return tuple(raw)\n'''
+          if old not in text:
+              raise SystemExit("expected post-Ruff SIM102 target not found")
+          path.write_text(text.replace(old, new, 1), encoding="utf-8")
+          PY
       - name: Verify fixed source
         run: python -m ruff check src
       - name: Full regression
         run: python -m pytest
+      - name: Compile
+        run: python -m compileall -q src tests examples
+      - name: Patch whitespace guard
+        run: git diff --check
       - name: Show exact patch
         run: git diff -- src/specgrain
       - name: Upload fixed source
