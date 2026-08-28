@@ -1,6 +1,6 @@
 # Roadmap
 
-The roadmap is intentionally progressive. Only the nearest specification should have implementation-level detail.
+The roadmap is intentionally progressive. Only the nearest specification should have implementation-level detail. Later entries are sequencing hypotheses and may be refined as evidence changes.
 
 ## M0 — Foundation
 
@@ -10,97 +10,105 @@ Define constitution, product thesis, domain model, architecture, methodology, co
 
 Exit: internally consistent foundation merged to canonical `main`.
 
-## M1 — Core Model
+## M1 — Deterministic specification kernel
 
-**Planned spec:** `001-core-model`
+### 001 — SpecNode Schema
 
-Implement deterministic models for SpecNode, lifecycle state, Grain readiness inputs, dependency references, normalized serialization, and content digests.
+Define and implement only the canonical recursive `SpecNode` data model, stable IDs, normalized serialization, and revision digest.
 
-Exit: a recursive spec tree can be loaded, validated, normalized, and classified without AI.
+Exit: a SpecNode can round-trip deterministically and identical semantic content yields identical canonical form/digest.
 
-## M2 — Grain Readiness
+### 002 — Lifecycle State
 
-**Planned spec:** `002-grain-readiness`
+Implement legal lifecycle states and deterministic transition validation independently of CLI or execution adapters.
 
-Implement deterministic Grain gates, explainable failures, method-profile hooks, and refinement recommendations as structured output.
+Exit: illegal transitions are rejected with explainable errors.
 
-Exit: invalid candidate leaves cannot become Grains.
+### 003 — Refinement Tree
 
-## M3 — CLI and Local Store
+Implement parent/child structural rules, tree integrity, child ordering semantics where needed, and detection of malformed recursive structures.
 
-**Planned spec:** `003-cli-store`
+Exit: a recursive spec forest can be loaded and structurally validated without AI.
 
-Implement `init`, `check`, state storage, IDs/revisions, and human-readable terminal rendering.
+### 004 — Grain Readiness
 
-Exit: a user can create and inspect a valid repository-local SpecGrain project.
+Implement the deterministic Definition of Grain contract and structured readiness failures.
 
-## M4 — Dependency Graph and Scheduler
+Exit: a leaf cannot become `GRAIN` unless all required machine-checkable readiness conditions pass.
 
-**Planned spec:** `004-graph-scheduler`
+## M2 — Local product surface
 
-Implement DAG validation, cycle detection, ready-set computation, blocker propagation, and deterministic execution-wave planning.
+### 005 — CLI and Local Store
 
-Exit: `next` returns only genuinely eligible Grains.
+Implement `init`, `check`, repository-local `.specgrain/` storage, project policy loading, and readable terminal output.
 
-## M5 — Brownfield Context
+Exit: a user can initialize and validate a local SpecGrain project.
 
-**Planned spec:** `005-repository-context`
+### 006 — Dependency Graph
 
-Implement repository scan, deterministic repository map, context-source records, context-size accounting, and budget gates.
+Implement dependency references, cycle detection, ready-set computation, blocker propagation, and deterministic wave projection.
 
-Exit: a Grain can carry a reproducible bounded context packet from an existing repository.
+Exit: `next` can identify only genuinely eligible Grains from local state.
 
-## M6 — Work Packets
+## M3 — Brownfield context
 
-**Planned spec:** `006-work-packets`
+### 007 — Repository Scan
 
-Implement immutable portable WorkPackets and structured execution-result ingestion.
+Implement a deterministic repository map from manifests, layout, test/config signals, and version-control facts.
 
-Exit: a human or external agent can execute a Grain without depending on internal SpecGrain prompts.
+Exit: SpecGrain can describe an existing repository without sending the whole repository to an LLM.
 
-## M7 — Verification and Evidence
+### 008 — Context Budget
 
-**Planned spec:** `007-evidence-verification`
+Implement context-source records, selection reasons, size accounting, mandatory/optional classification, and budget validation.
 
-Implement evidence records, exact-revision binding, acceptance/check results, changed-scope verification, and `prove` output.
+Exit: required context that cannot fit policy can block Grain readiness with an explainable result.
 
-Exit: an implementation cannot become `VERIFIED` through executor assertion alone.
+## M4 — Portable execution boundary
 
-**This is the first complete MVP vertical slice.**
+### 009 — Work Packet
 
-## M8 — Adaptive Method Profiles
+Implement immutable, digest-bound WorkPackets and a generic structured execution-result contract.
 
-**Planned spec:** `008-method-profiles`
+Exit: a human or external agent can receive all authorized Grain context without depending on SpecGrain-internal prompt text.
 
-Implement quick, DMAIC-lite, DMADV-lite, experiment, and controlled profile extensions to readiness/evidence.
+### 010 — Verification and Evidence
 
-## M9 — Drift, Diff, and Metrics
+Implement exact-revision evidence records, acceptance/check results, changed-scope verification, result binding, and `prove` output.
 
-**Planned spec:** `009-control-metrics`
+Exit: executor assertion alone cannot produce `VERIFIED`.
 
-Implement spec/code drift signals, spec-aware diff, rework, first-pass verification, cycle-time, context-efficiency, and scope-accuracy metrics.
+**This closes the first complete MVP vertical slice.**
 
-## M10 — Spec Kit Migration
+## M5 — Adaptive delivery control
 
-**Planned spec:** `010-speckit-import`
+### 011 — Method Profiles
 
-Import relevant Spec Kit project artifacts into SpecGrain state with explicit conversion reports and no silent data loss.
+Implement `quick`, `dmaic-lite`, `dmadv-lite`, `experiment`, and `controlled` profiles as incremental readiness/evidence requirements.
 
-## M11 — Agent Adapters
+### 012 — Diff, Drift, and Metrics
 
-**Planned spec:** `011-agent-adapters`
+Implement spec-aware change-surface diff, basic drift signals, first-pass verification, rework ratio, Grain cycle time, context efficiency, and scope accuracy.
 
-Add thin integrations beginning with a generic stdout/file protocol, then selected popular coding agents based on demand.
+## M6 — Ecosystem interoperability
 
-## M12 — SpecGrainBench
+### 013 — Spec Kit Import
 
-**Planned spec:** `012-benchmark`
+Import relevant Spec Kit artifacts into SpecGrain state with explicit conversion reports and no silent data loss.
 
-Build reproducible prompt-only, Spec Kit, and SpecGrain comparisons.
+### 014 — Agent Adapters
 
-## M13 — Public Launch
+Add thin integrations beginning with the generic packet/result protocol, then selected coding-agent adapters based on real adoption demand.
 
-Documentation, examples, recorded terminal demo, benchmark results, contribution guides, release packaging, and community launch.
+## M7 — Public proof
+
+### 015 — SpecGrainBench
+
+Build reproducible prompt-only, Spec Kit, and SpecGrain benchmark comparisons. Add other methods only where fair automation is possible.
+
+### 016 — Public Launch
+
+Ship installable releases, examples, terminal demo, benchmark report, migration guide, contribution paths, security documentation, and launch assets.
 
 ## Explicitly deferred
 

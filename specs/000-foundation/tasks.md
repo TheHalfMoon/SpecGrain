@@ -33,8 +33,8 @@ Tasks are ordered. Do not begin implementation work from later roadmap milestone
 
 ## Closeout gates
 
-- [ ] T018 Run cross-document consistency and gap review on the exact branch head.
-- [ ] T019 Reconcile all material foundation defects found by T018.
-- [ ] T020 Open and review the bounded foundation PR.
+- [x] T018 Run cross-document consistency and gap review on branch head `bae1df316dd0f143c96f7f21cd6f9bff5efe1bdf`.
+- [x] T019 Reconcile the material foundation defects found by T018: split the oversized next spec and clarify bootstrap/runtime separation.
+- [ ] T020 Open and review the bounded foundation PR on its exact final head.
 - [ ] T021 Merge only after exact-head review evidence is satisfactory.
-- [ ] T022 Re-read canonical `main`, update `specs/CURRENT.md`, and start `001-core-model`.
+- [ ] T022 Re-read canonical `main`, update `specs/CURRENT.md`, and start `001-specnode-schema`.
