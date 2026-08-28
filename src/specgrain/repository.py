@@ -305,8 +305,23 @@ def _read_bounded_text(path: Path, size: int, limit: int, location: str) -> str:
             location=location,
         )
     try:
-        return path.read_text(encoding="utf-8")
-    except (OSError, UnicodeError) as exc:
+        with path.open("rb") as stream:
+            data = stream.read(limit + 1)
+    except OSError as exc:
+        raise RepositoryScanError(
+            "MANIFEST_INVALID",
+            "manifest is not readable UTF-8 text",
+            location=location,
+        ) from exc
+    if len(data) > limit:
+        raise RepositoryScanError(
+            "MANIFEST_TOO_LARGE",
+            f"manifest exceeds {limit} bytes",
+            location=location,
+        )
+    try:
+        return data.decode("utf-8")
+    except UnicodeDecodeError as exc:
         raise RepositoryScanError(
             "MANIFEST_INVALID",
             "manifest is not readable UTF-8 text",
@@ -629,11 +644,15 @@ def _safe_git_text(path: Path) -> str | None:
     try:
         if path.is_symlink() or not path.is_file():
             return None
-        size = path.stat(follow_symlinks=False).st_size
-        if size > _GIT_METADATA_MAX_BYTES:
-            return None
-        return path.read_text(encoding="utf-8")
-    except (OSError, UnicodeError):
+        with path.open("rb") as stream:
+            data = stream.read(_GIT_METADATA_MAX_BYTES + 1)
+    except OSError:
+        return None
+    if len(data) > _GIT_METADATA_MAX_BYTES:
+        return None
+    try:
+        return data.decode("utf-8")
+    except UnicodeDecodeError:
         return None
 
 
