@@ -9,18 +9,18 @@
 
 ## Implementation
 
-- [ ] T005 Add immutable benchmark case/arm/run contracts and stable digests.
-- [ ] T006 Implement strict initial-arm plan validation and expected cell generation.
-- [ ] T007 Implement contamination/missing-cell preflight with stable issue codes.
-- [ ] T008 Implement deterministic arm summaries and report serialization without filtering failed runs or declaring a winner.
+- [x] T005 Add immutable benchmark case/arm/run contracts and stable digests.
+- [x] T006 Implement strict initial-arm plan validation and expected cell generation.
+- [x] T007 Implement contamination/missing-cell preflight with stable issue codes.
+- [x] T008 Implement deterministic arm summaries and report serialization without filtering failed runs or declaring a winner.
 
 ## Verification
 
-- [ ] T009 Test canonical arm/config/cell validation and deterministic digests.
-- [ ] T010 Test contamination detection for workspace/context reuse, baseline/config mismatch, scorer leakage, missing/duplicate cells.
-- [ ] T011 Test failure retention, metrics aggregation, and no-winner report semantics.
-- [ ] T012 Run exact full regression, Ruff, compile, install, entry-point parity, and line-length gates.
-- [ ] T013 Review exact diff for hidden exclusions, ranking claims, process/network execution, actor scoring, or dependency creep.
+- [x] T009 Test canonical arm/config/cell validation and deterministic digests.
+- [x] T010 Test contamination detection for workspace/context reuse, baseline/config mismatch, scorer leakage, missing/duplicate cells.
+- [x] T011 Test failure retention, metrics aggregation, and no-winner report semantics.
+- [x] T012 Run exact full regression, changed-surface Ruff, baseline/full Ruff diagnostics, compile, install, entry-point parity, and line-length gates on byte-identical product/test blobs.
+- [x] T013 Review exact diff for hidden exclusions, ranking claims, process/network execution, actor scoring, or dependency creep.
 
 ## PR closeout
 
