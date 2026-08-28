@@ -23,6 +23,6 @@
 
 ## PR closeout
 
-- [ ] T013 Open bounded PR with exact-head evidence.
-- [ ] T014 Resolve every material exact-head review defect.
-- [ ] T015 Merge only with expected-head evidence, re-read canonical `main`, then begin 015.
+- [x] T013 Open bounded PR #16 with exact-head evidence.
+- [x] T014 Resolve every material exact-head review defect; external automated review was unavailable/skipped and no manual exact-head defect remained.
+- [x] T015 Merge PR #16 with expected head `35db1bb8a078a68f412def8b50fa4f4e65b7afe5`, re-read canonical merge `b37ea3a06f86d68cb220ec1cd6cc57e71e76653f`, then begin 015.
