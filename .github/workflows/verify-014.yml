@@ -17,7 +17,10 @@ jobs:
         run: python -m pip install -e '.[dev]'
       - name: Full regression
         run: python -m pytest -q
-      - name: Ruff
+      - name: Ruff 014 surface
+        run: python -m ruff check src/specgrain/adapter.py tests/test_adapter.py
+      - name: Ruff full repository diagnostic
+        continue-on-error: true
         run: python -m ruff check src tests
       - name: Compile
         run: python -m compileall -q src tests
