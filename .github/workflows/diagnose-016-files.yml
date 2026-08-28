@@ -1,0 +1,39 @@
+name: Diagnose 016 Ruff Files
+
+on:
+  push:
+    branches:
+      - verify/016-ruff-files
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install pinned Ruff
+        run: python -m pip install "ruff==0.6.9"
+      - {name: Ruff __init__, continue-on-error: true, run: "python -m ruff check src/specgrain/__init__.py"}
+      - {name: Ruff __main__, continue-on-error: true, run: "python -m ruff check src/specgrain/__main__.py"}
+      - {name: Ruff adapter, continue-on-error: true, run: "python -m ruff check src/specgrain/adapter.py"}
+      - {name: Ruff benchmark, continue-on-error: true, run: "python -m ruff check src/specgrain/benchmark.py"}
+      - {name: Ruff cli, continue-on-error: true, run: "python -m ruff check src/specgrain/cli.py"}
+      - {name: Ruff context, continue-on-error: true, run: "python -m ruff check src/specgrain/context.py"}
+      - {name: Ruff dependency, continue-on-error: true, run: "python -m ruff check src/specgrain/dependency.py"}
+      - {name: Ruff lifecycle, continue-on-error: true, run: "python -m ruff check src/specgrain/lifecycle.py"}
+      - {name: Ruff method, continue-on-error: true, run: "python -m ruff check src/specgrain/method.py"}
+      - {name: Ruff metrics, continue-on-error: true, run: "python -m ruff check src/specgrain/metrics.py"}
+      - {name: Ruff model, continue-on-error: true, run: "python -m ruff check src/specgrain/model.py"}
+      - {name: Ruff packet, continue-on-error: true, run: "python -m ruff check src/specgrain/packet.py"}
+      - {name: Ruff project, continue-on-error: true, run: "python -m ruff check src/specgrain/project.py"}
+      - {name: Ruff readiness, continue-on-error: true, run: "python -m ruff check src/specgrain/readiness.py"}
+      - {name: Ruff refinement, continue-on-error: true, run: "python -m ruff check src/specgrain/refinement.py"}
+      - {name: Ruff repository, continue-on-error: true, run: "python -m ruff check src/specgrain/repository.py"}
+      - {name: Ruff speckit, continue-on-error: true, run: "python -m ruff check src/specgrain/speckit.py"}
+      - {name: Ruff store, continue-on-error: true, run: "python -m ruff check src/specgrain/store.py"}
+      - {name: Ruff verification, continue-on-error: true, run: "python -m ruff check src/specgrain/verification.py"}
