@@ -2,18 +2,19 @@
 
 ## Design
 
-Add one dependency-free `adapter.py` module that translates canonical WorkPackets into deterministic request envelopes and normalizes bounded external result payloads back into canonical ExecutionResults.
+Add one dependency-free `adapter.py` public module that translates canonical WorkPackets into deterministic request envelopes and normalizes bounded external result payloads back into canonical ExecutionResults.
 
 No vendor-specific adapter is added because the roadmap requires demonstrated adoption demand before taking on that maintenance surface, and current canonical repository evidence contains no such demand signal.
+
+The implementation deliberately does not modify package-root exports. `specgrain.adapter` is the bounded public adapter surface and declares its own `__all__`.
 
 ## Change surface
 
 - `src/specgrain/adapter.py`
-- `src/specgrain/__init__.py`
 - `tests/test_adapter.py`
 - Specification/ADR/continuation records only.
 
-No CLI, store, lifecycle, verification, dependency, repository-scan, context, packet, or runtime-dependency change is authorized.
+No root export, CLI, store, lifecycle, verification, dependency, repository-scan, context, packet, or runtime-dependency change is authorized.
 
 ## Verification
 
@@ -22,8 +23,8 @@ No CLI, store, lifecycle, verification, dependency, repository-scan, context, pa
 - compileall;
 - editable install with available build dependencies;
 - console/module entry-point parity;
+- Ruff on the 014 surface and full repository diagnostic;
 - changed-line length inspection;
-- available static checks;
 - exact uploaded-blob and exact-diff review.
 
-If the local transient workspace is unavailable, an isolated verification branch may add a temporary GitHub Actions workflow while preserving identical product/test blob identities; that verification branch is not part of the product PR.
+Because the transient local workspace was unavailable, exact regression was run on an isolated verification-only branch. That branch differs from the product commit only by a workflow file and is not part of the product PR.

@@ -9,17 +9,17 @@
 
 ## Implementation
 
-- [ ] T005 Add immutable adapter kind/request/error contracts and deterministic request digest.
-- [ ] T006 Implement exact `generic-json` and deterministic `generic-markdown` WorkPacket rendering.
-- [ ] T007 Implement strict object/JSON executor-result normalization with adapter-owned packet binding.
-- [ ] T008 Add bounded public exports without modifying core packet semantics.
+- [x] T005 Add immutable adapter kind/request/error contracts and deterministic request digest.
+- [x] T006 Implement exact `generic-json` and deterministic `generic-markdown` WorkPacket rendering.
+- [x] T007 Implement strict object/JSON executor-result normalization with adapter-owned packet binding.
+- [x] T008 Publish the bounded `specgrain.adapter` module surface without modifying core packet semantics or root exports.
 
 ## Verification
 
-- [ ] T009 Test request determinism, packet binding, and round-trip representation.
-- [ ] T010 Test strict result normalization, spoof/unknown-field rejection, duplicate/non-finite JSON rejection, and canonical ExecutionResult output.
-- [ ] T011 Run full 001–014 regression plus compile/package/entry-point and available static checks.
-- [ ] T012 Review exact uploaded diff for execution, network, credential, provider, lifecycle, verification-authority, or dependency creep.
+- [x] T009 Test request determinism, packet binding, and round-trip representation.
+- [x] T010 Test strict result normalization, spoof/unknown-field rejection, duplicate/non-finite JSON rejection, and canonical ExecutionResult output.
+- [x] T011 Run full 001–014 regression plus install, Ruff, compile, entry-point parity, and line-length gates on identical product/test blobs.
+- [x] T012 Review exact uploaded diff for execution, network, credential, provider, lifecycle, verification-authority, or dependency creep.
 
 ## PR closeout
 
