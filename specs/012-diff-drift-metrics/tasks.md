@@ -24,6 +24,6 @@
 
 ## PR closeout
 
-- [ ] T014 Open bounded PR with exact-head evidence.
-- [ ] T015 Resolve every material exact-head review defect.
-- [ ] T016 Merge only with expected-head evidence, re-read canonical `main`, then begin 013.
+- [x] T014 Open bounded PR with exact-head evidence.
+- [x] T015 Resolve every material exact-head review defect.
+- [x] T016 Merge only with expected-head evidence, re-read canonical `main`, then begin 013.

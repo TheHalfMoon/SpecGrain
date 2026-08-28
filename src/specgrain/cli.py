@@ -9,6 +9,7 @@ from collections.abc import Sequence
 
 from .project import NextResult, check_project, next_project
 from .repository import RepositoryMap, RepositoryScanError, scan_repository
+from .speckit import SpecKitImportError, SpecKitImportReport, load_spec_kit_feature
 from .store import ProjectCheckResult, StoreError, init_project
 from .verification import ProofResult, VerificationError, load_proof
 
@@ -37,6 +38,14 @@ def _parser() -> argparse.ArgumentParser:
     prove.add_argument("spec_id")
     prove.add_argument("path", nargs="?", default=".")
     prove.add_argument("--json", action="store_true", dest="as_json")
+
+    import_spec_kit = subparsers.add_parser(
+        "import-spec-kit", help="inspect a bounded Spec Kit feature for migration"
+    )
+    import_spec_kit.add_argument("feature_dir")
+    import_spec_kit.add_argument("--source-revision", required=True)
+    import_spec_kit.add_argument("--constitution")
+    import_spec_kit.add_argument("--json", action="store_true", dest="as_json")
     return parser
 
 
@@ -120,6 +129,22 @@ def _render_proof_text(result: ProofResult) -> str:
             f"- [{issue.code.value}] {issue.subject}: {issue.message}"
             for issue in result.latest.report.issues
         )
+    return "\n".join(lines)
+
+
+def _render_spec_kit_import_text(result: SpecKitImportReport) -> str:
+    lines = [
+        "SpecGrain import-spec-kit: PASS",
+        f"Feature: {result.feature_name}",
+        f"Source revision: {result.source_revision}",
+        f"Stories: {len(result.stories)}",
+        f"Functional requirements: {len(result.functional_requirements)}",
+        f"Success criteria: {len(result.success_criteria)}",
+        f"Legacy tasks preserved: {len(result.legacy_tasks)}",
+        "Legacy tasks promoted to core: false",
+        f"Digest: {result.digest}",
+    ]
+    lines.extend(f"- [{notice.code}] {notice.message}" for notice in result.notices)
     return "\n".join(lines)
 
 
@@ -241,5 +266,41 @@ def main(argv: Sequence[str] | None = None) -> int:
         else:
             print(_render_proof_text(result))
         return 0 if result.verified else 1
+
+    if args.command == "import-spec-kit":
+        try:
+            result = load_spec_kit_feature(
+                args.feature_dir,
+                source_revision=args.source_revision,
+                constitution_path=args.constitution,
+            )
+        except SpecKitImportError as exc:
+            if args.as_json:
+                print(
+                    json.dumps(
+                        {"error": str(exc), "valid": False},
+                        sort_keys=True,
+                        ensure_ascii=False,
+                        separators=(",", ":"),
+                    ),
+                    file=sys.stderr,
+                )
+            else:
+                print(f"SpecGrain import-spec-kit: FAIL\n- {exc}", file=sys.stderr)
+            return 1
+        payload = result.to_dict()
+        payload["digest"] = result.digest
+        if args.as_json:
+            print(
+                json.dumps(
+                    payload,
+                    sort_keys=True,
+                    ensure_ascii=False,
+                    separators=(",", ":"),
+                )
+            )
+        else:
+            print(_render_spec_kit_import_text(result))
+        return 0
 
     raise AssertionError(f"unhandled command {args.command!r}")
