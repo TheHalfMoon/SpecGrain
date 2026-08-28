@@ -38,6 +38,20 @@ from .lifecycle import (
     parse_spec_state,
     require_transition_allowed,
 )
+from .method import (
+    METHOD_PROFILE_VERSION,
+    MethodIssue,
+    MethodIssueCode,
+    MethodProfile,
+    MethodProfileName,
+    MethodReadinessError,
+    MethodReadinessReport,
+    MethodReport,
+    evaluate_method_profile,
+    evaluate_method_readiness,
+    get_method_profile,
+    require_method_readiness,
+)
 from .model import SPECNODE_SCHEMA_VERSION, SpecNode, SpecValidationError, is_spec_id
 from .packet import (
     EXECUTION_RESULT_VERSION,
@@ -111,6 +125,18 @@ from .store import (
 )
 
 __all__ = [
+    "METHOD_PROFILE_VERSION",
+    "MethodIssue",
+    "MethodIssueCode",
+    "MethodProfile",
+    "MethodProfileName",
+    "MethodReadinessError",
+    "MethodReadinessReport",
+    "MethodReport",
+    "evaluate_method_profile",
+    "evaluate_method_readiness",
+    "get_method_profile",
+    "require_method_readiness",
     "EVIDENCE_RECORD_VERSION",
     "VERIFICATION_VERSION",
     "CheckEvidence",
