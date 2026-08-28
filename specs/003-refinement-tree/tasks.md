@@ -28,5 +28,7 @@
 ## PR closeout
 
 - [x] T017 Open bounded implementation PR #5 with exact-head evidence.
-- [ ] T018 Resolve all external/exact-head review defects on the remediated head.
-- [ ] T019 Merge only with expected-head evidence, re-read canonical `main`, then begin `004-grain-readiness`.
+- [x] T018 Resolve exact-head review defect F-001; final head `854cbe7efa5cd6357f0b2d1fb889bac9787d9726` had CodeRabbit SUCCESS and no unresolved review threads.
+- [x] T019 Merge PR #5 with expected-head guard; canonical merge commit is `7f4682f88dd9988f12f2a466c071beb67d660a2d`, then re-read canonical `main` before beginning `004-grain-readiness`.
+
+**Result:** `CLOSED_CANONICAL` at merge commit `7f4682f88dd9988f12f2a466c071beb67d660a2d`.
