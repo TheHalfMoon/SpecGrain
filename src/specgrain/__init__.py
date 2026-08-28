@@ -80,6 +80,20 @@ from .repository import (
     ScanLimits,
     scan_repository,
 )
+from .verification import (
+    EVIDENCE_RECORD_VERSION,
+    VERIFICATION_VERSION,
+    CheckEvidence,
+    EvidenceRecord,
+    ProofResult,
+    VerificationError,
+    VerificationIssue,
+    VerificationIssueCode,
+    VerificationReport,
+    append_verification_report,
+    load_proof,
+    verify_execution,
+)
 from .store import (
     POLICY_VERSION,
     STORE_VERSION,
@@ -97,6 +111,18 @@ from .store import (
 )
 
 __all__ = [
+    "EVIDENCE_RECORD_VERSION",
+    "VERIFICATION_VERSION",
+    "CheckEvidence",
+    "EvidenceRecord",
+    "ProofResult",
+    "VerificationError",
+    "VerificationIssue",
+    "VerificationIssueCode",
+    "VerificationReport",
+    "append_verification_report",
+    "load_proof",
+    "verify_execution",
     "EXECUTION_RESULT_VERSION",
     "WORK_PACKET_VERSION",
     "ExecutionResult",
