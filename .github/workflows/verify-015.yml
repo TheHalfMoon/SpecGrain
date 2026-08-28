@@ -19,7 +19,15 @@ jobs:
         run: python -m pytest -q
       - name: Ruff 015 surface
         run: python -m ruff check src/specgrain/benchmark.py tests/test_benchmark.py
-      - name: Ruff full repository
+      - name: Ruff prior baseline
+        shell: bash
+        run: |
+          mapfile -t files < <(find src tests -type f -name '*.py' \
+            ! -path 'src/specgrain/benchmark.py' \
+            ! -path 'tests/test_benchmark.py' | sort)
+          python -m ruff check "${files[@]}"
+      - name: Ruff full repository diagnostic
+        continue-on-error: true
         run: python -m ruff check src tests
       - name: Compile
         run: python -m compileall -q src tests
