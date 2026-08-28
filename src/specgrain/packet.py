@@ -40,7 +40,7 @@ def _require_text(value: object, field_name: str, *, allow_empty: bool = False) 
 
 
 def _normalize_strings(value: object, field_name: str) -> tuple[str, ...]:
-    if isinstance(value, (str, bytes, bytearray)) or not isinstance(value, Sequence):
+    if isinstance(value, str | bytes | bytearray) or not isinstance(value, Sequence):
         raise PacketValidationError(f"{field_name} must be a sequence of strings")
     result: list[str] = []
     seen: set[str] = set()
@@ -54,7 +54,7 @@ def _normalize_strings(value: object, field_name: str) -> tuple[str, ...]:
 
 
 def _freeze_json(value: object, field_name: str) -> object:
-    if value is None or isinstance(value, (str, bool, int)):
+    if value is None or isinstance(value, str | bool | int):
         return value
     if isinstance(value, float):
         if not math.isfinite(value):
@@ -67,7 +67,7 @@ def _freeze_json(value: object, field_name: str) -> object:
                 raise PacketValidationError(f"{field_name} contains a non-string object key")
             frozen[key] = _freeze_json(nested, f"{field_name}.{key}")
         return MappingProxyType(frozen)
-    if isinstance(value, (list, tuple)):
+    if isinstance(value, list | tuple):
         return tuple(
             _freeze_json(item, f"{field_name}[{index}]")
             for index, item in enumerate(value)
@@ -335,7 +335,7 @@ class WorkPacket:
         if missing:
             raise PacketValidationError(f"WorkPacket input is missing fields: {', '.join(missing)}")
         raw_sources = payload.get("context_sources")
-        if isinstance(raw_sources, (str, bytes, bytearray)) or not isinstance(
+        if isinstance(raw_sources, str | bytes | bytearray) or not isinstance(
             raw_sources, Sequence
         ):
             raise PacketValidationError("context_sources must be a sequence of objects")

@@ -1,10 +1,15 @@
 """Explicit read-only migration from bounded GitHub Spec Kit artifacts."""
 from __future__ import annotations
-import hashlib, json, os, re
+
+import hashlib
+import json
+import os
+import re
 from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
 from typing import Any
+
 SPECKIT_IMPORT_VERSION = 1
 DEFAULT_ARTIFACT_LIMIT_BYTES = 1048576
 ROLES = {
@@ -201,7 +206,7 @@ def _section(ss, title):
     return next((x for x in ss if x.title == title), None)
 
 def _lines(body):
-    return tuple((x.strip() for x in COMMENT.sub('', '\n'.join(body)).splitlines() if x.strip()))
+    return tuple(x.strip() for x in COMMENT.sub('', '\n'.join(body)).splitlines() if x.strip())
 
 def _meta(text, label):
     m = re.search(f'^\\*\\*{re.escape(label)}\\*\\*:\\s*(.+?)\\s*$', COMMENT.sub('', text), re.M)

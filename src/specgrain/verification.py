@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import contextlib
 import hashlib
 import json
 import os
@@ -335,7 +336,7 @@ def _digest(payload: Mapping[str, object]) -> str:
 
 
 def _normalize_paths(value: object, field_name: str) -> tuple[str, ...]:
-    if isinstance(value, (str, bytes, bytearray)) or not isinstance(value, Sequence):
+    if isinstance(value, str | bytes | bytearray) or not isinstance(value, Sequence):
         raise VerificationError(
             f"{field_name} must be a sequence of repository-relative paths"
         )
@@ -362,7 +363,7 @@ def _normalize_paths(value: object, field_name: str) -> tuple[str, ...]:
 
 
 def _normalize_checks(value: object, field_name: str) -> tuple[CheckEvidence, ...]:
-    if isinstance(value, (str, bytes, bytearray)) or not isinstance(value, Sequence):
+    if isinstance(value, str | bytes | bytearray) or not isinstance(value, Sequence):
         raise VerificationError(f"{field_name} must be a sequence of CheckEvidence")
     checks = tuple(value)
     for index, check in enumerate(checks):
@@ -381,10 +382,7 @@ def _normalize_checks(value: object, field_name: str) -> tuple[CheckEvidence, ..
 
 
 def _path_authorized(path: str, surfaces: tuple[str, ...]) -> bool:
-    for surface in surfaces:
-        if path == surface or path.startswith(surface + "/"):
-            return True
-    return False
+    return any(path == surface or path.startswith(surface + "/") for surface in surfaces)
 
 
 def _check_required(
@@ -576,7 +574,7 @@ def _report_from_dict(data: Mapping[str, object]) -> VerificationReport:
         ("evidence_checks", raw_evidence),
         ("issues", raw_issues),
     ):
-        if isinstance(value, (str, bytes, bytearray)) or not isinstance(value, Sequence):
+        if isinstance(value, str | bytes | bytearray) or not isinstance(value, Sequence):
             raise VerificationError(f"{name} must be an array")
     report = VerificationReport(
         spec_id=data["spec_id"],
@@ -766,9 +764,7 @@ def append_verification_report(
         raise VerificationError("refusing to overwrite an existing evidence record") from exc
     except Exception:
         if created:
-            try:
+            with contextlib.suppress(OSError):
                 target.unlink(missing_ok=True)
-            except OSError:
-                pass
         raise
     return record

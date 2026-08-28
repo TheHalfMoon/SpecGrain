@@ -19,8 +19,10 @@ from .store import (
     ProjectCheckIssue,
     ProjectCheckResult,
     StoreError,
-    check_project as _store_check_project,
     load_project,
+)
+from .store import (
+    check_project as _store_check_project,
 )
 
 

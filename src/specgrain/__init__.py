@@ -38,20 +38,6 @@ from .lifecycle import (
     parse_spec_state,
     require_transition_allowed,
 )
-from .metrics import (
-    METRICS_VERSION,
-    ChangeScopeReport,
-    DeliveryMetrics,
-    DeliveryObservation,
-    DriftReport,
-    DriftSignal,
-    DriftSignalCode,
-    MetricsValidationError,
-    Ratio,
-    aggregate_delivery_metrics,
-    analyze_change_scope,
-    detect_drift,
-)
 from .method import (
     METHOD_PROFILE_VERSION,
     MethodIssue,
@@ -65,6 +51,20 @@ from .method import (
     evaluate_method_readiness,
     get_method_profile,
     require_method_readiness,
+)
+from .metrics import (
+    METRICS_VERSION,
+    ChangeScopeReport,
+    DeliveryMetrics,
+    DeliveryObservation,
+    DriftReport,
+    DriftSignal,
+    DriftSignalCode,
+    MetricsValidationError,
+    Ratio,
+    aggregate_delivery_metrics,
+    analyze_change_scope,
+    detect_drift,
 )
 from .model import SPECNODE_SCHEMA_VERSION, SpecNode, SpecValidationError, is_spec_id
 from .packet import (
@@ -108,26 +108,12 @@ from .repository import (
     ScanLimits,
     scan_repository,
 )
-from .verification import (
-    EVIDENCE_RECORD_VERSION,
-    VERIFICATION_VERSION,
-    CheckEvidence,
-    EvidenceRecord,
-    ProofResult,
-    VerificationError,
-    VerificationIssue,
-    VerificationIssueCode,
-    VerificationReport,
-    append_verification_report,
-    load_proof,
-    verify_execution,
-)
 from .speckit import (
     DEFAULT_ARTIFACT_LIMIT_BYTES,
     SPECKIT_IMPORT_VERSION,
-    ImportNotice,
     ImportedItem,
     ImportedStory,
+    ImportNotice,
     LegacyTask,
     SourceArtifact,
     SpecKitImportError,
@@ -150,6 +136,20 @@ from .store import (
     StoreValidationError,
     init_project,
     load_project,
+)
+from .verification import (
+    EVIDENCE_RECORD_VERSION,
+    VERIFICATION_VERSION,
+    CheckEvidence,
+    EvidenceRecord,
+    ProofResult,
+    VerificationError,
+    VerificationIssue,
+    VerificationIssueCode,
+    VerificationReport,
+    append_verification_report,
+    load_proof,
+    verify_execution,
 )
 
 __all__ = [
