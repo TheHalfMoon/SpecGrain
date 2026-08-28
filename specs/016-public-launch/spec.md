@@ -2,7 +2,7 @@
 
 ## Status
 
-`SHAPED`
+`VERIFYING`
 
 ## Outcome
 

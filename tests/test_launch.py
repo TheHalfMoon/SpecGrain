@@ -13,6 +13,9 @@ def test_release_metadata_is_versioned_and_runtime_dependency_free() -> None:
     assert data["project"]["version"] == "0.1.0"
     assert data["project"]["dependencies"] == []
     assert data["project"]["requires-python"] == ">=3.11"
+    assert data["project"]["license"] == "MIT"
+    assert data["project"]["license-files"] == ["LICENSE"]
+    assert data["build-system"]["requires"] == ["setuptools>=77"]
     assert "ruff==0.6.9" in data["project"]["optional-dependencies"]["dev"]
 
 
@@ -39,7 +42,7 @@ def test_permanent_ci_covers_supported_launch_platforms() -> None:
     )
 
 
-def test_release_workflow_is_post_ci_and_immutable() -> None:
+def test_release_workflow_is_post_ci_immutable_and_installable() -> None:
     workflow = (ROOT / ".github" / "workflows" / "release.yml").read_text(encoding="utf-8")
     assert "workflow_run" in workflow
     assert "head_branch == 'main'" in workflow
@@ -49,6 +52,12 @@ def test_release_workflow_is_post_ci_and_immutable() -> None:
     assert "git push origin refs/tags/v0.1.0" in workflow
     assert "gh release create v0.1.0" in workflow
     assert "--verify-tag" in workflow
+    assert "python -m build" in workflow
+    assert "dist/specgrain-0.1.0-py3-none-any.whl" in workflow
+    assert "dist/specgrain-0.1.0.tar.gz" in workflow
+    assert "GitHub Release v0.1.0 exists without the expected Git tag" in workflow
+    assert "already published at immutable tag target" in workflow
+    assert "git fetch --tags --force" not in workflow
 
 
 def test_readme_uses_only_current_cli_commands() -> None:

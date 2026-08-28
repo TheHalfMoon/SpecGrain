@@ -14,8 +14,10 @@ Specification 015 closed through PR #17. Final reviewed PR head `14e3d7e6a301148
 
 ## 016 release candidate surface
 
-The active branch now contains the v0.1.0 package metadata, permanent cross-platform CI, truthful launch README, runnable zero-to-verified example, pinned brownfield examples, Spec Kit migration guide, no-winner benchmark report, trust/security/community documentation, release notes, launch asset, and launch-surface tests. No `src/specgrain/**` production source change is planned or currently required by the release surface.
+The active branch contains the v0.1.0 package metadata, permanent cross-platform CI, truthful launch README, runnable zero-to-verified example, pinned brownfield examples, Spec Kit migration guide, no-winner benchmark report, trust/security/community documentation, release notes, launch asset, and launch-surface tests. The permanent Ruff gate exposed pre-existing source/test style debt during release verification; those findings were repaired mechanically and retained only after Ruff, full regression, compile, and whitespace checks succeeded. No behavioral product expansion was introduced by that hardening.
+
+The release contract is post-CI and exact-SHA-bound. It builds and attaches the v0.1.0 wheel and source distribution, refuses conflicting partial release state, and becomes a no-op after the immutable public v0.1.0 release exists so later canonical closeout commits cannot move the tag.
 
 ## Immediate ordering
 
-Complete exact-head regression/static/package verification, prove Linux/macOS/Windows permanent CI, review the exact diff, open and merge the bounded product PR with expected-head protection, publish `v0.1.0`, then perform the documentation-only release closeout.
+Complete exact-head regression/static/package verification, prove Linux/macOS/Windows permanent CI, record exact verification and diff-review evidence, open and merge the bounded product PR with expected-head protection, publish `v0.1.0`, then perform the documentation-only release closeout.
