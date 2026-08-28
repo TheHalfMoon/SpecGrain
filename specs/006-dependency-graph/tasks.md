@@ -28,7 +28,7 @@
 - [x] T018 Add local check/next integration and read-only tests.
 - [x] T019 Add CLI next text/JSON/exit-code tests.
 - [x] T020 Run all 001–006 tests plus compile/package/smoke and available lint/static checks: 275 pytest tests PASS, compileall PASS, editable install PASS, console/module help equivalence PASS, 0 lines >100; Ruff NOT RUN because unavailable/offline.
-- [ ] T021 Review exact uploaded diff for mutation, scan, semantic inference, conflict analysis, evidence, execution, or dependency-library creep.
+- [x] T021 Review exact uploaded implementation head `72409ba2881b04a7db41a3b30b9dc05c9eb69603`; no material defect or scope/trust-boundary leak remains. See `review.md`.
 
 ## PR closeout
 

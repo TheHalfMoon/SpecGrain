@@ -6,11 +6,11 @@
 **Closed specification:** `specs/005-cli-local-store/` — `CLOSED_CANONICAL`  
 **Active specification:** `specs/006-dependency-graph/`  
 **Active branch:** `feat/006-dependency-graph`  
-**Active status:** `IMPLEMENTED_REVIEW_PENDING`
+**Active status:** `PR_READY`
 
 ## Current objective
 
-Close Specification 006 from the exact uploaded dependency kernel + local project orchestration, then re-read canonical `main` and begin `007-repository-scan`.
+Open and close Specification 006 from the reviewed dependency kernel + local project orchestration, then re-read canonical `main` and begin `007-repository-scan`.
 
 ## Implemented dependency semantics
 
@@ -24,7 +24,7 @@ Only current `GRAIN` nodes are candidates for the ready set. Eligibility analysi
 
 ## Implemented 006 boundary
 
-006 now provides:
+006 provides:
 
 - duplicate/missing/self dependency validation;
 - deterministic dependency cycle detection;
@@ -34,7 +34,7 @@ Only current `GRAIN` nodes are candidates for the ready set. Eligibility analysi
 - dependency-aware local `check` orchestration;
 - read-only `next` text/JSON output.
 
-The final implementation deliberately leaves Specification 005 `store.py` unchanged and adds a small `project.py` orchestration layer instead. This reduces change surface while preserving the same 006 outcome.
+The final implementation leaves Specification 005 `store.py` unchanged and uses a small `project.py` orchestration layer instead, reducing change surface without changing the 006 outcome.
 
 ## Verification front
 
@@ -45,7 +45,7 @@ The final implementation deliberately leaves Specification 005 `store.py` unchan
 - changed-source/test line-length preflight: **0 lines over 100**;
 - Ruff: **NOT RUN — unavailable/offline**.
 
-See `specs/006-dependency-graph/verification.md`.
+Exact uploaded implementation head `72409ba2881b04a7db41a3b30b9dc05c9eb69603` passed internal exact-diff review; `review.md` records the result. The review-record commit will become the PR head and must receive fresh external/exact-head checks.
 
 ## Trust boundary
 
@@ -53,9 +53,9 @@ See `specs/006-dependency-graph/verification.md`.
 
 ## Immediate ordering
 
-1. Commit the exact verified implementation bytes.
-2. Review exact uploaded diff for scope/trust-boundary defects.
-3. Open bounded PR #8 with exact-head evidence.
-4. Resolve every external/exact-head defect.
+1. Commit the exact-head review record.
+2. Open bounded PR #8 with exact-head evidence.
+3. Run fresh exact-head CodeRabbit/repository checks and manual head confirmation.
+4. Resolve every material defect.
 5. Merge only with expected-head guard.
 6. Re-read canonical `main` and begin `007-repository-scan`.
