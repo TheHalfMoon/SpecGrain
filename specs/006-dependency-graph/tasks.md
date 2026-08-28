@@ -32,6 +32,8 @@
 
 ## PR closeout
 
-- [ ] T022 Open bounded implementation PR with exact-head evidence.
-- [ ] T023 Resolve every exact-head external/repository review defect.
-- [ ] T024 Merge only with expected-head evidence, re-read canonical `main`, then begin `007-repository-scan`.
+- [x] T022 Open bounded PR #8; final exact head `5c8115524af67a3d81d1335f29833322f551cf2c`.
+- [x] T023 Exact head had CodeRabbit SUCCESS, no unresolved review threads, mergeable state, and internal exact-head COMMENT review; no material defect remained.
+- [x] T024 Merge PR #8 with expected-head guard; canonical merge commit is `85d1bef8ee5c1c8e8d78baa52f509803a78a43d8`, then re-read canonical `main` before beginning 007.
+
+**Result:** `CLOSED_CANONICAL` at merge commit `85d1bef8ee5c1c8e8d78baa52f509803a78a43d8`.

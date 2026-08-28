@@ -8,6 +8,7 @@ import sys
 from collections.abc import Sequence
 
 from .project import NextResult, check_project, next_project
+from .repository import RepositoryMap, RepositoryScanError, scan_repository
 from .store import ProjectCheckResult, StoreError, init_project
 
 
@@ -26,6 +27,10 @@ def _parser() -> argparse.ArgumentParser:
     next_parser = subparsers.add_parser("next", help="show dependency-eligible Grains")
     next_parser.add_argument("path", nargs="?", default=".")
     next_parser.add_argument("--json", action="store_true", dest="as_json")
+
+    scan = subparsers.add_parser("scan", help="scan deterministic brownfield repository facts")
+    scan.add_argument("path", nargs="?", default=".")
+    scan.add_argument("--json", action="store_true", dest="as_json")
     return parser
 
 
@@ -72,6 +77,25 @@ def _render_next_text(result: NextResult) -> str:
             lines.append(f"Wave {index}: {', '.join(wave)}")
     for issue in result.issues:
         lines.append(f"- [{issue.code}] {issue.location}: {issue.message}")
+    return "\n".join(lines)
+
+
+def _render_scan_text(result: RepositoryMap) -> str:
+    lines = [
+        "SpecGrain scan: PASS",
+        f"Repository: {result.repository_name}",
+        f"Files: {result.file_count}",
+        f"Skipped symlinks: {result.skipped_symlink_count}",
+        f"Manifests: {len(result.manifests)}",
+        f"Dependencies: {len(result.dependencies)}",
+        f"Components: {len(result.components)}",
+        f"Git: {result.git.layout}",
+        f"Digest: {result.content_digest}",
+    ]
+    for manifest in result.manifests:
+        lines.append(f"- manifest {manifest.kind}: {manifest.path}")
+    for language in result.languages:
+        lines.append(f"- language {language.language}: {language.file_count}")
     return "\n".join(lines)
 
 
@@ -130,5 +154,38 @@ def main(argv: Sequence[str] | None = None) -> int:
         else:
             print(_render_next_text(result))
         return 0 if result.valid else 1
+
+    if args.command == "scan":
+        try:
+            result = scan_repository(args.path)
+        except RepositoryScanError as exc:
+            if args.as_json:
+                print(
+                    json.dumps(
+                        {"error": exc.to_dict(), "valid": False},
+                        sort_keys=True,
+                        ensure_ascii=False,
+                        separators=(",", ":"),
+                    ),
+                    file=sys.stderr,
+                )
+            else:
+                print(f"SpecGrain scan: FAIL\n- {exc}", file=sys.stderr)
+            return 1
+        except Exception:
+            print("SpecGrain scan: FAIL\n- internal error", file=sys.stderr)
+            return 1
+        if args.as_json:
+            print(
+                json.dumps(
+                    result.to_dict(),
+                    sort_keys=True,
+                    ensure_ascii=False,
+                    separators=(",", ":"),
+                )
+            )
+        else:
+            print(_render_scan_text(result))
+        return 0
 
     raise AssertionError(f"unhandled command {args.command!r}")

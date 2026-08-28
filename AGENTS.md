@@ -13,10 +13,11 @@ Before changing the repository, read in this order:
 1. `AGENTS.md`
 2. `specs/CURRENT.md`
 3. `.specify/memory/constitution.md`
-4. The active `spec.md`
-5. The active `plan.md`
-6. The active `tasks.md`
-7. Referenced ADRs, contracts, schemas, and source files
+4. `docs/execution-master-plan.md`
+5. The active `spec.md`
+6. The active `plan.md`
+7. The active `tasks.md`
+8. Referenced ADRs, contracts, schemas, research notes, and source files
 
 Live repository state overrides stale chat handoffs or external notes.
 
@@ -94,6 +95,8 @@ A green CI result is necessary where configured but is not by itself sufficient 
 ## 10. Planning rules
 
 SpecGrain uses progressive refinement. Near-term work may be detailed; distant work should remain coarse until dependencies and evidence make refinement useful. Avoid generating a large backlog of detailed tasks that will become stale before execution.
+
+The durable program-level sequence and fresh-session continuation protocol live in `docs/execution-master-plan.md`. `docs/roadmap.md` remains the milestone-level sequencing reference, while `specs/CURRENT.md` owns the active frontier.
 
 ## 11. Repository evolution
 
