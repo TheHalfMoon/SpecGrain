@@ -1,0 +1,43 @@
+name: Prepare 016 test Ruff fixes
+
+on:
+  push:
+    branches:
+      - feat/016-public-launch
+
+permissions:
+  contents: write
+
+jobs:
+  prepare:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install verification tools
+        run: python -m pip install "pytest>=8.0" "ruff==0.6.9"
+      - name: Apply mechanical test Ruff fixes
+        run: python -m ruff check tests --fix
+      - name: Verify all Python surfaces
+        run: |
+          python -m ruff check src
+          python -m ruff check tests
+          python -m ruff check examples
+      - name: Install package editable
+        run: python -m pip install -e . --no-deps
+      - name: Full regression
+        run: python -m pytest
+      - name: Compile
+        run: python -m compileall -q src tests examples
+      - name: Patch whitespace guard
+        run: git diff --check
+      - name: Commit verified test fixes
+        run: |
+          git add tests
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "style: apply verified test Ruff fixes [skip ci]"
+          git push origin HEAD:feat/016-public-launch
