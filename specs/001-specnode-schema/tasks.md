@@ -29,10 +29,12 @@ Tasks are intentionally small and ordered.
 - [x] T014 Add canonical ordering, Unicode, round-trip, schema-version, and golden-vector tests.
 - [x] T015 Add digest equivalence/difference tests, including state exclusion.
 - [x] T016 Run available local verification: 24 pytest tests PASS, compileall PASS, digest seed smoke PASS, golden vector PASS; ruff explicitly NOT RUN because unavailable. See `verification.md`.
-- [ ] T017 Review exact branch diff against 001 scope and confirm no lifecycle/graph/CLI/readiness creep.
+- [x] T017 Review exact PR head `0381d5b3b5699ea5959d197bcbbc961a69b22904` against 001 scope; no lifecycle/graph/CLI/readiness creep or material defect remained.
 
 ## PR closeout
 
 - [x] T018 Open bounded implementation PR #2 with exact test evidence and no unsupported completion claims.
-- [ ] T019 Resolve all exact-head review/check defects.
-- [ ] T020 Merge only with expected-head evidence, then re-read canonical `main` before `002-lifecycle-state`.
+- [x] T019 Resolve exact-head review defects F-001/F-002; CodeRabbit SUCCESS and no unresolved review threads on the final head.
+- [x] T020 Merge PR #2 with expected-head guard; canonical merge commit is `619b7501fc659588fc344af8835cc910a42bff31`. Re-read canonical `main` before starting 002.
+
+**Result:** `CLOSED_CANONICAL` at merge commit `619b7501fc659588fc344af8835cc910a42bff31`.
