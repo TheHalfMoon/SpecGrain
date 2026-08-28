@@ -6,7 +6,7 @@
 **Closed specification:** `specs/004-grain-readiness/` — `CLOSED_CANONICAL`  
 **Active specification:** `specs/005-cli-local-store/`  
 **Active branch:** `feat/005-cli-local-store`  
-**Active status:** `IMPLEMENTED_REVIEW_PENDING`
+**Active status:** `HARDENED_REVIEW_PENDING`
 
 ## Current objective
 
@@ -29,15 +29,16 @@ ADR-0005 replaces the earlier provisional YAML preference for M2 with dependency
 
 ## Verification front
 
-- pytest: **230 passed** (182 existing + 48 new 005 tests);
+- pytest: **236 passed** (182 existing + 54 005 tests);
 - compileall: **PASS**;
 - editable install: **PASS**;
 - `specgrain` and `python -m specgrain` entry points: **PASS**;
 - fresh `init -> check -> JSON` smoke: **PASS**;
-- line-length preflight for new source/tests: **0 lines over 100**;
+- console/module JSON equivalence: **PASS**;
+- line-length preflight for new/changed source/tests: **0 lines over 100**;
 - Ruff: **NOT RUN — unavailable locally; installation attempt blocked by offline DNS/network**.
 
-See `specs/005-cli-local-store/verification.md`.
+The final hardening adds direct coverage for canonical symlink boundaries and unexpected CLI internal errors. See `specs/005-cli-local-store/verification.md`.
 
 ## Trust boundary
 
@@ -53,8 +54,8 @@ See `specs/005-cli-local-store/verification.md`.
 
 ## Immediate ordering
 
-1. Commit the exact verified implementation bytes to the active branch.
-2. Review the uploaded diff for scope/trust-boundary defects.
+1. Commit the hardening changes on the active branch.
+2. Review the exact uploaded diff for scope/trust-boundary defects.
 3. Open a bounded PR with exact-head evidence.
 4. Resolve every exact-head external/repository defect.
 5. Merge only with expected-head guard.

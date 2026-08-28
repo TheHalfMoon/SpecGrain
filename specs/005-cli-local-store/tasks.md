@@ -24,7 +24,7 @@
 - [x] T014 Add initialization/store/parser/version/name/symlink/spec-loading tests.
 - [x] T015 Add structural check and readiness report/enforce tests.
 - [x] T016 Add CLI init/check/text/JSON/exit-code tests.
-- [x] T017 Run all 001–005 tests and compile/package/smoke checks: 230 pytest tests PASS, compileall PASS, editable install PASS, console/module smoke PASS; Ruff NOT RUN because unavailable and package installation is blocked by offline DNS.
+- [x] T017 Run all 001–005 tests and compile/package/smoke checks after boundary hardening: 236 pytest tests PASS, compileall PASS, editable install PASS, console/module smoke PASS; Ruff NOT RUN because unavailable and installation is blocked by offline DNS/network.
 - [ ] T018 Review exact uploaded diff for 006+ DAG, repository-scan, lifecycle-mutation, evidence-store, YAML, subprocess, provider, or dependency creep.
 
 ## PR closeout

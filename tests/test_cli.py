@@ -6,6 +6,7 @@ from pathlib import Path
 import pytest
 
 from specgrain import SpecNode
+import specgrain.cli as cli_module
 from specgrain.cli import main
 
 
@@ -128,3 +129,31 @@ def test_module_entrypoint_imports_same_main() -> None:
     import specgrain.cli as cli
 
     assert module_entry.main is cli.main
+
+
+def test_cli_init_unexpected_internal_error_fails_closed(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str], monkeypatch: pytest.MonkeyPatch
+) -> None:
+    def fail(*args: object, **kwargs: object) -> object:
+        raise RuntimeError("secret detail")
+
+    monkeypatch.setattr(cli_module, "init_project", fail)
+    assert main(["init", str(tmp_path), "--project-id", "demo"]) == 1
+    captured = capsys.readouterr()
+    assert captured.out == ""
+    assert captured.err == "SpecGrain init: FAIL\n- internal error\n"
+    assert "secret detail" not in captured.err
+
+
+def test_cli_check_unexpected_internal_error_fails_closed(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str], monkeypatch: pytest.MonkeyPatch
+) -> None:
+    def fail(*args: object, **kwargs: object) -> object:
+        raise RuntimeError("secret detail")
+
+    monkeypatch.setattr(cli_module, "check_project", fail)
+    assert main(["check", str(tmp_path), "--json"]) == 1
+    captured = capsys.readouterr()
+    assert captured.out == ""
+    assert captured.err == "SpecGrain check: FAIL\n- internal error\n"
+    assert "secret detail" not in captured.err

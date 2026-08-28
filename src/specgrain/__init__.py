@@ -23,6 +23,14 @@ from .readiness import (
     evaluate_grain_readiness,
     require_grain_readiness,
 )
+from .refinement import (
+    RefinementIssue,
+    RefinementIssueCode,
+    RefinementValidationError,
+    refinement_roots,
+    require_valid_refinement,
+    validate_refinement,
+)
 from .store import (
     POLICY_VERSION,
     STORE_VERSION,
@@ -38,14 +46,6 @@ from .store import (
     check_project,
     init_project,
     load_project,
-)
-from .refinement import (
-    RefinementIssue,
-    RefinementIssueCode,
-    RefinementValidationError,
-    refinement_roots,
-    require_valid_refinement,
-    validate_refinement,
 )
 
 __all__ = [

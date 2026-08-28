@@ -355,3 +355,57 @@ def test_symlinked_spec_file_is_rejected(tmp_path: Path) -> None:
         pytest.skip("symlinks unavailable")
     with pytest.raises(StoreValidationError, match="symlink"):
         load_project(tmp_path)
+
+
+def test_repository_root_symlink_is_rejected(tmp_path: Path) -> None:
+    target = tmp_path / "target-root"
+    target.mkdir()
+    link = tmp_path / "root-link"
+    try:
+        link.symlink_to(target, target_is_directory=True)
+    except OSError:
+        pytest.skip("symlinks unavailable")
+    with pytest.raises(StoreValidationError, match="root symlink"):
+        init_project(link, project_id="demo")
+
+
+def test_symlinked_project_manifest_is_rejected(tmp_path: Path) -> None:
+    init_project(tmp_path, project_id="demo")
+    manifest = tmp_path / ".specgrain" / "project.json"
+    outside = tmp_path / "outside-project.json"
+    outside.write_bytes(manifest.read_bytes())
+    manifest.unlink()
+    try:
+        manifest.symlink_to(outside)
+    except OSError:
+        pytest.skip("symlinks unavailable")
+    with pytest.raises(StoreValidationError, match="symlink"):
+        load_project(tmp_path)
+
+
+def test_symlinked_active_policy_is_rejected(tmp_path: Path) -> None:
+    init_project(tmp_path, project_id="demo")
+    policy = tmp_path / ".specgrain" / "policies" / "default.json"
+    outside = tmp_path / "outside-policy.json"
+    outside.write_bytes(policy.read_bytes())
+    policy.unlink()
+    try:
+        policy.symlink_to(outside)
+    except OSError:
+        pytest.skip("symlinks unavailable")
+    with pytest.raises(StoreValidationError, match="symlink"):
+        load_project(tmp_path)
+
+
+def test_symlinked_specs_directory_is_rejected(tmp_path: Path) -> None:
+    init_project(tmp_path, project_id="demo")
+    specs = tmp_path / ".specgrain" / "specs"
+    specs.rmdir()
+    outside = tmp_path / "outside-specs"
+    outside.mkdir()
+    try:
+        specs.symlink_to(outside, target_is_directory=True)
+    except OSError:
+        pytest.skip("symlinks unavailable")
+    with pytest.raises(StoreValidationError, match="symlink"):
+        load_project(tmp_path)

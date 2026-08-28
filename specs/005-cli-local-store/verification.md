@@ -9,15 +9,24 @@ The exact candidate source and tests in the local reconstructed workspace were e
 
 ```text
 python -m pytest -q
-........................................................................ [ 31%]
-........................................................................ [ 62%]
-........................................................................ [ 93%]
-..............                                                           [100%]
+........................................................................ [ 30%]
+........................................................................ [ 61%]
+........................................................................ [ 91%]
+....................                                                     [100%]
 ```
 
-Result: **230 passed**.
+Result: **236 passed**.
 
-This is 182 pre-existing 001–004 tests plus 48 new 005 store/CLI tests.
+This is 182 pre-existing 001–004 tests plus 54 005 store/CLI tests after exact-boundary hardening.
+
+The six hardening tests added after the first 230-test run cover:
+
+- repository-root symlink rejection;
+- symlinked `project.json` rejection;
+- symlinked active policy rejection;
+- symlinked canonical `specs/` directory rejection;
+- fail-closed unexpected internal error behavior for `init`;
+- fail-closed unexpected internal error behavior for `check` without leaking internal exception details.
 
 ## Compile check
 
@@ -45,7 +54,6 @@ A fresh temporary directory was exercised through the installed console entry po
 
 ```text
 specgrain init /tmp/sg005-smoke --project-id smoke
-specgrain check /tmp/sg005-smoke
 specgrain check /tmp/sg005-smoke --json
 python -m specgrain check /tmp/sg005-smoke --json
 ```
@@ -53,19 +61,21 @@ python -m specgrain check /tmp/sg005-smoke --json
 Results:
 
 - initialization PASS;
-- text check PASS;
 - console JSON check PASS;
 - module JSON check PASS;
-- console/module JSON payloads matched and contained no timestamp or absolute-path fields.
+- console/module JSON payloads matched byte-for-byte and contained no timestamp or absolute-path fields.
 
 ## Style preflight
 
 A local line-length preflight found **0 lines over 100 characters** in:
 
+- `src/specgrain/__init__.py`;
 - `src/specgrain/store.py`;
 - `src/specgrain/cli.py`;
 - `tests/test_store.py`;
 - `tests/test_cli.py`.
+
+The public relative-import block was also normalized to module order before the final verification run.
 
 ## Ruff
 
