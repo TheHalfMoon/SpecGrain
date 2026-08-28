@@ -45,9 +45,14 @@ Avoid emitting misleading reciprocal issues for unresolved missing references.
 
 ### Phase 5 — Cycles
 
-Build refinement adjacency from existing parent-child declarations after unique identity is established. Cycle detection should be iterative or recursively bounded only by Python limitations; deterministic DFS in canonical child-ID order is acceptable for the initial kernel.
+Build deterministic adjacency from the union of every resolvable declared refinement edge:
 
-Canonicalize a detected cycle by rotating its node-ID ring so the lexicographically smallest ID is first, choosing the encountered directed orientation. Deduplicate the same cycle if discovered from another starting node.
+- `C.parent_id=P` contributes `P -> C`;
+- `P.children` containing C contributes `P -> C`.
+
+Use iterative DFS in canonical node/child order so deep forests do not depend on Python recursion depth. A back edge yields a directed cycle ring. Canonicalize each reported ring by rotating it so the lexicographically smallest ID is first. Self-links are excluded here because they already have dedicated issue codes.
+
+This union rule is deliberate: an inconsistent child-list declaration may already produce a reciprocity issue, but it must not hide a cycle that exists in the declared refinement data.
 
 ### Phase 6 — Deterministic result
 
@@ -84,7 +89,8 @@ Tests should independently declare malformed fixtures for:
 - self child;
 - child points to parent but parent omits child;
 - parent names child whose parent is another node or none;
-- 2-node and 3-node cycles;
+- 2-node and 3-node reciprocal cycles;
+- child-list-only cycle with absent parent pointers;
 - input-order invariance;
 - aggregate error carries structured issues;
 - invalid root query fails closed.

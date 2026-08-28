@@ -24,7 +24,7 @@ Provide a dependency-free deterministic refinement validator for a collection of
 - self-child detection;
 - reciprocal parent/child consistency;
 - multiple-parent inconsistency detection through reciprocal declarations;
-- directed cycle detection;
+- directed cycle detection across all resolvable declared refinement edges;
 - deterministic root identification for a valid forest;
 - structured validation issues and one aggregate validation error;
 - deterministic issue ordering;
@@ -50,8 +50,10 @@ A refinement forest is a finite set of uniquely identified `SpecNode` values in 
 2. a parent that names a child in `children` is reciprocated by that child's `parent_id`;
 3. a child with `parent_id=X` is named in X's `children`;
 4. no node names itself as parent or child;
-5. following parent/child refinement edges cannot return to an already visited node;
+5. following any resolvable declared refinement edge cannot return to an already visited node;
 6. roots are exactly nodes whose `parent_id is None`.
+
+For cycle detection, a resolvable parent pointer `C.parent_id=P` declares directed edge `P -> C`, and a resolvable child entry `P.children` containing C also declares `P -> C`. The validator uses the union of those edges so inconsistent declarations cannot hide a cycle behind a reciprocity error.
 
 `children` order is not semantic in Specification 003. Specification 001 already treats `children` as set-like for canonical content. Execution ordering belongs to dependency/scheduling specifications.
 
@@ -122,7 +124,9 @@ These failures MUST use distinct structured issue codes so callers can explain w
 
 ### FR-005 Cycle detection
 
-Validation MUST detect directed cycles in refinement relationships and report a deterministic cycle issue. A cycle issue message MUST identify a canonical cycle path independent of input collection order.
+Validation MUST detect a directed cycle formed by any union of resolvable parent-pointer and child-list declarations. A cycle issue message MUST identify a canonical cycle path independent of input collection order.
+
+Self-links remain dedicated `SELF_PARENT`/`SELF_CHILD` issues rather than duplicate `CYCLE` reports.
 
 ### FR-006 Deterministic issue ordering
 
@@ -152,7 +156,7 @@ Specification 003 MUST NOT infer that a structurally valid leaf is a Grain. It M
 3. missing parent and child references are reported structurally.
 4. self-parent and self-child links are reported.
 5. parent/child reciprocal mismatches are reported with distinct codes.
-6. cycles are detected with deterministic canonical paths.
+6. parent-pointer cycles and child-list-only cycles are detected with deterministic canonical paths.
 7. input order does not change issue ordering or root ordering.
 8. invalid forests cannot return a partial root view.
 9. no API promotes lifecycle state or claims Grain readiness.

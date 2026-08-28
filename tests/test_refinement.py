@@ -24,10 +24,6 @@ def node(num: int, *, parent: int | None = None, children: tuple[int, ...] = ())
     )
 
 
-def codes(nodes: object) -> list[RefinementIssueCode]:
-    return [issue.code for issue in validate_refinement(nodes)]  # type: ignore[arg-type]
-
-
 def test_empty_and_single_root_are_valid() -> None:
     assert validate_refinement([]) == ()
     root = node(1)
@@ -118,10 +114,20 @@ def test_three_node_cycle_is_canonical_independent_of_input_order() -> None:
     expected = validate_refinement(nodes)
     assert [issue.code for issue in expected] == [RefinementIssueCode.CYCLE]
     assert expected[0].message == (
-        "refinement cycle detected: SG-000001 -> SG-000003 -> SG-000002 -> SG-000001"
+        "refinement cycle detected: SG-000001 -> SG-000002 -> SG-000003 -> SG-000001"
     )
     for permutation in itertools.permutations(nodes):
         assert validate_refinement(permutation) == expected
+
+
+def test_cycle_in_children_declarations_is_detected_without_parent_pointers() -> None:
+    nodes = [node(1, children=(2,)), node(2, children=(1,))]
+    issues = validate_refinement(nodes)
+    cycle = [issue for issue in issues if issue.code is RefinementIssueCode.CYCLE]
+    assert len(cycle) == 1
+    assert cycle[0].message == (
+        "refinement cycle detected: SG-000001 -> SG-000002 -> SG-000001"
+    )
 
 
 def test_issue_order_is_input_order_invariant() -> None:

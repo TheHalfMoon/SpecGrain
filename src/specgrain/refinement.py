@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections import Counter
-from collections.abc import Iterable
+from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 from enum import StrEnum
 
@@ -62,27 +62,53 @@ def _canonical_cycle(cycle: list[str]) -> tuple[str, ...]:
     return tuple(cycle[index:] + cycle[:index])
 
 
-def _find_parent_cycles(by_id: dict[str, SpecNode]) -> set[tuple[str, ...]]:
+def _refinement_adjacency(by_id: dict[str, SpecNode]) -> dict[str, tuple[str, ...]]:
+    adjacency: dict[str, set[str]] = {node_id: set() for node_id in by_id}
+    for node_id in sorted(by_id):
+        node = by_id[node_id]
+        if node.parent_id is not None and node.parent_id != node.id and node.parent_id in by_id:
+            adjacency[node.parent_id].add(node.id)
+        for child_id in node.children:
+            if child_id != node.id and child_id in by_id:
+                adjacency[node.id].add(child_id)
+    return {node_id: tuple(sorted(children)) for node_id, children in adjacency.items()}
+
+
+def _find_cycles(by_id: dict[str, SpecNode]) -> set[tuple[str, ...]]:
+    adjacency = _refinement_adjacency(by_id)
+    state: dict[str, int] = {}
     cycles: set[tuple[str, ...]] = set()
 
-    for start in sorted(by_id):
-        positions: dict[str, int] = {}
-        path: list[str] = []
-        current = start
+    for start in sorted(adjacency):
+        if state.get(start, 0) != 0:
+            continue
 
-        while current in by_id and current not in positions:
-            positions[current] = len(path)
-            path.append(current)
-            parent_id = by_id[current].parent_id
-            if parent_id is None or parent_id == current or parent_id not in by_id:
-                current = ""
-                break
-            current = parent_id
+        state[start] = 1
+        path = [start]
+        positions = {start: 0}
+        stack: list[tuple[str, Iterator[str]]] = [(start, iter(adjacency[start]))]
 
-        if current and current in positions:
-            ring = path[positions[current] :]
-            if len(ring) > 1:
-                cycles.add(_canonical_cycle(ring))
+        while stack:
+            node_id, iterator = stack[-1]
+            try:
+                child_id = next(iterator)
+            except StopIteration:
+                state[node_id] = 2
+                stack.pop()
+                positions.pop(node_id, None)
+                path.pop()
+                continue
+
+            child_state = state.get(child_id, 0)
+            if child_state == 0:
+                state[child_id] = 1
+                positions[child_id] = len(path)
+                path.append(child_id)
+                stack.append((child_id, iter(adjacency[child_id])))
+            elif child_state == 1:
+                ring = path[positions[child_id] :]
+                if len(ring) > 1:
+                    cycles.add(_canonical_cycle(ring))
 
     return cycles
 
@@ -181,7 +207,7 @@ def validate_refinement(nodes: Iterable[SpecNode]) -> tuple[RefinementIssue, ...
                     )
                 )
 
-    for cycle in sorted(_find_parent_cycles(by_id)):
+    for cycle in sorted(_find_cycles(by_id)):
         path = " -> ".join((*cycle, cycle[0]))
         issues.append(
             RefinementIssue(

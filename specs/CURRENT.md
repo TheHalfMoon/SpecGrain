@@ -6,11 +6,11 @@
 **Closed specification:** `specs/002-lifecycle-state/` — `CLOSED_CANONICAL`  
 **Active specification:** `specs/003-refinement-tree/`  
 **Active branch:** `feat/003-refinement-tree`  
-**Active status:** `IMPLEMENTED_REVIEW_PENDING`
+**Active status:** `REMEDIATED_PR_REVIEW_PENDING`
 
 ## Current objective
 
-Close deterministic parent/child refinement-forest validation through exact-head review, then begin `004-grain-readiness`.
+Close deterministic parent/child refinement-forest validation after the exact-head cycle-coverage remediation, then begin `004-grain-readiness`.
 
 ## Implemented scope
 
@@ -18,13 +18,13 @@ Close deterministic parent/child refinement-forest validation through exact-head
 - duplicate-ID fail-closed behavior;
 - missing/self parent-child validation;
 - reciprocal parent/child consistency;
-- deterministic cycle detection;
+- cycle detection across the union of resolvable `parent_id` and `children` declarations;
 - deterministic valid root query;
 - no runtime dependencies.
 
 ## Verification front
 
-- pytest: **115 passed**;
+- pytest after remediation: **116 passed**;
 - compileall: **PASS**;
 - Ruff: **NOT RUN — unavailable locally**.
 
@@ -34,9 +34,9 @@ Close deterministic parent/child refinement-forest validation through exact-head
 
 ## Immediate ordering
 
-1. Review exact uploaded diff.
-2. Open bounded PR.
-3. Resolve external/exact-head defects.
+1. Push the F-001 remediation to PR #5.
+2. Re-run exact-head external/repository checks.
+3. Resolve every remaining material defect.
 4. Merge only with expected-head evidence.
 5. Re-read canonical `main`.
 6. Begin `004-grain-readiness`, where donor-derived success-criteria/minimality/safety-floor requirements become active.
