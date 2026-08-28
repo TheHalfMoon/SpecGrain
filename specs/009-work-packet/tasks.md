@@ -27,6 +27,6 @@
 
 ## PR closeout
 
-- [ ] T017 Open bounded implementation PR with exact-head evidence.
-- [ ] T018 Resolve every material exact-head external/repository review defect.
-- [ ] T019 Merge only with expected-head evidence, re-read canonical `main`, then begin `010-verification-evidence`.
+- [x] T017 Open bounded implementation PR with exact-head evidence (PR #11).
+- [x] T018 Resolve every material exact-head external/repository review defect; manual exact-head review found none and external review was unavailable/rate-limited.
+- [x] T019 Merge with expected head `71e1cb418e85782f2425e425fec4fdba5a2d06c6`; canonical `main` is `39122001672dd4c9b3721685734d18313c191415` with the reviewed head as second parent.
