@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 import subprocess
 import sys
 import tomllib
@@ -115,6 +116,39 @@ def test_public_launch_surface_is_present() -> None:
     )
     for relative in required:
         assert (ROOT / relative).is_file(), relative
+
+
+def test_python_release_surface_respects_line_length() -> None:
+    violations: list[str] = []
+    for root_name in ("src", "tests", "examples"):
+        for path in sorted((ROOT / root_name).rglob("*.py")):
+            for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+                if len(line) > 100:
+                    violations.append(f"{path.relative_to(ROOT)}:{line_number}:{len(line)}")
+    assert violations == []
+
+
+def test_public_launch_relative_markdown_links_resolve() -> None:
+    docs = (
+        ROOT / "README.md",
+        ROOT / "CONTRIBUTING.md",
+        ROOT / "SECURITY.md",
+        ROOT / "docs" / "migration-from-spec-kit.md",
+        ROOT / "docs" / "benchmark-report-v0.1.0.md",
+        ROOT / "docs" / "trust-model.md",
+        ROOT / "docs" / "releases" / "v0.1.0.md",
+        ROOT / "examples" / "brownfield" / "README.md",
+    )
+    broken: list[str] = []
+    for document in docs:
+        text = document.read_text(encoding="utf-8")
+        for raw_target in re.findall(r"\[[^\]]*\]\(([^)]+)\)", text):
+            target = raw_target.split("#", 1)[0]
+            if not target or "://" in target or target.startswith("mailto:"):
+                continue
+            if not (document.parent / target).resolve().exists():
+                broken.append(f"{document.relative_to(ROOT)} -> {raw_target}")
+    assert broken == []
 
 
 def test_brownfield_examples_are_pinned_without_fake_output() -> None:
