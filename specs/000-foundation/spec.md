@@ -10,7 +10,7 @@ SpecGrain is a new repository with a strong product hypothesis but no canonical 
 
 ## Outcome
 
-Establish a coherent, reviewable foundation that makes the first implementation specification (`001-core-model`) unambiguous enough to plan without re-litigating product identity.
+Establish a coherent, reviewable foundation that makes the first implementation specification (`001-specnode-schema`) unambiguous enough to plan without re-litigating product identity.
 
 ## In scope
 
@@ -92,11 +92,11 @@ The launch and benchmark strategy MUST prohibit unsupported superiority claims.
 1. A new contributor can explain the difference between `SpecNode`, `Grain`, `WorkPacket`, `ExecutionRun`, and `EvidenceRecord` from repository docs alone.
 2. The repository documents why it is not a Spec Kit fork.
 3. The constitution explicitly prohibits AI-only authority over verified state.
-4. The roadmap identifies `001-core-model` as the next implementation spec.
+4. The roadmap identifies `001-specnode-schema` as the next implementation spec.
 5. The competitive document identifies recursive readiness + evidence + context accounting as the differentiation target.
 6. The benchmark document defines reproducibility and anti-gaming constraints.
 7. `AGENTS.md` gives future agents an unambiguous canonical reading and execution order.
 
 ## Success criterion
 
-Foundation can be merged without unresolved contradictions that would materially change the scope of `001-core-model`.
+Foundation can be merged without unresolved contradictions that would materially change the scope of `001-specnode-schema`.

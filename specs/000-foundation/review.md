@@ -1,7 +1,8 @@
 # Foundation Consistency and Gap Review
 
 **Review date:** 2026-08-28  
-**Reviewed head:** `bae1df316dd0f143c96f7f21cd6f9bff5efe1bdf`  
+**Initial reviewed head:** `bae1df316dd0f143c96f7f21cd6f9bff5efe1bdf`  
+**Exact-head follow-up:** PR #1 review cycle  
 **Scope:** all `000-foundation` artifacts and repository governance added on `docs/foundation-plan`
 
 ## Review questions
@@ -61,6 +62,15 @@ Competitive positioning and launch strategy prohibit unsupported claims. SpecGra
 
 Agile/Lean, PMP-inspired governance, and Six Sigma-inspired loops are treated as tailored methods, not mandatory ceremony frameworks.
 
+### F-007 — Stale `001-core-model` references after roadmap split
+
+**Severity:** material  
+**Status:** remediated
+
+The first PR exact-head diff showed that `specs/000-foundation/spec.md` and `plan.md` still referred to `001-core-model` after the roadmap had been split into smaller implementation specs.
+
+**Resolution:** replace those stale references with `001-specnode-schema` and align the foundation acceptance/success language with the canonical roadmap and `CURRENT.md`.
+
 ## Result
 
-No unresolved critical foundation contradiction was found after applying F-001 and F-002 remediation. The next gate is exact-head PR review because this review was performed before the remediation commit that records the fixes.
+All material findings identified so far have explicit remediations. Final closure still requires a fresh exact-head PR review after the F-007 fix and completion of external repository gates.

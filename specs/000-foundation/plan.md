@@ -39,4 +39,4 @@ No product tests are required because this spec adds no executable product code.
 
 ## Exit
 
-When acceptance criteria pass on the exact PR head, merge the PR, re-read canonical `main`, update `specs/CURRENT.md`, and begin `001-core-model`.
+When acceptance criteria pass on the exact PR head, merge the PR, re-read canonical `main`, update `specs/CURRENT.md`, and begin `001-specnode-schema`.
