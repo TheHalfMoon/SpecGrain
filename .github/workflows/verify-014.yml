@@ -1,0 +1,41 @@
+name: verify-014-agent-adapters
+
+on:
+  push:
+    branches:
+      - verify/014-agent-adapters
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: python -m pip install -e '.[dev]'
+      - name: Full regression
+        run: python -m pytest -q
+      - name: Compile
+        run: python -m compileall -q src tests
+      - name: Entry-point parity
+        shell: bash
+        run: |
+          specgrain --help > /tmp/console-help
+          python -m specgrain --help > /tmp/module-help
+          diff -u /tmp/console-help /tmp/module-help
+      - name: Changed-line length
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          files = [Path('src/specgrain/adapter.py'), Path('tests/test_adapter.py')]
+          long = []
+          for path in files:
+              for number, line in enumerate(path.read_text().splitlines(), start=1):
+                  if len(line) > 100:
+                      long.append((path.as_posix(), number, len(line)))
+          if long:
+              raise SystemExit(f'lines over 100 characters: {long}')
+          print('0 changed lines over 100 characters')
+          PY
