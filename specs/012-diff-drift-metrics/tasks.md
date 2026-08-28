@@ -9,18 +9,18 @@
 
 ## Implementation
 
-- [ ] T005 Add deterministic change-surface analysis.
-- [ ] T006 Add exact revision drift signals.
-- [ ] T007 Add actor-neutral delivery observations and exact ratios.
-- [ ] T008 Add deterministic aggregate delivery metrics and digest.
-- [ ] T009 Add bounded public exports.
+- [x] T005 Add deterministic change-surface analysis.
+- [x] T006 Add exact revision drift signals.
+- [x] T007 Add actor-neutral delivery observations and exact ratios.
+- [x] T008 Add deterministic aggregate delivery metrics and digest.
+- [x] T009 Add bounded public exports.
 
 ## Verification
 
-- [ ] T010 Test path normalization/scope partitioning and drift behavior.
-- [ ] T011 Test metric validation, exact ratios, zero denominators, and permutation invariance.
-- [ ] T012 Run all 001–012 tests plus compile/package/entry-point and available static checks.
-- [ ] T013 Review exact uploaded diff for telemetry, actor scoring, Git/filesystem discovery, verification/lifecycle/store/CLI, or dependency creep.
+- [x] T010 Test path normalization/scope partitioning and drift behavior.
+- [x] T011 Test metric validation, exact ratios, zero denominators, and permutation invariance.
+- [x] T012 Run all 001–012 tests plus compile/package/entry-point and available static checks.
+- [x] T013 Review exact uploaded diff for telemetry, actor scoring, Git/filesystem discovery, verification/lifecycle/store/CLI, or dependency creep.
 
 ## PR closeout
 
