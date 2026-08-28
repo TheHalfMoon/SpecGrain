@@ -10,6 +10,7 @@ from collections.abc import Sequence
 from .project import NextResult, check_project, next_project
 from .repository import RepositoryMap, RepositoryScanError, scan_repository
 from .store import ProjectCheckResult, StoreError, init_project
+from .verification import ProofResult, VerificationError, load_proof
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -31,6 +32,11 @@ def _parser() -> argparse.ArgumentParser:
     scan = subparsers.add_parser("scan", help="scan deterministic brownfield repository facts")
     scan.add_argument("path", nargs="?", default=".")
     scan.add_argument("--json", action="store_true", dest="as_json")
+
+    prove = subparsers.add_parser("prove", help="show independent evidence for a specification")
+    prove.add_argument("spec_id")
+    prove.add_argument("path", nargs="?", default=".")
+    prove.add_argument("--json", action="store_true", dest="as_json")
     return parser
 
 
@@ -96,6 +102,24 @@ def _render_scan_text(result: RepositoryMap) -> str:
         lines.append(f"- manifest {manifest.kind}: {manifest.path}")
     for language in result.languages:
         lines.append(f"- language {language.language}: {language.file_count}")
+    return "\n".join(lines)
+
+
+def _render_proof_text(result: ProofResult) -> str:
+    status = "PASS" if result.verified else "FAIL"
+    lines = [
+        f"SpecGrain prove: {status}",
+        f"Spec: {result.spec_id}",
+        f"Records: {len(result.records)}",
+        f"Verified: {str(result.verified).lower()}",
+    ]
+    if result.latest is not None:
+        lines.append(f"Latest: {result.latest.record_digest}")
+        lines.append(f"Implementation: {result.latest.report.implementation_revision}")
+        lines.extend(
+            f"- [{issue.code.value}] {issue.subject}: {issue.message}"
+            for issue in result.latest.report.issues
+        )
     return "\n".join(lines)
 
 
@@ -187,5 +211,35 @@ def main(argv: Sequence[str] | None = None) -> int:
         else:
             print(_render_scan_text(result))
         return 0
+
+    if args.command == "prove":
+        try:
+            result = load_proof(args.path, args.spec_id)
+        except VerificationError as exc:
+            if args.as_json:
+                print(
+                    json.dumps(
+                        {"error": str(exc), "valid": False},
+                        sort_keys=True,
+                        ensure_ascii=False,
+                        separators=(",", ":"),
+                    ),
+                    file=sys.stderr,
+                )
+            else:
+                print(f"SpecGrain prove: FAIL\n- {exc}", file=sys.stderr)
+            return 1
+        if args.as_json:
+            print(
+                json.dumps(
+                    result.to_dict(),
+                    sort_keys=True,
+                    ensure_ascii=False,
+                    separators=(",", ":"),
+                )
+            )
+        else:
+            print(_render_proof_text(result))
+        return 0 if result.verified else 1
 
     raise AssertionError(f"unhandled command {args.command!r}")
