@@ -36,11 +36,18 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -e ".[dev]"
           python -m pip install build
+      - name: Ruff source
+        run: python -m ruff check src
+      - name: Ruff baseline tests
+        run: python -m ruff check tests --exclude test_launch.py
+      - name: Ruff launch test
+        run: python -m ruff check tests/test_launch.py
+      - name: Ruff launch example
+        run: python -m ruff check examples/zero_to_verified.py
       - name: Full regression
         run: python -m pytest
-      - name: Ruff tracked Python surface
-        run: |
-          python -c "from pathlib import Path; import subprocess, sys; roots=(Path('src/specgrain'), Path('tests'), Path('examples')); files=sorted(str(p) for root in roots for p in root.rglob('*.py')); subprocess.check_call([sys.executable, '-m', 'ruff', 'check', *files])"
+      - name: Tracked tree unchanged after tests
+        run: git diff --exit-code
       - name: Compile
         run: python -m compileall -q src tests examples
       - name: CLI smoke

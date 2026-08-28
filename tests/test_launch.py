@@ -21,12 +21,17 @@ def test_permanent_ci_covers_supported_launch_platforms() -> None:
         assert runner in workflow
     for version in ('python: "3.11"', 'python: "3.12"', 'python: "3.13"'):
         assert version in workflow
-    assert "python -m pytest" in workflow
-    assert "Ruff tracked Python surface" in workflow
-    for root in ("src/specgrain", "tests", "examples"):
-        assert f"Path('{root}')" in workflow
-    assert "python -m build" in workflow
-    assert "--force-reinstall" in workflow
+    for command in (
+        "python -m ruff check src",
+        "python -m ruff check tests --exclude test_launch.py",
+        "python -m ruff check tests/test_launch.py",
+        "python -m ruff check examples/zero_to_verified.py",
+        "python -m pytest",
+        "git diff --exit-code",
+        "python -m build",
+        "--force-reinstall",
+    ):
+        assert command in workflow
 
 
 def test_release_workflow_is_post_ci_and_immutable() -> None:
