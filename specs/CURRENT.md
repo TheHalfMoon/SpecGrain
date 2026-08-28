@@ -2,27 +2,22 @@
 
 **Repository:** `TheHalfMoon/SpecGrain`  
 **Canonical branch:** `main`  
-**Last verified canonical main:** `b37ea3a06f86d68cb220ec1cd6cc57e71e76653f`  
-**Closed specification:** `specs/014-agent-adapters/` — `CLOSED_CANONICAL`  
-**Active specification:** `specs/015-specgrain-bench/`  
-**Active branch:** `feat/015-specgrain-bench`  
-**Active status:** `PR_READY`
+**Last verified canonical main:** `001a70fcabff497c565fa7339381c4da0b4a3881`  
+**Closed specification:** `specs/015-specgrain-bench/` — `CLOSED_CANONICAL`  
+**Active specification:** `specs/016-public-launch/`  
+**Active branch:** `feat/016-public-launch`  
+**Active status:** `SHAPED`
 
-## Canonical 014 closeout evidence
+## Canonical 015 closeout evidence
 
-Specification 014 closed through PR #16. Final reviewed PR head `35db1bb8a078a68f412def8b50fa4f4e65b7afe5` was merged with expected-head protection into canonical merge commit `b37ea3a06f86d68cb220ec1cd6cc57e71e76653f`; the merge commit's second parent is the exact reviewed head.
+Specification 015 closed through PR #17. Final reviewed PR head `14e3d7e6a301148e0a25c2e98134fe8a6c573b54` was merged with expected-head protection into canonical merge commit `001a70fcabff497c565fa7339381c4da0b4a3881`; the merge commit's second parent is the exact reviewed head.
 
-## 015 exact product evidence
+GitHub Actions verification-only run `33196205039` on byte-identical product/test blobs completed successfully with full pytest regression, changed-surface/baseline/full Ruff checks, compileall, install, entry-point parity, and line-length gates.
 
-Product commit: `7548becacb65b890fdfafc3dc4789fee215172fd`.
+## Active 016 boundary
 
-```text
-src/specgrain/benchmark.py        d118e7879691bd6b24541d37f84cd513903f95e5
-tests/test_benchmark.py           73bf295f130539e1a3d23e652fc9e2a457b6d8c2
-```
-
-Verification-only commit `7ce70d65c90b64fb3bd6f6250d8cf01d47666fab` preserved those exact blobs. GitHub Actions run `33196205039` completed successfully with full pytest regression, changed-surface/baseline/full Ruff checks, compileall, install, entry-point parity, and line-length gates all PASS.
+Specification 016 ships the first truthful public release. It must not add fake orchestration commands merely to match the aspirational launch demo, publish fabricated benchmark comparisons, or grow runtime dependencies without necessity. Release closure requires exact product merge evidence plus live `v0.1.0` tag/GitHub Release evidence.
 
 ## Immediate ordering
 
-Open the bounded 015 PR at the current documentation head, resolve every material exact-head review defect, merge only with expected-head evidence, prove canonical `main`, then begin 016 Public Launch immediately.
+Implement the bounded launch surface, verify permanent Linux/macOS/Windows CI and packaging on the exact PR head, merge with expected-head evidence, create `v0.1.0`, then perform a documentation-only release closeout and prove the final canonical state.
