@@ -9,21 +9,21 @@
 
 ## Implementation
 
-- [ ] T005 Add repository scan records/errors/limits and canonical map digest.
-- [ ] T006 Implement deterministic bounded traversal, ignore rules, and symlink non-following.
-- [ ] T007 Implement manifest/language/test/config/component signals.
-- [ ] T008 Implement bounded dependency extraction for pyproject/package/Cargo/go manifests.
-- [ ] T009 Implement safe ordinary/indirect/absent Git facts without subprocesses.
-- [ ] T010 Add `specgrain scan [PATH] [--json]` and bounded exports.
+- [x] T005 Add repository scan records/errors/limits and canonical map digest.
+- [x] T006 Implement deterministic bounded traversal, ignore rules, and symlink non-following.
+- [x] T007 Implement manifest/language/test/config/component signals.
+- [x] T008 Implement bounded dependency extraction for pyproject/package/Cargo/go manifests.
+- [x] T009 Implement safe ordinary/indirect/absent Git facts without subprocesses.
+- [x] T010 Add `specgrain scan [PATH] [--json]` and bounded exports.
 
 ## Verification
 
-- [ ] T011 Add traversal/limit/symlink/determinism tests.
-- [ ] T012 Add manifest/dependency/language/test/config/component tests.
-- [ ] T013 Add Git facts/digest/no-mutation/no-environment-leak tests.
-- [ ] T014 Add CLI text/JSON/error tests.
-- [ ] T015 Run all 001–007 tests plus compile/package/smoke and available lint/static checks.
-- [ ] T016 Review exact uploaded diff for semantic indexing, subprocess, mutation, context, evidence, scheduler, or dependency creep.
+- [x] T011 Add traversal/limit/symlink/determinism tests.
+- [x] T012 Add manifest/dependency/language/test/config/component tests.
+- [x] T013 Add Git facts/digest/no-mutation/no-environment-leak tests.
+- [x] T014 Add CLI text/JSON/error tests.
+- [x] T015 Run all 001–007 tests plus compile/package/smoke and available lint/static checks.
+- [x] T016 Review exact uploaded diff for semantic indexing, subprocess, mutation, context, evidence, scheduler, or dependency creep.
 
 ## PR closeout
 
