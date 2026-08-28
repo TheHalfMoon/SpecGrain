@@ -9,18 +9,18 @@
 
 ## Implementation
 
-- [ ] T005 Add immutable profile/name/issue/report contracts.
-- [ ] T006 Implement deterministic profile metadata/evidence evaluation.
-- [ ] T007 Add method-aware readiness composition over the existing 004 report.
-- [ ] T008 Add bounded public exports without CLI/lifecycle/store changes.
+- [x] T005 Add immutable profile/name/issue/report contracts.
+- [x] T006 Implement deterministic profile metadata/evidence evaluation.
+- [x] T007 Add method-aware readiness composition over the existing 004 report.
+- [x] T008 Add bounded public exports without CLI/lifecycle/store changes.
 
 ## Verification
 
-- [ ] T009 Test quick compatibility and canonical names.
-- [ ] T010 Test each non-quick profile pass/failure behavior.
-- [ ] T011 Test method-aware readiness composition and evidence reuse.
-- [ ] T012 Run all 001–011 tests plus compile/package/entry-point and available static checks.
-- [ ] T013 Review exact uploaded diff for ceremony, lifecycle, verification, provider, CLI, or dependency creep.
+- [x] T009 Test quick compatibility and canonical names.
+- [x] T010 Test each non-quick profile pass/failure behavior.
+- [x] T011 Test method-aware readiness composition and evidence reuse.
+- [x] T012 Run all 001–011 tests plus compile/package/entry-point and available static checks.
+- [x] T013 Review exact uploaded diff for ceremony, lifecycle, verification, provider, CLI, or dependency creep.
 
 ## PR closeout
 
