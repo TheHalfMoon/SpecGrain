@@ -2,41 +2,50 @@
 
 **Repository:** `TheHalfMoon/SpecGrain`  
 **Canonical branch:** `main`  
-**Last verified canonical main:** `2c3d87bd95f57286f494adbd84c58c8cd877bfd6`  
-**Closed specification:** `specs/002-lifecycle-state/` — `CLOSED_CANONICAL`  
-**Active specification:** `specs/003-refinement-tree/`  
-**Active branch:** `feat/003-refinement-tree`  
-**Active status:** `REMEDIATED_PR_REVIEW_PENDING`
+**Last verified canonical main:** `7f4682f88dd9988f12f2a466c071beb67d660a2d`  
+**Closed specification:** `specs/003-refinement-tree/` — `CLOSED_CANONICAL`  
+**Active specification:** `specs/004-grain-readiness/`  
+**Active branch:** `feat/004-grain-readiness`  
+**Active status:** `CONTRACT_REMEDIATED_PR_REVIEW_PENDING`
 
 ## Current objective
 
-Close deterministic parent/child refinement-forest validation after the exact-head cycle-coverage remediation, then begin `004-grain-readiness`.
+Close Grain readiness through fresh exact-head review after clarifying that readiness evaluation is not reusable lifecycle authority.
 
-## Implemented scope
+## Implemented readiness-v1 boundary
 
-- structured refinement issue codes;
-- duplicate-ID fail-closed behavior;
-- missing/self parent-child validation;
-- reciprocal parent/child consistency;
-- cycle detection across the union of resolvable `parent_id` and `children` declarations;
-- deterministic valid root query;
-- no runtime dependencies.
+A candidate must be a structurally valid REFINING leaf with:
+
+- acceptance criteria;
+- bounded `scope_in`;
+- authorized `change_surface` or explicit exception;
+- risk level + recovery declaration;
+- context token estimate within declared budget;
+- named required evidence;
+- explicit empty unresolved-decision list;
+- explicit minimality choice + rationale;
+- explicit safety status + consistent requirements.
+
+The readiness declaration lives in content-significant `metadata.readiness` and is versioned independently as readiness v1.
 
 ## Verification front
 
-- pytest after remediation: **116 passed**;
+- pytest: **182 passed** (116 existing + 66 readiness tests);
 - compileall: **PASS**;
 - Ruff: **NOT RUN — unavailable locally**.
 
-## Explicit scope boundary
+The F-001 remediation after this test run changes documentation/contracts only; product source and tests are unchanged. See `specs/004-grain-readiness/verification.md` and `review.md`.
 
-003 does not judge semantic decomposition quality, acceptance coverage, minimality, Grain readiness, dependency DAG ordering, execution scheduling, CLI/store behavior, or AI refinement.
+## Trust boundary
+
+004 verifies deterministic authored readiness content for supplied inputs. A report is not a durable transition token. Any future lifecycle mutator must re-read current candidate/current forest, re-evaluate readiness, and verify current state remains `REFINING` immediately before the write under its own concurrency/precondition rules.
+
+004 does not prove repository reuse claims, compute context-source sizes, validate dependency DAGs, run evidence, apply method-specific policies, or persist/mutate lifecycle state.
 
 ## Immediate ordering
 
-1. Push the F-001 remediation to PR #5.
+1. Commit the F-001 contract remediation to PR #6.
 2. Re-run exact-head external/repository checks.
 3. Resolve every remaining material defect.
-4. Merge only with expected-head evidence.
-5. Re-read canonical `main`.
-6. Begin `004-grain-readiness`, where donor-derived success-criteria/minimality/safety-floor requirements become active.
+4. Merge only with expected-head guard.
+5. Re-read canonical `main` and begin `005-cli-local-store`.
