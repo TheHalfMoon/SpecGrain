@@ -135,7 +135,7 @@ It should include:
 - acceptance results;
 - test/static-check results;
 - scope-compliance result;
-- provenance checks where applicable;
+- provenance checks;
 - residual risks;
 - evidence artifact digests;
 - final verification decision.
