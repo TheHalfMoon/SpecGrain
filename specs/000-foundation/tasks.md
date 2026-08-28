@@ -34,7 +34,9 @@ Tasks are ordered. Do not begin implementation work from later roadmap milestone
 ## Closeout gates
 
 - [x] T018 Run cross-document consistency and gap review on branch head `bae1df316dd0f143c96f7f21cd6f9bff5efe1bdf`.
-- [x] T019 Reconcile the material foundation defects found by T018: split the oversized next spec and clarify bootstrap/runtime separation.
-- [ ] T020 Open and review the bounded foundation PR on its exact final head.
-- [ ] T021 Merge only after exact-head review evidence is satisfactory.
-- [ ] T022 Re-read canonical `main`, update `specs/CURRENT.md`, and start `001-specnode-schema`.
+- [x] T019 Reconcile material foundation defects: split the oversized next spec, clarify bootstrap/runtime separation, and remove stale next-spec references.
+- [x] T020 Review PR #1 on exact final head `b60dce727575b632640d0bb47721fa74ee67c114`; no unresolved review threads remained and CodeRabbit completed successfully.
+- [x] T021 Merge PR #1 with expected-head guard; canonical merge commit is `36dcaee3298c4edbb938bb5ded5ba750523923b8`.
+- [x] T022 Re-read canonical `main`, update `specs/CURRENT.md`, and start `001-specnode-schema` on `feat/001-specnode-schema`.
+
+**Result:** `CLOSED_CANONICAL` at merge commit `36dcaee3298c4edbb938bb5ded5ba750523923b8`.
