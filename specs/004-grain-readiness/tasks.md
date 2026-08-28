@@ -29,5 +29,7 @@
 ## PR closeout
 
 - [x] T018 Open bounded implementation PR #6 with exact-head evidence.
-- [ ] T019 Resolve all exact-head external/repository review defects on the remediated head.
-- [ ] T020 Merge only with expected-head evidence, re-read canonical `main`, then begin `005-cli-local-store`.
+- [x] T019 Remediate F-001 at final head `11e43617590aca0e61b73f00e53e3783aff4f4ad`; CodeRabbit SUCCESS, no unresolved review threads, remediation docs-only, and exact-head internal review recorded as COMMENT because GitHub forbids self-approval.
+- [x] T020 Merge PR #6 with expected-head guard; canonical merge commit is `2a719a8ed2a7c22c0f65402c95361b32b230b511`, then re-read canonical `main` before beginning 005.
+
+**Result:** `CLOSED_CANONICAL` at merge commit `2a719a8ed2a7c22c0f65402c95361b32b230b511`.

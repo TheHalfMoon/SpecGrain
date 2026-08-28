@@ -73,37 +73,41 @@ AI may suggest values, but core validation decides whether they are acceptable.
 
 ## 2. Storage
 
-Initial design is repository-local and file-based.
+Initial product state is repository-local and file-based.
 
-Proposed project state:
+Specification 005 defines store v1 as:
 
 ```text
 .specgrain/
-  project.yaml
+  project.json
   specs/
-    SG-0001.yaml
-    SG-0002.yaml
-  evidence/
-    SG-0002/
-      <run-id>.json
+    SG-000001.json
+    SG-000002.json
   policies/
-    default.yaml
+    default.json
 ```
 
-Runtime caches and temporary run data are not canonical and should remain untracked.
+Evidence directories are added only when Specification 010 defines their canonical contract. Runtime caches and temporary run data are not canonical and should remain untracked.
 
-The canonical format should be stable, machine-readable, diff-friendly, and editable without a server. YAML is preferred for authored state; canonical hashes should be computed from normalized data, not raw whitespace.
+JSON v1 is the canonical M2 store format because it is available in the Python standard library, maps directly onto `SpecNode` data, and permits strict duplicate-key/non-finite-number rejection without adding a runtime dependency. Canonical semantic hashes remain computed from normalized data, not raw whitespace.
+
+YAML may later be supported as an import/export or authored-format adapter if evidence justifies it, but it must not silently replace or weaken the versioned store contract. See `docs/adr/0005-dependency-free-json-store.md`.
 
 ## 3. CLI
 
-Initial command surface should remain small:
+The command surface grows progressively. Specification 005 implements only:
 
 ```text
 specgrain init
+specgrain check
+```
+
+Planned later commands, activated only by their owning specifications, include:
+
+```text
 specgrain scan
 specgrain ask
 specgrain refine
-specgrain check
 specgrain graph
 specgrain next
 specgrain packet
@@ -112,21 +116,19 @@ specgrain prove
 specgrain diff
 ```
 
-`run` may be added when the portable packet/result boundary is stable. The first release should not embed many vendor-specific executors.
+`run` may be added when the portable packet/result boundary is stable. The first releases should not embed many vendor-specific executors.
 
 ## 4. Python implementation
 
 Initial implementation target:
 
 - Python 3.11+;
-- Typer for CLI;
-- Rich for terminal presentation;
-- Pydantic for model validation if dependency cost remains justified;
-- PyYAML for authored state;
+- standard-library deterministic core wherever sufficient;
+- `argparse` + `json` + `pathlib` for Specification 005;
 - pytest for tests;
-- ruff and a static type checker for quality gates.
+- ruff and a static type checker as development quality gates when available.
 
-The core should avoid a heavy graph dependency unless profiling or complexity justifies one. DAG algorithms required for early releases are small and testable.
+Typer, Rich, Pydantic, PyYAML, and graph libraries are not architectural requirements. They may be adopted later only when a bounded problem justifies their dependency cost. The core should avoid a heavy graph dependency unless profiling or complexity demonstrates a need.
 
 ## 5. Repository intelligence
 
@@ -199,6 +201,8 @@ A verifier may use AI for semantic review, but AI-only evidence cannot silently 
 - Never execute arbitrary repository commands merely because a spec requests them.
 - Execution adapters must make command authority explicit.
 - Treat imported specs and external repository content as untrusted data.
+- Canonical local-store readers must reject path escape and symlink ambiguity instead of following untrusted store links.
 - Avoid shell interpolation in core subprocess boundaries.
-- Evidence records should be append-oriented and digest-bound.
+- Evidence records should be append-oriented and digest-bound once Specification 010 owns that contract.
 - Secrets and environment files must not be captured into work packets or evidence by default.
+- A readiness report is not reusable lifecycle mutation authority; future state writes must re-evaluate current preconditions at the mutation boundary.
