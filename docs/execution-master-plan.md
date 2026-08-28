@@ -1,280 +1,96 @@
 # SpecGrain Execution Master Plan
 
-This document is the durable program-level continuation plan for SpecGrain. It exists so a fresh human or AI session can continue from repository truth without depending on chat history.
-
-`specs/CURRENT.md` is authoritative for the active execution frontier. Live GitHub state overrides stale text in this file when they disagree.
+This document is the durable continuation plan for SpecGrain. `specs/CURRENT.md` is authoritative for the active frontier, and live GitHub state overrides stale text when they disagree.
 
 ## Canonical reading order
 
 Before changing the repository, read:
 
-1. `AGENTS.md`
-2. `specs/CURRENT.md`
-3. `.specify/memory/constitution.md`
-4. `docs/execution-master-plan.md`
-5. the active specification's `spec.md`
-6. the active specification's `plan.md`
-7. the active specification's `tasks.md`
-8. referenced ADRs, contracts, research notes, and implementation files
-
-Also consult `docs/roadmap.md` for milestone-level sequencing.
+1. `AGENTS.md`;
+2. `specs/CURRENT.md`;
+3. `.specify/memory/constitution.md`;
+4. this file;
+5. the active `spec.md`, `plan.md`, and `tasks.md`;
+6. referenced ADRs, contracts, research, and implementation files.
 
 ## Product objective
 
-SpecGrain is an independent, agent-neutral software-delivery system built around recursively refined specifications. A specification is refined until a leaf is small enough to become a Grain: one bounded, understandable, context-safe, independently verifiable unit of delivery.
-
-The product is not a GitHub Spec Kit fork and must not regress into a large prompt/template framework. Spec Kit is an upstream influence and compatibility target. Ponytail and Karpathy-inspired skills are planning/design donors. Their useful principles are converted into deterministic or measurable SpecGrain contracts where possible.
-
-Core thesis:
-
 > Make every software change small enough to understand, execute, verify, recover, measure, and prove.
 
-## Durable architecture
+SpecGrain is an independent, agent-neutral delivery system built around recursively refined specifications. A specification is refined until a leaf satisfies the deterministic Definition of Grain. Probabilistic systems may propose work; they are never the sole authority for correctness-sensitive state transitions.
 
-The program develops progressively through these capabilities:
+## Canonical program sequence
 
 ```text
-Recursive SpecNode model
-        ↓
-Lifecycle state
-        ↓
-Refinement tree
-        ↓
-Grain readiness
-        ↓
-Local store + CLI
-        ↓
-Dependency DAG + eligibility
-        ↓
-Brownfield repository map
-        ↓
-Context budget
-        ↓
-Portable WorkPacket
-        ↓
-Independent verification + evidence
-        ↓
-Adaptive method profiles
-        ↓
-Diff / drift / metrics
-        ↓
-Spec Kit migration + agent adapters
-        ↓
-SpecGrainBench + public launch
+001 SpecNode schema
+  -> 002 lifecycle state
+  -> 003 refinement tree
+  -> 004 Grain readiness
+  -> 005 CLI/local store
+  -> 006 dependency graph
+  -> 007 repository scan
+  -> 008 context budget
+  -> 009 WorkPacket
+  -> 010 verification/evidence
+  -> 011 method profiles
+  -> 012 diff/drift/metrics
+  -> 013 Spec Kit import
+  -> 014 agent adapters
+  -> 015 SpecGrainBench
+  -> 016 public launch
 ```
 
-The deterministic kernel owns schema, lifecycle legality, structural validation, readiness rules, dependency validation, context budgets, evidence binding, and state-transition preconditions. Probabilistic systems may propose work but cannot silently become authority.
+Specification 000 established the project foundation and constitution.
 
-## Completed program frontier
+## Completed frontier
 
-Specifications `000` through `007` are closed canonically on `main`.
+Specifications 000 through 015 are closed canonically on `main`.
 
-Current verified canonical `main` at the time this plan was refreshed:
+The post-015 canonical baseline is:
 
-`197ddfb68d94bf8998d68d1371c26431f3816ca0`
+`001a70fcabff497c565fa7339381c4da0b4a3881`
 
-This is the merge of PR #9 for Specification 007. The merge commit's second parent is final reviewed PR head `35571d5cdcbe441b04a8e975c5eb6be0fe088698`.
+This is the merge of PR #17. Its second parent is exact reviewed PR head `14e3d7e6a301148e0a25c2e98134fe8a6c573b54`.
 
-Completed capabilities include:
+Completed capabilities include recursive/versioned specs, lifecycle/refinement/readiness validation, local state, dependency scheduling, brownfield scanning, context budgets, portable WorkPackets/results, independent evidence, method profiles, drift/metrics, Spec Kit import, generic agent adapters, and benchmark comparability controls.
 
-- project constitution, domain model, architecture, donor policy, benchmark strategy, launch strategy, and roadmap;
-- immutable/versioned SpecNode schema and deterministic digest;
-- lifecycle legality separated from transition authorization;
-- deterministic recursive refinement validation;
-- deterministic Grain readiness gates;
-- dependency-free JSON local store;
-- `specgrain init` and `specgrain check`;
-- dependency graph validation, transitive blockers, eligible Grain computation, advisory dependency-only waves;
-- `specgrain next`;
-- deterministic bounded brownfield repository map and `specgrain scan`.
+## Active frontier — 016 Public Launch
 
-## Active frontier — 008 Context Budget
+Active branch: `feat/016-public-launch`.
 
-Active branch:
+Read `specs/016-public-launch/spec.md`, `plan.md`, `tasks.md`, and ADR-0016 before acting.
 
-`feat/008-context-budget`
+016 must ship:
 
-Read `specs/008-context-budget/spec.md`, `plan.md`, `tasks.md`, and ADR-0008 before implementing.
+- versioned installable `0.1.0` package;
+- permanent Linux/macOS/Windows CI;
+- truthful README and runnable zero-to-verified example;
+- pinned brownfield examples;
+- Spec Kit migration and benchmark reports;
+- contribution/security/trust/conduct surfaces;
+- release notes and launch assets;
+- tag `v0.1.0` and a GitHub Release;
+- exact post-release canonical closeout.
 
-### 008 outcome
-
-Build a deterministic revision-bound context plan without loading arbitrary repository content into the control plane, executing a tokenizer, or letting optional context hide required-context overflow.
-
-Context Budget v1 owns:
-
-- immutable source records with provenance, selection reason, revision, byte size, explicit token cost, requirement class, and priority;
-- token/byte/source-count policy ceilings;
-- required-context non-omission and explainable overflow blockers;
-- deterministic optional packing by `(priority, source_id)`;
-- normalized context-plan digest;
-- repository-map source integration bound to the 007 normalized map digest.
-
-It must not retrieve arbitrary file contents, execute a tokenizer/LLM/embedding service, mutate lifecycle/store state, alter dependency scheduling, construct WorkPackets/evidence, or add a runtime dependency.
-
-### 008 execution rule
-
-`token_cost` is an explicit revision-bound accounting input. The deterministic kernel validates and sums it but does not pretend to know a model-specific tokenization. Required sources are never dropped to make a plan fit. Optional sources may be omitted only through the canonical deterministic packing rule.
-
-## Remaining program sequence
-
-The sequence below is canonical at milestone level. Per repository planning rules, only the nearest work should be refined to implementation detail; distant work remains deliberately coarse until its dependencies are real.
-
-### 009 — Work Packet
-
-Implement immutable digest-bound WorkPackets and a generic structured execution-result contract.
-
-Packets must carry outcome, acceptance/success criteria, authorized change surface, decisions/assumptions, dependencies, context records, reuse/minimality evidence, risk/recovery requirements, and required evidence. They must not depend on giant vendor-specific prompt text.
-
-Exit: a human or external agent can receive the complete authorized Grain boundary through a portable data contract.
-
-### 010 — Verification and Evidence
-
-Implement independent verification and append-oriented evidence semantics.
-
-Required capabilities include:
-
-- exact SpecNode revision binding;
-- exact implementation/result binding;
-- acceptance/check evidence;
-- changed-scope verification;
-- detection of unscoped/drive-by changes;
-- evidence records and deterministic `prove` output;
-- executor self-report treated as input, never sufficient authority.
-
-Exit: executor assertion alone cannot create `VERIFIED`.
-
-**Specification 010 closes the first complete MVP vertical slice.**
-
-### 011 — Method Profiles
-
-Add incremental delivery-control profiles rather than ceremony-heavy project-management frameworks:
-
-- `quick`;
-- `dmaic-lite`;
-- `dmadv-lite`;
-- `experiment`;
-- `controlled`.
-
-Profiles add bounded readiness/evidence requirements and must remain composable with the deterministic kernel.
-
-### 012 — Diff, Drift, and Metrics
-
-Implement spec-aware delivery control and useful measurements:
-
-- authorized change-surface diff;
-- spec/repository drift signals;
-- first-pass verification rate;
-- rework ratio;
-- Grain cycle time;
-- context efficiency;
-- change-scope accuracy;
-- unnecessary-change / overproduction signals.
-
-Metrics must be reproducible and should not create process theater.
-
-### 013 — Spec Kit Import
-
-Implement explicit migration from relevant GitHub Spec Kit artifacts.
-
-Preserve useful constitution, technical-context, dependency, and independent-testability information. Produce conversion reports and reject silent data loss. Do not import a mandatory flat `tasks.md` ontology into the SpecGrain core.
-
-### 014 — Agent Adapters
-
-Keep the generic WorkPacket/result protocol canonical. Add thin selected agent integrations only where real use justifies them. Providers and agents are adapters, never the delivery process itself.
-
-### 015 — SpecGrainBench
-
-Build public reproducible comparisons using isolated workspaces and fresh contexts.
-
-Initial comparison arms:
-
-- prompt-only development;
-- GitHub Spec Kit;
-- SpecGrain.
-
-Add other systems only when fair automation is possible.
-
-Benchmark requirements include:
-
-- identical repository/task baselines;
-- contamination preflight;
-- fresh isolated workspace/context per arm;
-- repeated probabilistic runs where appropriate;
-- correctness and acceptance results;
-- tokens/context cost;
-- cycle time;
-- retries/rework;
-- regression rate;
-- change size/scope accuracy;
-- human interventions;
-- safety/adversarial cases where relevant;
-- publication of unfavorable results as well as wins.
-
-See `docs/benchmark-strategy.md` and `docs/research/planning-donor-synthesis-2026-08-28.md`.
-
-### 016 — Public Launch
-
-Ship the complete open-source launch surface:
-
-- installable versioned release;
-- README that demonstrates the product in under one minute;
-- zero-to-verified example;
-- real brownfield examples;
-- Spec Kit migration guide;
-- benchmark report;
-- contribution guide;
-- security/trust documentation;
-- architecture/methodology docs;
-- release notes and launch assets.
-
-The launch claim must be evidence-based. Do not invent benchmark advantages or claim competitors are obsolete without reproducible proof.
+No empirical benchmark winner may be claimed without a reproducible completed dataset. No aspirational CLI command may be presented as shipped behavior.
 
 ## Cross-spec execution rules
 
-These rules apply through the rest of the project:
-
 1. Live GitHub/repository truth overrides chat handoffs.
-2. No force-push, rebase, or destructive history rewriting.
+2. No force-push, rebase, or destructive shared-history rewriting.
 3. Use bounded feature branches and pull requests.
-4. Before merging, verify the exact PR head, checks/statuses, review threads, and manual scope review.
-5. Merge with an expected-head guard where available.
+4. Verify exact PR head, checks, threads, and scope before merge.
+5. Merge with expected-head protection where available.
 6. Never claim PASS, VERIFIED, MERGED, COMPLETE, or CLOSED_CANONICAL without exact evidence.
-7. Re-read canonical `main` after every merge before starting dependent work.
-8. Prefer smaller native implementations over dependencies or abstractions without demonstrated need.
-9. Every changed line should trace to the active bounded outcome.
-10. Do not turn donor advice into optional prompt prose when it can become a deterministic/measurable contract.
-11. Do not execute untrusted repository commands merely to understand a brownfield project.
-12. Do not let AI reasoning transcripts become repository authority.
-13. Preserve explicit residual risks and blockers instead of hiding them behind green tests.
-14. Refine near-term work deeply; do not generate stale implementation-level task lists for distant milestones.
+7. Re-read canonical `main` after every merge.
+8. Prefer smaller native implementations over dependencies without demonstrated need.
+9. Do not execute untrusted repository commands merely to inspect a brownfield project.
+10. Do not make AI reasoning transcripts repository authority.
+11. Preserve residual risks and blockers.
+12. External ideas/code require license-aware provenance.
 
-## Planning and research references
+## Completion rule
 
-The full program is intentionally distributed across specialized canonical documents rather than duplicated into one giant spec. Key references:
+016 is the final planned specification in this program sequence. The program is complete only after the product PR merges, `v0.1.0` is published at the exact release commit, and a post-release documentation-only closeout leaves `specs/CURRENT.md` at `CLOSED_CANONICAL` with no next planned specification.
 
-- `docs/roadmap.md` — milestone sequence and exit points;
-- `docs/product-thesis.md` — product/category thesis;
-- `docs/domain-model.md` — recursive specification model;
-- `docs/architecture.md` — system boundaries;
-- `docs/methodology.md` — Agile/Lean/PMP/Six-Sigma-inspired operating model;
-- `docs/donor-policy.md` — provenance and external-project usage;
-- `docs/research/planning-donor-synthesis-2026-08-28.md` — Ponytail, Karpathy-inspired, and Spec Kit synthesis;
-- `docs/benchmark-strategy.md` — public proof methodology;
-- `docs/competitive-positioning.md` — differentiation boundaries;
-- `docs/launch-strategy.md` — public launch direction;
-- `docs/adr/` — durable architecture decisions;
-- `specs/<NNN-...>/` — bounded canonical implementation contracts.
-
-## Fresh-session continuation protocol
-
-A new session should not ask the founder to restate prior work. It should:
-
-1. read the canonical order above;
-2. verify live `main`, active branch, PRs, checks, and exact heads;
-3. compare repository truth with `specs/CURRENT.md`;
-4. continue the next incomplete task in the active spec;
-5. close the active spec through exact-head PR evidence;
-6. re-read canonical state and immediately begin the next eligible specification;
-7. continue until a genuine repository/governance/tooling blocker is reached.
-
-This file is a durable continuation map, not permission to bypass the active spec, task order, evidence gates, or live repository truth.
+Any subsequent feature begins a new explicitly shaped specification derived from then-current repository truth; it is not implicitly authorized by this completed sequence.

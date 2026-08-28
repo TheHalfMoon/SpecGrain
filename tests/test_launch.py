@@ -54,3 +54,47 @@ def test_zero_to_verified_example_executes() -> None:
     assert "Readiness: GRAIN" in completed.stdout
     assert "Verification: VERIFIED" in completed.stdout
     assert "Proof: VERIFIED" in completed.stdout
+
+
+def test_public_launch_surface_is_present() -> None:
+    required = (
+        "CONTRIBUTING.md",
+        "SECURITY.md",
+        "CODE_OF_CONDUCT.md",
+        "CHANGELOG.md",
+        "examples/brownfield/README.md",
+        "docs/migration-from-spec-kit.md",
+        "docs/benchmark-report-v0.1.0.md",
+        "docs/trust-model.md",
+        "docs/releases/v0.1.0.md",
+        "docs/assets/terminal-demo.svg",
+        ".github/ISSUE_TEMPLATE/bug_report.md",
+        ".github/ISSUE_TEMPLATE/feature_request.md",
+        ".github/pull_request_template.md",
+    )
+    for relative in required:
+        assert (ROOT / relative).is_file(), relative
+
+
+def test_brownfield_examples_are_pinned_without_fake_output() -> None:
+    text = (ROOT / "examples" / "brownfield" / "README.md").read_text(encoding="utf-8")
+    for revision in (
+        "672971d66a2ef9f85151e53283113f33d642dabd",
+        "22dda61ea29037ba85af25e84bc5efba77e62f44",
+        "5a82625fae462e8ba64cec8146b24a372b4d75c6",
+    ):
+        assert revision in text
+    assert "does not publish precomputed scan output" in text
+
+
+def test_benchmark_report_declares_no_empirical_winner() -> None:
+    report = (ROOT / "docs" / "benchmark-report-v0.1.0.md").read_text(encoding="utf-8")
+    assert "Empirical comparative dataset:** not yet published" in report
+    assert "Declared winner:** none" in report
+    assert "no fabricated" in report
+
+
+def test_spec_kit_guide_keeps_legacy_tasks_out_of_core() -> None:
+    guide = (ROOT / "docs" / "migration-from-spec-kit.md").read_text(encoding="utf-8")
+    assert "tasks_promoted_to_core` value is always false" in guide
+    assert "does not write `.specgrain/` state" in guide

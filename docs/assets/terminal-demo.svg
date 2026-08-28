@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="360" viewBox="0 0 920 360" role="img" aria-labelledby="title desc">
+  <title id="title">SpecGrain zero-to-verified terminal demo</title>
+  <desc id="desc">A terminal showing the runnable zero-to-verified example reaching Grain readiness and independent verification.</desc>
+  <rect width="920" height="360" rx="18" fill="#0d1117"/>
+  <circle cx="34" cy="30" r="7" fill="#ff7b72"/>
+  <circle cx="58" cy="30" r="7" fill="#d29922"/>
+  <circle cx="82" cy="30" r="7" fill="#3fb950"/>
+  <text x="34" y="78" fill="#c9d1d9" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="20">
+    <tspan x="34" dy="0">$ python examples/zero_to_verified.py</tspan>
+    <tspan x="34" dy="42">Spec: SG-000001</tspan>
+    <tspan x="34" dy="34">Readiness: GRAIN</tspan>
+    <tspan x="34" dy="34">Packet: sha256:&lt;digest&gt;</tspan>
+    <tspan x="34" dy="34">Verification: VERIFIED</tspan>
+    <tspan x="34" dy="34">Evidence: sha256:&lt;digest&gt;</tspan>
+    <tspan x="34" dy="34">Proof: VERIFIED</tspan>
+  </text>
+</svg>

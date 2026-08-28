@@ -9,25 +9,25 @@
 
 ## Release foundation
 
-- [ ] T005 Version package as 0.1.0 with truthful public metadata and zero runtime dependencies.
-- [ ] T006 Add permanent Linux/macOS/Windows CI plus build/install verification.
+- [x] T005 Version package as 0.1.0 with truthful public metadata and zero runtime dependencies.
+- [x] T006 Add permanent Linux/macOS/Windows CI plus build/install verification.
 
 ## Onboarding and examples
 
-- [ ] T007 Replace stale README with an under-one-minute real-product introduction and quickstart.
-- [ ] T008 Add runnable zero-to-verified public-API example and automated execution test.
-- [ ] T009 Add three pinned brownfield example references and reproducible scan instructions without fabricated output.
+- [x] T007 Replace stale README with an under-one-minute real-product introduction and quickstart.
+- [x] T008 Add runnable zero-to-verified public-API example and automated execution test.
+- [x] T009 Add three pinned brownfield example references and reproducible scan instructions without fabricated output.
 
 ## Migration, proof, and community
 
-- [ ] T010 Add Spec Kit migration guide tied to the implemented `import-spec-kit` contract.
-- [ ] T011 Add benchmark report that distinguishes harness verification from empirical comparative results and declares no unsupported winner.
-- [ ] T012 Add contribution, security/trust, conduct, issue/PR templates, release notes/changelog, and launch asset surfaces.
-- [ ] T013 Refresh program/launch documentation so current capabilities and deferred features are accurate.
+- [x] T010 Add Spec Kit migration guide tied to the implemented `import-spec-kit` contract.
+- [x] T011 Add benchmark report that distinguishes harness verification from empirical comparative results and declares no unsupported winner.
+- [x] T012 Add contribution, security/trust, conduct, issue/PR templates, release notes/changelog, and launch asset surfaces.
+- [x] T013 Refresh program/launch documentation so current capabilities and deferred features are accurate.
 
 ## Verification
 
-- [ ] T014 Add launch-surface tests for version, docs links/files, workflow matrix, example execution, and unsupported-claim guards.
+- [x] T014 Add launch-surface tests for version, docs links/files, workflow matrix, example execution, and unsupported-claim guards.
 - [ ] T015 Run exact full regression, Ruff, compileall, CLI help parity, package build, wheel-install smoke, and documentation/line-length checks.
 - [ ] T016 Prove permanent CI success on Linux, macOS, and Windows for the exact PR head.
 - [ ] T017 Review the exact diff for unsupported commands, fabricated output/evidence, benchmark claims, dependency creep, security regressions, and accidental source changes.
