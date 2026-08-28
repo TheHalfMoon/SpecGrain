@@ -27,6 +27,6 @@
 
 ## PR closeout
 
-- [ ] T017 Open bounded implementation PR with exact-head evidence.
-- [ ] T018 Resolve every exact-head external/repository review defect.
-- [ ] T019 Merge only with expected-head evidence, re-read canonical `main`, then begin `008-context-budget`.
+- [x] T017 Open bounded implementation PR #9 from exact branch head; final reviewed PR head was `35571d5cdcbe441b04a8e975c5eb6be0fe088698`.
+- [x] T018 Resolve exact-head defects: repository review found and repaired stale master-plan state; CodeRabbit status was success on the final head but automatic substantive review was unavailable for the repository; Qodo was unavailable because its trial ended; no review threads or material external defects remained.
+- [x] T019 Merge PR #9 with `expected_head_sha=35571d5cdcbe441b04a8e975c5eb6be0fe088698`; re-read canonical `main` at merge commit `197ddfb68d94bf8998d68d1371c26431f3816ca0`, whose second parent is the expected PR head; begin `008-context-budget`.
