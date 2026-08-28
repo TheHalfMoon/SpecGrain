@@ -93,11 +93,11 @@ Active branch:
 
 `feat/007-repository-scan`
 
-Planning commit at the time this plan was refreshed:
+Planning head used for the implementation net-diff review:
 
-`a879c0f76345dd82b9f3719831f952a25777461a`
+`b720b321510204eb463602e418dbef7fc65a077d`
 
-Read `specs/007-repository-scan/spec.md`, `plan.md`, `tasks.md`, and ADR-0007 before implementing.
+Read `specs/007-repository-scan/spec.md`, `plan.md`, `tasks.md`, `verification.md`, `review.md`, and ADR-0007 before changing this slice.
 
 ### 007 outcome
 
@@ -115,28 +115,34 @@ Repository Scan v1 owns:
 
 It must not perform AST/semantic indexing, embeddings, arbitrary content indexing, package resolution, context selection, lifecycle mutation, scheduler changes, evidence verification, or subprocess execution.
 
-### Uncommitted verified candidate at handoff
+### Exact verified PR-ready product state
 
-A local reconstructed workspace contained a 007 implementation candidate with these Git blob hashes:
+The exact reviewed product commit is:
+
+`20d36002720fe5c7183e8e7defd02451c134516f`
+
+Exact product/test blobs:
 
 ```text
-src/specgrain/repository.py      f87f14bb75af6bcbf5de383e30da4d88db02e9a5
-src/specgrain/cli.py             d80d146aafa8c909eb8daf76eb06f9b2001a7ec2
-src/specgrain/__init__.py        8fbe2faaa990831f487d26c46d56170787af22b8
-tests/test_repository.py         1a9d845080b4677efa0090f6ba1f3bb9e130a3c5
-tests/test_repository_cli.py     af781b905868179a3c6a68e20ce55582c541a561
+src/specgrain/repository.py      20d6068a53965c776b7eddd359fbdeb9960b15c8
+src/specgrain/cli.py             93614f13c01cc70cfb55c0dd2e9e1dda463c09cb
+src/specgrain/__init__.py        2bcff16c1db87a564a96f45054d233f4646f0b10
+tests/test_repository.py         4ce1600e1d1fe126f5e4e04a9639fbef649bc8a9
+tests/test_repository_cli.py     5f6922be235b2c746a6e6ce813d5a7d5c2b4b95b
 ```
 
-Local evidence for that candidate:
+Verification for those exact uploaded bytes:
 
-- 304 tests collected / PASS;
+- 304 pytest tests PASS;
 - `compileall` PASS;
 - editable install PASS;
 - console/module help parity PASS;
 - 0 changed source/test lines over 100 characters;
-- Ruff NOT RUN because it was unavailable/offline.
+- Ruff NOT RUN because it is unavailable in the execution environment.
 
-These bytes were **not committed to GitHub** when this execution plan was refreshed. They are continuation evidence only, not canonical repository state. A new session must re-read the live branch and either recover/reproduce those exact bytes or implement 007 from the canonical spec. Never claim 007 COMPLETE, MERGED, or CLOSED_CANONICAL from this local evidence alone.
+The exact-diff review repaired the selected-manifest/Git metadata bounded-read race before the PR-ready state. The net implementation diff from the planning head contains only the five planned implementation/test files.
+
+PR #9 is the bounded closeout PR for 007. Its live exact head, statuses, reviews, threads, and mergeability MUST be re-read from GitHub before any merge because documentation/review commits may move the head after the product commit above. Never infer `MERGED` or `CLOSED_CANONICAL` from the product verification alone.
 
 ## Remaining program sequence
 
