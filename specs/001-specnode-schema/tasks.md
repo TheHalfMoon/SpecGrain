@@ -26,13 +26,13 @@ Tasks are intentionally small and ordered.
 
 - [x] T012 Add focused unit tests for ID/string/duplicate validation.
 - [x] T013 Add mutation-isolation and nested JSON-safety tests.
-- [x] T014 Add canonical ordering, Unicode, round-trip, and schema-version tests.
+- [x] T014 Add canonical ordering, Unicode, round-trip, schema-version, and golden-vector tests.
 - [x] T015 Add digest equivalence/difference tests, including state exclusion.
-- [x] T016 Run available local verification: 23 pytest tests PASS, compileall PASS, digest seed smoke PASS; ruff explicitly NOT RUN because unavailable. See `verification.md`.
+- [x] T016 Run available local verification: 24 pytest tests PASS, compileall PASS, digest seed smoke PASS, golden vector PASS; ruff explicitly NOT RUN because unavailable. See `verification.md`.
 - [ ] T017 Review exact branch diff against 001 scope and confirm no lifecycle/graph/CLI/readiness creep.
 
 ## PR closeout
 
-- [ ] T018 Open bounded implementation PR with exact test evidence and no unsupported completion claims.
+- [x] T018 Open bounded implementation PR #2 with exact test evidence and no unsupported completion claims.
 - [ ] T019 Resolve all exact-head review/check defects.
 - [ ] T020 Merge only with expected-head evidence, then re-read canonical `main` before `002-lifecycle-state`.

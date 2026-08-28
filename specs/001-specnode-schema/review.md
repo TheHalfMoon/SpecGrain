@@ -18,11 +18,21 @@ The initial implementation hashed normalized semantic content but did not encode
 
 **Resolution:** add public `SPECNODE_SCHEMA_VERSION = 1`, persist `schema_version` on every SpecNode, reject unsupported versions, and include the version in canonical semantic content and the revision digest.
 
+### F-002 — Generic JSON settings did not provide byte-level interoperability evidence
+
+**Severity:** material  
+**Status:** remediated
+
+`json.dumps(sort_keys=True, ...)` is deterministic for the tested Python implementation but the digest is a trust primitive that may later be reproduced by other runtimes. Generic JSON serializer settings alone do not prove identical bytes, especially for numeric rendering.
+
+**Resolution:** define schema-v1 canonicalization as a byte-level contract and add a golden vector that includes set-like ordering, nested list/object data, Unicode, and finite floating-point rendering. Any compatible implementation must reproduce the exact bytes and SHA-256. A change to those bytes requires a future schema-version change.
+
 ## Re-verification after remediation
 
-- pytest: **23 passed**;
+- pytest: **24 passed**;
 - `compileall`: **PASS**;
 - cross-process hash-seed smoke: **PASS** with identical digest for `PYTHONHASHSEED=1` and `777`;
+- golden canonical JSON vector: **PASS** with digest `sha256:30ce9cd0616d9d5ed87e181265b73f8fad61e8dd5a1b3309a8f3f8b61a357b1c`;
 - ruff: **NOT RUN** because the tool is unavailable in the local execution environment.
 
 A fresh exact-head GitHub diff review and repository checks are still required before merge.

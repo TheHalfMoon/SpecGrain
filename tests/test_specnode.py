@@ -179,3 +179,29 @@ def test_schema_version_is_explicit_and_digest_significant() -> None:
 def test_unsupported_schema_version_is_rejected(value: object) -> None:
     with pytest.raises(SpecValidationError, match="schema_version|unsupported"):
         make_node(schema_version=value)
+
+
+def test_canonical_json_v1_golden_vector() -> None:
+    node = SpecNode(
+        id="SG-000123",
+        title="Canonical ✓",
+        outcome="Stable bytes",
+        scope_in=("z", "a"),
+        acceptance=("second", "first"),
+        risk={"z": 1e-7, "a": 1.25},
+        metadata={"note": "café — 東京", "steps": ["b", "a"]},
+        state="READY",
+    )
+    expected = (
+        '{"acceptance":["first","second"],"change_surface":[],"children":[],'
+        '"context":{},"dependencies":[],"evidence":{},"id":"SG-000123","labels":[],'
+        '"metadata":{"note":"café — 東京","steps":["b","a"]},"method":"quick",'
+        '"outcome":"Stable bytes","parent_id":null,"rationale":"","risk":{"a":1.25,'
+        '"z":1e-07},"schema_version":1,"scope_in":["a","z"],"scope_out":[],'
+        '"title":"Canonical ✓"}'
+    ).encode("utf-8")
+
+    assert node.canonical_content_json() == expected
+    assert node.revision_digest == (
+        "sha256:30ce9cd0616d9d5ed87e181265b73f8fad61e8dd5a1b3309a8f3f8b61a357b1c"
+    )

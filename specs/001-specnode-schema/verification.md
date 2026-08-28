@@ -15,10 +15,10 @@
 
 ```text
 python -m pytest -q
-.......................                                                  [100%]
+........................                                                 [100%]
 ```
 
-Result: **23 tests passed**.
+Result: **24 tests passed**.
 
 ### Compile check
 
@@ -40,6 +40,16 @@ sha256:3990c4fc3dc00d51baa33e58d424d70da5fc0d34bf6ac737763444fa45549a9a
 
 Result: **PASS** for this deterministic smoke case.
 
+### Schema-v1 golden conformance vector
+
+The published test vector exercises set-like ordering, nested object/list content, Unicode, and finite floating-point rendering. It produces exact canonical bytes locked by the test and this digest:
+
+```text
+sha256:30ce9cd0616d9d5ed87e181265b73f8fad61e8dd5a1b3309a8f3f8b61a357b1c
+```
+
+Result: **PASS**.
+
 ### Ruff
 
 `python -m ruff` could not run because `ruff` is not installed in the execution environment and network access is unavailable.
@@ -48,9 +58,9 @@ Result: **NOT RUN — tool unavailable**.
 
 This is not reported as PASS. Source was manually reconciled to the configured 100-character line limit and standard-library import grouping before upload. Repository/CI or external review remains responsible for the exact-head lint gate if available.
 
-## Review finding remediated
+## Review findings remediated
 
-The first uploaded implementation did not version the canonicalization contract. Review finding F-001 added public `SPECNODE_SCHEMA_VERSION = 1`, required `schema_version=1` on nodes, rejected unsupported versions, and included the version in canonical content/digest. See `review.md`.
+F-001 versioned the canonicalization contract with `schema_version=1`. F-002 added byte-level golden conformance evidence so compatibility is not inferred from generic serializer settings alone. See `review.md`.
 
 ## Scope review before upload
 
