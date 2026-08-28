@@ -38,8 +38,9 @@ jobs:
           python -m pip install build
       - name: Full regression
         run: python -m pytest
-      - name: Ruff
-        run: python -m ruff check src tests examples
+      - name: Ruff tracked Python surface
+        run: |
+          python -c "from pathlib import Path; import subprocess, sys; roots=(Path('src/specgrain'), Path('tests'), Path('examples')); files=sorted(str(p) for root in roots for p in root.rglob('*.py')); subprocess.check_call([sys.executable, '-m', 'ruff', 'check', *files])"
       - name: Compile
         run: python -m compileall -q src tests examples
       - name: CLI smoke

@@ -22,7 +22,9 @@ def test_permanent_ci_covers_supported_launch_platforms() -> None:
     for version in ('python: "3.11"', 'python: "3.12"', 'python: "3.13"'):
         assert version in workflow
     assert "python -m pytest" in workflow
-    assert "python -m ruff check src tests examples" in workflow
+    assert "Ruff tracked Python surface" in workflow
+    for root in ("src/specgrain", "tests", "examples"):
+        assert f"Path('{root}')" in workflow
     assert "python -m build" in workflow
     assert "--force-reinstall" in workflow
 
