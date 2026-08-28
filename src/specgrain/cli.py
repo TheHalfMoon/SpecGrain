@@ -7,7 +7,8 @@ import json
 import sys
 from collections.abc import Sequence
 
-from .store import ProjectCheckResult, StoreError, check_project, init_project
+from .project import NextResult, check_project, next_project
+from .store import ProjectCheckResult, StoreError, init_project
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -21,6 +22,10 @@ def _parser() -> argparse.ArgumentParser:
     check = subparsers.add_parser("check", help="validate repository-local SpecGrain state")
     check.add_argument("path", nargs="?", default=".")
     check.add_argument("--json", action="store_true", dest="as_json")
+
+    next_parser = subparsers.add_parser("next", help="show dependency-eligible Grains")
+    next_parser.add_argument("path", nargs="?", default=".")
+    next_parser.add_argument("--json", action="store_true", dest="as_json")
     return parser
 
 
@@ -44,6 +49,29 @@ def _render_check_text(result: ProjectCheckResult) -> str:
     for report in result.readiness_blocked:
         codes = ", ".join(issue.code.value for issue in report.issues)
         lines.append(f"- [{report.node_id}] readiness: {codes}")
+    return "\n".join(lines)
+
+
+def _render_next_text(result: NextResult) -> str:
+    status = "PASS" if result.valid else "FAIL"
+    lines = [f"SpecGrain next: {status}"]
+    if result.project_id is not None:
+        lines.append(f"Project: {result.project_id}")
+        lines.append(f"Eligible: {len(result.eligible_ids)}")
+        lines.extend(f"- {node_id}" for node_id in result.eligible_ids)
+        for report in result.dependency_reports:
+            if report.eligible:
+                continue
+            waiting = ", ".join(report.waiting_on) or "none"
+            blockers = ", ".join(report.blocked_by) or "none"
+            lines.append(
+                f"- {report.node_id} waiting: {waiting}; blockers: {blockers}"
+            )
+        lines.append(f"Projected waves: {len(result.waves)}")
+        for index, wave in enumerate(result.waves, start=1):
+            lines.append(f"Wave {index}: {', '.join(wave)}")
+    for issue in result.issues:
+        lines.append(f"- [{issue.code}] {issue.location}: {issue.message}")
     return "\n".join(lines)
 
 
@@ -82,6 +110,25 @@ def main(argv: Sequence[str] | None = None) -> int:
             )
         else:
             print(_render_check_text(result))
+        return 0 if result.valid else 1
+
+    if args.command == "next":
+        try:
+            result = next_project(args.path)
+        except Exception:
+            print("SpecGrain next: FAIL\n- internal error", file=sys.stderr)
+            return 1
+        if args.as_json:
+            print(
+                json.dumps(
+                    result.to_dict(),
+                    sort_keys=True,
+                    ensure_ascii=False,
+                    separators=(",", ":"),
+                )
+            )
+        else:
+            print(_render_next_text(result))
         return 0 if result.valid else 1
 
     raise AssertionError(f"unhandled command {args.command!r}")

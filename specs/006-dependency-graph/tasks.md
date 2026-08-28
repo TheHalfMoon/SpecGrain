@@ -10,25 +10,25 @@
 
 ## Implementation
 
-- [ ] T006 Add dependency issue/report/error models and lifecycle-state classifications.
-- [ ] T007 Implement duplicate/missing/self dependency validation.
-- [ ] T008 Implement deterministic dependency cycle detection.
-- [ ] T009 Implement Grain dependency reports with direct waiting + transitive blocker propagation.
-- [ ] T010 Implement `ready_grains` and deterministic Grain wave projection.
-- [ ] T011 Integrate dependency validation into local `check_project` before readiness summaries.
-- [ ] T012 Add structured `next_project` local-product orchestration.
-- [ ] T013 Add `specgrain next [PATH] [--json]` without mutation.
-- [ ] T014 Export the bounded 006 public API.
+- [x] T006 Add dependency issue/report/error models and lifecycle-state classifications.
+- [x] T007 Implement duplicate/missing/self dependency validation.
+- [x] T008 Implement deterministic dependency cycle detection.
+- [x] T009 Implement Grain dependency reports with direct waiting + transitive blocker propagation.
+- [x] T010 Implement `ready_grains` and deterministic Grain wave projection.
+- [x] T011 Integrate dependency validation into local project checks before readiness summaries through a bounded project orchestration layer while leaving Specification 005 persistence unchanged.
+- [x] T012 Add structured `next_project` local-product orchestration.
+- [x] T013 Add `specgrain next [PATH] [--json]` without mutation.
+- [x] T014 Export the bounded 006 public API.
 
 ## Verification
 
-- [ ] T015 Add structural dependency and cycle-determinism tests.
-- [ ] T016 Add satisfied/waiting/blocker/report/ready-set tests.
-- [ ] T017 Add wave projection and transitive blocker tests.
-- [ ] T018 Add store check/next integration and read-only tests.
-- [ ] T019 Add CLI next text/JSON/exit-code tests.
-- [ ] T020 Run all 001–006 tests plus compile/package/smoke and available lint/static checks.
-- [ ] T021 Review exact diff for mutation, scan, semantic inference, conflict analysis, evidence, execution, or dependency-library creep.
+- [x] T015 Add structural dependency and cycle-determinism tests.
+- [x] T016 Add satisfied/waiting/blocker/report/ready-set tests.
+- [x] T017 Add wave projection and transitive blocker tests.
+- [x] T018 Add local check/next integration and read-only tests.
+- [x] T019 Add CLI next text/JSON/exit-code tests.
+- [x] T020 Run all 001–006 tests plus compile/package/smoke and available lint/static checks: 275 pytest tests PASS, compileall PASS, editable install PASS, console/module help equivalence PASS, 0 lines >100; Ruff NOT RUN because unavailable/offline.
+- [ ] T021 Review exact uploaded diff for mutation, scan, semantic inference, conflict analysis, evidence, execution, or dependency-library creep.
 
 ## PR closeout
 
