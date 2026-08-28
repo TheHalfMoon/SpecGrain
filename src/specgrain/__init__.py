@@ -38,6 +38,20 @@ from .lifecycle import (
     parse_spec_state,
     require_transition_allowed,
 )
+from .metrics import (
+    METRICS_VERSION,
+    ChangeScopeReport,
+    DeliveryMetrics,
+    DeliveryObservation,
+    DriftReport,
+    DriftSignal,
+    DriftSignalCode,
+    MetricsValidationError,
+    Ratio,
+    aggregate_delivery_metrics,
+    analyze_change_scope,
+    detect_drift,
+)
 from .method import (
     METHOD_PROFILE_VERSION,
     MethodIssue,
@@ -125,6 +139,18 @@ from .store import (
 )
 
 __all__ = [
+    "METRICS_VERSION",
+    "ChangeScopeReport",
+    "DeliveryMetrics",
+    "DeliveryObservation",
+    "DriftReport",
+    "DriftSignal",
+    "DriftSignalCode",
+    "MetricsValidationError",
+    "Ratio",
+    "aggregate_delivery_metrics",
+    "analyze_change_scope",
+    "detect_drift",
     "METHOD_PROFILE_VERSION",
     "MethodIssue",
     "MethodIssueCode",

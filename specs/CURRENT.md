@@ -2,44 +2,32 @@
 
 **Repository:** `TheHalfMoon/SpecGrain`  
 **Canonical branch:** `main`  
-**Last verified canonical main:** `fa666854324aa131d6232df0bbb5971c0498f76e`  
-**Closed specification:** `specs/010-verification-evidence/` — `CLOSED_CANONICAL`  
-**Active specification:** `specs/011-method-profiles/`  
-**Active branch:** `feat/011-method-profiles`  
+**Last verified canonical main:** `9531c3e300569946c3083c6510c6bae57c21ccbf`  
+**Closed specification:** `specs/011-method-profiles/` — `CLOSED_CANONICAL`  
+**Active specification:** `specs/012-diff-drift-metrics/`  
+**Active branch:** `feat/012-diff-drift-metrics`  
 **Active status:** `PR_READY`
 
-## Canonical 010 closeout evidence
+## Canonical 011 closeout evidence
 
-Specification 010 closed through PR #12. Final reviewed PR head `8c8574923999b4195e05d599c7995d1c50e22653` was merged with expected-head protection into canonical merge commit `fa666854324aa131d6232df0bbb5971c0498f76e`; the merge commit's second parent is the exact reviewed head.
+Specification 011 closed through PR #13. Final reviewed PR head `b6af6a11b911df96875f0386584562b16e7de22a` was merged with expected-head protection into canonical merge commit `9531c3e300569946c3083c6510c6bae57c21ccbf`; the merge commit's second parent is the exact reviewed head.
 
-## 011 exact verified product state
+## 012 exact verified product state
 
 Exact implementation commit:
 
-`48626e69c155f08710337c2c7605d05c2eb9ff3a`
+`7434b094f93df4fb72e03640623a626f5ea5d4e0`
 
 ```text
-src/specgrain/method.py          32d03bd815751cd654af26a6b2bdbd9fb7c152e1
-src/specgrain/__init__.py        5f4478764a30abb65b88ed1fc95d58033da84047
-tests/test_method.py             0b01d1a1ce332759654cf5eb90183c2e5454e332
+src/specgrain/metrics.py          3ae0415291c64daf0474e359de46e2c29a74918f
+src/specgrain/__init__.py         d31bc4e0932eafde0b546f97e414167bba4cffa2
+tests/test_metrics.py             c020f19f2aaea8806b6cf9b29c3de26a7ba2d5b7
 ```
 
-Verification for those exact uploaded bytes:
+Verification: 464 pytest tests PASS; compileall PASS; editable install with `--no-build-isolation` PASS; console/module help parity PASS; 0 long changed implementation/test lines; Ruff NOT RUN.
 
-- 448 pytest tests PASS;
-- compileall PASS;
-- editable install with `--no-build-isolation` PASS;
-- console/module help parity PASS;
-- 0 changed implementation/test lines over 100 characters;
-- Ruff NOT RUN because unavailable;
-- build-isolated editable install was blocked by unavailable DNS while resolving build requirements and is not claimed PASS.
-
-The exact implementation diff from planning head `024f5de0d72670f2e189ebaf3b00716f7a2b25bb` contains only the three planned implementation/test files.
+The implementation diff from planning head `023e93ac1db0e5f81c803f8ed7472c7f389c6bfe` contains only the three planned files.
 
 ## Immediate ordering
 
-1. Open the bounded 011 PR at the live documentation head.
-2. Re-read exact PR head, net diff, statuses, comments, reviews, and threads.
-3. Resolve every material exact-head defect using forward-only commits.
-4. Merge only with expected-head protection.
-5. Re-read canonical `main`, prove the exact head landed, close 011 canonically, and begin 012 immediately.
+Open and review the bounded 012 PR, merge only with expected-head protection, prove post-merge canonical `main`, then begin `013-spec-kit-import` immediately.
