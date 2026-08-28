@@ -4,11 +4,12 @@ version = "0.1.0"
 description = "Deterministic, evidence-backed delivery for small verifiable software changes"
 readme = "README.md"
 requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
 dependencies = []
 keywords = ["specification", "software-delivery", "ai-agents", "verification", "devtools"]
 classifiers = [
   "Development Status :: 3 - Alpha",
-  "License :: OSI Approved :: MIT License",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
@@ -24,7 +25,7 @@ Issues = "https://github.com/TheHalfMoon/SpecGrain/issues"
 specgrain = "specgrain.cli:main"
 
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project.optional-dependencies]
