@@ -36,8 +36,12 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -e ".[dev]"
           python -m pip install build
-      - name: Ruff source
-        run: python -m ruff check src
+      - name: Ruff tracked source files
+        run: >-
+          python -c "import subprocess, sys;
+          files=subprocess.check_output(['git','ls-files','src/specgrain/*.py'], text=True).splitlines();
+          assert files;
+          [subprocess.check_call([sys.executable,'-m','ruff','check',path]) for path in files]"
       - name: Ruff baseline tests
         run: python -m ruff check tests --exclude test_launch.py
       - name: Ruff launch test

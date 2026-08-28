@@ -13,6 +13,7 @@ def test_release_metadata_is_versioned_and_runtime_dependency_free() -> None:
     assert data["project"]["version"] == "0.1.0"
     assert data["project"]["dependencies"] == []
     assert data["project"]["requires-python"] == ">=3.11"
+    assert "ruff==0.6.9" in data["project"]["optional-dependencies"]["dev"]
 
 
 def test_permanent_ci_covers_supported_launch_platforms() -> None:
@@ -21,8 +22,9 @@ def test_permanent_ci_covers_supported_launch_platforms() -> None:
         assert runner in workflow
     for version in ('python: "3.11"', 'python: "3.12"', 'python: "3.13"'):
         assert version in workflow
-    for command in (
-        "python -m ruff check src",
+    for marker in (
+        "Ruff tracked source files",
+        "git','ls-files','src/specgrain/*.py'",
         "python -m ruff check tests --exclude test_launch.py",
         "python -m ruff check tests/test_launch.py",
         "python -m ruff check examples/zero_to_verified.py",
@@ -31,7 +33,7 @@ def test_permanent_ci_covers_supported_launch_platforms() -> None:
         "python -m build",
         "--force-reinstall",
     ):
-        assert command in workflow
+        assert marker in workflow
 
 
 def test_release_workflow_is_post_ci_and_immutable() -> None:
