@@ -39,6 +39,16 @@ from .lifecycle import (
     require_transition_allowed,
 )
 from .model import SPECNODE_SCHEMA_VERSION, SpecNode, SpecValidationError, is_spec_id
+from .packet import (
+    EXECUTION_RESULT_VERSION,
+    WORK_PACKET_VERSION,
+    ExecutionResult,
+    ExecutionStatus,
+    PacketContextSource,
+    PacketValidationError,
+    WorkPacket,
+    build_work_packet,
+)
 from .project import NextResult, check_project, next_project
 from .readiness import (
     GRAIN_READINESS_VERSION,
@@ -87,6 +97,14 @@ from .store import (
 )
 
 __all__ = [
+    "EXECUTION_RESULT_VERSION",
+    "WORK_PACKET_VERSION",
+    "ExecutionResult",
+    "ExecutionStatus",
+    "PacketContextSource",
+    "PacketValidationError",
+    "WorkPacket",
+    "build_work_packet",
     "DEPENDENCY_BLOCKER_STATES",
     "DEPENDENCY_SATISFIED_STATES",
     "EXCEPTIONAL_STATES",
