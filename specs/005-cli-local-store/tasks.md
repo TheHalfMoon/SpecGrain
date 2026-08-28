@@ -10,22 +10,22 @@
 
 ## Implementation
 
-- [ ] T006 Add store constants, enums, immutable manifest/policy/project/check models, and stable errors.
-- [ ] T007 Implement strict JSON parsing/serialization and safe name/path validation.
-- [ ] T008 Implement atomic `init_project` with staging cleanup and no overwrite.
-- [ ] T009 Implement `load_project` with symlink rejection, manifest/policy validation, deterministic spec loading, and filename/ID binding.
-- [ ] T010 Implement `check_project` refinement validation plus report/enforce readiness behavior.
-- [ ] T011 Implement argparse CLI text/JSON rendering and 0/1/2 exit semantics.
-- [ ] T012 Add `python -m specgrain` and console-script entry points without new runtime dependencies.
-- [ ] T013 Export the bounded 005 public store API.
+- [x] T006 Add store constants, enums, immutable manifest/policy/project/check models, and stable errors.
+- [x] T007 Implement strict JSON parsing/serialization and safe name/path validation.
+- [x] T008 Implement atomic `init_project` with staging cleanup and no overwrite.
+- [x] T009 Implement `load_project` with symlink rejection, manifest/policy validation, deterministic spec loading, and filename/ID binding.
+- [x] T010 Implement `check_project` refinement validation plus report/enforce readiness behavior.
+- [x] T011 Implement argparse CLI text/JSON rendering and 0/1/2 exit semantics.
+- [x] T012 Add `python -m specgrain` and console-script entry points without new runtime dependencies.
+- [x] T013 Export the bounded 005 public store API.
 
 ## Verification
 
-- [ ] T014 Add initialization/store/parser/version/name/symlink/spec-loading tests.
-- [ ] T015 Add structural check and readiness report/enforce tests.
-- [ ] T016 Add CLI init/check/text/JSON/exit-code tests.
-- [ ] T017 Run all 001–005 tests, compileall, and available lint/static checks with exact evidence.
-- [ ] T018 Review exact diff for 006+ DAG, repository-scan, lifecycle-mutation, evidence-store, YAML, subprocess, provider, or dependency creep.
+- [x] T014 Add initialization/store/parser/version/name/symlink/spec-loading tests.
+- [x] T015 Add structural check and readiness report/enforce tests.
+- [x] T016 Add CLI init/check/text/JSON/exit-code tests.
+- [x] T017 Run all 001–005 tests and compile/package/smoke checks: 230 pytest tests PASS, compileall PASS, editable install PASS, console/module smoke PASS; Ruff NOT RUN because unavailable and package installation is blocked by offline DNS.
+- [ ] T018 Review exact uploaded diff for 006+ DAG, repository-scan, lifecycle-mutation, evidence-store, YAML, subprocess, provider, or dependency creep.
 
 ## PR closeout
 

@@ -6,13 +6,13 @@
 **Closed specification:** `specs/004-grain-readiness/` — `CLOSED_CANONICAL`  
 **Active specification:** `specs/005-cli-local-store/`  
 **Active branch:** `feat/005-cli-local-store`  
-**Active status:** `IMPLEMENTATION_PLANNED`
+**Active status:** `IMPLEMENTED_REVIEW_PENDING`
 
 ## Current objective
 
-Ship the first repository-local SpecGrain product surface: dependency-free store v1 plus `init` and `check` with deterministic policy-aware readiness reporting.
+Close the first repository-local SpecGrain product surface through exact-head review: dependency-free store v1 plus `init` and read-only `check` with deterministic policy-aware readiness reporting.
 
-## Store-v1 boundary
+## Implemented store-v1 boundary
 
 Canonical state:
 
@@ -23,13 +23,25 @@ Canonical state:
   policies/default.json
 ```
 
-005 owns strict JSON/store parsing, safe path/symlink rules, initialization, project/policy loading, refinement validation, readiness report/enforce policy, and CLI rendering/exit codes.
+005 owns strict JSON/store parsing, safe path/symlink rules, atomic initialization, project/policy loading, refinement validation, readiness report/enforce policy, and CLI rendering/exit codes.
 
 ADR-0005 replaces the earlier provisional YAML preference for M2 with dependency-free JSON v1. YAML remains a possible later adapter, not a 005 dependency.
 
+## Verification front
+
+- pytest: **230 passed** (182 existing + 48 new 005 tests);
+- compileall: **PASS**;
+- editable install: **PASS**;
+- `specgrain` and `python -m specgrain` entry points: **PASS**;
+- fresh `init -> check -> JSON` smoke: **PASS**;
+- line-length preflight for new source/tests: **0 lines over 100**;
+- Ruff: **NOT RUN — unavailable locally; installation attempt blocked by offline DNS/network**.
+
+See `specs/005-cli-local-store/verification.md`.
+
 ## Trust boundary
 
-005 MUST remain read-only during `check` and MUST NOT:
+005 remains read-only during `check` and does not:
 
 - mutate lifecycle state;
 - treat readiness reports as transition tokens;
@@ -41,9 +53,9 @@ ADR-0005 replaces the earlier provisional YAML preference for M2 with dependency
 
 ## Immediate ordering
 
-1. Implement store models/errors and strict JSON/path validation.
-2. Implement atomic `init_project` and deterministic `load_project`.
-3. Implement policy-aware `check_project`.
-4. Implement CLI/entry points without runtime dependencies.
-5. Add store/CLI tests plus all kernel regressions.
-6. Review exact diff and close a bounded expected-head PR.
+1. Commit the exact verified implementation bytes to the active branch.
+2. Review the uploaded diff for scope/trust-boundary defects.
+3. Open a bounded PR with exact-head evidence.
+4. Resolve every exact-head external/repository defect.
+5. Merge only with expected-head guard.
+6. Re-read canonical `main` and begin `006-dependency-graph`.
