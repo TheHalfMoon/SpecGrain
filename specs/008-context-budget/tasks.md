@@ -9,21 +9,21 @@
 
 ## Implementation
 
-- [ ] T005 Add context requirement/source/policy records and validation errors.
-- [ ] T006 Add deterministic source-collection validation and canonical ordering.
-- [ ] T007 Implement required-context token/byte/source-count blocker accounting.
-- [ ] T008 Implement deterministic optional packing by `(priority, source_id)`.
-- [ ] T009 Implement normalized context-plan digest and exact budget error behavior.
-- [ ] T010 Add repository-map context-source bridge without content retrieval.
-- [ ] T011 Add bounded public exports without CLI/store/lifecycle changes.
+- [x] T005 Add context requirement/source/policy records and validation errors.
+- [x] T006 Add deterministic source-collection validation and canonical ordering.
+- [x] T007 Implement required-context token/byte/source-count blocker accounting.
+- [x] T008 Implement deterministic optional packing by `(priority, source_id)`.
+- [x] T009 Implement normalized context-plan digest and exact budget error behavior.
+- [x] T010 Add repository-map context-source bridge without content retrieval.
+- [x] T011 Add bounded public exports without CLI/store/lifecycle changes.
 
 ## Verification
 
-- [ ] T012 Add model/policy/collection validation tests.
-- [ ] T013 Add required-overflow/optional-packing/permutation/digest tests.
-- [ ] T014 Add repository-map bridge/no-content-read/no-mutation tests.
-- [ ] T015 Run all 001–008 tests plus compile/package/entry-point and available lint/static checks.
-- [ ] T016 Review exact uploaded diff for retrieval/tokenizer/LLM, WorkPacket/evidence, lifecycle/store/scheduler, subprocess, or dependency creep.
+- [x] T012 Add model/policy/collection validation tests.
+- [x] T013 Add required-overflow/optional-packing/permutation/digest tests.
+- [x] T014 Add repository-map bridge/no-content-read/no-mutation tests.
+- [x] T015 Run all 001–008 tests plus compile/package/entry-point and available lint/static checks.
+- [x] T016 Review exact uploaded diff for retrieval/tokenizer/LLM, WorkPacket/evidence, lifecycle/store/scheduler, subprocess, or dependency creep.
 
 ## PR closeout
 

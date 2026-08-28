@@ -6,7 +6,7 @@
 **Closed specification:** `specs/007-repository-scan/` — `CLOSED_CANONICAL`  
 **Active specification:** `specs/008-context-budget/`  
 **Active branch:** `feat/008-context-budget`  
-**Active status:** `SHAPED`
+**Active status:** `PR_READY`
 
 ## Canonical continuation references
 
@@ -14,46 +14,46 @@ Read `docs/execution-master-plan.md` after the constitution. `docs/roadmap.md` r
 
 ## Canonical 007 closeout evidence
 
-Specification 007 closed through PR #9.
+Specification 007 closed through PR #9: final reviewed PR head `35571d5cdcbe441b04a8e975c5eb6be0fe088698`, merged with expected-head protection into canonical merge commit `197ddfb68d94bf8998d68d1371c26431f3816ca0`. The merge commit's second parent is the exact reviewed PR head.
 
-- final reviewed PR head: `35571d5cdcbe441b04a8e975c5eb6be0fe088698`;
-- merge commit: `197ddfb68d94bf8998d68d1371c26431f3816ca0`;
-- merge commit parent 1: prior canonical `main` `85d1bef8ee5c1c8e8d78baa52f509803a78a43d8`;
-- merge commit parent 2: exact PR head `35571d5cdcbe441b04a8e975c5eb6be0fe088698`;
-- PR #9 is closed and merged;
-- no force-push, rebase, or destructive history rewriting was used.
+## 008 exact verified product state
 
-The exact reviewed 007 product/test bytes passed 304 pytest tests, compileall, editable install, entry-point parity, and changed-line-length preflight. Ruff was NOT RUN because unavailable in the execution environment.
+Exact reviewed product commit:
 
-## Current objective — 008 Context Budget
+`5d7822218888302d95ccfc580ea37a0853759d34`
 
-Implement deterministic revision-bound context-source records and budget accounting without reading source content, selecting context through an LLM, mutating lifecycle/store state, or depending on a model-specific tokenizer.
+Exact product/test blobs:
 
-008 owns:
+```text
+src/specgrain/context.py          c68cf285ae4fa2358583163b136e55e53ee7cb0c
+src/specgrain/__init__.py         b1a5d6f6678b3e83a3ab0075cf8d570ee348df15
+tests/test_context.py             31fd6c0e13a8784bf7af8c91270e9da718649379
+```
 
-- immutable context-source records with provenance, selection reason, revision, requirement class, byte size, token cost, and optional priority;
-- deterministic validation and canonical serialization;
-- required-context budget blockers;
-- deterministic optional-context packing by `(priority, source_id)`;
-- explicit token/byte/source-count policy limits;
-- explainable budget reports and fail-closed `require_context_budget` behavior;
-- repository-map integration that binds to the normalized 007 map digest without loading repository contents.
+Verification for those exact uploaded bytes:
 
-008 does not own:
+- 354 pytest tests PASS;
+- compileall PASS;
+- editable install PASS;
+- console/module help parity PASS;
+- 0 changed source/test lines over 100 characters;
+- Ruff NOT RUN because unavailable.
 
-- file-content retrieval or arbitrary repository indexing;
-- semantic relevance scoring or LLM context selection;
-- tokenizer execution or hidden token estimation;
-- WorkPacket construction (`009`);
-- evidence verification (`010`);
-- lifecycle/store mutation;
-- scheduler changes.
+The exact implementation diff from planning head `ca53852a2239483e2a51b72de8786e785b04f37a` contains only the three planned implementation/test files.
+
+## 008 boundary
+
+008 owns immutable revision-bound context-source records, explicit byte/token costs, required/optional classification, deterministic budget policy, required-context blockers, optional packing, plan digest, and a normalized RepositoryMap bridge.
+
+It does not retrieve file contents, invoke a tokenizer/LLM/embedding service, mutate lifecycle/store state, alter dependency scheduling, build WorkPackets/evidence, execute subprocesses, or add runtime dependencies.
 
 ## Immediate ordering
 
-1. Read `specs/008-context-budget/spec.md`, `plan.md`, `tasks.md`, and ADR-0008.
-2. Implement the bounded context kernel in task order.
-3. Verify all 001–008 tests plus compile/package/entry-point checks and available static checks.
-4. Review the exact uploaded diff for content retrieval, hidden token estimation, lifecycle/store/scheduler mutation, evidence semantics, or dependency creep.
-5. Open and close the bounded 008 PR using exact-head evidence.
-6. Re-read canonical `main`, close 008 canonical task state, and immediately begin `009-work-packet`.
+1. Re-read live 008 branch head and confirm no competing PR exists.
+2. Open the bounded 008 implementation PR against canonical `main` using the live exact documentation head.
+3. Re-read exact PR head, diff, statuses, reviews, comments, and threads.
+4. Resolve every material exact-head defect with forward-only commits and repeat affected verification.
+5. Merge only with an expected-head guard.
+6. Re-read canonical `main` after merge and prove the exact head landed.
+7. On the 009 planning branch, close 008 T017–T019 and mark 008 `CLOSED_CANONICAL`.
+8. Begin `009-work-packet` immediately.
