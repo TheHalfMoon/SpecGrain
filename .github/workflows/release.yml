@@ -1,0 +1,56 @@
+name: Release v0.1.0
+
+on:
+  workflow_run:
+    workflows:
+      - CI
+    types:
+      - completed
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_branch == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate release metadata
+        run: |
+          python -c "import tomllib; data=tomllib.load(open('pyproject.toml','rb')); assert data['project']['version'] == '0.1.0'"
+      - name: Create immutable tag and GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_SHA: ${{ github.event.workflow_run.head_sha }}
+        shell: bash
+        run: |
+          git fetch --tags --force
+          if git rev-parse -q --verify refs/tags/v0.1.0 >/dev/null; then
+            existing="$(git rev-list -n 1 v0.1.0)"
+            if [ "$existing" != "$RELEASE_SHA" ]; then
+              echo "v0.1.0 already points to $existing, expected $RELEASE_SHA" >&2
+              exit 1
+            fi
+          else
+            git tag v0.1.0 "$RELEASE_SHA"
+            git push origin refs/tags/v0.1.0
+          fi
+
+          if gh release view v0.1.0 >/dev/null 2>&1; then
+            echo "GitHub Release v0.1.0 already exists at the validated immutable tag."
+          else
+            gh release create v0.1.0 \
+              --verify-tag \
+              --target "$RELEASE_SHA" \
+              --title "SpecGrain v0.1.0" \
+              --notes-file docs/releases/v0.1.0.md
+          fi

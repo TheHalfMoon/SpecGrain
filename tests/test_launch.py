@@ -29,6 +29,18 @@ def test_permanent_ci_covers_supported_launch_platforms() -> None:
     assert "--force-reinstall" in workflow
 
 
+def test_release_workflow_is_post_ci_and_immutable() -> None:
+    workflow = (ROOT / ".github" / "workflows" / "release.yml").read_text(encoding="utf-8")
+    assert "workflow_run" in workflow
+    assert "head_branch == 'main'" in workflow
+    assert "workflow_run.conclusion == 'success'" in workflow
+    assert "RELEASE_SHA: ${{ github.event.workflow_run.head_sha }}" in workflow
+    assert "git tag v0.1.0 \"$RELEASE_SHA\"" in workflow
+    assert "git push origin refs/tags/v0.1.0" in workflow
+    assert "gh release create v0.1.0" in workflow
+    assert "--verify-tag" in workflow
+
+
 def test_readme_uses_only_current_cli_commands() -> None:
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     for command in (
