@@ -1,5 +1,18 @@
 """SpecGrain deterministic core primitives."""
 
+from .dependency import (
+    DEPENDENCY_BLOCKER_STATES,
+    DEPENDENCY_SATISFIED_STATES,
+    DependencyIssue,
+    DependencyIssueCode,
+    DependencyValidationError,
+    GrainDependencyReport,
+    dependency_waves,
+    grain_dependency_report,
+    ready_grains,
+    require_valid_dependencies,
+    validate_dependencies,
+)
 from .lifecycle import (
     EXCEPTIONAL_STATES,
     TERMINAL_STATES,
@@ -31,6 +44,7 @@ from .refinement import (
     require_valid_refinement,
     validate_refinement,
 )
+from .project import NextResult, check_project, next_project
 from .store import (
     POLICY_VERSION,
     STORE_VERSION,
@@ -43,16 +57,21 @@ from .store import (
     StoreError,
     StoreExistsError,
     StoreValidationError,
-    check_project,
     init_project,
     load_project,
 )
 
 __all__ = [
+    "DEPENDENCY_BLOCKER_STATES",
+    "DEPENDENCY_SATISFIED_STATES",
     "EXCEPTIONAL_STATES",
     "GRAIN_READINESS_VERSION",
     "SPECNODE_SCHEMA_VERSION",
     "TERMINAL_STATES",
+    "DependencyIssue",
+    "DependencyIssueCode",
+    "DependencyValidationError",
+    "GrainDependencyReport",
     "GrainReadinessError",
     "GrainReadinessReport",
     "LifecycleStateError",
@@ -64,6 +83,7 @@ __all__ = [
     "RefinementIssueCode",
     "RefinementValidationError",
     "LocalProject",
+    "NextResult",
     "POLICY_VERSION",
     "ProjectCheckIssue",
     "ProjectCheckResult",
@@ -80,15 +100,21 @@ __all__ = [
     "SpecValidationError",
     "allowed_transitions",
     "check_project",
+    "dependency_waves",
     "evaluate_grain_readiness",
+    "grain_dependency_report",
     "is_spec_id",
     "init_project",
     "is_transition_allowed",
     "load_project",
+    "next_project",
     "parse_spec_state",
+    "ready_grains",
     "refinement_roots",
     "require_grain_readiness",
+    "require_valid_dependencies",
     "require_transition_allowed",
     "require_valid_refinement",
+    "validate_dependencies",
     "validate_refinement",
 ]
