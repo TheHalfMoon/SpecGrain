@@ -9,19 +9,19 @@
 
 ## Implementation
 
-- [ ] T005 Add deterministic read-only Spec Kit artifact parser and report contracts.
-- [ ] T006 Preserve independent testability, FR/SC, assumptions, Technical Context, and Constitution Check fields.
-- [ ] T007 Preserve legacy tasks as non-core migration evidence and emit explicit loss/governance notices.
-- [ ] T008 Add bounded ordinary-file loader and hard artifact byte limits.
-- [ ] T009 Add read-only `import-spec-kit` CLI and bounded public exports.
+- [x] T005 Add deterministic read-only Spec Kit artifact parser and report contracts.
+- [x] T006 Preserve independent testability, FR/SC, assumptions, Technical Context, and Constitution Check fields.
+- [x] T007 Preserve legacy tasks as non-core migration evidence and emit explicit loss/governance notices.
+- [x] T008 Add bounded ordinary-file loader and hard artifact byte limits.
+- [x] T009 Add read-only `import-spec-kit` CLI and bounded public exports.
 
 ## Verification
 
-- [ ] T010 Test deterministic parsing, source revision/digest binding, and placeholder/duplicate rejection.
-- [ ] T011 Test symlink/size/UTF-8/known-file boundaries and legacy-task non-promotion.
-- [ ] T012 Test CLI JSON/text determinism and no mutation.
-- [ ] T013 Run all 001–013 tests plus compile/package/entry-point and available static checks.
-- [ ] T014 Review exact uploaded diff for silent semantic invention, mutation, task-ontology creep, command execution, or dependency creep.
+- [x] T010 Test deterministic parsing, source revision/digest binding, and placeholder/duplicate rejection.
+- [x] T011 Test symlink/size/UTF-8/known-file boundaries and legacy-task non-promotion.
+- [x] T012 Test CLI JSON/text determinism and no mutation.
+- [x] T013 Run all 001–013 tests plus compile/package/entry-point and available static checks.
+- [x] T014 Review exact uploaded diff for silent semantic invention, mutation, task-ontology creep, command execution, or dependency creep.
 
 ## PR closeout
 

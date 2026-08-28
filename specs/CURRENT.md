@@ -6,7 +6,7 @@
 **Closed specification:** `specs/012-diff-drift-metrics/` — `CLOSED_CANONICAL`  
 **Active specification:** `specs/013-spec-kit-import/`  
 **Active branch:** `feat/013-spec-kit-import`  
-**Active status:** `RUNNING`
+**Active status:** `PR_READY`
 
 ## Canonical 012 closeout evidence
 
@@ -21,10 +21,20 @@ Live `github/spec-kit` `main` template identities re-read before implementation:
 - plan template `36f2eab16880bac670fe43cbe7ef2b9bc8c3aa2f`;
 - tasks template `7fff087cc5a3c51a889d865fd9126607a032d233`.
 
-## 013 objective
+## 013 exact product evidence
 
-Build a bounded read-only conversion report that preserves relevant Spec Kit information and provenance without silently adopting constitution policy, inventing missing semantics, mutating `.specgrain`, or promoting legacy `tasks.md` into the SpecGrain core ontology.
+Exact product commit: `49817d5c99adb131125f8e3fc4f605cc6e42c0e3`.
+
+```text
+src/specgrain/speckit.py          4d1048723af296d178deaa2c23a51570df0c0100
+src/specgrain/cli.py              6dd2437fe3490aa6153bed75966d52b5c46d699b
+src/specgrain/__init__.py         ccee33cee4c28a1764e0a2fd500a40a30e5f9dcf
+tests/test_speckit.py             3c9d8257723985b2c6c174788f70a0d994054c35
+tests/test_speckit_cli.py         2f926b3189c7c1a24a884b28eb587612c0a154a5
+```
+
+The exact candidate recorded above passed 480 pytest tests, compileall, editable install using available local build dependencies, console/module help parity, and 0 changed lines over 100 characters. Ruff was unavailable and is not claimed PASS.
 
 ## Immediate ordering
 
-Publish planning, upload the exact five-file implementation/test candidate, run exact-byte verification/review, open the bounded PR, merge only with expected-head evidence, then begin 014 immediately.
+Open the bounded 013 PR at the current documentation head, resolve every material exact-head review defect, merge only with expected-head evidence, prove canonical `main`, then begin 014 Agent Adapters immediately.
