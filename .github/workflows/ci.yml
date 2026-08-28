@@ -39,9 +39,9 @@ jobs:
       - name: Full regression
         run: python -m pytest
       - name: Ruff
-        run: python -m ruff check src tests
+        run: python -m ruff check src tests examples
       - name: Compile
-        run: python -m compileall -q src tests
+        run: python -m compileall -q src tests examples
       - name: CLI smoke
         run: |
           python -m specgrain --help

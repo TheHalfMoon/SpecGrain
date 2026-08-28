@@ -1,46 +1,126 @@
 # SpecGrain
 
-**Make every software change small enough to understand, execute, verify, and prove.**
+**Big ideas. Small specs. Proven software.**
 
-SpecGrain is an open-source, AI-native software delivery system built around recursively refined specifications. Instead of turning a large specification directly into a long task list, SpecGrain keeps decomposing work into smaller specifications until each leaf is independently valuable, context-safe, bounded, and verifiable.
+SpecGrain is an open-source, agent-neutral delivery kernel for turning software work into small, bounded, independently verifiable changes. Its deterministic core owns specification structure, readiness, dependency ordering, context budgets, WorkPackets, evidence binding, drift/metrics, Spec Kit import, agent-adapter boundaries, and benchmark comparability checks.
 
-> Big ideas. Small specs. Proven software.
+[![CI](https://github.com/TheHalfMoon/SpecGrain/actions/workflows/ci.yml/badge.svg)](https://github.com/TheHalfMoon/SpecGrain/actions/workflows/ci.yml)
 
-## Status
+## One-minute start
 
-SpecGrain is in its foundation and methodology design phase. The repository will develop in public from a written constitution, explicit domain model, measurable quality gates, and reproducible benchmarks.
+SpecGrain requires Python 3.11 or newer. From a clone:
 
-## Core idea
+```bash
+python -m pip install .
+specgrain scan .
+mkdir specgrain-demo
+specgrain init specgrain-demo --project-id demo
+specgrain check specgrain-demo
+```
+
+The commands above are local and deterministic. `scan` maps bounded brownfield repository facts without executing repository commands or sending the repository to a model. `init` creates repository-local `.specgrain/` state, and `check` validates it.
+
+After `v0.1.0` is tagged, the same release can be installed directly from its source archive:
+
+```bash
+python -m pip install "https://github.com/TheHalfMoon/SpecGrain/archive/refs/tags/v0.1.0.zip"
+```
+
+## What is a Grain?
+
+A specification may recursively contain smaller specifications. A leaf becomes a **Grain** only after deterministic readiness rules establish that its outcome, scope, acceptance conditions, dependencies, risk/recovery plan, context footprint, change surface, and evidence requirements are bounded enough for independent execution and verification.
 
 ```text
 Intent
   -> Spec
       -> Spec
+          -> Grain -> WorkPacket -> Execute -> Verify -> Evidence
           -> Grain
-          -> Grain
-      -> Spec
-          -> Grain
-
-Grain -> Execute -> Verify -> Evidence -> Measure -> Improve
 ```
 
-A **Grain** is the smallest independently valuable, context-safe, reversible, and verifiable unit of software delivery.
+When a change is too large, SpecGrain's default answer is further refinement—not a larger prompt.
 
-## Principles
+## Supported CLI in v0.1.0
 
-- Recursive refinement instead of giant up-front specifications.
-- Small-batch delivery instead of long agent runs.
-- Evidence instead of self-declared completion.
-- Explicit dependencies instead of flat task lists.
-- Context budgets instead of unlimited prompt growth.
-- Adaptive planning instead of ceremony by default.
-- Measured flow and quality instead of vanity activity metrics.
-- Human and agent interoperability instead of vendor lock-in.
-- Brownfield repositories as a first-class use case.
-- Compatibility with existing spec-driven workflows, including GitHub Spec Kit, without being architecturally dependent on them.
+| Command | Purpose |
+| --- | --- |
+| `specgrain init [path]` | Initialize repository-local SpecGrain state. |
+| `specgrain check [path]` | Validate local state and Grain-readiness reports. |
+| `specgrain next [path]` | Show dependency-eligible Grains and projected waves. |
+| `specgrain scan [path]` | Build a bounded deterministic brownfield repository map. |
+| `specgrain prove <spec-id> [path]` | Load and validate append-oriented evidence for a spec. |
+| `specgrain import-spec-kit <feature-dir>` | Produce a read-only, source-bound Spec Kit migration report. |
 
-## Project direction
+Most inspection commands also provide deterministic JSON output with `--json`.
 
-SpecGrain is an independent project. GitHub Spec Kit is an important upstream influence, compatibility target, and potential source of MIT-licensed implementation patterns, but SpecGrain uses a different core model: recursive specifications, execution graphs, readiness gates, context isolation, independent verification, and an evidence ledger.
+SpecGrain v0.1.0 is a deterministic control plane, not an agent runner or hosted service. External agents integrate through portable WorkPacket/result adapter contracts rather than becoming verification authority.
 
-Detailed specifications, architecture, roadmap, benchmark methodology, and execution tasks are being added next.
+## Zero to VERIFIED
+
+The repository includes a runnable API example that creates a Grain candidate, checks readiness, builds a context-bounded WorkPacket, simulates one bounded implementation change, performs independent acceptance/evidence checks, appends an immutable evidence record, and proves the chain:
+
+```bash
+python examples/zero_to_verified.py
+```
+
+See [`examples/zero_to_verified.py`](examples/zero_to_verified.py). The example is executed by the test suite; `VERIFIED` is derived from independent checks, not from the executor's success claim.
+
+## Brownfield first
+
+SpecGrain treats existing repositories as the normal case. [`examples/brownfield/README.md`](examples/brownfield/README.md) pins three public Python, Node.js, and Rust repositories and shows reproducible scan commands without publishing invented output.
+
+## Migrating from GitHub Spec Kit
+
+Use the explicit, read-only importer:
+
+```bash
+specgrain import-spec-kit path/to/specs/001-feature \
+  --source-revision <git-sha> \
+  --constitution path/to/.specify/memory/constitution.md
+```
+
+The importer preserves supported source information in a reviewable report, binds artifacts to their source revision/digests, and keeps legacy flat tasks as evidence rather than silently promoting them into SpecGrain's recursive ontology. See [`docs/migration-from-spec-kit.md`](docs/migration-from-spec-kit.md).
+
+## Evidence and trust
+
+Executor self-report is input, not authority. Independent verification binds the current SpecNode revision, WorkPacket digest, execution-result digest, observed changed paths, acceptance checks, evidence checks, and implementation revision. Append-oriented evidence records are hash chained.
+
+Read [`docs/trust-model.md`](docs/trust-model.md), [`docs/architecture.md`](docs/architecture.md), and [`docs/methodology.md`](docs/methodology.md) for the trust and delivery model.
+
+## Benchmarks: evidence before claims
+
+SpecGrainBench provides deterministic experiment plans, isolation/contamination preflight, run ledgers, and no-automatic-winner reports for prompt-only, GitHub Spec Kit, and SpecGrain arms. v0.1.0 does **not** claim an empirical winner because a public comparative run dataset has not yet been published. See [`docs/benchmark-report-v0.1.0.md`](docs/benchmark-report-v0.1.0.md) and [`docs/benchmark-strategy.md`](docs/benchmark-strategy.md).
+
+## Architecture in one view
+
+```text
+Recursive SpecNode
+  -> Lifecycle + refinement
+  -> Grain readiness
+  -> Local store + dependency DAG
+  -> Brownfield repository map
+  -> Context budget
+  -> WorkPacket + agent-neutral adapter
+  -> Independent verification + evidence
+  -> Method profiles + drift/metrics
+  -> Spec Kit import
+  -> SpecGrainBench
+```
+
+The runtime package has zero third-party dependencies. LLMs, coding agents, IDEs, and providers remain optional adapters around the deterministic kernel.
+
+## Project documents
+
+- [`docs/product-thesis.md`](docs/product-thesis.md) — product/category thesis.
+- [`docs/domain-model.md`](docs/domain-model.md) — recursive specification model.
+- [`docs/architecture.md`](docs/architecture.md) — deterministic kernel and boundaries.
+- [`docs/methodology.md`](docs/methodology.md) — Agile/Lean/PMP/Six-Sigma-inspired operating model.
+- [`docs/donor-policy.md`](docs/donor-policy.md) — provenance and donor-code rules.
+- [`docs/roadmap.md`](docs/roadmap.md) — milestone sequence.
+- [`docs/execution-master-plan.md`](docs/execution-master-plan.md) — canonical continuation and completion state.
+
+## Contributing and security
+
+Contributions are welcome as small, independently reviewable changes. Read [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md). For vulnerabilities and trust boundaries, read [`SECURITY.md`](SECURITY.md).
+
+SpecGrain is released under the [MIT License](LICENSE).
