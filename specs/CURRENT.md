@@ -2,50 +2,61 @@
 
 **Repository:** `TheHalfMoon/SpecGrain`  
 **Canonical branch:** `main`  
-**Last verified canonical main:** `7f4682f88dd9988f12f2a466c071beb67d660a2d`  
-**Closed specification:** `specs/003-refinement-tree/` — `CLOSED_CANONICAL`  
-**Active specification:** `specs/004-grain-readiness/`  
-**Active branch:** `feat/004-grain-readiness`  
-**Active status:** `CONTRACT_REMEDIATED_PR_REVIEW_PENDING`
+**Last verified canonical main:** `2a719a8ed2a7c22c0f65402c95361b32b230b511`  
+**Closed specification:** `specs/004-grain-readiness/` — `CLOSED_CANONICAL`  
+**Active specification:** `specs/005-cli-local-store/`  
+**Active branch:** `feat/005-cli-local-store`  
+**Active status:** `PR_READY`
 
 ## Current objective
 
-Close Grain readiness through fresh exact-head review after clarifying that readiness evaluation is not reusable lifecycle authority.
+Open and close the bounded Specification 005 PR from the reviewed local-store/CLI implementation, then re-read canonical `main` and begin `006-dependency-graph`.
 
-## Implemented readiness-v1 boundary
+## Implemented store-v1 boundary
 
-A candidate must be a structurally valid REFINING leaf with:
+Canonical state:
 
-- acceptance criteria;
-- bounded `scope_in`;
-- authorized `change_surface` or explicit exception;
-- risk level + recovery declaration;
-- context token estimate within declared budget;
-- named required evidence;
-- explicit empty unresolved-decision list;
-- explicit minimality choice + rationale;
-- explicit safety status + consistent requirements.
+```text
+.specgrain/
+  project.json
+  specs/*.json
+  policies/default.json
+```
 
-The readiness declaration lives in content-significant `metadata.readiness` and is versioned independently as readiness v1.
+005 owns strict JSON/store parsing, safe path/symlink rules, staged initialization, project/policy loading, refinement validation, readiness report/enforce policy, and CLI rendering/exit codes.
+
+ADR-0005 replaces the earlier provisional YAML preference for M2 with dependency-free JSON v1. YAML remains a possible later adapter, not a 005 dependency.
 
 ## Verification front
 
-- pytest: **182 passed** (116 existing + 66 readiness tests);
+- pytest: **236 passed** (182 existing + 54 005 tests);
 - compileall: **PASS**;
-- Ruff: **NOT RUN — unavailable locally**.
+- editable install: **PASS**;
+- `specgrain` and `python -m specgrain` entry points: **PASS**;
+- fresh `init -> check -> JSON` smoke: **PASS**;
+- console/module JSON equivalence: **PASS**;
+- line-length preflight for new/changed source/tests: **0 lines over 100**;
+- Ruff: **NOT RUN — unavailable locally; installation attempt blocked by offline DNS/network**.
 
-The F-001 remediation after this test run changes documentation/contracts only; product source and tests are unchanged. See `specs/004-grain-readiness/verification.md` and `review.md`.
+Exact implementation review found no material defect. `review.md` records accepted non-blocking concurrency boundary R-001; 005 does not claim cross-process transaction/locking semantics.
 
 ## Trust boundary
 
-004 verifies deterministic authored readiness content for supplied inputs. A report is not a durable transition token. Any future lifecycle mutator must re-read current candidate/current forest, re-evaluate readiness, and verify current state remains `REFINING` immediately before the write under its own concurrency/precondition rules.
+005 remains read-only during `check` and does not:
 
-004 does not prove repository reuse claims, compute context-source sizes, validate dependency DAGs, run evidence, apply method-specific policies, or persist/mutate lifecycle state.
+- mutate lifecycle state;
+- treat readiness reports as transition tokens;
+- validate the dependency DAG;
+- scan repository source;
+- execute subprocesses/agents;
+- create evidence-ledger semantics;
+- add generic spec mutation APIs.
 
 ## Immediate ordering
 
-1. Commit the F-001 contract remediation to PR #6.
-2. Re-run exact-head external/repository checks.
-3. Resolve every remaining material defect.
-4. Merge only with expected-head guard.
-5. Re-read canonical `main` and begin `005-cli-local-store`.
+1. Commit the review record and PR-ready state.
+2. Open PR #7 with exact-head evidence.
+3. Run fresh exact-head external/repository checks.
+4. Resolve every material defect.
+5. Merge only with expected-head guard.
+6. Re-read canonical `main` and begin `006-dependency-graph`.
