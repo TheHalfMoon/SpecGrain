@@ -6,35 +6,45 @@
 **Closed specification:** `specs/001-specnode-schema/` — `CLOSED_CANONICAL`  
 **Active specification:** `specs/002-lifecycle-state/`  
 **Active branch:** `feat/002-lifecycle-state`  
-**Active status:** `IMPLEMENTATION_PLANNED`
+**Active status:** `IMPLEMENTED_PR_PENDING`
 
 ## Current objective
 
-Define and implement canonical lifecycle state names plus deterministic structural transition validation without creating a bypass around readiness, scheduling, execution, or verification authorization.
+Close the bounded lifecycle implementation through exact-head PR review, then re-read canonical `main` and begin `003-refinement-tree`.
 
-## Explicit scope boundary
+## Implemented scope
 
-`002-lifecycle-state` MUST NOT implement:
+Specification 002 now provides:
 
-- Grain readiness evidence or promotion authority;
-- dependency/repository readiness authorization;
-- execution orchestration;
-- verification/evidence authorization;
-- recursive tree integrity;
-- dependency DAG algorithms;
-- CLI or store IO;
-- transition history persistence;
-- automatic resume to a pre-exception state.
+- the 14 canonical lifecycle states;
+- strict state parsing;
+- terminal and exceptional classifications;
+- the complete immutable structural adjacency graph;
+- explainable illegal-transition errors;
+- SpecNode validation of canonical state names;
+- exhaustive transition-matrix tests;
+- Specification 001 digest regression coverage.
+
+## Explicit trust boundary
+
+Lifecycle legality is not lifecycle authorization. Specification 002 exposes no generic state-mutating API. Later gate-owning specifications must authorize protected transitions after their own evidence/preconditions pass. See `docs/adr/0004-transition-legality-vs-authorization.md`.
+
+## Verification front
+
+Local available verification for the implementation:
+
+- pytest: **98 passed**;
+- compileall: **PASS**;
+- Specification 001 golden digest: **PASS**;
+- Ruff: **NOT RUN — unavailable locally**.
+
+See `specs/002-lifecycle-state/verification.md`.
 
 ## Immediate ordering
 
-1. Define the complete state set and legal adjacency graph.
-2. Define terminal and exceptional-state recovery semantics.
-3. Implement state parsing/normalization and explainable transition validation.
-4. Make `SpecNode` reject unknown lifecycle state strings while preserving known-state digest behavior.
-5. Verify the full transition matrix and all Specification 001 regression tests.
-6. Open and review a bounded exact-head PR.
-
-## Trust boundary
-
-Lifecycle legality is not lifecycle authorization. Specification 002 does not expose a general-purpose node state mutator. Later gate-owning specifications may apply a legal transition only after their own evidence/preconditions pass. See `docs/adr/0004-transition-legality-vs-authorization.md`.
+1. Open the bounded Specification 002 PR.
+2. Review the exact PR head and external checks.
+3. Resolve every material defect without bypassing scope or gates.
+4. Merge only with expected-head evidence.
+5. Re-read canonical `main`.
+6. Begin `003-refinement-tree`.

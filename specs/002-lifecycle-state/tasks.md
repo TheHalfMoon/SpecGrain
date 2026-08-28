@@ -9,19 +9,19 @@
 
 ## Implementation
 
-- [ ] T005 Add `SpecState`, lifecycle errors, immutable state classifications, and parser.
-- [ ] T006 Implement immutable structural transition graph and `allowed_transitions`.
-- [ ] T007 Implement `is_transition_allowed` and `require_transition_allowed`.
-- [ ] T008 Integrate canonical state validation into `SpecNode` without changing valid-state content digests.
-- [ ] T009 Export the 002 public lifecycle API from `specgrain`.
+- [x] T005 Add `SpecState`, lifecycle errors, immutable state classifications, and parser.
+- [x] T006 Implement immutable structural transition graph and `allowed_transitions`.
+- [x] T007 Implement `is_transition_allowed` and `require_transition_allowed`.
+- [x] T008 Integrate canonical state validation into `SpecNode` without changing valid-state content digests.
+- [x] T009 Export the 002 public lifecycle API from `specgrain`.
 
 ## Verification
 
-- [ ] T010 Add exhaustive 14x14 transition-matrix tests.
-- [ ] T011 Add parsing, classification, terminal-state, and exceptional-recovery tests.
-- [ ] T012 Add SpecNode state-validation and Specification 001 digest-regression tests.
-- [ ] T013 Run available full pytest/compile/lint checks and record exact evidence.
-- [ ] T014 Review exact branch diff for authorization bypass or 003/004 scope creep.
+- [x] T010 Add exhaustive 14x14 transition-matrix tests.
+- [x] T011 Add parsing, classification, terminal-state, and exceptional-recovery tests.
+- [x] T012 Add SpecNode state-validation and Specification 001 digest-regression tests.
+- [x] T013 Run available full pytest/compile/lint checks and record exact evidence: 98 pytest tests PASS, compileall PASS, Ruff NOT RUN because unavailable.
+- [x] T014 Review exact implementation diff at `526dcc4de03d2338f1842475573d2064ccb5a45f` for authorization bypass or 003/004 scope creep; none found.
 
 ## PR closeout
 
