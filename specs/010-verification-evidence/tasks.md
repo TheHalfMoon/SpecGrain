@@ -27,6 +27,6 @@
 
 ## PR closeout
 
-- [ ] T017 Open bounded implementation PR with exact-head evidence.
-- [ ] T018 Resolve every material exact-head external/repository review defect.
-- [ ] T019 Merge only with expected-head evidence, re-read canonical `main`, then begin `011-method-profiles`.
+- [x] T017 Open bounded implementation PR #12 with exact-head evidence.
+- [x] T018 Resolve every material exact-head review defect; manual exact-head review found none. CodeRabbit auto-review was skipped by repository star policy and Qodo was billing-blocked, so external review was recorded as unavailable rather than PASS.
+- [x] T019 Merge with expected head `8c8574923999b4195e05d599c7995d1c50e22653`; canonical `main` is `fa666854324aa131d6232df0bbb5971c0498f76e` with the reviewed head as second parent.
