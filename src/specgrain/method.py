@@ -104,16 +104,19 @@ def _non_empty(value: object) -> bool:
         return bool(value.strip())
     if isinstance(value, Mapping):
         return bool(value)
-    if isinstance(value, Sequence) and not isinstance(value, (str, bytes, bytearray)):
+    if isinstance(value, Sequence) and not isinstance(value, str | bytes | bytearray):
         return bool(value)
     return value is True
 
 
 def _required_evidence(node: SpecNode) -> tuple[str, ...]:
     raw = node.evidence.get("required")
-    if isinstance(raw, Sequence) and not isinstance(raw, (str, bytes, bytearray)):
-        if all(isinstance(item, str) for item in raw):
-            return tuple(raw)
+    if (
+        isinstance(raw, Sequence)
+        and not isinstance(raw, str | bytes | bytearray)
+        and all(isinstance(item, str) for item in raw)
+    ):
+        return tuple(raw)
     return ()
 
 

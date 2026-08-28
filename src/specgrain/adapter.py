@@ -257,11 +257,11 @@ def parse_agent_result(
 
     changed_paths = data.get("changed_paths", ())
     reported_evidence = data.get("reported_evidence", ())
-    if isinstance(changed_paths, (str, bytes, bytearray)) or not isinstance(
+    if isinstance(changed_paths, str | bytes | bytearray) or not isinstance(
         changed_paths, Sequence
     ):
         raise AgentAdapterError("changed_paths must be a sequence")
-    if isinstance(reported_evidence, (str, bytes, bytearray)) or not isinstance(
+    if isinstance(reported_evidence, str | bytes | bytearray) or not isinstance(
         reported_evidence, Sequence
     ):
         raise AgentAdapterError("reported_evidence must be a sequence")

@@ -109,7 +109,7 @@ def _is_integer(value: object) -> bool:
 
 
 def _string_sequence(value: object, *, allow_empty: bool) -> tuple[str, ...] | None:
-    if isinstance(value, (str, bytes, bytearray)) or not isinstance(value, Sequence):
+    if isinstance(value, str | bytes | bytearray) or not isinstance(value, Sequence):
         return None
 
     normalized: list[str] = []

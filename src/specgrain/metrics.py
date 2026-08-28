@@ -219,7 +219,7 @@ def _normalize_path(value: object, field_name: str) -> str:
 
 
 def _normalize_paths(values: object, field_name: str) -> tuple[str, ...]:
-    if isinstance(values, (str, bytes, bytearray)) or not isinstance(values, (list, tuple)):
+    if isinstance(values, str | bytes | bytearray) or not isinstance(values, list | tuple):
         raise MetricsValidationError(f"{field_name} must be a sequence of paths")
     normalized = tuple(_normalize_path(value, field_name) for value in values)
     if len(set(normalized)) != len(normalized):
@@ -302,8 +302,8 @@ def detect_drift(
 def aggregate_delivery_metrics(observations: object) -> DeliveryMetrics:
     """Aggregate reproducible process metrics without actor-level scoring."""
 
-    if isinstance(observations, (str, bytes, bytearray)) or not isinstance(
-        observations, (list, tuple)
+    if isinstance(observations, str | bytes | bytearray) or not isinstance(
+        observations, list | tuple
     ):
         raise MetricsValidationError("observations must be a sequence")
     items = tuple(observations)
