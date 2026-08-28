@@ -6,13 +6,13 @@
 **Closed specification:** `specs/003-refinement-tree/` — `CLOSED_CANONICAL`  
 **Active specification:** `specs/004-grain-readiness/`  
 **Active branch:** `feat/004-grain-readiness`  
-**Active status:** `IMPLEMENTATION_PLANNED`
+**Active status:** `IMPLEMENTED_REVIEW_PENDING`
 
 ## Current objective
 
-Make Grain readiness a deterministic, versioned, explainable binary contract rather than an agent/human label.
+Close Grain readiness through exact-head review without allowing a readiness report to become a lifecycle mutation or external-fact proof.
 
-## Readiness-v1 boundary
+## Implemented readiness-v1 boundary
 
 A candidate must be a structurally valid REFINING leaf with:
 
@@ -28,14 +28,22 @@ A candidate must be a structurally valid REFINING leaf with:
 
 The readiness declaration lives in content-significant `metadata.readiness` and is versioned independently as readiness v1.
 
+## Verification front
+
+- pytest: **182 passed** (116 existing + 66 readiness tests);
+- compileall: **PASS**;
+- Ruff: **NOT RUN — unavailable locally**.
+
+See `specs/004-grain-readiness/verification.md`.
+
 ## Trust boundary
 
 004 verifies deterministic authored readiness content. It does not prove repository reuse claims, compute context-source sizes, validate dependency DAGs, run evidence, apply method-specific policies, or mutate lifecycle state.
 
 ## Immediate ordering
 
-1. Implement readiness models/report.
-2. Implement forest/candidate and intrinsic gates.
-3. Add exhaustive focused tests plus all regressions.
-4. Review exact diff for scope creep.
-5. Open and close a bounded expected-head PR.
+1. Review exact uploaded diff for scope/trust-boundary defects.
+2. Open bounded PR with exact-head evidence.
+3. Resolve all external/exact-head defects.
+4. Merge only with expected-head guard.
+5. Re-read canonical `main` and begin `005-cli-local-store`.

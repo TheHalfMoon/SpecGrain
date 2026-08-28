@@ -9,22 +9,22 @@
 
 ## Implementation
 
-- [ ] T005 Add readiness enums, issue/report/error models, and version constant.
-- [ ] T006 Implement forest/candidate binding and structural blocker mapping.
-- [ ] T007 Implement leaf, state, acceptance, scope, and change-surface gates.
-- [ ] T008 Implement risk/recovery and context-fit gates.
-- [ ] T009 Implement evidence, unresolved-decision, minimality, and safety declaration gates.
-- [ ] T010 Implement deterministic report ordering and require helper.
-- [ ] T011 Export public readiness API.
+- [x] T005 Add readiness enums, issue/report/error models, and version constant.
+- [x] T006 Implement forest/candidate binding and structural blocker mapping.
+- [x] T007 Implement leaf, state, acceptance, scope, and change-surface gates.
+- [x] T008 Implement risk/recovery and context-fit gates.
+- [x] T009 Implement evidence, unresolved-decision, minimality, and safety declaration gates.
+- [x] T010 Implement deterministic report ordering and require helper.
+- [x] T011 Export public readiness API.
 
 ## Verification
 
-- [ ] T012 Add passing-candidate and no-mutation tests.
-- [ ] T013 Add structural/candidate/state/leaf tests.
-- [ ] T014 Add scope/change-surface/risk/context/evidence tests.
-- [ ] T015 Add readiness-version/decision/minimality/safety tests.
-- [ ] T016 Add issue-order/error-report tests and full regression run.
-- [ ] T017 Review exact diff for repository scan, dependency DAG, method profile, execution, or evidence-verification creep.
+- [x] T012 Add passing-candidate and no-mutation tests.
+- [x] T013 Add structural/candidate/state/leaf tests.
+- [x] T014 Add scope/change-surface/risk/context/evidence tests.
+- [x] T015 Add readiness-version/decision/minimality/safety tests.
+- [x] T016 Add issue-order/error-report tests and run all 001–004 tests: 182 pytest tests PASS, compileall PASS, Ruff NOT RUN because unavailable.
+- [ ] T017 Review exact uploaded diff for repository scan, dependency DAG, method profile, execution, evidence-verification, or lifecycle-mutation creep.
 
 ## PR closeout
 
