@@ -2,38 +2,41 @@
 
 **Repository:** `TheHalfMoon/SpecGrain`  
 **Canonical branch:** `main`  
-**Last verified canonical main:** `f7f245f6352f4f587f5e384af1312547ee4fa3e2`  
+**Last verified canonical main:** `2c3d87bd95f57286f494adbd84c58c8cd877bfd6`  
 **Closed specification:** `specs/002-lifecycle-state/` — `CLOSED_CANONICAL`  
-**Active work:** planning donor synthesis (documentation-only)  
-**Active branch:** `docs/planning-donor-synthesis`  
-**Active status:** `PLANNING_REVIEW`
+**Active specification:** `specs/003-refinement-tree/`  
+**Active branch:** `feat/003-refinement-tree`  
+**Active status:** `REMEDIATED_PR_REVIEW_PENDING`
 
 ## Current objective
 
-Incorporate bounded, provenance-recorded planning lessons from Ponytail, Karpathy-inspired coding guidelines, and GitHub Spec Kit before opening the next implementation specification.
+Close deterministic parent/child refinement-forest validation after the exact-head cycle-coverage remediation, then begin `004-grain-readiness`.
 
-## Scope boundary
+## Implemented scope
 
-This documentation-only work may refine methodology, roadmap, benchmark controls, and donor research. It MUST NOT change product source code or skip the canonical next implementation spec.
+- structured refinement issue codes;
+- duplicate-ID fail-closed behavior;
+- missing/self parent-child validation;
+- reciprocal parent/child consistency;
+- cycle detection across the union of resolvable `parent_id` and `children` declarations;
+- deterministic valid root query;
+- no runtime dependencies.
 
-## Canonical next implementation spec
+## Verification front
 
-`003-refinement-tree` — implement only deterministic parent/child structural validation, forest integrity, and malformed-recursion detection. Keep semantic decomposition quality, AI refinement, and Grain readiness outside 003.
+- pytest after remediation: **116 passed**;
+- compileall: **PASS**;
+- Ruff: **NOT RUN — unavailable locally**.
 
-## Donor-design rules
+## Explicit scope boundary
 
-- Treat external projects as design references unless a separate provenance record authorizes code adaptation.
-- Convert useful agent instructions into SpecGrain-native contracts/metrics where possible instead of growing prompt text.
-- Minimality must follow understanding and must not weaken security, validation, accessibility, recovery, or acceptance.
-- Every implementation change should trace to authorized outcome/scope.
-- Benchmark methods must be isolated against cross-arm plugin/context/workspace contamination.
-
-See `docs/research/planning-donor-synthesis-2026-08-28.md`.
+003 does not judge semantic decomposition quality, acceptance coverage, minimality, Grain readiness, dependency DAG ordering, execution scheduling, CLI/store behavior, or AI refinement.
 
 ## Immediate ordering
 
-1. Review and merge the bounded planning-synthesis PR if exact-head checks pass.
-2. Re-read canonical `main`.
-3. Create `feat/003-refinement-tree`.
-4. Write the narrow 003 spec/plan/tasks.
-5. Implement only structural refinement-tree behavior.
+1. Push the F-001 remediation to PR #5.
+2. Re-run exact-head external/repository checks.
+3. Resolve every remaining material defect.
+4. Merge only with expected-head evidence.
+5. Re-read canonical `main`.
+6. Begin `004-grain-readiness`, where donor-derived success-criteria/minimality/safety-floor requirements become active.
