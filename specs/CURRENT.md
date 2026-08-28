@@ -2,39 +2,27 @@
 
 **Repository:** `TheHalfMoon/SpecGrain`  
 **Canonical branch:** `main`  
-**Last verified canonical main:** `1243cc584da718e6eb986b576b09777ff5a0056e`  
-**Closed specification:** `specs/012-diff-drift-metrics/` — `CLOSED_CANONICAL`  
-**Active specification:** `specs/013-spec-kit-import/`  
-**Active branch:** `feat/013-spec-kit-import`  
+**Last verified canonical main:** `4241923f58612682ef8107e18e0937b2cc1b26f7`  
+**Closed specification:** `specs/013-spec-kit-import/` — `CLOSED_CANONICAL`  
+**Active specification:** `specs/014-agent-adapters/`  
+**Active branch:** `feat/014-agent-adapters`  
 **Active status:** `PR_READY`
 
-## Canonical 012 closeout evidence
+## Canonical 013 closeout evidence
 
-Specification 012 closed through PR #14. Final reviewed PR head `ee890f836acf9d48eb6a2df732ee132087ec315b` was merged with expected-head protection into canonical merge commit `1243cc584da718e6eb986b576b09777ff5a0056e`; the merge commit's second parent is the exact reviewed head.
+Specification 013 closed through PR #15. Final reviewed PR head `f01fec87813540783bca046d1e1de5ababdc02ee` was merged with expected-head protection into canonical merge commit `4241923f58612682ef8107e18e0937b2cc1b26f7`; the merge commit's second parent is the exact reviewed head.
 
-## 013 compatibility references
+## 014 exact product evidence
 
-Live `github/spec-kit` `main` template identities re-read before implementation:
-
-- constitution template `a4670ff46919b276a4c9663b4ca51830108fcfc0`;
-- spec template `ceb28776215a098e977650ac090c785dcbf53651`;
-- plan template `36f2eab16880bac670fe43cbe7ef2b9bc8c3aa2f`;
-- tasks template `7fff087cc5a3c51a889d865fd9126607a032d233`.
-
-## 013 exact product evidence
-
-Exact product commit: `49817d5c99adb131125f8e3fc4f605cc6e42c0e3`.
+Product commit: `e48c0e07f1c9d135e378ff3ca367a9db088c3ec8`.
 
 ```text
-src/specgrain/speckit.py          4d1048723af296d178deaa2c23a51570df0c0100
-src/specgrain/cli.py              6dd2437fe3490aa6153bed75966d52b5c46d699b
-src/specgrain/__init__.py         ccee33cee4c28a1764e0a2fd500a40a30e5f9dcf
-tests/test_speckit.py             3c9d8257723985b2c6c174788f70a0d994054c35
-tests/test_speckit_cli.py         2f926b3189c7c1a24a884b28eb587612c0a154a5
+src/specgrain/adapter.py          81d134e9078d05474a74bceb78f256f839a89d0d
+tests/test_adapter.py             3a6bbb9a4f7fa9b2967bb7cac15cd45bf3a6fb28
 ```
 
-The exact candidate recorded above passed 480 pytest tests, compileall, editable install using available local build dependencies, console/module help parity, and 0 changed lines over 100 characters. Ruff was unavailable and is not claimed PASS.
+Verification-only commit `4cbec602e522384839a300e30953c2c50c2e9076` changed only the workflow relative to the exact product commit. GitHub Actions run `33195455173` completed successfully with install, full pytest regression, 014-surface Ruff, full-repository Ruff diagnostic, compileall, entry-point parity, and changed-line-length gates all PASS.
 
 ## Immediate ordering
 
-Open the bounded 013 PR at the current documentation head, resolve every material exact-head review defect, merge only with expected-head evidence, prove canonical `main`, then begin 014 Agent Adapters immediately.
+Open the bounded 014 PR at the current documentation head, resolve every material exact-head review defect, merge only with expected-head evidence, prove canonical `main`, then begin 015 SpecGrainBench immediately.
