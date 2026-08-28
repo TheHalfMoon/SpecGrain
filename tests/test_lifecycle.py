@@ -97,10 +97,10 @@ def test_parse_rejects_noncanonical_states(value: object) -> None:
 
 
 def test_classifications_are_exact_and_immutable() -> None:
-    assert TERMINAL_STATES == frozenset({SpecState.CANCELLED, SpecState.SUPERSEDED})
-    assert EXCEPTIONAL_STATES == frozenset(
+    assert frozenset({SpecState.CANCELLED, SpecState.SUPERSEDED}) == TERMINAL_STATES
+    assert frozenset(
         {SpecState.BLOCKED, SpecState.FAILED, SpecState.STALE}
-    )
+    ) == EXCEPTIONAL_STATES
 
 
 @pytest.mark.parametrize("source", list(SpecState))
