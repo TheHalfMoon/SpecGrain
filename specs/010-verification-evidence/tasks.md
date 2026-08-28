@@ -9,21 +9,21 @@
 
 ## Implementation
 
-- [ ] T005 Add independent verification models, validation, normalization, and blocker codes.
-- [ ] T006 Bind verification to current spec revision, exact packet/result digests, and implementation revision.
-- [ ] T007 Add executor/observed changed-path equality and authorized path-prefix checks.
-- [ ] T008 Add required acceptance/evidence checks plus independent-check minimum.
-- [ ] T009 Add strict VerificationReport/EvidenceRecord round-trip and tamper rejection.
-- [ ] T010 Add bounded strict evidence-chain load and append with fork rollback.
-- [ ] T011 Add deterministic read-only `specgrain prove` and bounded public exports.
+- [x] T005 Add independent verification models, validation, normalization, and blocker codes.
+- [x] T006 Bind verification to current spec revision, exact packet/result digests, and implementation revision.
+- [x] T007 Add executor/observed changed-path equality and authorized path-prefix checks.
+- [x] T008 Add required acceptance/evidence checks plus independent-check minimum.
+- [x] T009 Add strict VerificationReport/EvidenceRecord round-trip and tamper rejection.
+- [x] T010 Add bounded strict evidence-chain load and append with fork rollback.
+- [x] T011 Add deterministic read-only `specgrain prove` and bounded public exports.
 
 ## Verification
 
-- [ ] T012 Add verification authority/revision/scope/check tests.
-- [ ] T013 Add evidence digest/strict JSON/symlink/oversize/fork/missing-link tests.
-- [ ] T014 Add append rollback/proof status/CLI determinism/no-mutation tests.
-- [ ] T015 Run all 001–010 tests plus compile/package/entry-point and available lint/static checks.
-- [ ] T016 Review exact uploaded diff for executor command execution, lifecycle mutation, store-parser changes, provider logic, or dependency creep.
+- [x] T012 Add verification authority/revision/scope/check tests.
+- [x] T013 Add evidence digest/strict JSON/symlink/oversize/fork/missing-link tests.
+- [x] T014 Add append rollback/proof status/CLI determinism/no-mutation tests.
+- [x] T015 Run all 001–010 tests plus compile/package/entry-point and available lint/static checks.
+- [x] T016 Review exact uploaded diff for executor command execution, lifecycle mutation, store-parser changes, provider logic, or dependency creep.
 
 ## PR closeout
 
