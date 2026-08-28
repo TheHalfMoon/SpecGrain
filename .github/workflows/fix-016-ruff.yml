@@ -6,7 +6,7 @@ on:
       - fix/016-ruff-baseline
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   prepare:
@@ -53,3 +53,15 @@ jobs:
           name: fixed-specgrain-source
           path: src/specgrain
           if-no-files-found: error
+      - name: Commit verified source fixes
+        shell: bash
+        run: |
+          git add src/specgrain
+          if git diff --cached --quiet; then
+            echo "No verified source fixes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "style: apply verified Ruff baseline fixes [skip ci]"
+          git push origin HEAD:fix/016-ruff-baseline
