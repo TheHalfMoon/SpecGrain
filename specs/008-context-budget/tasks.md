@@ -27,6 +27,6 @@
 
 ## PR closeout
 
-- [ ] T017 Open bounded implementation PR with exact-head evidence.
-- [ ] T018 Resolve every material exact-head external/repository review defect.
-- [ ] T019 Merge only with expected-head evidence, re-read canonical `main`, then begin `009-work-packet`.
+- [x] T017 Open bounded implementation PR #10 with exact-head evidence at `36d9a2f551088f5c38b42d7959c8521c1cf3b0de`.
+- [x] T018 Resolve material exact-head external/repository review defects; CodeRabbit reported no actionable comments, its docstring-coverage warning was assessed non-material to the repository contract, and Qodo was unavailable due expired trial.
+- [x] T019 Merge with expected head `36d9a2f551088f5c38b42d7959c8521c1cf3b0de`; canonical merge commit `e1336acc3f764241d79d5051f34309ae2f66d6e4` has the reviewed head as second parent.
