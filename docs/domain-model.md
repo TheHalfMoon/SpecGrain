@@ -68,6 +68,8 @@ Optional terminal/control states:
 
 State transitions must be validated by deterministic rules. An agent response cannot directly assign `VERIFIED`.
 
+Specification 002 defines the complete adjacency graph. Structural legality and transition authorization are intentionally different concepts: a legal edge such as `REFINING -> GRAIN` does not prove the readiness gate has passed. Gate-owning subsystems authorize protected transitions. See `docs/adr/0004-transition-legality-vs-authorization.md`.
+
 ## 5. Decomposition edge
 
 A parent-child edge means "this child refines part of the parent's responsibility." Children collectively must preserve parent intent. Decomposition validation should detect:
@@ -133,7 +135,7 @@ It should include:
 - acceptance results;
 - test/static-check results;
 - scope-compliance result;
-- provenance checks;
+- provenance checks where applicable;
 - residual risks;
 - evidence artifact digests;
 - final verification decision.

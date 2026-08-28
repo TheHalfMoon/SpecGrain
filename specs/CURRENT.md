@@ -2,43 +2,39 @@
 
 **Repository:** `TheHalfMoon/SpecGrain`  
 **Canonical branch:** `main`  
-**Last verified canonical main:** `36dcaee3298c4edbb938bb5ded5ba750523923b8`  
-**Closed specification:** `specs/000-foundation/` — `CLOSED_CANONICAL`  
-**Active specification:** `specs/001-specnode-schema/`  
-**Active branch:** `feat/001-specnode-schema`  
+**Last verified canonical main:** `619b7501fc659588fc344af8835cc910a42bff31`  
+**Closed specification:** `specs/001-specnode-schema/` — `CLOSED_CANONICAL`  
+**Active specification:** `specs/002-lifecycle-state/`  
+**Active branch:** `feat/002-lifecycle-state`  
 **Active status:** `IMPLEMENTATION_PLANNED`
 
 ## Current objective
 
-Implement the smallest deterministic kernel slice: the recursive `SpecNode` schema, stable repository-local ID validation, normalized serialization, and content revision digest.
+Define and implement canonical lifecycle state names plus deterministic structural transition validation without creating a bypass around readiness, scheduling, execution, or verification authorization.
 
 ## Explicit scope boundary
 
-`001-specnode-schema` MUST NOT implement:
+`002-lifecycle-state` MUST NOT implement:
 
-- lifecycle transition rules;
-- parent/child tree integrity beyond local field validation;
+- Grain readiness evidence or promotion authority;
+- dependency/repository readiness authorization;
+- execution orchestration;
+- verification/evidence authorization;
+- recursive tree integrity;
 - dependency DAG algorithms;
-- Grain readiness;
-- YAML repository storage;
-- CLI commands;
-- repository scanning/context selection;
-- WorkPackets;
-- execution adapters;
-- verification/evidence ledgers.
-
-Those belong to later specifications in `docs/roadmap.md`.
+- CLI or store IO;
+- transition history persistence;
+- automatic resume to a pre-exception state.
 
 ## Immediate ordering
 
-1. Finalize `001` contract decisions in its spec and plan.
-2. Scaffold the dependency-light Python package and tests.
-3. Implement ID/value validation and immutable SpecNode construction.
-4. Implement deterministic canonical serialization.
-5. Implement semantic content revision digest.
-6. Run focused and full available quality checks.
-7. Open a bounded implementation PR and satisfy exact-head review gates.
+1. Define the complete state set and legal adjacency graph.
+2. Define terminal and exceptional-state recovery semantics.
+3. Implement state parsing/normalization and explainable transition validation.
+4. Make `SpecNode` reject unknown lifecycle state strings while preserving known-state digest behavior.
+5. Verify the full transition matrix and all Specification 001 regression tests.
+6. Open and review a bounded exact-head PR.
 
-## Bootstrap boundary
+## Trust boundary
 
-`.specify/` remains repository-development scaffolding only. Product runtime state will be `.specgrain/` and must not require GitHub Spec Kit.
+Lifecycle legality is not lifecycle authorization. Specification 002 does not expose a general-purpose node state mutator. Later gate-owning specifications may apply a legal transition only after their own evidence/preconditions pass. See `docs/adr/0004-transition-legality-vs-authorization.md`.
