@@ -37,6 +37,10 @@ def test_permanent_ci_covers_supported_launch_platforms() -> None:
         "--force-reinstall",
     ):
         assert command in workflow
+    assert "actions/checkout@v7" in workflow
+    assert "actions/setup-python@v7" in workflow
+    assert "actions/checkout@v4" not in workflow
+    assert "actions/setup-python@v5" not in workflow
     assert workflow.index("python -m ruff check src") < workflow.index(
         "python -m pip install -e . --no-deps"
     )
@@ -47,6 +51,10 @@ def test_release_workflow_is_post_ci_immutable_and_installable() -> None:
     assert "workflow_run" in workflow
     assert "head_branch == 'main'" in workflow
     assert "workflow_run.conclusion == 'success'" in workflow
+    assert "actions/checkout@v7" in workflow
+    assert "actions/setup-python@v7" in workflow
+    assert "actions/checkout@v4" not in workflow
+    assert "actions/setup-python@v5" not in workflow
     assert "RELEASE_SHA: ${{ github.event.workflow_run.head_sha }}" in workflow
     assert "git tag v0.1.0 \"$RELEASE_SHA\"" in workflow
     assert "git push origin refs/tags/v0.1.0" in workflow
