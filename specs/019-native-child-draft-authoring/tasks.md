@@ -23,12 +23,12 @@
 
 - [x] T011 Add API coverage for normal/nested child creation, non-DRAFT rejection, invalid parent/forest, journal blocking, recovery phases, and ambiguous-state refusal.
 - [x] T012 Add CLI coverage for root compatibility, child text/JSON, recovery text/JSON, errors, and internal-error redaction.
-- [ ] T013 Run exact regression, Ruff, compileall, CLI help parity, package build/install, and permanent cross-platform CI on the exact implementation head.
-- [ ] T014 Review the exact implementation diff for lifecycle authority, semantic overwrite, journal/recovery safety, unsupported atomicity claims, dependency creep, and unrelated scope.
+- [x] T013 Run exact regression, Ruff, compileall, CLI help parity, package build/install, and permanent cross-platform CI on product head `994f40f84ad3696b4037ea05eaec746c19bb473f`; run `33247361906` succeeded across all five cells and Ubuntu/Python 3.11 recorded `554 passed`.
+- [x] T014 Review exact product head `994f40f84ad3696b4037ea05eaec746c19bb473f` for lifecycle authority, semantic overwrite, journal/recovery safety, unsupported atomicity claims, dependency creep, and unrelated scope; record findings/repairs in `review.md`.
 
 ## Product PR and canonical closeout
 
-- [ ] T015 Open the bounded implementation PR from the exact canonical shaping merge and resolve every material exact-head finding forward.
+- [x] T015 Open bounded implementation PR #27 from exact canonical shaping merge `e10cce6b11cbe4724881936858d7721baa938667` and resolve every material product/verification finding forward through reviewed product head `994f40f84ad3696b4037ea05eaec746c19bb473f`.
 - [ ] T016 Merge only with expected-head evidence and prove the exact product merge plus canonical post-merge CI.
 - [ ] T017 Record exact implementation/review/merge evidence and run a fresh post-019 product audit.
 - [ ] T018 Close 019 through a documentation-only exact-head PR, expected-head merge, and post-closeout canonical CI before claiming `CLOSED_CANONICAL`.
