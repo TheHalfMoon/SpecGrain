@@ -134,6 +134,7 @@ from .store import (
     StoreError,
     StoreExistsError,
     StoreValidationError,
+    create_draft_spec,
     init_project,
     load_project,
 )
@@ -263,6 +264,7 @@ __all__ = [
     "StoreValidationError",
     "allowed_transitions",
     "check_project",
+    "create_draft_spec",
     "dependency_waves",
     "evaluate_context_budget",
     "evaluate_grain_readiness",

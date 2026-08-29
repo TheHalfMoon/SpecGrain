@@ -2,7 +2,7 @@
 
 ## Status
 
-`SHAPED`
+`IMPLEMENTING`
 
 ## Outcome
 
@@ -40,7 +40,7 @@ The post-v0.1 product audit at `docs/research/post-v0.1-product-audit-2026-08-29
 
 1. `specgrain draft <path> --title <text> --outcome <text>` creates exactly one canonical root SpecNode under `.specgrain/specs/` when the local project is valid.
 2. The created node is fixed to state `DRAFT`, has no parent, children, dependencies, acceptance conditions, change surface, or readiness declaration, and therefore receives no implied Grain/readiness/execution authority.
-3. IDs are allocated deterministically as the lowest unused canonical `SG-######` identifier representable by store v1.
+3. IDs are allocated deterministically as the lowest unused positive canonical identifier from `SG-000001` through `SG-999999`.
 4. The creation boundary validates title, outcome, rationale, store structure, and the resulting SpecNode through existing deterministic contracts before persistence.
 5. Existing spec files are never overwritten. A collision or write race fails closed without replacing prior canonical content.
 6. Text output identifies the created ID, state, relative store path, and semantic revision. `--json` emits deterministic machine-readable data for the same facts.
@@ -60,6 +60,6 @@ The post-v0.1 product audit at `docs/research/post-v0.1-product-audit-2026-08-29
 
 ## Dependencies
 
-Specifications 000 through 016 are `CLOSED_CANONICAL`. Specification 017 is shaped from canonical `main` `7c343841424ca48207f9c42eae725a53213d19e5` and the live post-v0.1 audit.
+Specifications 000 through 016 are `CLOSED_CANONICAL`. Specification 017 was shaped from canonical `main` `7c343841424ca48207f9c42eae725a53213d19e5`; the shaped authority chain became canonical at merge `5c7783dde897c975b3519b37bfd45b547244b273` before implementation began.
 
 No constitution amendment or new ADR is required: the change implements the existing deterministic local-store and progressive CLI architecture without changing a durable architectural decision.

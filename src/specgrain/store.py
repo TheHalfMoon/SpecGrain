@@ -8,6 +8,7 @@ import re
 import shutil
 import tempfile
 from collections.abc import Mapping
+from contextlib import suppress
 from dataclasses import dataclass
 from enum import StrEnum
 from pathlib import Path
@@ -40,7 +41,7 @@ class StoreError(ValueError):
 
 
 class StoreExistsError(StoreError):
-    """Raised when initialization would overwrite an existing store."""
+    """Raised when initialization or creation would overwrite existing state."""
 
 
 class StoreValidationError(StoreError):
@@ -197,9 +198,34 @@ def _strict_json(path: Path, location: str) -> Mapping[str, object]:
     return value
 
 
+def _json_text(value: Mapping[str, object]) -> str:
+    return json.dumps(value, sort_keys=True, ensure_ascii=False, indent=2, allow_nan=False) + "\n"
+
+
 def _write_json(path: Path, value: Mapping[str, object]) -> None:
-    text = json.dumps(value, sort_keys=True, ensure_ascii=False, indent=2, allow_nan=False) + "\n"
-    path.write_text(text, encoding="utf-8", newline="\n")
+    path.write_text(_json_text(value), encoding="utf-8", newline="\n")
+
+
+def _write_new_json(path: Path, value: Mapping[str, object], location: str) -> None:
+    """Create one JSON file without ever replacing an existing path."""
+
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL
+    try:
+        descriptor = os.open(path, flags, 0o644)
+    except FileExistsError as exc:
+        raise StoreExistsError(location, "spec already exists; refusing overwrite") from exc
+    except OSError as exc:
+        raise StoreValidationError(location, f"cannot create spec file: {exc}") from exc
+
+    try:
+        with os.fdopen(descriptor, "w", encoding="utf-8", newline="\n") as handle:
+            handle.write(_json_text(value))
+            handle.flush()
+            os.fsync(handle.fileno())
+    except Exception:
+        with suppress(OSError):
+            path.unlink(missing_ok=True)
+        raise
 
 
 def _repository_root(root: str | os.PathLike[str]) -> Path:
@@ -330,6 +356,46 @@ def load_project(root: str | os.PathLike[str] = ".") -> LocalProject:
         policy=policy,
         specs=tuple(sorted(specs, key=lambda node: node.id)),
     )
+
+
+def _next_draft_id(specs: tuple[SpecNode, ...]) -> str:
+    used = {int(node.id.removeprefix("SG-")) for node in specs}
+    for number in range(1, 1_000_000):
+        if number not in used:
+            return f"SG-{number:06d}"
+    raise StoreValidationError(
+        ".specgrain/specs", "no positive six-digit SpecNode identifiers remain"
+    )
+
+
+def create_draft_spec(
+    root: str | os.PathLike[str] = ".",
+    *,
+    title: str,
+    outcome: str,
+    rationale: str = "",
+) -> SpecNode:
+    """Create one validated root DRAFT without overwriting repository-local state."""
+
+    project = load_project(root)
+    refinement_issues = validate_refinement(project.specs)
+    if refinement_issues:
+        first = refinement_issues[0]
+        raise StoreValidationError(
+            ".specgrain/specs",
+            f"existing refinement is invalid: {first.code.value}: {first.message}",
+        )
+
+    node = SpecNode(
+        id=_next_draft_id(project.specs),
+        title=title,
+        outcome=outcome,
+        rationale=rationale,
+        state=SpecState.DRAFT.value,
+    )
+    relative_path = f".specgrain/specs/{node.id}.json"
+    _write_new_json(project.root / relative_path, node.to_dict(), relative_path)
+    return node
 
 
 def check_project(root: str | os.PathLike[str] = ".") -> ProjectCheckResult:

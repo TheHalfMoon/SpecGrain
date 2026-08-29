@@ -7,10 +7,11 @@ import json
 import sys
 from collections.abc import Sequence
 
+from .model import SpecValidationError
 from .project import NextResult, check_project, next_project
 from .repository import RepositoryMap, RepositoryScanError, scan_repository
 from .speckit import SpecKitImportError, SpecKitImportReport, load_spec_kit_feature
-from .store import ProjectCheckResult, StoreError, init_project
+from .store import ProjectCheckResult, StoreError, create_draft_spec, init_project
 from .verification import ProofResult, VerificationError, load_proof
 
 
@@ -21,6 +22,13 @@ def _parser() -> argparse.ArgumentParser:
     init = subparsers.add_parser("init", help="initialize repository-local SpecGrain state")
     init.add_argument("path", nargs="?", default=".")
     init.add_argument("--project-id")
+
+    draft = subparsers.add_parser("draft", help="create a native root DRAFT SpecNode")
+    draft.add_argument("path", nargs="?", default=".")
+    draft.add_argument("--title", required=True)
+    draft.add_argument("--outcome", required=True)
+    draft.add_argument("--rationale", default="")
+    draft.add_argument("--json", action="store_true", dest="as_json")
 
     check = subparsers.add_parser("check", help="validate repository-local SpecGrain state")
     check.add_argument("path", nargs="?", default=".")
@@ -148,6 +156,15 @@ def _render_spec_kit_import_text(result: SpecKitImportReport) -> str:
     return "\n".join(lines)
 
 
+def _draft_payload(spec_id: str, state: str, revision_digest: str) -> dict[str, str]:
+    return {
+        "file": f".specgrain/specs/{spec_id}.json",
+        "revision_digest": revision_digest,
+        "spec_id": spec_id,
+        "state": state,
+    }
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     """Run the SpecGrain CLI and return a process-compatible exit code."""
 
@@ -164,6 +181,50 @@ def main(argv: Sequence[str] | None = None) -> int:
         print("SpecGrain init: PASS")
         print(f"Project: {project.manifest.project_id}")
         print("Store: .specgrain")
+        return 0
+
+    if args.command == "draft":
+        try:
+            node = create_draft_spec(
+                args.path,
+                title=args.title,
+                outcome=args.outcome,
+                rationale=args.rationale,
+            )
+        except (StoreError, SpecValidationError) as exc:
+            if args.as_json:
+                print(
+                    json.dumps(
+                        {"error": str(exc), "valid": False},
+                        sort_keys=True,
+                        ensure_ascii=False,
+                        separators=(",", ":"),
+                    ),
+                    file=sys.stderr,
+                )
+            else:
+                print(f"SpecGrain draft: FAIL\n- {exc}", file=sys.stderr)
+            return 1
+        except Exception:
+            print("SpecGrain draft: FAIL\n- internal error", file=sys.stderr)
+            return 1
+
+        payload = _draft_payload(node.id, node.state, node.revision_digest)
+        if args.as_json:
+            print(
+                json.dumps(
+                    payload,
+                    sort_keys=True,
+                    ensure_ascii=False,
+                    separators=(",", ":"),
+                )
+            )
+        else:
+            print("SpecGrain draft: CREATED")
+            print(f"Spec: {node.id}")
+            print(f"State: {node.state}")
+            print(f"File: {payload['file']}")
+            print(f"Revision: {node.revision_digest}")
         return 0
 
     if args.command == "check":
