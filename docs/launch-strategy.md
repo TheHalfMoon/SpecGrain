@@ -10,19 +10,27 @@ Make SpecGrain understandable in under one minute and credible after one hour of
 
 SpecGrain recursively refines work until executable leaves are small enough to understand, contextually isolate, verify, recover, and prove.
 
-## v0.1.0 launch demo
+## Current v0.3.0 launch demo
 
-The public demo uses only release surfaces that exist:
+The public demo uses only surfaces shipped in the current versioned release:
 
 ```bash
-python -m pip install .
-specgrain scan .
-python examples/zero_to_verified.py
+python -m pip install "https://github.com/TheHalfMoon/SpecGrain/archive/refs/tags/v0.3.0.zip"
+mkdir specgrain-demo
+specgrain init specgrain-demo --project-id demo
+specgrain draft specgrain-demo \
+  --title "Add a bounded health check" \
+  --outcome "The service exposes one deterministic health endpoint"
+specgrain check specgrain-demo
 ```
 
-The first command installs the dependency-light package. `scan` shows bounded brownfield repository facts. The example then demonstrates Grain readiness, context budgeting, a digest-bound WorkPacket, independent verification, append-oriented evidence, and proof.
+The release installs with zero runtime third-party dependencies. `init` creates repository-local state, `draft` creates a validated root `DRAFT`, and `check` validates that state without promoting lifecycle status or granting execution authority.
 
-Earlier planning examples referenced future orchestration commands. Those commands are not part of the v0.1.0 CLI and must not be advertised as shipped behavior.
+The same release also ships bounded brownfield scanning, child-DRAFT authoring through `draft --parent`, explicit supported transaction recovery through `recover`, dependency eligibility through `next`, evidence loading through `prove`, and read-only Spec Kit migration reports through `import-spec-kit`.
+
+For a source checkout, `python examples/zero_to_verified.py` demonstrates Grain readiness, context budgeting, a digest-bound WorkPacket, independent verification, append-oriented evidence, and proof. It is exercised by the repository test suite rather than advertised as precomputed benchmark output.
+
+Future orchestration commands, hosted surfaces, generic lifecycle editing, and provider execution are not part of v0.3.0 and must not be advertised as shipped behavior.
 
 ## Public proof order
 
