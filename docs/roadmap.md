@@ -2,7 +2,7 @@
 
 The roadmap is intentionally progressive. Only the nearest active specification should have implementation-level detail. Future work is shaped from current evidence rather than pre-authorized by stale backlog detail.
 
-**Current program state:** Specifications 000–019 are `CLOSED_CANONICAL`. Specification 020 product delivery is canonical at `70dd66aba0e68ae710e6ef12605ed153d107bab4`; canonical product CI `33249920673` succeeded and GitHub Release `378962445` / tag `v0.3.0` was published by Release workflow `33249956337`. 020 remains in documentation-only closeout until the exact closeout merge, post-closeout CI, and historical v0.3.0 no-mutation verification succeed. The fresh post-v0.3 audit selects no evidence-supported successor.
+**Current program state:** Specifications 000–020 are `CLOSED_CANONICAL`. Specification 020 product merge `70dd66aba0e68ae710e6ef12605ed153d107bab4` passed canonical product CI `33249920673`; GitHub Release `378962445` / tag `v0.3.0` was published by Release workflow `33249956337`; documentation-only closeout merged as `123e1ded9d6bdc1aa15767ec7185bfffab5f8eba`; post-closeout CI `33250422380` succeeded; Release verification `33250468134` / job `99095156240` preserved historical `v0.3.0` at exact product source `70dd66a...` without mutation. The fresh post-v0.3 audit selects no evidence-supported successor, so the program is `POST_V0.3_OBSERVATION` with no active specification.
 
 ## M0 — Foundation
 
@@ -54,9 +54,9 @@ The initial v0.1 sequence ended at Specification 016. Exact release and closeout
 - **017 — Native DRAFT CLI:** `CLOSED_CANONICAL`; adds deterministic creation of the first native root `DRAFT` after `specgrain init` without Grain/readiness/execution authority.
 - **018 — v0.2.0 Authoring Release:** `CLOSED_CANONICAL`; product merge `baf00995a7ae9cf01b6196d68c62f4eca2c1ec85`, Release `378936896`, closeout merge `c5282caa29fbfeb8c118755766b6a7b8a49d2781`.
 - **019 — Native Child-DRAFT Authoring:** `CLOSED_CANONICAL`; product merge `d6727b6c5cdafcf6265b6d999418c0fe853249a7`, closeout merge `3f8f3d825c3171a3a9ac7761ee5bc642e68a9d2d`; adds recoverable reciprocal child DRAFT authoring and explicit recovery without lifecycle promotion.
-- **020 — v0.3.0 Recursive Authoring Release:** product delivery canonical at `70dd66aba0e68ae710e6ef12605ed153d107bab4`; Release `378962445` / `v0.3.0` publishes the already-canonical root/child DRAFT and explicit recovery surface with no new product behavior; documentation-only closeout pending.
+- **020 — v0.3.0 Recursive Authoring Release:** `CLOSED_CANONICAL`; product merge `70dd66aba0e68ae710e6ef12605ed153d107bab4`; Release `378962445` / `v0.3.0`; closeout merge `123e1ded9d6bdc1aa15767ec7185bfffab5f8eba`; post-closeout CI `33250422380`; historical no-mutation Release verification `33250468134` / job `99095156240`. It publishes the already-canonical root/child DRAFT and explicit recovery surface with no new product behavior.
 
-Fresh audit `docs/research/post-v0.3-product-audit-2026-08-29.md` selects no evidence-supported successor after 020. Once 020 closes canonically, the roadmap enters observation rather than pre-authorizing another specification. A later successor requires fresh user/adoption evidence, a reproducible defect/security finding, controlled benchmark data, or a clearly bounded interoperability/governance blocker.
+Fresh audit `docs/research/post-v0.3-product-audit-2026-08-29.md` selects no evidence-supported successor after 020. The roadmap is now in observation rather than pre-authorizing another specification. A later successor requires fresh user/adoption evidence, a reproducible defect/security finding, controlled benchmark data, or a clearly bounded interoperability/governance blocker.
 
 ## Explicitly deferred
 
@@ -75,4 +75,4 @@ Future work requires a newly shaped specification and fresh evidence. No item be
 - PyPI publication or broader distribution changes without publishing-governance shaping;
 - empirical benchmark superiority claims without a reproducible completed dataset.
 
-No successor after 020 is implied or currently selected. Observation is the current evidence-shaped frontier once 020 canonical closeout completes.
+No successor after 020 is implied or currently selected. Observation is the current evidence-shaped frontier.
