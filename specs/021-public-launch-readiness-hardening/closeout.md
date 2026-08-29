@@ -1,9 +1,11 @@
 # Closeout — Specification 021 Public Launch Readiness Hardening
 
-**Status:** `CLOSEOUT_PENDING_CANONICAL`  
+**Status:** `CLOSED_CANONICAL`  
 **Canonical shaping merge:** `5c8cfe64f5481c42c53b6fefa91f92e7a2c68811`  
 **Implementation head:** `e95bbafdd2bc66ea67e40e0690c053806acf85c3`  
 **Canonical implementation merge:** `88e174818870cb90d18537b0c8aea810c84fc244`  
+**Canonical closeout head:** `29f213efef3e1a5c3ed7a68abec17e7a213639d4`  
+**Canonical closeout merge:** `96df6391a0a6be5267e15f88d768d6c0c70c8bf5`  
 **Published release preserved:** `v0.3.0` / Release `378962445`
 
 ## Scope delivered
@@ -47,33 +49,55 @@ Ubuntu/Python 3.11 job `99111766462` recorded:
 
 Manual exact-diff review found exactly six implementation paths and no forbidden product/package/workflow/release scope. PR #34 had no submitted reviews or inline review threads at final recheck.
 
-PR #34 merged with expected-head protection as canonical implementation merge `88e174818870cb90d18537b0c8aea810c84fc244`. The merge is GitHub-signature verified, with first parent canonical shaping merge `5c8cfe64...` and second parent exact implementation head `e95bbafd...`.
+PR #34 merged with expected-head protection as canonical implementation merge `88e174818870cb90d18537b0c8aea810c84fc244`. The merge is GitHub-signature verified, with first parent canonical shaping merge `5c8cfe64f5481c42c53b6fefa91f92e7a2c68811` and second parent exact implementation head `e95bbafdd2bc66ea67e40e0690c053806acf85c3`.
 
-Canonical post-merge CI `33256836246` succeeded across all five permanent matrix cells on exact merge `88e174818870cb90d18537b0c8aea810c84fc244`.
+Canonical post-merge CI `33256836246` succeeded across all five permanent matrix cells on exact implementation merge `88e174818870cb90d18537b0c8aea810c84fc244`.
 
-## Historical release preservation
+## Historical release preservation after implementation
 
 Release verification `33256877372`, job `99112050245`, checked out exact canonical implementation merge `88e174818870cb90d18537b0c8aea810c84fc244` and completed successfully.
 
 The workflow reported that v0.3.0 was already published at historical tag target `70dd66aba0e68ae710e6ef12605ed153d107bab4` and that no release mutation was required.
 
-Live v0.3.0 truth remains:
+Live v0.3.0 truth remained:
 
 - Release ID `378962445`;
 - target `70dd66aba0e68ae710e6ef12605ed153d107bab4`;
 - wheel asset ID `535129008`, size `70463`, digest `sha256:b4f724e5ae187db28053c264cf9b9612f864fe5052459c7341a7f470602fb817`;
 - source asset ID `535129009`, size `104057`, digest `sha256:e7dc5484b8439cf8a6c594c65b454e141fef7c94a7edb0c7cb4edfc839007835`.
 
+## Canonical closeout evidence
+
+Documentation/status-only closeout PR #35 used exact head `29f213efef3e1a5c3ed7a68abec17e7a213639d4`.
+
+- its compare contained one commit and exactly five closeout/status paths;
+- exact-head PR CI `33257372972` completed `success` across the permanent five-cell matrix;
+- final review recheck found no submitted reviews or inline review threads;
+- PR #35 merged with expected-head protection as canonical closeout merge `96df6391a0a6be5267e15f88d768d6c0c70c8bf5`;
+- the closeout merge is GitHub-signature verified;
+- first parent is exact canonical implementation merge `88e174818870cb90d18537b0c8aea810c84fc244`;
+- second parent is exact closeout head `29f213efef3e1a5c3ed7a68abec17e7a213639d4`;
+- canonical post-closeout CI `33257485950` completed `success` across all five permanent cells:
+  - Ubuntu / Python 3.11 — job `99113626660`;
+  - Ubuntu / Python 3.12 — job `99113626617`;
+  - Ubuntu / Python 3.13 — job `99113626553`;
+  - macOS / Python 3.11 — job `99113626720`;
+  - Windows / Python 3.11 — job `99113626650`;
+- Release verification `33257527462`, job `99113736087`, checked out exact closeout merge `96df6391a0a6be5267e15f88d768d6c0c70c8bf5` and completed `success`;
+- the Release log states: `SpecGrain v0.3.0 is already published at historical tag target 70dd66aba0e68ae710e6ef12605ed153d107bab4; no release mutation is required.`
+
+All repository-side closure conditions for Specification 021 are therefore satisfied.
+
 ## External GitHub platform residuals
 
-Live GitHub settings after implementation still show:
+Live GitHub settings observed during Specification 021 still show:
 
 - description: unset;
 - topics: none;
 - `main` branch protection: disabled;
 - repository rulesets: none.
 
-The repository interface available to this execution can read but cannot write those settings. Specification 021 therefore records them explicitly rather than fabricating completion.
+The repository interface available to this execution can read but cannot write those settings. Specification 021 records them explicitly rather than fabricating completion. They are platform residuals, not uncompleted repository-side product work.
 
 Recommended repository description:
 
@@ -94,6 +118,6 @@ Recommended topics:
 
 Recommended minimal `main` ruleset target remains the bounded policy recorded by the public-launch audit. It is not claimed as applied.
 
-## Closeout gate
+## Program state
 
-Repository-side implementation and canonical post-merge evidence are complete. This specification does not become `CLOSED_CANONICAL` until this closeout chain itself passes exact-head CI/review, merges with expected-head protection, and its canonical post-closeout CI plus no-mutation Release verification succeed.
+Specification 021 is `CLOSED_CANONICAL`. The program returns to `POST_V0.3_OBSERVATION` with no active specification or selected successor. Any future Specification 022 must be shaped from fresh evidence under the repository's post-v0.1 governance rules; deferred roadmap items and the external platform residuals above are not implicit authority for unrelated product scope.

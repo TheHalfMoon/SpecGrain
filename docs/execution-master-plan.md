@@ -89,9 +89,28 @@ Specification 020 is `CLOSED_CANONICAL`.
 
 020 is distribution-only: it makes the already-canonical root/child DRAFT authoring and explicit recovery surface available in the latest versioned GitHub Release without changing `src/specgrain/` product behavior, release automation, or runtime dependencies.
 
-The fresh post-v0.3 audit `docs/research/post-v0.3-product-audit-2026-08-29.md` finds that the distribution discontinuity is closed and selects no evidence-supported successor. Repository adoption evidence is currently too sparse to justify lifecycle mutation, generic editing, stronger multi-writer semantics, executor orchestration, PyPI/broader distribution, hosted/provider scope, or empirical benchmark claims.
+The fresh post-v0.3 audit `docs/research/post-v0.3-product-audit-2026-08-29.md` found that the distribution discontinuity was closed and initially selected no evidence-supported successor. Repository adoption evidence was too sparse to justify lifecycle mutation, generic editing, stronger multi-writer semantics, executor orchestration, PyPI/broader distribution, hosted/provider scope, or empirical benchmark claims.
 
-The current program state is `POST_V0.3_OBSERVATION`. No active specification exists. Any future Specification 021 must be shaped from fresh evidence such as concrete user/adoption friction, a reproducible defect/security finding, controlled benchmark data, or a clearly bounded interoperability/governance blocker.
+A subsequent explicit maintainer request to make the public repository launch surface professional and audit keywords, licensing, security truth, launch presentation, and GitHub metadata supplied fresh adoption/launch evidence. `docs/research/public-launch-readiness-audit-2026-08-29.md` reproduced stale `SECURITY.md` support-line text, stale launch guidance, and missing GitHub description/topics/ruleset metadata, and shaped Specification 021 — Public Launch Readiness Hardening.
+
+Specification 021 is `CLOSED_CANONICAL`.
+
+- exact shaping head `70e511e73feb4e561a8137ffd39e481b393c5ec4` passed PR #33 CI `33256371898` and merged with expected-head protection as canonical shaping merge `5c8cfe64f5481c42c53b6fefa91f92e7a2c68811`;
+- canonical shaping post-merge CI `33256530949` succeeded across all five permanent cells before implementation;
+- exact implementation head `e95bbafdd2bc66ea67e40e0690c053806acf85c3` passed PR #34 CI `33256769276`; Ubuntu/Python 3.11 job `99111766462` recorded `558 passed in 1.58s` plus successful Ruff, tracked-tree cleanliness, compileall, package build/install, and CLI smoke;
+- PR #34 changed exactly six bounded public-launch/status/test paths and no `src/specgrain/`, package/version/dependency, workflow, changelog/release-note, PyPI, hosted/provider, lifecycle/readiness/execution, benchmark-data, or historical-release surface;
+- canonical implementation merge `88e174818870cb90d18537b0c8aea810c84fc244` passed canonical CI `33256836246` across all five permanent cells;
+- Release verification `33256877372`, job `99112050245`, proved historical v0.3.0 remained at source `70dd66a...` without mutation;
+- documentation/status-only closeout head `29f213efef3e1a5c3ed7a68abec17e7a213639d4` passed exact-head PR #35 CI `33257372972` across all five permanent cells and had no submitted reviews or inline review threads at final recheck;
+- PR #35 merged with expected-head protection as canonical closeout merge `96df6391a0a6be5267e15f88d768d6c0c70c8bf5`, with a valid GitHub signature, first parent exact implementation merge `88e1748...`, and second parent exact closeout head `29f213e...`;
+- canonical post-closeout CI `33257485950` succeeded across all five permanent cells;
+- Release verification `33257527462`, job `99113736087`, checked out exact closeout merge and proved historical `v0.3.0` remained published at `70dd66a...` without mutation.
+
+021 hardens only the public launch surface: README first-screen trust signals and stable v0.3.0 install prominence, current `0.3.x` SECURITY support truth, current v0.3.0 launch guidance, and bounded launch regression checks. It does not change product behavior or release identity.
+
+Live GitHub platform settings observed during 021 still have no repository description, no topics, no `main` branch protection, and no repository ruleset. The available repository interface is read-only for those settings, so they are explicit residual platform operations rather than fabricated completed work.
+
+The current program state is `POST_V0.3_OBSERVATION`. No active specification exists. Any future Specification 022 must be shaped from fresh evidence such as concrete user/adoption friction, a reproducible defect/security finding, controlled benchmark data, a demonstrated authoring/recovery limitation, or a clearly bounded interoperability/governance blocker.
 
 ## Cross-spec execution rules
 
