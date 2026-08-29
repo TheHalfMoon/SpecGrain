@@ -70,11 +70,13 @@ Specification 018 is `CLOSED_CANONICAL`. Product merge `baf00995a7ae9cf01b6196d6
 
 The fresh post-v0.2 audit `docs/research/post-v0.2-product-audit-2026-08-29.md` selected native child-DRAFT authoring as the smallest recursive product gap and shaped Specification 019 narrowly under ADR-0018.
 
-Specification 019 product delivery is canonical at merge `d6727b6c5cdafcf6265b6d999418c0fe853249a7`. Final PR head `53cd8482b727d4f61bfafbea6ed363e4e8783d52` passed exact-head CI `33247844945`; canonical product post-merge CI `33248014390` succeeded across the permanent five-cell matrix. Release verification `33248070688` confirmed that historical `v0.2.0` remained at `baf00995...` with no release mutation.
+Specification 019 is `CLOSED_CANONICAL`. Product merge `d6727b6c5cdafcf6265b6d999418c0fe853249a7` passed canonical product CI `33248014390`; historical-release verification `33248070688` preserved `v0.2.0`. Documentation-only closeout merged as `3f8f3d825c3171a3a9ac7761ee5bc642e68a9d2d`; post-closeout CI `33248332725` succeeded and Release verification `33248368659` again preserved historical `v0.2.0` without mutation.
 
-019 adds bounded native child-DRAFT authoring and explicit recovery without lifecycle promotion, readiness synthesis, or execution authority. It remains open only for documentation-only canonical closeout.
+019 adds bounded native child-DRAFT authoring and explicit recovery without lifecycle promotion, readiness synthesis, or execution authority.
 
-The fresh post-019 audit `docs/research/post-019-product-audit-2026-08-29.md` recommends a v0.3.0 Recursive Authoring Release as the smallest next shaping candidate because current canonical `main` contains verified child-DRAFT/recovery behavior that published `v0.2.0` predates. This is evidence only; no successor is authorized until 019 closes canonically and a separate shaping chain merges.
+The fresh post-019 audit `docs/research/post-019-product-audit-2026-08-29.md` identifies the distribution discontinuity between current canonical recursive authoring and public `v0.2.0` as the smallest next gap. Specification 020 shapes a v0.3.0 Recursive Authoring Release under ADR-0017, limited to publishing already-canonical behavior without a `src/specgrain/` behavior change.
+
+Specification 020 is documentation-only shaping until its exact head merges canonically and canonical shaping post-merge CI succeeds. It does not authorize lifecycle promotion, generic editing, PyPI, runtime dependencies, hosted/provider behavior, empirical benchmark claims, or an automatic successor.
 
 ## Cross-spec execution rules
 
