@@ -16,9 +16,9 @@
 
 ## Verification and publication
 
-- [ ] T009 Run full regression, Ruff, compileall, CLI help parity, package build/install, and permanent cross-platform CI on the exact implementation PR head.
-- [ ] T010 Review the exact implementation diff for product-behavior change, dependency creep, release-workflow drift, historical-release mutation, PyPI scope, lifecycle authority, and unrelated changes.
-- [ ] T011 Open the bounded implementation PR from the exact canonical shaping merge and resolve every material exact-head finding forward.
+- [x] T009 Run full regression, Ruff, compileall, CLI help parity, package build/install, and permanent cross-platform CI on exact implementation head `d207d54317457a744cb8887a260fcb78dc0710be`; CI run `33249652226` succeeded across all five cells and Ubuntu/Python 3.11 recorded `555 passed` plus successful v0.3.0 build/install/CLI smoke.
+- [x] T010 Review exact implementation diff `05219b4...d207d54` for product-behavior change, dependency creep, release-workflow drift, historical-release mutation, PyPI scope, lifecycle authority, and unrelated changes; repair the only finding (unnecessary historical v0.1 changelog wording drift) forward in `d207d54317457a744cb8887a260fcb78dc0710be` and record `review.md`.
+- [x] T011 Open bounded implementation PR #30 from exact canonical shaping merge and resolve every material exact-head finding forward; no submitted reviews or inline review threads remained at the reviewed product head, while Qodo billing pause and CodeRabbit skip were recorded as non-review service states.
 - [ ] T012 Merge only with expected-head evidence and prove exact canonical product merge plus canonical post-merge CI.
 - [ ] T013 Prove first publication of `v0.3.0` at the exact successful canonical CI/product head; record live release ID/state and exact wheel/sdist IDs, sizes, and digests; reverify v0.1.0/v0.2.0 unchanged.
 
