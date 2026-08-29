@@ -51,93 +51,83 @@ Specification 000 established the project foundation and constitution. Specifica
 - Specification 020 — v0.3.0 Recursive Authoring Release: `CLOSED_CANONICAL`; product/release source `70dd66aba0e68ae710e6ef12605ed153d107bab4`; GitHub Release `378962445`.
 - Specification 021 — Public Launch Readiness Hardening: `CLOSED_CANONICAL`; repository-side public launch hardening without product/release mutation.
 - Specification 022 — Native Grain Preparation: `CLOSED_CANONICAL`; current source closes the bounded native `DRAFT -> SHAPED -> REFINING -> GRAIN` pre-execution gap without READY/execution/verification authority.
+- Specification 023 — Spec Kit Preset-Compatible Import: product merged and verified; documentation closeout in progress.
 
 The latest published release remains `v0.3.0` at exact historical product source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
 
 ## Closed frontier — Specification 022
 
-Specification 022 was selected from reproduced native adoption friction and closed the exact bounded pre-execution preparation gap. Final evidence reconciliation is canonical at `ff9f640bf0e4de5bdd5bf2af0e11b98d86f6587b`; post-reconciliation CI `33262914956` completed `success` across the permanent five-cell matrix.
+Specification 022 closed the native pre-execution preparation gap. Final status reconciliation is canonical at `ff9f640bf0e4de5bdd5bf2af0e11b98d86f6587b`; post-reconciliation CI `33262914956` completed `success` across the permanent five-cell matrix.
 
-The historical `v0.3.0` tag, Release `378962445`, assets, digests, and historical command list remain unchanged. A bounded concurrent-writer race remains an explicit residual and requires separately shaped authority if future evidence selects stronger coordination.
+A bounded concurrent-writer race around exact-preimage validation and atomic replacement remains an explicit residual. Specification 023 does not select or alter that boundary.
 
-## Active frontier — Specification 023
+## Closeout frontier — Specification 023
 
-Post-022 observation produced a concrete compatibility finding against exact current GitHub Spec Kit truth.
+Post-022 observation produced a reproduced compatibility finding against exact current GitHub Spec Kit truth.
 
 Reviewed upstream:
 
 - `github/spec-kit` main `51e52be6c3b26fed3ff5424c671f4a559519a759`;
 - latest observed release `v1.0.1` / `374643230`;
-- standard `templates/spec-template.md` blob `ceb28776215a098e977650ac090c785dcbf53651`;
+- standard spec-template blob `ceb28776215a098e977650ac090c785dcbf53651`;
 - bundled Lean README blob `ab17257f96091590d2289699aaf2b114cc05bbbe`;
 - bundled Lean specify blob `c15353557aa941b18e811c15aef605c41ff64133`;
 - bundled Lean plan blob `9fbbe4c3713203a363169b9ca4d7f0dedbd0d1e0`;
 - bundled Lean tasks blob `724a7b840074b8e34cf107f2ca37d211745d15be`.
 
-Pre-023 SpecGrain importer blob `fe68ca91d9bca3b649a80bf7fc4d2942db6a18a0` established feature identity only from the canonical full-template `# Feature Specification:` heading. The official bundled Lean preset intentionally produces focused Markdown without requiring full-template boilerplate. Therefore an official current Spec Kit artifact could be rejected before the bounded migration report exists solely because of template shape.
-
-The exact audit lives at:
-
-`docs/research/post-022-spec-kit-1.0-compatibility-audit-2026-08-29.md`
+Pre-023 SpecGrain required the canonical full-template `# Feature Specification:` heading to establish feature identity. The official bundled Lean preset intentionally does not require that boilerplate.
 
 ### Canonical shaping authority
 
-Documentation-only shaping PR #41 merged exact head `e19484f292c7601036e1993e58203554d1267594` with expected-head protection as canonical shaped base:
+Documentation-only shaping PR #41 merged exact head `e19484f292c7601036e1993e58203554d1267594` with expected-head protection as canonical shaped base `99d8ee5bc7ce49c00ae542f3c06f564d05641a70`.
 
-`99d8ee5bc7ce49c00ae542f3c06f564d05641a70`
+Canonical post-shaping CI `33263898618` completed `success` across the permanent five-cell matrix before implementation began.
 
-Canonical post-shaping CI `33263898618` completed `success` across the permanent five-cell matrix, and historical `v0.3.0` remained unchanged. T007 is closed and 023 implementation authority is canonical.
+### Delivered bounded product behavior
 
-### 023 bounded product behavior
-
-Specification 023 authorizes only the smallest deterministic repair:
+Specification 023 implements only:
 
 - canonical full-template imports remain behavior/report/digest-stable;
 - when the canonical feature heading is absent, migration-report identity may come only from a concrete explicit feature-path parent;
-- direct artifact mappings use the normalized `spec.md` parent path;
-- filesystem loading uses the explicitly selected feature directory's final component solely as fallback identity while keeping legacy source-artifact report paths stable;
-- path fallback is explicit through `FEATURE_NAME_DERIVED_FROM_PATH`;
+- fallback identity is explicit through `FEATURE_NAME_DERIVED_FROM_PATH`;
 - unrecognized prose is not inferred into structured semantics;
-- existing source path/role/UTF-8/size/digest/revision safety remains unchanged;
+- source path/role/UTF-8/size/digest/revision safety remains unchanged;
 - tasks remain non-core migration evidence;
 - constitutions remain source-bound but non-authoritative;
 - `SPECKIT_IMPORT_VERSION` remains `1`;
 - no runtime dependency or upstream command execution is added.
 
-ADR-0020 governs this path-bound identity rule.
+The canonical pre-023 full-template report digest remains:
 
-### Verified implementation checkpoint
+`sha256:678fcc87985902002a9d2bc852196fbffdc59b332740660f1deeaf0d4f58746a`.
 
-Checkpoint:
+### Product verification and merge
 
-`0d18c523f57da007d946c3ad6ed99bcccaabe784`
+Initial checkpoint `0d18c523f57da007d946c3ad6ed99bcccaabe784` passed five-cell push CI `33264209823`; Ubuntu/Python 3.11 recorded `578 passed` plus all required static/package/CLI gates.
 
-changes only `src/specgrain/speckit.py`, `tests/test_speckit.py`, and `docs/migration-from-spec-kit.md` from canonical shaped base.
+Final implementation head `83fcc6add4e982df523f6c606399f08c317d3ffe` passed exact push CI `33264389193` and exact PR CI `33264479954`, both `completed/success` across the permanent five-cell matrix.
 
-Push CI `33264209823` completed `success` across all five permanent cells. Ubuntu/Python 3.11 recorded `578 passed` plus Ruff over `src`, `tests`, and `examples`, editable installation with `--no-deps`, tracked-tree cleanliness, compileall, source CLI smoke, package build, built-wheel reinstall with `--no-deps`, and installed CLI smoke.
+PR #42 had no submitted reviews or inline review threads. Qodo was billing-blocked, automatic CodeRabbit review was skipped by repository-star policy, and Cubic provided descriptive summary text only; none was treated as independent approval.
 
-The pre-023 canonical full-template report digest remains locked at:
+PR #42 merged with expected-head protection as signature-verified canonical product merge `037f137cdd6e7a0fe224bd3fa3371d6da7460f22`, with parents:
 
-`sha256:678fcc87985902002a9d2bc852196fbffdc59b332740660f1deeaf0d4f58746a`
+1. `99d8ee5bc7ce49c00ae542f3c06f564d05641a70`;
+2. `83fcc6add4e982df523f6c606399f08c317d3ffe`.
 
-and the import report version remains `1`.
+Canonical post-product CI `33265277105` completed `success` across all five permanent cells.
 
-### Remaining 023 product gates
+Historical `v0.3.0` remains unchanged at source `70dd66aba0e68ae710e6ef12605ed153d107bab4`, Release `378962445`, wheel digest `sha256:b4f724e5ae187db28053c264cf9b9612f864fe5052459c7341a7f470602fb817`, and source digest `sha256:e7dc5484b8439cf8a6c594c65b454e141fef7c94a7edb0c7cb4edfc839007835`.
 
-Before product merge:
+### Remaining closeout gates
 
-1. reconcile exact evidence/status documents;
-2. review the shaped-base-to-final-head diff for semantic inference, unsafe path acceptance, hidden upstream coupling, report/digest churn, task/constitution promotion, unrelated scope, and false historical release claims;
-3. open the bounded implementation PR from exact shaped base;
-4. prove permanent push/PR five-cell CI on exact PR head;
-5. recheck review comments/threads/mergeability and unavailable review systems without false PASS claims;
-6. merge only with expected-head protection;
-7. prove canonical product merge parentage, post-product five-cell CI, and historical `v0.3.0` preservation;
-8. complete documentation-only closeout and final canonical verification.
+Product work is complete. The remaining authorized work is documentation-only closeout and final evidence reconciliation:
 
-023 explicitly does not authorize arbitrary Markdown semantic inference, Spec Kit preset/hook/extension/bundle/workflow installation or execution, automatic SpecNode creation, constitution adoption, task promotion, READY/execution/verification authority, provider orchestration, concurrency expansion, or release publication.
-
-An external architectural review, including a Fable review, may add evidence but cannot widen 023 authority without canonical reshaping.
+1. exact closeout diff must remain governance/evidence only;
+2. exact closeout head must pass permanent push and PR five-cell CI;
+3. review comments/threads, review-system availability, and mergeability must be rechecked;
+4. closeout PR must merge with expected-head protection;
+5. canonical closeout parentage, post-closeout CI, and release preservation must be proven;
+6. final evidence reconciliation must record exact closeout truth and only then declare 023 `CLOSED_CANONICAL`.
 
 ## Cross-spec execution rules
 
@@ -157,6 +147,6 @@ An external architectural review, including a Fable review, may add evidence but
 
 ## Program continuation rule
 
-If Specification 023 closes canonically, re-read exact canonical `main` and return to observation/evidence gathering. Do not automatically continue into READY mutation, WorkPacket execution, executor/provider orchestration, verification execution, evidence mutation, stronger locking, release work, or broader Spec Kit integration.
+After Specification 023 closes canonically, re-read exact canonical `main` and return to observation/evidence gathering. Do not automatically continue into READY mutation, WorkPacket execution, executor/provider orchestration, verification execution, evidence mutation, stronger locking, release work, or broader Spec Kit integration.
 
-No empirical benchmark winner is claimed without a reproducible completed dataset. No aspirational CLI command is presented as shipped historical-release behavior.
+No successor product scope is currently selected. No empirical benchmark winner is claimed without a reproducible completed dataset, and no aspirational CLI command is presented as shipped historical-release behavior.
