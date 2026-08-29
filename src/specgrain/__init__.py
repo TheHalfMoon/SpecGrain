@@ -77,6 +77,13 @@ from .packet import (
     WorkPacket,
     build_work_packet,
 )
+from .pregrain import (
+    GrainPromotionBlockedError,
+    PreGrainMutationResult,
+    promote_refining_spec_to_grain,
+    refine_shaped_spec,
+    shape_draft_spec,
+)
 from .project import NextResult, check_project, next_project
 from .readiness import (
     GRAIN_READINESS_VERSION,
@@ -224,6 +231,8 @@ __all__ = [
     "DEPENDENCY_SATISFIED_STATES",
     "EXCEPTIONAL_STATES",
     "GRAIN_READINESS_VERSION",
+    "GrainPromotionBlockedError",
+    "PreGrainMutationResult",
     "SPECNODE_SCHEMA_VERSION",
     "TERMINAL_STATES",
     "ContextBudgetError",
@@ -286,8 +295,10 @@ __all__ = [
     "load_project",
     "next_project",
     "parse_spec_state",
+    "promote_refining_spec_to_grain",
     "ready_grains",
     "recover_authoring_transaction",
+    "refine_shaped_spec",
     "repository_map_context_source",
     "refinement_roots",
     "require_context_budget",
@@ -296,6 +307,7 @@ __all__ = [
     "require_valid_dependencies",
     "require_valid_refinement",
     "scan_repository",
+    "shape_draft_spec",
     "validate_context_sources",
     "validate_dependencies",
     "validate_refinement",

@@ -8,6 +8,13 @@ import sys
 from collections.abc import Sequence
 
 from .model import SpecValidationError
+from .pregrain import (
+    GrainPromotionBlockedError,
+    PreGrainMutationResult,
+    promote_refining_spec_to_grain,
+    refine_shaped_spec,
+    shape_draft_spec,
+)
 from .project import NextResult, check_project, next_project
 from .repository import RepositoryMap, RepositoryScanError, scan_repository
 from .speckit import SpecKitImportError, SpecKitImportReport, load_spec_kit_feature
@@ -39,6 +46,63 @@ def _parser() -> argparse.ArgumentParser:
     draft.add_argument("--rationale", default="")
     draft.add_argument("--parent")
     draft.add_argument("--json", action="store_true", dest="as_json")
+
+    shape = subparsers.add_parser(
+        "shape",
+        help="populate one DRAFT candidate and advance it to SHAPED",
+    )
+    shape.add_argument("spec_id")
+    shape.add_argument("path", nargs="?", default=".")
+    shape.add_argument("--scope-in", action="append", required=True)
+    shape.add_argument("--scope-out", action="append", default=[])
+    shape.add_argument("--acceptance", action="append", required=True)
+    shape.add_argument("--dependency", action="append", default=[])
+    shape.add_argument(
+        "--risk-level",
+        required=True,
+        choices=("low", "medium", "high", "critical"),
+    )
+    shape.add_argument("--recovery", required=True)
+    shape.add_argument("--context-budget", type=int, required=True)
+    shape.add_argument("--context-estimate", type=int, required=True)
+    shape.add_argument("--change-surface", action="append", default=[])
+    shape.add_argument("--change-surface-exception")
+    shape.add_argument("--evidence", action="append", required=True)
+    shape.add_argument(
+        "--minimality-choice",
+        required=True,
+        choices=(
+            "reuse-existing",
+            "stdlib",
+            "native",
+            "installed-dependency",
+            "new-code",
+        ),
+    )
+    shape.add_argument("--minimality-rationale", required=True)
+    shape.add_argument(
+        "--safety-status",
+        required=True,
+        choices=("none-identified", "requirements-defined"),
+    )
+    shape.add_argument("--safety-requirement", action="append", default=[])
+    shape.add_argument("--json", action="store_true", dest="as_json")
+
+    refine = subparsers.add_parser(
+        "refine",
+        help="advance one SHAPED candidate to REFINING",
+    )
+    refine.add_argument("spec_id")
+    refine.add_argument("path", nargs="?", default=".")
+    refine.add_argument("--json", action="store_true", dest="as_json")
+
+    grain = subparsers.add_parser(
+        "grain",
+        help="promote one ready REFINING leaf to GRAIN",
+    )
+    grain.add_argument("spec_id")
+    grain.add_argument("path", nargs="?", default=".")
+    grain.add_argument("--json", action="store_true", dest="as_json")
 
     recover = subparsers.add_parser(
         "recover", help="recover a pending native authoring transaction"
@@ -207,6 +271,128 @@ def _render_recovery_text(result: AuthoringRecoveryResult) -> str:
     return "\n".join(lines)
 
 
+def _render_pregrain_text(command: str, result: PreGrainMutationResult) -> str:
+    payload = result.to_dict()
+    return "\n".join(
+        [
+            f"SpecGrain {command}: UPDATED",
+            f"Spec: {payload['spec_id']}",
+            f"Source state: {payload['source_state']}",
+            f"State: {payload['state']}",
+            f"File: {payload['file']}",
+            f"Revision: {payload['revision_digest']}",
+        ]
+    )
+
+
+def _json_error(message: str) -> str:
+    return json.dumps(
+        {"error": message, "valid": False},
+        sort_keys=True,
+        ensure_ascii=False,
+        separators=(",", ":"),
+    )
+
+
+def _render_grain_blocked_json(exc: GrainPromotionBlockedError) -> str:
+    report = exc.report
+    return json.dumps(
+        {
+            "issues": [
+                {
+                    "code": issue.code.value,
+                    "field": issue.field,
+                    "message": issue.message,
+                }
+                for issue in report.issues
+            ],
+            "revision_digest": report.revision_digest,
+            "source_state": "REFINING",
+            "spec_id": report.node_id,
+            "state": "REFINING",
+            "valid": False,
+        },
+        sort_keys=True,
+        ensure_ascii=False,
+        separators=(",", ":"),
+    )
+
+
+def _render_grain_blocked_text(exc: GrainPromotionBlockedError) -> str:
+    report = exc.report
+    lines = [
+        "SpecGrain grain: BLOCKED",
+        f"Spec: {report.node_id}",
+        "Source state: REFINING",
+        "State: REFINING",
+        f"Revision: {report.revision_digest}",
+    ]
+    lines.extend(
+        f"- [{issue.code.value}] {issue.field}: {issue.message}"
+        for issue in report.issues
+    )
+    return "\n".join(lines)
+
+
+def _run_pregrain_command(args: argparse.Namespace) -> int:
+    command = args.command
+    try:
+        if command == "shape":
+            result = shape_draft_spec(
+                args.path,
+                spec_id=args.spec_id,
+                scope_in=tuple(args.scope_in),
+                scope_out=tuple(args.scope_out),
+                acceptance=tuple(args.acceptance),
+                dependencies=tuple(args.dependency),
+                risk_level=args.risk_level,
+                recovery=args.recovery,
+                context_budget=args.context_budget,
+                context_estimate=args.context_estimate,
+                change_surface=tuple(args.change_surface),
+                change_surface_exception=args.change_surface_exception,
+                evidence=tuple(args.evidence),
+                minimality_choice=args.minimality_choice,
+                minimality_rationale=args.minimality_rationale,
+                safety_status=args.safety_status,
+                safety_requirements=tuple(args.safety_requirement),
+            )
+        elif command == "refine":
+            result = refine_shaped_spec(args.path, spec_id=args.spec_id)
+        elif command == "grain":
+            result = promote_refining_spec_to_grain(args.path, spec_id=args.spec_id)
+        else:
+            raise AssertionError(f"unhandled pre-Grain command {command!r}")
+    except GrainPromotionBlockedError as exc:
+        if args.as_json:
+            print(_render_grain_blocked_json(exc), file=sys.stderr)
+        else:
+            print(_render_grain_blocked_text(exc), file=sys.stderr)
+        return 1
+    except (StoreError, SpecValidationError) as exc:
+        if args.as_json:
+            print(_json_error(str(exc)), file=sys.stderr)
+        else:
+            print(f"SpecGrain {command}: FAIL\n- {exc}", file=sys.stderr)
+        return 1
+    except Exception:
+        print(f"SpecGrain {command}: FAIL\n- internal error", file=sys.stderr)
+        return 1
+
+    if args.as_json:
+        print(
+            json.dumps(
+                result.to_dict(),
+                sort_keys=True,
+                ensure_ascii=False,
+                separators=(",", ":"),
+            )
+        )
+    else:
+        print(_render_pregrain_text(command, result))
+    return 0
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     """Run the SpecGrain CLI and return a process-compatible exit code."""
 
@@ -246,15 +432,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                 node = child_result.child
         except (StoreError, SpecValidationError) as exc:
             if args.as_json:
-                print(
-                    json.dumps(
-                        {"error": str(exc), "valid": False},
-                        sort_keys=True,
-                        ensure_ascii=False,
-                        separators=(",", ":"),
-                    ),
-                    file=sys.stderr,
-                )
+                print(_json_error(str(exc)), file=sys.stderr)
             else:
                 print(f"SpecGrain draft: FAIL\n- {exc}", file=sys.stderr)
             return 1
@@ -294,20 +472,15 @@ def main(argv: Sequence[str] | None = None) -> int:
                 )
         return 0
 
+    if args.command in {"shape", "refine", "grain"}:
+        return _run_pregrain_command(args)
+
     if args.command == "recover":
         try:
             result = recover_authoring_transaction(args.path)
         except StoreError as exc:
             if args.as_json:
-                print(
-                    json.dumps(
-                        {"error": str(exc), "valid": False},
-                        sort_keys=True,
-                        ensure_ascii=False,
-                        separators=(",", ":"),
-                    ),
-                    file=sys.stderr,
-                )
+                print(_json_error(str(exc)), file=sys.stderr)
             else:
                 print(f"SpecGrain recover: FAIL\n- {exc}", file=sys.stderr)
             return 1
@@ -403,15 +576,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             result = load_proof(args.path, args.spec_id)
         except VerificationError as exc:
             if args.as_json:
-                print(
-                    json.dumps(
-                        {"error": str(exc), "valid": False},
-                        sort_keys=True,
-                        ensure_ascii=False,
-                        separators=(",", ":"),
-                    ),
-                    file=sys.stderr,
-                )
+                print(_json_error(str(exc)), file=sys.stderr)
             else:
                 print(f"SpecGrain prove: FAIL\n- {exc}", file=sys.stderr)
             return 1
@@ -437,15 +602,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             )
         except SpecKitImportError as exc:
             if args.as_json:
-                print(
-                    json.dumps(
-                        {"error": str(exc), "valid": False},
-                        sort_keys=True,
-                        ensure_ascii=False,
-                        separators=(",", ":"),
-                    ),
-                    file=sys.stderr,
-                )
+                print(_json_error(str(exc)), file=sys.stderr)
             else:
                 print(f"SpecGrain import-spec-kit: FAIL\n- {exc}", file=sys.stderr)
             return 1

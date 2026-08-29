@@ -6,17 +6,21 @@ Close the public v0.3.0 pre-execution authoring dead end by wiring existing sche
 
 ## Canonical base
 
-Implementation begins only after this shaping chain is merged to canonical `main` and re-read. The prospective shaping base is `3b98914200c68909f09db08642faf56de48305eb`.
+The documentation-only shaping PR #37 merged with expected-head protection as canonical shaped base `4919a4261f649e81cb1f507c0e80bc5c98d848d8`. Canonical post-shaping CI run `33260132438` succeeded before implementation began.
+
+Implementation branch: `feat/022-native-grain-preparation`.
 
 ## Change strategy
 
-### 1. Store-level mutation primitives
+### 1. Bounded pre-Grain mutation module
 
-Add narrowly scoped public operations in `src/specgrain/store.py`:
+Implement the authorized single-node operations in a dedicated `src/specgrain/pregrain.py` module:
 
 - shape one existing `DRAFT` using explicit existing-schema readiness fields and transition to `SHAPED`;
 - advance one `SHAPED` node to `REFINING` without semantic mutation;
 - promote one `REFINING` candidate to `GRAIN` only after exact existing readiness success.
+
+The shaped plan originally named `src/specgrain/store.py` as the likely implementation location. Implementation instead keeps the authority in the bounded `pregrain.py` module while reusing the existing store safety primitives. This is an implementation-detail refinement, not an authority expansion.
 
 Reuse the current safe local-store machinery:
 
@@ -39,7 +43,7 @@ SHAPED -> REFINING
 REFINING -> GRAIN
 ```
 
-The last edge additionally requires existing Grain-readiness v1 success.
+The last edge additionally requires existing Grain-readiness v1 success on the exact current candidate and complete forest.
 
 ### 3. CLI
 
@@ -58,12 +62,11 @@ Export the bounded functions/result types from `src/specgrain/__init__.py` witho
 
 ### 5. Tests
 
-Primary tests:
+Primary tests are intentionally isolated from the older DRAFT-authoring suites:
 
-- `tests/test_authoring.py` for store/API mutation authority and exact failure/no-mutation semantics;
-- `tests/test_authoring_cli.py` for CLI parse/output/workflow behavior;
-- focused existing lifecycle/readiness/dependency tests only if a regression fixture needs extension;
-- `tests/test_launch.py` only for public command/document truth if required by existing launch guards.
+- `tests/test_pregrain.py` for API mutation authority and exact failure/no-mutation semantics;
+- `tests/test_pregrain_cli.py` for CLI parse/output/workflow behavior;
+- `tests/test_launch.py` for public release/current-source document truth and release preservation guards.
 
 Required workflow fixture:
 
@@ -83,49 +86,59 @@ Also prove a readiness-blocked candidate remains `REFINING` and unchanged after 
 
 Update only the bounded product truth:
 
-- README one-minute/native workflow;
-- supported CLI table;
-- architecture/product-surface description where current docs explicitly stop at DRAFT;
-- CHANGELOG unreleased/current canonical section if used by repository convention;
-- Specification 022 evidence files during verification/closeout.
+- README published-release vs. current-source workflow and CLI distinction;
+- architecture/product-surface description;
+- CHANGELOG `Unreleased` section while preserving the historical v0.3.0 section;
+- Specification 022 task/status/verification evidence;
+- canonical `CURRENT`, execution master plan, and roadmap frontier text.
 
-No release/version bump is part of 022.
+No release/version bump is part of 022. The historical v0.3.0 tag/release remains the published contract and must not be rewritten to include Specification 022 commands.
 
 ## Expected implementation change surface
 
 ```text
-src/specgrain/store.py
+src/specgrain/pregrain.py
 src/specgrain/cli.py
 src/specgrain/__init__.py
-tests/test_authoring.py
-tests/test_authoring_cli.py
+tests/test_pregrain.py
+tests/test_pregrain_cli.py
+tests/test_launch.py
 README.md
 docs/architecture.md
 CHANGELOG.md
-specs/022-native-grain-preparation/*
+specs/022-native-grain-preparation/plan.md
+specs/022-native-grain-preparation/tasks.md
+specs/022-native-grain-preparation/verification.md
 specs/CURRENT.md
 docs/execution-master-plan.md
 docs/roadmap.md
 ```
 
-A path outside this set requires explicit review and justification before merge.
+`src/specgrain/store.py` remains reused but unchanged. A path outside this set requires explicit review and justification before product merge.
+
+## Verification checkpoints
+
+Initial implementation checkpoint `05865fdfeb89e259be237f5e020a87424384d122` passed permanent CI run `33260707422` across all five cells, including 573 full-regression tests, Ruff, tracked-tree cleanliness, compile, CLI smoke, package build, built-wheel install, and installed CLI smoke.
+
+That checkpoint is not the final product candidate because public documentation reconciliation still had to be committed. Final verification must bind to the documentation-reconciled exact head.
 
 ## Verification order
 
-1. focused authoring/API tests;
-2. focused authoring CLI tests;
-3. full pytest regression;
-4. Ruff over `src`, `tests`, and `examples`;
-5. compileall;
-6. tracked-tree cleanliness after tests;
-7. CLI help/smoke including new commands;
-8. package build and built-wheel reinstall smoke;
-9. exact base-to-head diff review;
-10. permanent five-cell CI on exact PR head;
-11. review threads/comments and mergeability recheck;
-12. expected-head merge;
-13. canonical post-merge CI and historical-release no-mutation verification;
-14. documentation-only closeout and final canonical verification.
+1. focused pre-Grain API tests;
+2. focused pre-Grain CLI tests;
+3. launch/document guards;
+4. full pytest regression;
+5. Ruff over `src`, `tests`, and `examples`;
+6. compileall;
+7. tracked-tree cleanliness after tests;
+8. CLI help/smoke including new commands;
+9. package build and built-wheel reinstall smoke;
+10. exact base-to-head diff review;
+11. permanent five-cell CI on exact PR head;
+12. review threads/comments and mergeability recheck;
+13. expected-head merge;
+14. canonical post-merge CI and historical-release no-mutation verification;
+15. documentation-only closeout and final canonical verification.
 
 ## Non-goals
 

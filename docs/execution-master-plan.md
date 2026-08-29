@@ -53,23 +53,11 @@ Specification 000 established the project foundation and constitution. Specifica
 
 The latest published release remains `v0.3.0` at exact historical product source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
 
-## Evidence-shaped frontier — Specification 022
+## Active frontier — Specification 022
 
-The post-v0.3 audit originally selected observation because adoption evidence was insufficient to authorize lifecycle/execution expansion. A later maintainer-supplied adversarial product review supplied fresh concrete user/adoption friction. The repository reproduced the material finding at canonical `main` `3b98914200c68909f09db08642faf56de48305eb`:
+Fresh reproduced adoption friction selected Specification 022 — Native Grain Preparation. The shaping authority chain was merged through PR #37 as exact canonical shaped base `4919a4261f649e81cb1f507c0e80bc5c98d848d8`. Canonical post-shaping permanent CI `33260132438` succeeded before product implementation began.
 
-- `draft` can create validated root/child DRAFTs;
-- no supported CLI can populate existing readiness fields on an authored DRAFT;
-- no supported CLI reaches `SHAPED`, `REFINING`, or `GRAIN`;
-- `check_project()` evaluates readiness only for `REFINING` leaves;
-- `next_project()` considers only `GRAIN` nodes.
-
-`docs/research/post-v0.3-native-workflow-friction-2026-08-29.md` records the reproduced evidence.
-
-### Prospective Specification 022 — Native Grain Preparation
-
-022 is `SHAPED` only on `docs/022-native-grain-preparation` until its exact shaping head is merged canonically.
-
-Its bounded outcome is:
+022's bounded outcome is:
 
 ```text
 DRAFT -> SHAPED -> REFINING -> GRAIN
@@ -98,12 +86,31 @@ ADR-0019 authorizes only:
 - hosted/provider/account scope;
 - empirical benchmark claims.
 
-Implementation authority begins only when:
+### Implementation state
 
-1. the exact 022 shaping head is reviewed and passes permanent CI;
-2. the shaping PR is merged using expected-head protection;
-3. canonical `main` and post-shaping CI are re-verified;
-4. `AGENTS.md`, `CURRENT`, constitution, this plan, and the canonical 022 authority chain are re-read.
+Implementation is on `feat/022-native-grain-preparation`, based exactly on shaped canonical `4919a4261f649e81cb1f507c0e80bc5c98d848d8` with no behind-main drift at the pre-document checkpoint.
+
+Checkpoint `05865fdfeb89e259be237f5e020a87424384d122` delivered:
+
+- dedicated bounded `src/specgrain/pregrain.py` mutation module reusing existing store safety primitives;
+- public APIs for explicit DRAFT shaping, state-only refinement, and readiness-gated Grain promotion;
+- `shape`, `refine`, and `grain` CLI commands;
+- exact-preimage single-file mutation with pending ADR-0018 refusal;
+- proposed refinement/dependency validation;
+- deterministic text/JSON output and blocker/no-mutation semantics;
+- semantic revision preservation for state-only transitions;
+- existing `next` integration;
+- zero runtime dependency growth.
+
+Permanent CI `33260707422` succeeded on exact checkpoint `05865fdfeb89e259be237f5e020a87424384d122` across all five supported cells. Ubuntu/Python 3.11 recorded 573 passing tests plus Ruff for source/tests/examples, editable installation, tracked-tree cleanliness, compile, CLI smoke, package build, built-wheel installation, and installed CLI smoke.
+
+The checkpoint was not yet the final product candidate because README/architecture/changelog/launch guards and current governance state still required reconciliation. Final product CI and review must bind to the documentation-reconciled exact head.
+
+### Published-release boundary
+
+The historical `v0.3.0` tag and GitHub Release remain the published contract. They contain root/child DRAFT authoring and explicit recovery, but do not contain `shape`, `refine`, or `grain`.
+
+Specification 022 is an unreleased current-source product change. No package version, tag, GitHub Release, release asset, or release note may be rewritten to imply otherwise.
 
 ## Cross-spec execution rules
 
@@ -127,13 +134,14 @@ Implementation authority begins only when:
 
 - its shaped authority chain is present on canonical `main` before implementation begins;
 - implementation is performed on a bounded branch from the exact shaped canonical base;
-- required focused/full/static/package checks and permanent five-cell exact-head CI succeed;
-- exact-head review confirms no readiness weakening, hidden defaults, edge skipping, post-GRAIN authority, or unrelated scope;
+- all required focused, full, static, and package checks, plus permanent five-cell exact-head CI, succeed on the final product candidate;
+- exact-head review confirms no readiness weakening, hidden defaults, edge skipping, post-GRAIN authority, recovery widening, dependency creep, false historical-release claims, or unrelated scope;
+- implementation PR review threads/submitted reviews/mergeability and review-bot availability are rechecked without treating unavailable/skipped bots as PASS;
 - merge uses expected-head protection;
 - canonical post-merge state, CI, and historical v0.3.0 release no-mutation behavior are re-verified;
 - a documentation-only closeout records exact evidence and re-evaluates the next frontier;
 - the exact closeout head is merged with expected-head protection and final canonical state/CI are verified.
 
-The likely later need for a WorkPacket/execution workflow is not pre-authorized. It must be selected, shaped, and implemented only from post-022 evidence.
+The likely later need for a WorkPacket/execution workflow is not pre-authorized. It must be selected, shaped, and implemented only from fresh post-022 evidence.
 
-No empirical benchmark winner is claimed without a reproducible completed dataset. No aspirational CLI command is presented as shipped behavior.
+No empirical benchmark winner is claimed without a reproducible completed dataset. No aspirational CLI command is presented as shipped historical-release behavior.

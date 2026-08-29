@@ -71,7 +71,7 @@ The following must be deterministic and extensively tested:
 
 AI may suggest values, but core validation decides whether they are acceptable.
 
-## 2. Storage
+## 2. Storage and native mutation boundaries
 
 Initial product state is repository-local and file-based.
 
@@ -95,7 +95,7 @@ YAML may later be supported as an import/export or authored-format adapter if ev
 
 Specification 017 adds the first public native authoring write: create one root SpecNode fixed to `DRAFT` with deterministic positive ID allocation and create-if-absent persistence.
 
-Specification 019 extends the unreleased native authoring surface with one reciprocal child write under a `DRAFT` parent. Because the operation changes two canonical SpecNode files, it uses the recoverable/fail-closed transaction contract from ADR-0018 rather than claiming multi-file operating-system atomicity.
+Specification 019 extends native authoring with one reciprocal child write under a `DRAFT` parent. Because the operation changes two canonical SpecNode files, it uses the recoverable/fail-closed transaction contract from ADR-0018 rather than claiming multi-file operating-system atomicity.
 
 The supported child writer creates an ignored runtime journal at:
 
@@ -105,11 +105,25 @@ The supported child writer creates an ignored runtime journal at:
 
 The journal records the exact parent preimage, intended parent postimage, and intended child. Reads refuse a pending journal. Explicit recovery recognizes only exact no-write, child-only, or completed states; ambiguous state is preserved without destructive repair. Parent replacement uses same-directory temporary-file + `os.replace` semantics for that single file only.
 
-## 3. CLI
+Specification 022 adds a separate bounded pre-Grain mutation module, `src/specgrain/pregrain.py`. It deliberately reuses the existing local-store parsing, safe-path, pending-journal, and canonical serialization primitives without widening `store.py` into a generic editor. Each 022 mutation changes exactly one existing canonical SpecNode file and uses exact-preimage checking, same-directory temporary-file replacement, postimage confirmation, and complete-project validation.
+
+The 022 mutation authority is intentionally narrower than arbitrary editing:
+
+```text
+DRAFT -> SHAPED
+SHAPED -> REFINING
+REFINING -> GRAIN
+```
+
+`DRAFT -> SHAPED` may populate only the explicit existing readiness-relevant fields authorized by ADR-0019. `SHAPED -> REFINING` changes state only. `REFINING -> GRAIN` changes state only and re-evaluates the exact current candidate with the unchanged Grain-readiness engine immediately before mutation. All three operations refuse a pending ADR-0018 journal. No 022 operation mutates evidence or grants post-GRAIN authority.
+
+## 3. CLI and release/source distinction
 
 The CLI grows progressively as specifications own bounded product surfaces.
 
-Shipped on current `main`:
+### Published v0.3.0
+
+The historical `v0.3.0` tag and GitHub Release ship exactly:
 
 ```text
 specgrain init
@@ -126,18 +140,31 @@ specgrain import-spec-kit
 
 `recover` is an explicit bounded mutation for the native authoring journal. It does not attempt generic store repair and does not run automatically from read-oriented commands.
 
-Still-deferred commands include:
+### Current source after Specification 022
+
+Current source adds:
+
+```text
+specgrain shape
+specgrain refine
+specgrain grain
+```
+
+`shape` accepts explicit readiness-sensitive declarations and advances exactly `DRAFT -> SHAPED`. It does not infer or synthesize risk, recovery, context, evidence, minimality, or safety claims. `refine` advances exactly `SHAPED -> REFINING` with semantic revision preservation. `grain` advances exactly `REFINING -> GRAIN` only when the existing deterministic readiness evaluator returns no blockers for the exact current candidate and forest.
+
+These commands are not part of the historical v0.3.0 release. Specification 022 contains no version bump or new-release authority.
+
+Still-deferred command ideas include:
 
 ```text
 specgrain ask
-specgrain refine
 specgrain graph
 specgrain packet
 specgrain verify
 specgrain diff
 ```
 
-`run` may be added when evidence justifies a portable orchestration surface. Early releases should not embed many vendor-specific executors.
+`run` may be added only when fresh evidence justifies a portable orchestration surface. Specification 022 does not authorize `GRAIN -> READY`, WorkPacket CLI generation, executor/provider invocation, verification execution, or evidence mutation.
 
 ## 4. Python implementation
 
@@ -150,6 +177,8 @@ Initial implementation target:
 - ruff and a static type checker as development quality gates when available.
 
 Typer, Rich, Pydantic, PyYAML, and graph libraries are not architectural requirements. They may be adopted later only when a bounded problem justifies their dependency cost. The core should avoid a heavy graph dependency unless profiling or complexity demonstrates a need.
+
+Specification 022 preserves the runtime third-party dependency count at zero.
 
 ## 5. Repository intelligence
 
@@ -201,7 +230,7 @@ Adapters may target:
 - Cursor;
 - other local or hosted agent harnesses.
 
-The contract is more important than the number of adapters.
+The contract is more important than the number of adapters. Specification 022 does not invoke this boundary.
 
 ## 9. Verification
 
@@ -215,7 +244,7 @@ Verification should be layered:
 6. provenance checks where applicable;
 7. residual-risk handling.
 
-A verifier may use AI for semantic review, but AI-only evidence cannot silently satisfy deterministic gates.
+A verifier may use AI for semantic review, but AI-only evidence cannot silently satisfy deterministic gates. Specification 022 does not add a native verification-execution command or mutate evidence.
 
 ## 10. Security and trust
 
@@ -224,9 +253,12 @@ A verifier may use AI for semantic review, but AI-only evidence cannot silently 
 - Treat imported specs and external repository content as untrusted data.
 - Canonical local-store readers must reject path escape and symlink ambiguity instead of following untrusted store links.
 - Root authoring remains create-if-absent; child authoring may replace only the exact selected `DRAFT` parent preimage under the ADR-0018 journal contract.
-- A pending authoring journal blocks ordinary store operations until explicit deterministic recovery succeeds.
+- A pending authoring journal blocks ordinary store operations and all Specification 022 mutations until explicit deterministic recovery succeeds.
+- Specification 022 may replace only the exact selected single-file preimage after complete proposed refinement/dependency validation.
+- Grain promotion must re-evaluate readiness at the mutation boundary and must write nothing when blocked.
+- State-only `SHAPED -> REFINING` and `REFINING -> GRAIN` transitions must preserve the semantic revision digest.
 - Recovery must not guess, overwrite unrelated content, or delete an ambiguous child.
 - Avoid shell interpolation in core subprocess boundaries.
-- Evidence records should be append-oriented and digest-bound once Specification 010 owns that contract.
+- Evidence records remain append-oriented and digest-bound under Specification 010; Specification 022 does not mutate them.
 - Secrets and environment files must not be captured into work packets or evidence by default.
-- A readiness report is not reusable lifecycle mutation authority; future state writes must re-evaluate current preconditions at the mutation boundary.
+- A readiness report is not reusable lifecycle mutation authority; state writes must re-evaluate current preconditions at the mutation boundary.

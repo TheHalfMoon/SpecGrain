@@ -2,7 +2,7 @@
 
 The roadmap is intentionally progressive. Only the nearest active specification should have implementation-level detail. Future work is shaped from current evidence rather than pre-authorized by stale backlog detail.
 
-**Current program state:** Specifications 000–021 are `CLOSED_CANONICAL`. Canonical pre-022 `main` is `3b98914200c68909f09db08642faf56de48305eb`. The latest published release remains GitHub Release `378962445` / tag `v0.3.0` at exact product source `70dd66aba0e68ae710e6ef12605ed153d107bab4`. Fresh reproduced adoption friction has shaped prospective Specification 022 — Native Grain Preparation on a documentation-only branch; implementation authority does not exist until that exact shaping head is merged canonically and post-shaping CI succeeds.
+**Current program state:** Specifications 000–021 are `CLOSED_CANONICAL`. Specification 022 — Native Grain Preparation is the active `SHAPED` specification. Its documentation-only shaping PR #37 is canonical at `4919a4261f649e81cb1f507c0e80bc5c98d848d8`, and canonical post-shaping CI `33260132438` succeeded. Product implementation is being verified on `feat/022-native-grain-preparation`. The latest published release remains GitHub Release `378962445` / tag `v0.3.0` at exact historical product source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
 
 ## M0 — Foundation
 
@@ -51,28 +51,34 @@ The initial v0.1 sequence ended at Specification 016. Exact release and closeout
 
 ## Post-v0.1 — Evidence-shaped product adoption
 
-- **017 — Native DRAFT CLI:** `CLOSED_CANONICAL`; adds deterministic creation of the first native root `DRAFT` after `specgrain init` without hand-authoring internal JSON or granting Grain/readiness/execution authority.
+- **017 — Native DRAFT CLI:** `CLOSED_CANONICAL`; deterministic creation of the first native root `DRAFT` after `specgrain init` without hand-authoring internal JSON or granting Grain/readiness/execution authority.
 - **018 — v0.2.0 Authoring Release:** `CLOSED_CANONICAL`; published the native root-DRAFT surface as v0.2.0.
-- **019 — Native Child-DRAFT Authoring:** `CLOSED_CANONICAL`; adds recoverable reciprocal child DRAFT authoring and explicit recovery without lifecycle promotion.
-- **020 — v0.3.0 Recursive Authoring Release:** `CLOSED_CANONICAL`; product merge `70dd66aba0e68ae710e6ef12605ed153d107bab4`; Release `378962445` / `v0.3.0`; publishes root/child DRAFT authoring and explicit recovery with no new product behavior.
+- **019 — Native Child-DRAFT Authoring:** `CLOSED_CANONICAL`; recoverable reciprocal child DRAFT authoring and explicit recovery without lifecycle promotion.
+- **020 — v0.3.0 Recursive Authoring Release:** `CLOSED_CANONICAL`; product/release source `70dd66aba0e68ae710e6ef12605ed153d107bab4`; Release `378962445` / `v0.3.0`; publishes root/child DRAFT authoring and explicit recovery with no new product behavior.
 - **021 — Public Launch Readiness Hardening:** `CLOSED_CANONICAL`; hardens README first-screen trust signals, v0.3.0 install prominence, current security/launch truth, licensing recognition, and launch regression checks without changing product behavior or release identity.
-- **022 — Native Grain Preparation:** `SHAPED` prospectively from fresh reproduced adoption friction. It is limited to explicit native `DRAFT -> SHAPED -> REFINING -> GRAIN` preparation using existing schema/lifecycle/readiness semantics. It does not authorize READY/execution/verification/evidence/provider scope. Implementation begins only after canonical shaping merge and re-verification.
+- **022 — Native Grain Preparation:** active `SHAPED` specification. Canonical shaping base `4919a4261f649e81cb1f507c0e80bc5c98d848d8`; bounded current-source implementation adds explicit native `DRAFT -> SHAPED -> REFINING -> GRAIN` preparation using existing schema/lifecycle/readiness semantics. It does not authorize READY/execution/verification/evidence/provider scope or a release/version change.
+
+## Specification 022 implementation checkpoint
+
+Pre-document implementation checkpoint `05865fdfeb89e259be237f5e020a87424384d122` passed permanent CI `33260707422` across all five cells with 573 tests in the Ubuntu/Python 3.11 cell plus all static/package/CLI gates. The final product candidate includes public documentation and launch-guard reconciliation, so exact-head product CI/review remains required before merge.
+
+The historical v0.3.0 release remains unchanged and does not contain `shape`, `refine`, or `grain`; those commands are Specification 022 current-source additions until a separately authorized future release publishes them.
 
 ## Evidence selecting 022
 
-The prior post-v0.3 audit selected observation because no concrete adoption blocker had yet been reproduced. A later maintainer-supplied adversarial product review exercised the public workflow and identified the native authoring dead end. Repository inspection then reproduced it at canonical `main`:
+The prior post-v0.3 audit selected observation because no concrete adoption blocker had yet been reproduced. A later maintainer-supplied adversarial product review exercised the public workflow and identified the native authoring dead end. Repository inspection then reproduced it at canonical source:
 
 - DRAFT authoring exists;
-- no CLI can populate the readiness fields on an existing DRAFT;
-- no CLI advances lifecycle into readiness evaluation;
+- published v0.3.0 has no CLI that populates readiness fields on an existing DRAFT;
+- published v0.3.0 has no CLI that advances lifecycle into readiness evaluation;
 - `check` evaluates only REFINING leaves;
 - `next` consumes only GRAIN nodes.
 
 `docs/research/post-v0.3-native-workflow-friction-2026-08-29.md` records the evidence and explains why 022 stops at GRAIN instead of combining authoring, WorkPacket, executor, verification, and evidence mutation in one oversized specification.
 
-## Explicitly deferred beyond 022 shaping
+## Explicitly deferred beyond 022
 
-Future work requires a newly shaped specification and fresh evidence. No item below is automatically authorized:
+Future work requires a newly shaped specification and fresh post-022 evidence. No item below is automatically authorized:
 
 - `GRAIN -> READY` or later lifecycle mutation;
 - WorkPacket CLI generation or executor/result orchestration;
