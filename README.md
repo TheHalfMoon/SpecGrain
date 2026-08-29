@@ -35,10 +35,10 @@ specgrain recover specgrain-demo
 
 Recovery only clears, rolls back, or finalizes an exact recognized transaction state. Ambiguous parent/child state is preserved for manual investigation instead of being guessed or overwritten.
 
-The published v0.2.0 release includes root `draft` authoring but predates the unreleased child-DRAFT and `recover` surfaces now present on `main`. v0.2.0 can be installed directly from its source archive:
+The v0.3.0 versioned release includes root and child DRAFT authoring plus explicit recovery. It can be installed directly from its source archive:
 
 ```bash
-python -m pip install "https://github.com/TheHalfMoon/SpecGrain/archive/refs/tags/v0.2.0.zip"
+python -m pip install "https://github.com/TheHalfMoon/SpecGrain/archive/refs/tags/v0.3.0.zip"
 ```
 
 ## What is a Grain?
@@ -55,7 +55,7 @@ Intent
 
 When a change is too large, SpecGrain's default answer is further refinement—not a larger prompt.
 
-## Supported CLI on current main
+## Supported CLI
 
 | Command | Purpose |
 | --- | --- |
@@ -70,7 +70,7 @@ When a change is too large, SpecGrain's default answer is further refinement—n
 
 Inspection commands, `draft`, and `recover` provide deterministic JSON output where `--json` is supported.
 
-The published v0.2.0 release contains every command in the table except `recover`; its `draft` command creates roots only and has no `--parent` option. Current unreleased `main` adds child-DRAFT authoring without changing package version or claiming a new release. SpecGrain remains a deterministic control plane, not an agent runner or hosted service. External agents integrate through portable WorkPacket/result adapter contracts rather than becoming verification authority.
+The v0.3.0 versioned release contains every command in the table. Its `draft` command supports root creation and `--parent` child creation, while `recover` remains an explicit bounded mutation for exact recognized interrupted authoring states. These surfaces do not promote lifecycle state or synthesize Grain/readiness/execution authority. SpecGrain remains a deterministic control plane, not an agent runner or hosted service. External agents integrate through portable WorkPacket/result adapter contracts rather than becoming verification authority.
 
 ## Zero to VERIFIED
 
@@ -106,7 +106,7 @@ Read [`docs/trust-model.md`](docs/trust-model.md), [`docs/architecture.md`](docs
 
 ## Benchmarks: evidence before claims
 
-SpecGrainBench provides deterministic experiment plans, isolation/contamination preflight, run ledgers, and no-automatic-winner reports for prompt-only, GitHub Spec Kit, and SpecGrain arms. v0.2.0 does **not** claim an empirical winner because a public comparative run dataset has not yet been published. The current public benchmark methodology report remains [`docs/benchmark-report-v0.1.0.md`](docs/benchmark-report-v0.1.0.md); see also [`docs/benchmark-strategy.md`](docs/benchmark-strategy.md).
+SpecGrainBench provides deterministic experiment plans, isolation/contamination preflight, run ledgers, and no-automatic-winner reports for prompt-only, GitHub Spec Kit, and SpecGrain arms. v0.3.0 does **not** claim an empirical winner because a public comparative run dataset has not yet been published. The current public benchmark methodology report remains [`docs/benchmark-report-v0.1.0.md`](docs/benchmark-report-v0.1.0.md); see also [`docs/benchmark-strategy.md`](docs/benchmark-strategy.md).
 
 ## Architecture in one view
 

@@ -4,6 +4,12 @@ All notable public release changes are recorded here.
 
 ## Unreleased
 
+_No changes recorded yet._
+
+## [0.3.0] — 2026-08-29
+
+Backward-compatible recursive authoring release.
+
 ### Added
 
 - native child-DRAFT authoring through the public `create_child_draft_spec` API and `specgrain draft --parent`, limited to existing parents that remain in state `DRAFT`;
@@ -11,12 +17,14 @@ All notable public release changes are recorded here.
 
 ### Changed
 
-- local store reads and authoring writes now fail closed when a native authoring transaction journal is pending;
+- local store reads and authoring writes fail closed when a native authoring transaction journal is pending;
 - reciprocal child writes use a recoverable journal plus exact parent-preimage replacement instead of claiming operating-system atomicity across two files.
 
 ### Evidence boundary
 
-These unreleased changes do not promote lifecycle state, synthesize Grain readiness, add an executor/provider, add a runtime dependency, change package version `0.2.0`, or claim a new release.
+v0.3.0 publishes already-canonical recursive DRAFT authoring and recovery. Specification 020 changes no `src/specgrain/` product behavior, does not promote lifecycle state, synthesize Grain readiness, add an executor/provider, add a runtime dependency, publish to PyPI, or claim an empirical benchmark winner.
+
+See [`docs/releases/v0.3.0.md`](docs/releases/v0.3.0.md) for detailed release notes.
 
 ## [0.2.0] — 2026-08-29
 

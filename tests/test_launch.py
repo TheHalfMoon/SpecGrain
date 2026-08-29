@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def test_release_metadata_is_versioned_and_runtime_dependency_free() -> None:
     data = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
-    assert data["project"]["version"] == "0.2.0"
+    assert data["project"]["version"] == "0.3.0"
     assert data["project"]["dependencies"] == []
     assert data["project"]["requires-python"] == ">=3.11"
     assert data["project"]["license"] == "MIT"
@@ -77,6 +77,8 @@ def test_release_workflow_is_metadata_derived_monotonic_and_installable() -> Non
     assert "gh release edit" not in workflow
     assert "gh release upload" not in workflow
     assert "v0.1.0" not in workflow
+    assert "v0.2.0" not in workflow
+    assert "v0.3.0" not in workflow
 
 
 def test_readme_uses_only_current_cli_commands() -> None:
@@ -94,9 +96,9 @@ def test_readme_uses_only_current_cli_commands() -> None:
         assert command in readme
     for unsupported in ("specgrain ask ", "specgrain packet ", "specgrain verify "):
         assert unsupported not in readme
-    assert "refs/tags/v0.2.0.zip" in readme
-    assert "published v0.2.0 release contains every command in the table except `recover`" in readme
-    assert "no `--parent` option" in readme
+    assert "refs/tags/v0.3.0.zip" in readme
+    assert "v0.3.0 versioned release contains every command in the table" in readme
+    assert "do not promote lifecycle state" in readme
 
 
 def test_zero_to_verified_example_executes() -> None:
@@ -125,6 +127,7 @@ def test_public_launch_surface_is_present() -> None:
         "docs/trust-model.md",
         "docs/releases/v0.1.0.md",
         "docs/releases/v0.2.0.md",
+        "docs/releases/v0.3.0.md",
         "docs/assets/terminal-demo.svg",
         ".github/ISSUE_TEMPLATE/bug_report.md",
         ".github/ISSUE_TEMPLATE/feature_request.md",
@@ -144,15 +147,26 @@ def test_v020_release_notes_preserve_authoring_and_trust_boundaries() -> None:
     assert "Runtime third-party dependency count remains zero" in notes
 
 
-def test_changelog_tracks_unreleased_child_authoring_without_version_bump() -> None:
+def test_v030_release_notes_preserve_recursive_authoring_and_trust_boundaries() -> None:
+    notes = (ROOT / "docs" / "releases" / "v0.3.0.md").read_text(encoding="utf-8")
+    assert "create_child_draft_spec" in notes
+    assert "specgrain recover" in notes
+    assert "does not change `src/specgrain/` product behavior" in notes
+    assert "No PyPI" in notes
+    assert "no benchmark winner is claimed" in notes
+    assert "Runtime third-party dependency count remains zero" in notes
+
+
+def test_changelog_promotes_v030_and_restores_unreleased_boundary() -> None:
     changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+    assert "## [0.3.0] — 2026-08-29" in changelog
     assert "## [0.2.0] — 2026-08-29" in changelog
-    assert changelog.index("## Unreleased") < changelog.index("## [0.2.0]")
+    assert changelog.index("## Unreleased") < changelog.index("## [0.3.0]")
+    assert changelog.index("## [0.3.0]") < changelog.index("## [0.2.0]")
+    assert "_No changes recorded yet._" in changelog
     assert "create_child_draft_spec" in changelog
     assert "specgrain recover" in changelog
-    assert "do not promote lifecycle state" in changelog
-    assert "package version `0.2.0`" in changelog
-    assert "specgrain draft" in changelog
+    assert "Specification 020 changes no `src/specgrain/` product behavior" in changelog
 
 
 def test_python_release_surface_respects_line_length() -> None:
@@ -175,6 +189,7 @@ def test_public_launch_relative_markdown_links_resolve() -> None:
         ROOT / "docs" / "trust-model.md",
         ROOT / "docs" / "releases" / "v0.1.0.md",
         ROOT / "docs" / "releases" / "v0.2.0.md",
+        ROOT / "docs" / "releases" / "v0.3.0.md",
         ROOT / "examples" / "brownfield" / "README.md",
     )
     broken: list[str] = []

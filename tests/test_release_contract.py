@@ -6,7 +6,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def test_v020_release_workflow_binds_new_publication_to_exact_ci_head() -> None:
+def test_release_workflow_binds_new_publication_to_exact_ci_head() -> None:
     workflow = (ROOT / ".github" / "workflows" / "release.yml").read_text(encoding="utf-8")
     assert "RELEASE_SHA: ${{ github.event.workflow_run.head_sha }}" in workflow
     assert 'git tag "$RELEASE_TAG" "$RELEASE_SHA"' in workflow
@@ -15,10 +15,11 @@ def test_v020_release_workflow_binds_new_publication_to_exact_ci_head() -> None:
     assert '--notes-file "$RELEASE_NOTES"' in workflow
 
 
-def test_v020_release_workflow_is_metadata_derived_and_history_safe() -> None:
+def test_release_workflow_is_metadata_derived_and_history_safe() -> None:
     data = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
-    assert data["project"]["version"] == "0.2.0"
+    assert data["project"]["version"] == "0.3.0"
     assert data["project"]["dependencies"] == []
+    assert (ROOT / "docs" / "releases" / "v0.3.0.md").is_file()
 
     workflow = (ROOT / ".github" / "workflows" / "release.yml").read_text(encoding="utf-8")
     for derived in (
@@ -37,6 +38,8 @@ def test_v020_release_workflow_is_metadata_derived_and_history_safe() -> None:
         "gh release edit",
         "gh release upload",
         "v0.1.0",
+        "v0.2.0",
+        "v0.3.0",
     ):
         assert forbidden not in workflow
 
