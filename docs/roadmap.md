@@ -2,7 +2,7 @@
 
 The roadmap is intentionally progressive. Only the nearest active specification should have implementation-level detail. Future work is shaped from current evidence rather than pre-authorized by stale backlog detail.
 
-**Current program state:** Specifications 000–021 are `CLOSED_CANONICAL`. The latest published release remains GitHub Release `378962445` / tag `v0.3.0` at exact product source `70dd66aba0e68ae710e6ef12605ed153d107bab4`. Specification 021 public-launch hardening merged as canonical implementation `88e174818870cb90d18537b0c8aea810c84fc244`; its closeout merged as `96df6391a0a6be5267e15f88d768d6c0c70c8bf5`; canonical post-closeout CI `33257485950` succeeded and Release verification `33257527462` / job `99113736087` preserved historical `v0.3.0` without mutation. The program is `POST_V0.3_OBSERVATION` with no active or selected successor specification.
+**Current program state:** Specifications 000–021 are `CLOSED_CANONICAL`. Canonical pre-022 `main` is `3b98914200c68909f09db08642faf56de48305eb`. The latest published release remains GitHub Release `378962445` / tag `v0.3.0` at exact product source `70dd66aba0e68ae710e6ef12605ed153d107bab4`. Fresh reproduced adoption friction has shaped prospective Specification 022 — Native Grain Preparation on a documentation-only branch; implementation authority does not exist until that exact shaping head is merged canonically and post-shaping CI succeeds.
 
 ## M0 — Foundation
 
@@ -30,7 +30,7 @@ The roadmap is intentionally progressive. Only the nearest active specification 
 - **009 — Work Packet:** immutable digest-bound WorkPacket and execution-result contracts.
 - **010 — Verification and Evidence:** exact-revision independent verification, changed-scope checks, evidence records, and `prove`.
 
-Specification 010 closed the first complete MVP vertical slice.
+Specification 010 closed the first complete MVP vertical slice at the API layer.
 
 ## M5 — Adaptive delivery control
 
@@ -51,33 +51,37 @@ The initial v0.1 sequence ended at Specification 016. Exact release and closeout
 
 ## Post-v0.1 — Evidence-shaped product adoption
 
-- **017 — Native DRAFT CLI:** `CLOSED_CANONICAL`; adds deterministic creation of the first native root `DRAFT` after `specgrain init` without Grain/readiness/execution authority.
-- **018 — v0.2.0 Authoring Release:** `CLOSED_CANONICAL`; product merge `baf00995a7ae9cf01b6196d68c62f4eca2c1ec85`, Release `378936896`, closeout merge `c5282caa29fbfeb8c118755766b6a7b8a49d2781`.
-- **019 — Native Child-DRAFT Authoring:** `CLOSED_CANONICAL`; product merge `d6727b6c5cdafcf6265b6d999418c0fe853249a7`, closeout merge `3f8f3d825c3171a3a9ac7761ee5bc642e68a9d2d`; adds recoverable reciprocal child DRAFT authoring and explicit recovery without lifecycle promotion.
-- **020 — v0.3.0 Recursive Authoring Release:** `CLOSED_CANONICAL`; product merge `70dd66aba0e68ae710e6ef12605ed153d107bab4`; Release `378962445` / `v0.3.0`; closeout merge `123e1ded9d6bdc1aa15767ec7185bfffab5f8eba`; post-closeout CI `33250422380`; historical no-mutation Release verification `33250468134` / job `99095156240`. It publishes the already-canonical root/child DRAFT and explicit recovery surface with no new product behavior.
-- **021 — Public Launch Readiness Hardening:** `CLOSED_CANONICAL`; shaped from explicit maintainer launch-readiness evidence; shaping merge `5c8cfe64f5481c42c53b6fefa91f92e7a2c68811`; implementation merge `88e174818870cb90d18537b0c8aea810c84fc244`; closeout merge `96df6391a0a6be5267e15f88d768d6c0c70c8bf5`; post-closeout CI `33257485950`; no-mutation Release verification `33257527462` / job `99113736087`. It hardens README first-screen trust signals, v0.3.0 install prominence, current SECURITY/launch truth, and bounded launch regression tests without product behavior or release-identity changes.
+- **017 — Native DRAFT CLI:** `CLOSED_CANONICAL`; adds deterministic creation of the first native root `DRAFT` after `specgrain init` without hand-authoring internal JSON or granting Grain/readiness/execution authority.
+- **018 — v0.2.0 Authoring Release:** `CLOSED_CANONICAL`; published the native root-DRAFT surface as v0.2.0.
+- **019 — Native Child-DRAFT Authoring:** `CLOSED_CANONICAL`; adds recoverable reciprocal child DRAFT authoring and explicit recovery without lifecycle promotion.
+- **020 — v0.3.0 Recursive Authoring Release:** `CLOSED_CANONICAL`; product merge `70dd66aba0e68ae710e6ef12605ed153d107bab4`; Release `378962445` / `v0.3.0`; publishes root/child DRAFT authoring and explicit recovery with no new product behavior.
+- **021 — Public Launch Readiness Hardening:** `CLOSED_CANONICAL`; hardens README first-screen trust signals, v0.3.0 install prominence, current security/launch truth, licensing recognition, and launch regression checks without changing product behavior or release identity.
+- **022 — Native Grain Preparation:** `SHAPED` prospectively from fresh reproduced adoption friction. It is limited to explicit native `DRAFT -> SHAPED -> REFINING -> GRAIN` preparation using existing schema/lifecycle/readiness semantics. It does not authorize READY/execution/verification/evidence/provider scope. Implementation begins only after canonical shaping merge and re-verification.
 
-The fresh post-v0.3 audit initially selected no successor after 020. A later explicit maintainer public-launch-readiness request supplied fresh evidence and shaped 021 narrowly. With 021 now closed, the roadmap returns to observation rather than pre-authorizing another specification.
+## Evidence selecting 022
 
-Live GitHub platform metadata observed during 021 still has no repository description, no topics, no `main` branch protection, and no repository ruleset. The available repository interface is read-only for those settings. They remain explicit platform residuals and do not authorize unrelated product work.
+The prior post-v0.3 audit selected observation because no concrete adoption blocker had yet been reproduced. A later maintainer-supplied adversarial product review exercised the public workflow and identified the native authoring dead end. Repository inspection then reproduced it at canonical `main`:
 
-A later Specification 022 requires fresh user/adoption evidence, a reproducible defect/security finding, a demonstrated authoring/recovery limitation, controlled benchmark data, a bounded interoperability/distribution blocker, or a new governance requirement.
+- DRAFT authoring exists;
+- no CLI can populate the readiness fields on an existing DRAFT;
+- no CLI advances lifecycle into readiness evaluation;
+- `check` evaluates only REFINING leaves;
+- `next` consumes only GRAIN nodes.
 
-## Explicitly deferred
+`docs/research/post-v0.3-native-workflow-friction-2026-08-29.md` records the evidence and explains why 022 stops at GRAIN instead of combining authoring, WorkPacket, executor, verification, and evidence mutation in one oversized specification.
 
-Future work requires a newly shaped specification and fresh evidence. No item below is automatically authorized by this roadmap:
+## Explicitly deferred beyond 022 shaping
 
-- lifecycle-aware broad recursive refinement or automatic state progression;
-- generic DRAFT editing or protected lifecycle mutation without a bounded authority contract;
-- stronger multi-writer/recovery concurrency without observed demand and a separately shaped locking contract;
-- WorkPacket/executor orchestration commands;
-- hosted SaaS or web dashboard;
-- own LLM or fine-tuning;
-- account/enterprise system;
-- visual workflow designer;
-- large agent-persona catalog;
-- provider-specific orchestration without adoption evidence;
+Future work requires a newly shaped specification and fresh evidence. No item below is automatically authorized:
+
+- `GRAIN -> READY` or later lifecycle mutation;
+- WorkPacket CLI generation or executor/result orchestration;
+- automatic/LLM-assisted spec shaping or provider-specific command installation;
+- generic arbitrary editing of mature SpecNodes;
+- stronger multi-writer/recovery concurrency;
 - PyPI publication or broader distribution changes without publishing-governance shaping;
+- hosted SaaS, dashboard, account/enterprise, or provider runtime scope;
+- visual workflow designer or large agent-persona catalog;
 - empirical benchmark superiority claims without a reproducible completed dataset.
 
-No successor after 021 is implied or currently selected. Observation is the current evidence-shaped frontier.
+After Specification 022 closes, the next frontier must be re-evaluated from actual post-022 product/adoption evidence rather than assumed to be WorkPacket/executor work.

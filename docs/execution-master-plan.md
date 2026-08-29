@@ -40,77 +40,70 @@ SpecGrain is an independent, agent-neutral delivery system built around recursiv
   -> 016 public launch
 ```
 
-Specification 000 established the project foundation and constitution.
+Specification 000 established the project foundation and constitution. Specifications 000 through 016 are `CLOSED_CANONICAL`.
 
-## Initial v0.1 program completion
+## Versioned product history
 
-Specifications 000 through 016 are closed canonically.
+- `v0.1.0` product source: `5eb46db0479cb8707afe070027dab4f3c558849a`; initial program closeout: `7c343841424ca48207f9c42eae725a53213d19e5`.
+- Specification 017 — Native DRAFT CLI: `CLOSED_CANONICAL`; root DRAFT authoring.
+- Specification 018 — v0.2.0 Authoring Release: `CLOSED_CANONICAL`; published root DRAFT authoring.
+- Specification 019 — Native Child-DRAFT Authoring: `CLOSED_CANONICAL`; recoverable reciprocal child authoring under ADR-0018.
+- Specification 020 — v0.3.0 Recursive Authoring Release: `CLOSED_CANONICAL`; product/release source `70dd66aba0e68ae710e6ef12605ed153d107bab4`; GitHub Release `378962445`.
+- Specification 021 — Public Launch Readiness Hardening: `CLOSED_CANONICAL`; canonical closeout `3b98914200c68909f09db08642faf56de48305eb` after reconciliation PR #36.
 
-The v0.1.0 product release source commit is:
+The latest published release remains `v0.3.0` at exact historical product source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
 
-`5eb46db0479cb8707afe070027dab4f3c558849a`
+## Evidence-shaped frontier — Specification 022
 
-This is the expected-head-protected merge of PR #18. Its second parent is exact reviewed PR head `1e4b36b169c7ac6d9e59741bb62b6a29b7649a17`. PR-head CI run `33234332746` and canonical post-merge CI run `33234395766` each completed the five-cell Linux/macOS/Windows matrix successfully.
+The post-v0.3 audit originally selected observation because adoption evidence was insufficient to authorize lifecycle/execution expansion. A later maintainer-supplied adversarial product review supplied fresh concrete user/adoption friction. The repository reproduced the material finding at canonical `main` `3b98914200c68909f09db08642faf56de48305eb`:
 
-Release workflow run `33234424696` published tag `v0.1.0` at that exact product merge commit and GitHub Release `378876694` with the versioned wheel and source distribution. Specification 016 documentation-only closeout then merged through PR #19 as canonical `main` `7c343841424ca48207f9c42eae725a53213d19e5`; final CI run `33234669930` and post-closeout release workflow `33234703124` succeeded.
+- `draft` can create validated root/child DRAFTs;
+- no supported CLI can populate existing readiness fields on an authored DRAFT;
+- no supported CLI reaches `SHAPED`, `REFINING`, or `GRAIN`;
+- `check_project()` evaluates readiness only for `REFINING` leaves;
+- `next_project()` considers only `GRAIN` nodes.
 
-Completed v0.1 capabilities include recursive/versioned specs, lifecycle/refinement/readiness validation, local state, dependency scheduling, brownfield scanning, context budgets, portable WorkPackets/results, independent evidence, method profiles, drift/metrics, Spec Kit import, generic agent adapters, benchmark comparability controls, permanent cross-platform CI, public migration/trust/community surfaces, and the published v0.1.0 release.
+`docs/research/post-v0.3-native-workflow-friction-2026-08-29.md` records the reproduced evidence.
 
-## Post-v0.1 evidence-shaped frontier
+### Prospective Specification 022 — Native Grain Preparation
 
-The initial sequence ended at Specification 016 and does not authorize an automatic successor. Every post-v0.1 specification must be shaped from current product/repository evidence.
+022 is `SHAPED` only on `docs/022-native-grain-preparation` until its exact shaping head is merged canonically.
 
-Specification 017 — Native DRAFT CLI is `CLOSED_CANONICAL`. Its product merge is `dedb9ee30a6b8856c9c06439c68f3a37225f0563`; its closeout merge is `d7c3f8e5734264824cd6ed1d8e931802a242c50a`; exact product and closeout CI evidence is recorded under `specs/017-native-draft-cli/`.
+Its bounded outcome is:
 
-017 closes the empty-project authoring gap on current `main`: users can create one validated root `DRAFT` through `specgrain draft` without hand-authoring internal JSON or receiving implied Grain/readiness/execution authority.
+```text
+DRAFT -> SHAPED -> REFINING -> GRAIN
+```
 
-The fresh audit `docs/research/post-017-product-audit-2026-08-29.md` identified the distribution discontinuity between current `main` and public `v0.1.0` as the smallest adoption-oriented gap and shaped Specification 018 — v0.2.0 Authoring Release.
+using explicit existing-schema inputs and the existing Grain-readiness evaluator.
 
-Specification 018 is `CLOSED_CANONICAL`. Product merge `baf00995a7ae9cf01b6196d68c62f4eca2c1ec85` passed canonical CI `33245753969`; release workflow `33245783948` published GitHub Release `378936896` / tag `v0.2.0`. Documentation-only closeout merged as `c5282caa29fbfeb8c118755766b6a7b8a49d2781`; post-closeout CI `33246162550` succeeded and release verification `33246212598` confirmed the existing historical `v0.2.0` release without mutation.
+ADR-0019 authorizes only:
 
-The fresh post-v0.2 audit `docs/research/post-v0.2-product-audit-2026-08-29.md` selected native child-DRAFT authoring as the smallest recursive product gap and shaped Specification 019 narrowly under ADR-0018.
+- semantic shaping of one existing DRAFT into SHAPED;
+- state-only SHAPED-to-REFINING mutation;
+- readiness-gated state-only REFINING-to-GRAIN promotion;
+- exact-preimage single-file replacement;
+- native `shape`, `refine`, and `grain` CLI surfaces.
 
-Specification 019 is `CLOSED_CANONICAL`. Product merge `d6727b6c5cdafcf6265b6d999418c0fe853249a7` passed canonical product CI `33248014390`; historical-release verification `33248070688` preserved `v0.2.0`. Documentation-only closeout merged as `3f8f3d825c3171a3a9ac7761ee5bc642e68a9d2d`; post-closeout CI `33248332725` succeeded and Release verification `33248368659` again preserved historical `v0.2.0` without mutation.
+022 explicitly does not authorize:
 
-019 adds bounded native child-DRAFT authoring and explicit recovery without lifecycle promotion, readiness synthesis, or execution authority.
+- `GRAIN -> READY` or later lifecycle transitions;
+- WorkPacket CLI generation;
+- executor/provider invocation or agent orchestration;
+- running verification/evidence commands;
+- evidence-record mutation;
+- AI-generated shaping or hidden readiness defaults;
+- readiness-rule weakening;
+- PyPI/new-release scope;
+- hosted/provider/account scope;
+- empirical benchmark claims.
 
-The fresh post-019 audit `docs/research/post-019-product-audit-2026-08-29.md` identified the distribution discontinuity between canonical recursive authoring and public `v0.2.0` as the smallest next gap and shaped Specification 020 — v0.3.0 Recursive Authoring Release.
+Implementation authority begins only when:
 
-Specification 020 is `CLOSED_CANONICAL`.
-
-- final implementation/evidence PR head `bf59a2ceba3e28cabc2294a0bd95e4e973b1e2bf` passed exact-head PR CI `33249768557` across the permanent five-cell matrix;
-- canonical product merge `70dd66aba0e68ae710e6ef12605ed153d107bab4` passed canonical product CI `33249920673`;
-- Release workflow `33249956337` published GitHub Release `378962445` / tag `v0.3.0` from exact product merge `70dd66a...`;
-- documentation-only closeout PR #31 exact head `a9cb5c65598b12e005034b3fec3b356239bbaf29` passed exact-head CI `33250227572` and merged with expected-head protection as canonical closeout merge `123e1ded9d6bdc1aa15767ec7185bfffab5f8eba`;
-- the closeout merge has first parent exact product merge `70dd66a...`, second parent exact closeout head `a9cb5c6...`, and a valid GitHub signature;
-- canonical post-closeout CI `33250422380` succeeded across all five permanent cells;
-- Release verification `33250468134`, job `99095156240`, checked out exact closeout merge and proved historical `v0.3.0` remained published at product source `70dd66a...` without mutation;
-- live `v0.3.0` tag, Release ID, asset IDs, sizes, and digests remained unchanged after verification.
-
-020 is distribution-only: it makes the already-canonical root/child DRAFT authoring and explicit recovery surface available in the latest versioned GitHub Release without changing `src/specgrain/` product behavior, release automation, or runtime dependencies.
-
-The fresh post-v0.3 audit `docs/research/post-v0.3-product-audit-2026-08-29.md` found that the distribution discontinuity was closed and initially selected no evidence-supported successor. Repository adoption evidence was too sparse to justify lifecycle mutation, generic editing, stronger multi-writer semantics, executor orchestration, PyPI/broader distribution, hosted/provider scope, or empirical benchmark claims.
-
-A subsequent explicit maintainer request to make the public repository launch surface professional and audit keywords, licensing, security truth, launch presentation, and GitHub metadata supplied fresh adoption/launch evidence. `docs/research/public-launch-readiness-audit-2026-08-29.md` reproduced stale `SECURITY.md` support-line text, stale launch guidance, and missing GitHub description/topics/ruleset metadata, and shaped Specification 021 — Public Launch Readiness Hardening.
-
-Specification 021 is `CLOSED_CANONICAL`.
-
-- exact shaping head `70e511e73feb4e561a8137ffd39e481b393c5ec4` passed PR #33 CI `33256371898` and merged with expected-head protection as canonical shaping merge `5c8cfe64f5481c42c53b6fefa91f92e7a2c68811`;
-- canonical shaping post-merge CI `33256530949` succeeded across all five permanent cells before implementation;
-- exact implementation head `e95bbafdd2bc66ea67e40e0690c053806acf85c3` passed PR #34 CI `33256769276`; Ubuntu/Python 3.11 job `99111766462` recorded `558 passed in 1.58s` plus successful Ruff, tracked-tree cleanliness, compileall, package build/install, and CLI smoke;
-- PR #34 changed exactly six bounded public-launch/status/test paths and no `src/specgrain/`, package/version/dependency, workflow, changelog/release-note, PyPI, hosted/provider, lifecycle/readiness/execution, benchmark-data, or historical-release surface;
-- canonical implementation merge `88e174818870cb90d18537b0c8aea810c84fc244` passed canonical CI `33256836246` across all five permanent cells;
-- Release verification `33256877372`, job `99112050245`, proved historical v0.3.0 remained at source `70dd66a...` without mutation;
-- documentation/status-only closeout head `29f213efef3e1a5c3ed7a68abec17e7a213639d4` passed exact-head PR #35 CI `33257372972` across all five permanent cells and had no submitted reviews or inline review threads at final recheck;
-- PR #35 merged with expected-head protection as canonical closeout merge `96df6391a0a6be5267e15f88d768d6c0c70c8bf5`, with a valid GitHub signature, first parent exact implementation merge `88e1748...`, and second parent exact closeout head `29f213e...`;
-- canonical post-closeout CI `33257485950` succeeded across all five permanent cells;
-- Release verification `33257527462`, job `99113736087`, checked out exact closeout merge and proved historical `v0.3.0` remained published at `70dd66a...` without mutation.
-
-021 hardens only the public launch surface: README first-screen trust signals and stable v0.3.0 install prominence, current `0.3.x` SECURITY support truth, current v0.3.0 launch guidance, and bounded launch regression checks. It does not change product behavior or release identity.
-
-Live GitHub platform settings observed during 021 still have no repository description, no topics, no `main` branch protection, and no repository ruleset. The available repository interface is read-only for those settings, so they are explicit residual platform operations rather than fabricated completed work.
-
-The current program state is `POST_V0.3_OBSERVATION`. No active specification exists. Any future Specification 022 must be shaped from fresh evidence such as concrete user/adoption friction, a reproducible defect/security finding, controlled benchmark data, a demonstrated authoring/recovery limitation, or a clearly bounded interoperability/governance blocker.
+1. the exact 022 shaping head is reviewed and passes permanent CI;
+2. the shaping PR is merged using expected-head protection;
+3. canonical `main` and post-shaping CI are re-verified;
+4. `AGENTS.md`, `CURRENT`, constitution, this plan, and the canonical 022 authority chain are re-read.
 
 ## Cross-spec execution rules
 
@@ -128,17 +121,19 @@ The current program state is `POST_V0.3_OBSERVATION`. No active specification ex
 12. External ideas/code require license-aware provenance.
 13. Post-v0.1 work requires a newly shaped specification derived from live evidence; roadmap deferrals and audit recommendations are not implicit authority.
 
-## Completion rule for a post-v0.1 specification
+## Completion rule for Specification 022
 
-A post-v0.1 specification is canonical only when:
+022 is canonical only when:
 
 - its shaped authority chain is present on canonical `main` before implementation begins;
 - implementation is performed on a bounded branch from the exact shaped canonical base;
-- required exact-head CI and review evidence succeeds;
+- required focused/full/static/package checks and permanent five-cell exact-head CI succeed;
+- exact-head review confirms no readiness weakening, hidden defaults, edge skipping, post-GRAIN authority, or unrelated scope;
 - merge uses expected-head protection;
-- canonical post-merge state and required CI are re-verified;
-- closeout documentation records exact evidence before claiming `CLOSED_CANONICAL`;
-- the exact closeout head is merged with expected-head protection and post-closeout canonical state/CI are verified;
-- the next product frontier is re-evaluated from current truth rather than assumed.
+- canonical post-merge state, CI, and historical v0.3.0 release no-mutation behavior are re-verified;
+- a documentation-only closeout records exact evidence and re-evaluates the next frontier;
+- the exact closeout head is merged with expected-head protection and final canonical state/CI are verified.
+
+The likely later need for a WorkPacket/execution workflow is not pre-authorized. It must be selected, shaped, and implemented only from post-022 evidence.
 
 No empirical benchmark winner is claimed without a reproducible completed dataset. No aspirational CLI command is presented as shipped behavior.
