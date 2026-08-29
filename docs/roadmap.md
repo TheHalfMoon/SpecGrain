@@ -1,8 +1,8 @@
 # Roadmap
 
-The roadmap is intentionally progressive. Only the nearest specification should have implementation-level detail. Later work is refined as dependencies and evidence become real.
+The roadmap is intentionally progressive. Only the nearest active specification should have implementation-level detail. Future work is shaped from current evidence rather than pre-authorized by stale backlog detail.
 
-**Current program state:** Specifications 000–015 are closed canonically. Specification 016 Public Launch is the final active specification in the initial v0.1 program.
+**Current program state:** Specifications 000–016 are closed canonically after the exact Specification 016 documentation-only closeout reaches `main`. SpecGrain v0.1.0 is published from product release source commit `5eb46db0479cb8707afe070027dab4f3c558849a`. The initial v0.1 program has no active or next planned specification.
 
 ## M0 — Foundation
 
@@ -47,9 +47,11 @@ Specification 010 closed the first complete MVP vertical slice.
 - **015 — SpecGrainBench:** reproducible experiment ledger and contamination/comparability preflight.
 - **016 — Public Launch:** versioned package, cross-platform CI, public examples/guides/trust surfaces, release notes/assets, and `v0.1.0` publication.
 
+The initial v0.1 sequence ends at Specification 016. Exact release and closeout evidence lives in `specs/016-public-launch/closeout.md`.
+
 ## Explicitly deferred beyond v0.1
 
-Future work requires a newly shaped specification and fresh evidence. No item below is automatically authorized by this roadmap:
+Future work requires a newly shaped specification and fresh evidence. No item below is automatically authorized by this roadmap or by completion of the initial program:
 
 - hosted SaaS or web dashboard;
 - own LLM or fine-tuning;

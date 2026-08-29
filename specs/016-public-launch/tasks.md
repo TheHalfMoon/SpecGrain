@@ -29,18 +29,20 @@
 
 - [x] T014 Add launch-surface tests for version, docs links/files, workflow matrix, example execution, and unsupported-claim guards.
 - [x] T015 Run exact full regression, Ruff, compileall, CLI help parity, package build, wheel-install smoke, and documentation/line-length checks.
-- [ ] T016 Prove permanent CI success on Linux, macOS, and Windows for the exact PR head.
+- [x] T016 Prove permanent CI success on Linux, macOS, and Windows for the exact PR head.
 - [x] T017 Review the exact diff for unsupported commands, fabricated output/evidence, benchmark claims, dependency creep, security regressions, and accidental source changes.
 
 ## Product PR and release
 
-- [ ] T018 Open bounded product PR with exact-head verification evidence.
-- [ ] T019 Resolve every material exact-head review defect.
-- [ ] T020 Merge product PR only with expected-head evidence and prove canonical `main`.
-- [ ] T021 Create tag `v0.1.0` and a non-draft, non-prerelease GitHub Release at the exact product merge commit.
+- [x] T018 Open bounded product PR with exact-head verification evidence.
+- [x] T019 Resolve every material exact-head review defect.
+- [x] T020 Merge product PR only with expected-head evidence and prove canonical `main`.
+- [x] T021 Create tag `v0.1.0` and a non-draft, non-prerelease GitHub Release at the exact product merge commit.
 
 ## Canonical closeout
 
-- [ ] T022 Record live tag/release evidence in repository state.
-- [ ] T023 Merge the documentation-only closeout with expected-head evidence.
-- [ ] T024 Prove final canonical `main`, release target, closed PRs, and Specification 016 `CLOSED_CANONICAL`; no next planned specification remains.
+- [x] T022 Record live tag/release evidence in repository state.
+- [x] T023 Merge the documentation-only closeout with expected-head evidence.
+- [x] T024 Prove final canonical `main`, release target, closed PRs, and Specification 016 `CLOSED_CANONICAL`; no next planned specification remains.
+
+T023 and T024 become canonical facts only if the exact closeout PR head containing this file is merged and then verified against live GitHub. A non-canonical branch carrying these checked boxes is not by itself completion evidence.

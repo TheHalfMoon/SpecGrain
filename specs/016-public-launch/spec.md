@@ -2,7 +2,7 @@
 
 ## Status
 
-`PR_READY`
+`CLOSED_CANONICAL`
 
 ## Outcome
 
@@ -57,3 +57,17 @@ Ship a truthful, installable, cross-platform SpecGrain v0.1.0 release whose publ
 ## Dependencies
 
 Specifications 000 through 015 closed canonically. The exact 015 merge commit is `001a70fcabff497c565fa7339381c4da0b4a3881`.
+
+## Canonical release evidence
+
+- Product PR #18 exact reviewed head: `1e4b36b169c7ac6d9e59741bb62b6a29b7649a17`.
+- Product merge commit: `5eb46db0479cb8707afe070027dab4f3c558849a`.
+- Product merge second parent: exact reviewed head `1e4b36b169c7ac6d9e59741bb62b6a29b7649a17`.
+- Exact PR-head CI run: `33234332746` — five matrix jobs successful.
+- Canonical post-merge CI run: `33234395766` — five matrix jobs successful.
+- Release workflow run: `33234424696` — success.
+- Tag `v0.1.0` targets `5eb46db0479cb8707afe070027dab4f3c558849a`.
+- GitHub Release `378876694` is public (`draft=false`, `prerelease=false`) and targets the same commit.
+- Release assets and SHA-256 digests are recorded in `closeout.md`.
+
+The `CLOSED_CANONICAL` status in this file becomes authoritative only when the exact documentation-only closeout head containing it is merged and live GitHub post-merge evidence confirms canonical `main`.
