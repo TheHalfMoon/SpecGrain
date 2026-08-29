@@ -28,9 +28,9 @@
 
 - [x] T013 Open the bounded implementation PR from the exact shaped canonical base.
 - [x] T014 Resolve every material exact-head review defect and re-prove CI after head movement.
-- [ ] T015 Merge only with expected-head evidence and prove the exact product merge on canonical `main`.
-- [ ] T016 Record post-merge CI and exact merge evidence, close 017 canonically, and re-audit the next product frontier before authorizing another specification.
+- [x] T015 Merge only with expected-head evidence and prove the exact product merge on canonical `main`.
+- [x] T016 Record post-merge CI and exact merge evidence, close 017 canonically, and re-audit the next product frontier before authorizing another specification.
 
-Verification/review evidence for T011–T014 is recorded in `verification.md` and `review.md`. The exact implementation head `0a01d0c10039f277458b6f30652ed9443f80e645` completed CI run `33235745053` successfully across all five permanent matrix jobs after two forward repairs. This evidence-recording commit moves the PR head and therefore requires a fresh exact-final-head CI/review check before T015 may proceed.
+Pre-merge verification/review evidence is recorded in `verification.md` and `review.md`. Final exact product PR head `1255a9187f85591edd041a3125359e70d2eea379` completed CI run `33235889444` successfully and merged through PR #21 as `dedb9ee30a6b8856c9c06439c68f3a37225f0563` with expected-head protection. Canonical post-merge CI run `33236142514` then completed all five permanent matrix jobs successfully.
 
-Checked implementation tasks on the feature branch are implementation evidence only. T015–T016 require exact live GitHub post-merge evidence before they may be checked or treated as canonical completion.
+T015 and T016 are recorded as completed work in this documentation-only closeout tree. They become canonical completion facts only if the exact closeout PR head containing this file is merged with expected-head protection and live GitHub post-closeout evidence confirms canonical `main`.

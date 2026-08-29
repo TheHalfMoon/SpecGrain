@@ -60,11 +60,13 @@ Completed v0.1 capabilities include recursive/versioned specs, lifecycle/refinem
 
 The initial sequence ended at Specification 016 and does not authorize an automatic successor. Every post-v0.1 specification must be shaped from current product/repository evidence.
 
-The first post-v0.1 audit is `docs/research/post-v0.1-product-audit-2026-08-29.md`. It identifies the missing supported first-party path from an initialized empty store to the first native SpecNode as the smallest current adoption gap.
+The first post-v0.1 audit is `docs/research/post-v0.1-product-audit-2026-08-29.md`. It identified the missing supported first-party path from an initialized empty store to the first native SpecNode as the smallest adoption gap and shaped Specification 017 — Native DRAFT CLI.
 
-**Specification 017 — Native DRAFT CLI** is therefore shaped to add only deterministic root-DRAFT creation through the local store and CLI. Implementation authority begins only after the shaped 017 authority chain is canonical on `main`.
+017 shaping became canonical at `5c7783dde897c975b3519b37bfd45b547244b273`. Product PR #21 exact reviewed head `1255a9187f85591edd041a3125359e70d2eea379` completed final-head CI run `33235889444` successfully, then merged with expected-head protection as `dedb9ee30a6b8856c9c06439c68f3a37225f0563`. Canonical post-merge CI run `33236142514` completed the permanent five-cell matrix successfully.
 
-017 does not pre-authorize recursive refinement, WorkPacket/executor orchestration, hosted services, provider-specific integrations, empirical benchmark execution, PyPI publication, or a new release. After 017 closes canonically, the project must re-audit the frontier instead of assuming a next specification.
+017 closes the empty-project authoring gap on current `main`: users can create one validated root `DRAFT` through `specgrain draft` without hand-authoring internal JSON or receiving implied Grain/readiness/execution authority.
+
+The fresh audit `docs/research/post-017-product-audit-2026-08-29.md` observes that published `v0.1.0` predates `draft` and recommends a versioned public release of the already-completed current authoring surface as the strongest next shaping candidate. That recommendation is not authority. No successor specification, release version, tag, PyPI publication, recursive refinement, or executor work is authorized until a separate shaped authority chain becomes canonical.
 
 ## Cross-spec execution rules
 
@@ -80,7 +82,7 @@ The first post-v0.1 audit is `docs/research/post-v0.1-product-audit-2026-08-29.m
 10. Do not make AI reasoning transcripts repository authority.
 11. Preserve residual risks and blockers.
 12. External ideas/code require license-aware provenance.
-13. Post-v0.1 work requires a newly shaped specification derived from live evidence; roadmap deferrals are not implicit authority.
+13. Post-v0.1 work requires a newly shaped specification derived from live evidence; roadmap deferrals and audit recommendations are not implicit authority.
 
 ## Completion rule for a post-v0.1 specification
 
@@ -92,6 +94,9 @@ A post-v0.1 specification is canonical only when:
 - merge uses expected-head protection;
 - canonical post-merge state and required CI are re-verified;
 - closeout documentation records exact evidence before claiming `CLOSED_CANONICAL`;
+- the exact closeout head is merged with expected-head protection and post-closeout canonical state/CI are verified;
 - the next product frontier is re-evaluated from current truth rather than assumed.
 
 No empirical benchmark winner is claimed without a reproducible completed dataset. No aspirational CLI command is presented as shipped behavior.
+
+The 017 `CLOSED_CANONICAL` statement in its documentation-only closeout tree becomes authoritative only after the exact closeout head is merged and live GitHub post-closeout evidence confirms canonical `main`.
