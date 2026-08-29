@@ -77,6 +77,30 @@ CONSTITUTION = """# Demo Constitution
 All feature behavior works offline.
 """
 
+TEMPLATE_LIGHT_SPEC = """# Search Workspace
+
+## Overview
+
+Search saved work from a focused specification.
+
+## Functional Requirements
+
+- Search saved work by exact title.
+- Filter results by type.
+
+## User Scenarios
+
+- A user searches for one saved item.
+
+## Success Criteria
+
+- A user can find the expected item.
+"""
+
+CANONICAL_REPORT_DIGEST = (
+    "sha256:678fcc87985902002a9d2bc852196fbffdc59b332740660f1deeaf0d4f58746a"
+)
+
 
 def bundle() -> dict[str, str]:
     return {
@@ -95,6 +119,7 @@ def test_import_version_and_deterministic_digest() -> None:
     assert SPECKIT_IMPORT_VERSION == 1
     assert first.to_dict() == second.to_dict()
     assert first.digest == second.digest
+    assert first.digest == CANONICAL_REPORT_DIGEST
 
 
 def test_import_extracts_independent_testability_and_requirements() -> None:
@@ -109,6 +134,53 @@ def test_import_extracts_independent_testability_and_requirements() -> None:
     assert report.stories[0].independent_test.startswith("Create two saved items")
     assert [item.item_id for item in report.functional_requirements] == ["FR-001", "FR-002"]
     assert [item.item_id for item in report.success_criteria] == ["SC-001"]
+    assert "FEATURE_NAME_DERIVED_FROM_PATH" not in {
+        notice.code for notice in report.notices
+    }
+
+
+def test_template_light_import_uses_path_identity_without_semantic_inference() -> None:
+    report = import_spec_kit_artifacts(
+        {"specs/search-workspace/spec.md": TEMPLATE_LIGHT_SPEC},
+        source_revision="lean-1",
+    )
+    assert report.feature_name == "search-workspace"
+    assert {notice.code for notice in report.notices} >= {
+        "FEATURE_NAME_DERIVED_FROM_PATH",
+        "NO_USER_STORIES_EXTRACTED",
+        "SPEC_SOURCE_PARTIALLY_MAPPED",
+    }
+    assert report.stories == ()
+    assert report.functional_requirements == ()
+    assert report.success_criteria == ()
+    assert report.source_artifacts[0].path == "specs/search-workspace/spec.md"
+
+
+def test_template_light_import_fails_without_concrete_path_identity() -> None:
+    with pytest.raises(SpecKitImportError, match="concrete feature parent"):
+        import_spec_kit_artifacts(
+            {"spec.md": TEMPLATE_LIGHT_SPEC},
+            source_revision="lean-1",
+        )
+    with pytest.raises(SpecKitImportError, match="feature-name placeholder"):
+        import_spec_kit_artifacts(
+            {"specs/[FEATURE]/spec.md": TEMPLATE_LIGHT_SPEC},
+            source_revision="lean-1",
+        )
+
+
+def test_template_light_loader_uses_selected_feature_directory_identity(
+    tmp_path: Path,
+) -> None:
+    feature = tmp_path / "specs" / "search-workspace"
+    feature.mkdir(parents=True)
+    (feature / "spec.md").write_text(TEMPLATE_LIGHT_SPEC, encoding="utf-8")
+    report = load_spec_kit_feature(feature, source_revision="lean-1")
+    assert report.feature_name == "search-workspace"
+    assert "FEATURE_NAME_DERIVED_FROM_PATH" in {
+        notice.code for notice in report.notices
+    }
+    assert report.source_artifacts[0].path == "spec.md"
 
 
 def test_import_preserves_technical_context_constitution_and_legacy_tasks() -> None:

@@ -28,8 +28,10 @@ TASK = re.compile(
 FIELD = re.compile('^\\*\\*([^*]+)\\*\\*:\\s*(.+?)\\s*$')
 COMMENT = re.compile('<!--.*?-->', re.DOTALL)
 
+
 class SpecKitImportError(ValueError):
     pass
+
 
 @dataclass(frozen=True, slots=True, order=True)
 class SourceArtifact:
@@ -46,6 +48,7 @@ class SourceArtifact:
             'size_bytes': self.size_bytes,
         }
 
+
 @dataclass(frozen=True, slots=True, order=True)
 class ImportedStory:
     title: str
@@ -59,6 +62,7 @@ class ImportedStory:
             'title': self.title,
         }
 
+
 @dataclass(frozen=True, slots=True, order=True)
 class ImportedItem:
     item_id: str
@@ -67,6 +71,7 @@ class ImportedItem:
     def to_dict(self):
         return {'id': self.item_id, 'text': self.text}
 
+
 @dataclass(frozen=True, slots=True, order=True)
 class TechnicalContextField:
     name: str
@@ -74,6 +79,7 @@ class TechnicalContextField:
 
     def to_dict(self):
         return {'name': self.name, 'value': self.value}
+
 
 @dataclass(frozen=True, slots=True, order=True)
 class LegacyTask:
@@ -94,6 +100,7 @@ class LegacyTask:
             d['story_id'] = self.story_id
         return d
 
+
 @dataclass(frozen=True, slots=True, order=True)
 class ImportNotice:
     code: str
@@ -102,6 +109,7 @@ class ImportNotice:
 
     def to_dict(self):
         return {'code': self.code, 'message': self.message, 'source_path': self.source_path}
+
 
 @dataclass(frozen=True, slots=True)
 class SpecKitImportReport:
@@ -155,16 +163,19 @@ class SpecKitImportReport:
         ).encode()
         return f'sha256:{hashlib.sha256(b).hexdigest()}'
 
+
 @dataclass(frozen=True, slots=True)
 class _Section:
     level: int
     title: str
     body: tuple[str, ...]
 
+
 def _text(v, field):
     if not isinstance(v, str) or not v.strip():
         raise SpecKitImportError(f'{field} must be non-empty text')
     return v.strip()
+
 
 def _path(v):
     s = _text(v, 'artifact path')
@@ -175,15 +186,18 @@ def _path(v):
         raise SpecKitImportError('artifact path must be normalized and repository-relative')
     return p.as_posix()
 
+
 def _role(p):
     try:
         return ROLES[PurePosixPath(p).name]
     except KeyError as e:
         raise SpecKitImportError(f'unsupported Spec Kit artifact: {p}') from e
 
+
 def _artifact(p, c):
     b = c.encode()
     return SourceArtifact(_role(p), p, len(b), f'sha256:{hashlib.sha256(b).hexdigest()}')
+
 
 def _sections(text):
     out = []
@@ -202,25 +216,40 @@ def _sections(text):
     out.append(_Section(level, title, tuple(body)))
     return tuple(out)
 
+
 def _section(ss, title):
     return next((x for x in ss if x.title == title), None)
 
+
 def _lines(body):
     return tuple(x.strip() for x in COMMENT.sub('', '\n'.join(body)).splitlines() if x.strip())
+
 
 def _meta(text, label):
     m = re.search(f'^\\*\\*{re.escape(label)}\\*\\*:\\s*(.+?)\\s*$', COMMENT.sub('', text), re.M)
     return None if not m else m.group(1).strip().strip('`') or None
 
-def _feature(text):
+
+def _feature(text, spec_path):
     for line in COMMENT.sub('', text).splitlines():
         m = re.match('^#\\s+Feature Specification:\\s*(.+?)\\s*$', line.strip())
         if m:
             name = m.group(1).strip()
             if not name or name.startswith('['):
                 raise SpecKitImportError('spec.md contains an unresolved feature-name placeholder')
-            return name
-    raise SpecKitImportError("spec.md is missing '# Feature Specification:' heading")
+            return name, False
+    parent = PurePosixPath(spec_path).parent.name
+    if not parent:
+        raise SpecKitImportError(
+            "spec.md is missing '# Feature Specification:' heading and its source path "
+            'has no concrete feature parent'
+        )
+    if parent.startswith('[') or ('[' in parent and ']' in parent):
+        raise SpecKitImportError(
+            'spec.md source path contains an unresolved feature-name placeholder'
+        )
+    return parent, True
+
 
 def _stories(ss):
     out = []
@@ -241,6 +270,7 @@ def _stories(ss):
         out.append(ImportedStory(m.group(1).strip(), m.group(2).strip(), val))
     return tuple(out)
 
+
 def _items(sec, prefix):
     if sec is None:
         return ()
@@ -259,6 +289,7 @@ def _items(sec, prefix):
         out.append(ImportedItem(i, t))
     return tuple(out)
 
+
 def _assumptions(sec):
     if sec is None:
         return ()
@@ -267,6 +298,7 @@ def _assumptions(sec):
         for x in _lines(sec.body)
         if x.startswith('- ') and not x[2:].strip().startswith('[')
     )
+
 
 def _context(sec):
     if sec is None:
@@ -282,10 +314,12 @@ def _context(sec):
             out.append(TechnicalContextField(m.group(1).strip(), m.group(2).strip()))
     return tuple(sorted(out))
 
+
 def _checks(sec):
     if sec is None:
         return ()
     return tuple(x for x in _lines(sec.body) if not x.startswith(('*', '[')))
+
 
 def _tasks(text):
     out = []
@@ -310,11 +344,13 @@ def _tasks(text):
         )
     return tuple(out)
 
-def import_spec_kit_artifacts(
+
+def _import_spec_kit_artifacts(
     artifacts: Mapping[str, str],
     *,
     source_revision: str,
-    max_artifact_bytes: int = DEFAULT_ARTIFACT_LIMIT_BYTES,
+    max_artifact_bytes: int,
+    feature_identity_path: str | None = None,
 ) -> SpecKitImportReport:
     rev = _text(source_revision, 'source_revision')
     if (
@@ -341,14 +377,28 @@ def import_spec_kit_artifacts(
     if 'spec' not in roles:
         raise SpecKitImportError('spec.md is required for Spec Kit migration')
     sp = roles['spec']
+    identity_path = sp if feature_identity_path is None else _path(feature_identity_path)
+    if PurePosixPath(identity_path).name != 'spec.md':
+        raise SpecKitImportError('feature identity path must identify spec.md')
     st = norm[sp]
     ss = _sections(st)
     pt = norm.get(roles.get('plan', ''), '')
     ps = _sections(pt) if pt else ()
     tt = norm.get(roles.get('tasks', ''), '')
+    feature_name, feature_name_from_path = _feature(st, identity_path)
     stories = _stories(ss)
     tasks = _tasks(tt) if tt else ()
     notices = []
+    if feature_name_from_path:
+        notices.append(
+            ImportNotice(
+                'FEATURE_NAME_DERIVED_FROM_PATH',
+                'The canonical full-template feature heading was absent; feature identity '
+                'was derived only from the explicit source path parent. Unrecognized source '
+                'semantics remain unmapped.',
+                sp,
+            )
+        )
     if tasks:
         notices.append(
             ImportNotice(
@@ -396,7 +446,7 @@ def import_spec_kit_artifacts(
         )
     return SpecKitImportReport(
         rev,
-        _feature(st),
+        feature_name,
         _meta(st, 'Feature Branch'),
         _meta(st, 'Status'),
         tuple(sorted(_artifact(p, c) for p, c in norm.items())),
@@ -409,6 +459,20 @@ def import_spec_kit_artifacts(
         tasks,
         tuple(sorted(notices)),
     )
+
+
+def import_spec_kit_artifacts(
+    artifacts: Mapping[str, str],
+    *,
+    source_revision: str,
+    max_artifact_bytes: int = DEFAULT_ARTIFACT_LIMIT_BYTES,
+) -> SpecKitImportReport:
+    return _import_spec_kit_artifacts(
+        artifacts,
+        source_revision=source_revision,
+        max_artifact_bytes=max_artifact_bytes,
+    )
+
 
 def _read(path: Path, limit: int) -> str:
     try:
@@ -424,6 +488,7 @@ def _read(path: Path, limit: int) -> str:
         return data.decode()
     except UnicodeDecodeError as e:
         raise SpecKitImportError(f'{path.name} must be UTF-8 text') from e
+
 
 def load_spec_kit_feature(
     feature_dir: str | os.PathLike[str],
@@ -451,8 +516,10 @@ def load_spec_kit_feature(
             a[name] = _read(p, max_artifact_bytes)
     if constitution_path is not None:
         a['constitution.md'] = _read(Path(constitution_path), max_artifact_bytes)
-    return import_spec_kit_artifacts(
+    identity_path = f'{root.name}/spec.md' if root.name else 'spec.md'
+    return _import_spec_kit_artifacts(
         a,
         source_revision=source_revision,
         max_artifact_bytes=max_artifact_bytes,
+        feature_identity_path=identity_path,
     )
