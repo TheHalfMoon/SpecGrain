@@ -4,8 +4,10 @@
 
 | Version | Security fixes |
 | --- | --- |
-| 0.1.x | Supported |
-| < 0.1 | Not released/supported |
+| 0.3.x | Supported |
+| < 0.3 | Not supported |
+
+Security fixes are targeted to the current `0.3.x` release line. Older release lines remain historical evidence anchors and are not maintained as parallel security-support branches.
 
 ## Reporting a vulnerability
 

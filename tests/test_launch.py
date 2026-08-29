@@ -101,6 +101,16 @@ def test_readme_uses_only_current_cli_commands() -> None:
     assert "do not promote lifecycle state" in readme
 
 
+def test_readme_first_screen_states_current_public_contract() -> None:
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    assert "agent-neutral delivery control plane" in readme
+    assert "Current release:** `v0.3.0`" in readme
+    assert "Python:** `3.11+`" in readme
+    assert "License:** MIT" in readme
+    assert "Runtime dependencies:** zero" in readme
+    assert "actions/workflows/ci.yml/badge.svg" in readme
+
+
 def test_zero_to_verified_example_executes() -> None:
     completed = subprocess.run(
         [sys.executable, str(ROOT / "examples" / "zero_to_verified.py")],
@@ -117,6 +127,7 @@ def test_zero_to_verified_example_executes() -> None:
 
 def test_public_launch_surface_is_present() -> None:
     required = (
+        "LICENSE",
         "CONTRIBUTING.md",
         "SECURITY.md",
         "CODE_OF_CONDUCT.md",
@@ -135,6 +146,23 @@ def test_public_launch_surface_is_present() -> None:
     )
     for relative in required:
         assert (ROOT / relative).is_file(), relative
+
+
+def test_security_policy_tracks_current_release_line() -> None:
+    policy = (ROOT / "SECURITY.md").read_text(encoding="utf-8")
+    assert "| 0.3.x | Supported |" in policy
+    assert "| < 0.3 | Not supported |" in policy
+    assert "| 0.1.x | Supported |" not in policy
+    assert "historical evidence anchors" in policy
+
+
+def test_launch_strategy_tracks_current_release() -> None:
+    strategy = (ROOT / "docs" / "launch-strategy.md").read_text(encoding="utf-8")
+    assert "## Current v0.3.0 launch demo" in strategy
+    assert "refs/tags/v0.3.0.zip" in strategy
+    assert "v0.1.0 launch demo" not in strategy
+    for command in ("specgrain init", "specgrain draft", "specgrain check"):
+        assert command in strategy
 
 
 def test_v020_release_notes_preserve_authoring_and_trust_boundaries() -> None:
@@ -184,6 +212,7 @@ def test_public_launch_relative_markdown_links_resolve() -> None:
         ROOT / "README.md",
         ROOT / "CONTRIBUTING.md",
         ROOT / "SECURITY.md",
+        ROOT / "docs" / "launch-strategy.md",
         ROOT / "docs" / "migration-from-spec-kit.md",
         ROOT / "docs" / "benchmark-report-v0.1.0.md",
         ROOT / "docs" / "trust-model.md",

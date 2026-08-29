@@ -2,16 +2,26 @@
 
 **Big ideas. Small specs. Proven software.**
 
-SpecGrain is an open-source, agent-neutral delivery kernel for turning software work into small, bounded, independently verifiable changes. Its deterministic core owns specification structure, readiness, dependency ordering, context budgets, WorkPackets, evidence binding, drift/metrics, Spec Kit import, agent-adapter boundaries, and benchmark comparability checks.
-
 [![CI](https://github.com/TheHalfMoon/SpecGrain/actions/workflows/ci.yml/badge.svg)](https://github.com/TheHalfMoon/SpecGrain/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/TheHalfMoon/SpecGrain?display_name=tag)](https://github.com/TheHalfMoon/SpecGrain/releases/tag/v0.3.0)
+[![Python](https://img.shields.io/badge/python-3.11%2B-blue)](https://www.python.org/)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
+SpecGrain is an open-source, local-first, agent-neutral delivery control plane for turning software work into small, bounded, independently verifiable changes. Its deterministic core owns specification structure, readiness, dependency ordering, context budgets, WorkPackets, evidence binding, drift/metrics, Spec Kit import, agent-adapter boundaries, and benchmark comparability checks.
+
+**Current release:** `v0.3.0` · **Python:** `3.11+` · **License:** MIT · **Runtime dependencies:** zero
 
 ## One-minute start
 
-SpecGrain requires Python 3.11 or newer. From a clone:
+Install the current versioned release directly from GitHub:
 
 ```bash
-python -m pip install .
+python -m pip install "https://github.com/TheHalfMoon/SpecGrain/archive/refs/tags/v0.3.0.zip"
+```
+
+Then try the native local workflow:
+
+```bash
 specgrain scan .
 mkdir specgrain-demo
 specgrain init specgrain-demo --project-id demo
@@ -35,11 +45,7 @@ specgrain recover specgrain-demo
 
 Recovery only clears, rolls back, or finalizes an exact recognized transaction state. Ambiguous parent/child state is preserved for manual investigation instead of being guessed or overwritten.
 
-The v0.3.0 versioned release includes root and child DRAFT authoring plus explicit recovery. It can be installed directly from its source archive:
-
-```bash
-python -m pip install "https://github.com/TheHalfMoon/SpecGrain/archive/refs/tags/v0.3.0.zip"
-```
+The v0.3.0 versioned release includes root and child DRAFT authoring plus explicit recovery. Source checkouts may also be installed locally with `python -m pip install .` for development and contribution work.
 
 ## What is a Grain?
 
