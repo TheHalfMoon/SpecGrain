@@ -18,14 +18,24 @@ specgrain init specgrain-demo --project-id demo
 specgrain draft specgrain-demo \
   --title "Add a bounded health check" \
   --outcome "The service exposes one deterministic health endpoint"
+specgrain draft specgrain-demo \
+  --parent SG-000001 \
+  --title "Define the health response" \
+  --outcome "The health response has one bounded deterministic contract"
 specgrain check specgrain-demo
 ```
 
-The commands above are local and deterministic. `scan` maps bounded brownfield repository facts without executing repository commands or sending the repository to a model. `init` creates repository-local `.specgrain/` state. `draft` creates the first validated native root SpecNode in state `DRAFT` without granting Grain/readiness/execution authority, and `check` validates local state.
+The commands above are local and deterministic. `scan` maps bounded brownfield repository facts without executing repository commands or sending the repository to a model. `init` creates repository-local `.specgrain/` state. `draft` creates a validated SpecNode fixed to `DRAFT`: without `--parent` it creates a root, and with `--parent` it creates one reciprocal child under an existing `DRAFT` parent. Neither path grants Grain/readiness/execution authority. `check` validates local state.
 
-Recursive child refinement is not yet exposed as a CLI authoring command. A newly created DRAFT is intentionally incomplete rather than silently promoted to an executable Grain.
+Child authoring uses a recoverable, fail-closed journal rather than claiming an operating-system-atomic two-file write. If a supported child-authoring transaction is interrupted, ordinary store reads refuse the pending journal until the user explicitly runs:
 
-The v0.2.0 versioned release includes the native `draft` authoring path and can be installed directly from its source archive:
+```bash
+specgrain recover specgrain-demo
+```
+
+Recovery only clears, rolls back, or finalizes an exact recognized transaction state. Ambiguous parent/child state is preserved for manual investigation instead of being guessed or overwritten.
+
+The published v0.2.0 release includes root `draft` authoring but predates the unreleased child-DRAFT and `recover` surfaces now present on `main`. v0.2.0 can be installed directly from its source archive:
 
 ```bash
 python -m pip install "https://github.com/TheHalfMoon/SpecGrain/archive/refs/tags/v0.2.0.zip"
@@ -45,21 +55,22 @@ Intent
 
 When a change is too large, SpecGrain's default answer is further refinement—not a larger prompt.
 
-## Supported CLI
+## Supported CLI on current main
 
 | Command | Purpose |
 | --- | --- |
 | `specgrain init [path]` | Initialize repository-local SpecGrain state. |
-| `specgrain draft [path] --title ... --outcome ...` | Create a validated root DRAFT SpecNode without lifecycle promotion. |
+| `specgrain draft [path] --title ... --outcome ... [--parent SG-XXXXXX]` | Create a root DRAFT or one child DRAFT under an existing DRAFT parent. |
+| `specgrain recover [path]` | Explicitly recover one exact pending native authoring transaction. |
 | `specgrain check [path]` | Validate local state and Grain-readiness reports. |
 | `specgrain next [path]` | Show dependency-eligible Grains and projected waves. |
 | `specgrain scan [path]` | Build a bounded deterministic brownfield repository map. |
 | `specgrain prove <spec-id> [path]` | Load and validate append-oriented evidence for a spec. |
 | `specgrain import-spec-kit <feature-dir>` | Produce a read-only, source-bound Spec Kit migration report. |
 
-Most inspection commands and `draft` provide deterministic JSON output with `--json`.
+Inspection commands, `draft`, and `recover` provide deterministic JSON output where `--json` is supported.
 
-The v0.2.0 release contains every command above. SpecGrain remains a deterministic control plane, not an agent runner or hosted service. External agents integrate through portable WorkPacket/result adapter contracts rather than becoming verification authority.
+The published v0.2.0 release contains every command in the table except `recover`; its `draft` command creates roots only and has no `--parent` option. Current unreleased `main` adds child-DRAFT authoring without changing package version or claiming a new release. SpecGrain remains a deterministic control plane, not an agent runner or hosted service. External agents integrate through portable WorkPacket/result adapter contracts rather than becoming verification authority.
 
 ## Zero to VERIFIED
 

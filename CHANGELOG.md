@@ -4,7 +4,19 @@ All notable public release changes are recorded here.
 
 ## Unreleased
 
-_No changes recorded yet._
+### Added
+
+- native child-DRAFT authoring through the public `create_child_draft_spec` API and `specgrain draft --parent`, limited to existing parents that remain in state `DRAFT`;
+- explicit `recover_authoring_transaction` API and `specgrain recover` CLI for exact recognized interrupted child-authoring states.
+
+### Changed
+
+- local store reads and authoring writes now fail closed when a native authoring transaction journal is pending;
+- reciprocal child writes use a recoverable journal plus exact parent-preimage replacement instead of claiming operating-system atomicity across two files.
+
+### Evidence boundary
+
+These unreleased changes do not promote lifecycle state, synthesize Grain readiness, add an executor/provider, add a runtime dependency, change package version `0.2.0`, or claim a new release.
 
 ## [0.2.0] — 2026-08-29
 

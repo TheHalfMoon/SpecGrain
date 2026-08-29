@@ -23,10 +23,14 @@ def cli_module(monkeypatch: pytest.MonkeyPatch):
     monkeypatch.setitem(sys.modules, "specgrain.project", project)
 
     store = types.ModuleType("specgrain.store")
+    store.AuthoringRecoveryResult = object
+    store.ChildDraftResult = object
     store.ProjectCheckResult = object
     store.StoreError = type("StoreError", (Exception,), {})
+    store.create_child_draft_spec = lambda path, parent_id, title, outcome, rationale="": None
     store.create_draft_spec = lambda path, title, outcome, rationale="": None
     store.init_project = lambda path, project_id=None: None
+    store.recover_authoring_transaction = lambda path: None
     monkeypatch.setitem(sys.modules, "specgrain.store", store)
 
     for name in ("specgrain.repository", "specgrain.cli"):
