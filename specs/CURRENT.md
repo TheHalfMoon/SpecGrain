@@ -2,76 +2,60 @@
 
 **Repository:** `TheHalfMoon/SpecGrain`  
 **Canonical branch:** `main`  
-**Program status:** `POST_V0.3_OBSERVATION`  
+**Program status:** `SHAPING_022`  
 **Last closed specification:** `specs/021-public-launch-readiness-hardening/` — `CLOSED_CANONICAL`  
-**Active specification:** none  
-**Active branch:** none  
-**Next planned specification:** none; any Specification 022 requires fresh evidence under the post-v0.1 governance rules  
+**Prospective active specification:** `specs/022-native-grain-preparation/` — `SHAPED` on documentation branch only  
+**Shaping branch:** `docs/022-native-grain-preparation`  
+**Canonical pre-022 main:** `3b98914200c68909f09db08642faf56de48305eb`  
 **Published release:** `v0.3.0`  
 **Published release source commit:** `70dd66aba0e68ae710e6ef12605ed153d107bab4`  
 **Published release ID:** `378962445`
 
-## Specification 021 canonical closure
+## Fresh evidence selecting Specification 022
 
-Specification 021 was shaped from fresh public-launch-readiness evidence after an explicit maintainer request to audit repository professionalism, keywords, licensing, launch presentation, security truth, and GitHub metadata.
+A maintainer-supplied external adversarial review exercised the public workflow and identified a concrete adoption blocker: native authoring can create DRAFTs but cannot populate Grain-readiness fields or reach the readiness-evaluated lifecycle through the supported CLI.
 
-Canonical shaping:
+The repository-side audit `docs/research/post-v0.3-native-workflow-friction-2026-08-29.md` reproduced that finding against exact canonical source:
 
-- exact shaping head `70e511e73feb4e561a8137ffd39e481b393c5ec4`;
-- PR #33 exact-head CI `33256371898` — success across the permanent five-cell matrix;
-- canonical shaping merge `5c8cfe64f5481c42c53b6fefa91f92e7a2c68811`;
-- canonical shaping post-merge CI `33256530949` — success across all five cells.
+- public CLI has no existing semantic shaping command;
+- no public CLI transition reaches `SHAPED`, `REFINING`, or `GRAIN`;
+- `check_project()` evaluates readiness only for `REFINING` leaves;
+- `next_project()` considers only nodes already in `GRAIN`.
 
-Canonical implementation:
+This is the fresh concrete user/adoption friction required by the post-v0.1 governance rules. It authorizes shaping a successor, not unrestricted execution scope.
 
-- exact implementation head `e95bbafdd2bc66ea67e40e0690c053806acf85c3`;
-- PR #34 exact-head CI `33256769276` — success across all five cells;
-- Ubuntu/Python 3.11 job `99111766462` recorded `558 passed in 1.58s` plus successful Ruff, tracked-tree cleanliness, compileall, package build/install, and CLI smoke;
-- canonical implementation merge `88e174818870cb90d18537b0c8aea810c84fc244`;
-- canonical post-merge CI `33256836246` — success across all five cells;
-- Release verification `33256877372`, job `99112050245` — success and no mutation of historical v0.3.0.
+## Prospective 022 boundary
 
-Canonical closeout:
+Specification 022 — Native Grain Preparation closes only the pre-execution dead end:
 
-- exact closeout head `29f213efef3e1a5c3ed7a68abec17e7a213639d4`;
-- PR #35 exact-head CI `33257372972` — success across all five cells;
-- final closeout review recheck found no submitted reviews or inline review threads;
-- canonical closeout merge `96df6391a0a6be5267e15f88d768d6c0c70c8bf5`, GitHub-signature verified with first parent exact implementation merge and second parent exact closeout head;
-- canonical post-closeout CI `33257485950` — success across all five permanent cells;
-- Release verification `33257527462`, job `99113736087` — success, checking out exact closeout merge and proving `v0.3.0` remained published at historical source `70dd66aba0e68ae710e6ef12605ed153d107bab4` without mutation.
+```text
+DRAFT -> SHAPED -> REFINING -> GRAIN
+```
 
-All tasks T001–T013 are complete. Specification 021 is `CLOSED_CANONICAL`.
+It authorizes:
 
-## Public launch surface now canonical
+- explicit DRAFT shaping using existing schema/readiness fields;
+- state-only `SHAPED -> REFINING`;
+- existing-readiness-gated `REFINING -> GRAIN`;
+- native `shape`, `refine`, and `grain` CLI commands;
+- exact-preimage single-file mutation and deterministic failure evidence.
 
-The repository-side public surface now includes:
+It does **not** authorize `GRAIN -> READY`, WorkPacket CLI, agent/provider execution, verification execution, evidence mutation, PyPI, release/version changes, hosted scope, or readiness weakening.
 
-- README first-screen CI/release/Python/MIT and zero-runtime-dependency trust signals;
-- a prominent stable v0.3.0 GitHub installation path;
-- `SECURITY.md` aligned to the current `0.3.x` support line with an explicit older-version policy;
-- `docs/launch-strategy.md` aligned to current v0.3.0 shipped behavior;
-- bounded launch regression tests for LICENSE presence, README public truth, SECURITY current-version truth, and current launch guidance;
-- MIT licensing recognized by GitHub and consistent with package metadata.
+ADR-0019 records the bounded mutation authority. Implementation may begin only after the exact shaping head is merged to canonical `main`, post-shaping CI succeeds, and the canonical authority chain is re-read.
 
-## External GitHub platform residuals
+## Live GitHub platform truth
 
-Live GitHub settings observed during Specification 021 remain separate from file-backed repository truth:
+Live repository metadata now reports the recommended repository description and the ten recommended topics (`ai-agents`, `cli`, `coding-agents`, `developer-tools`, `python`, `software-delivery`, `software-engineering`, `spec-driven-development`, `spec-kit`, `verification`). These settings were changed outside the file-backed 021 implementation and are recorded here only because live GitHub now proves them.
 
-- repository description: unset;
-- topics: none;
-- `main` branch protection: disabled;
-- repository rulesets: none.
+No claim is made here that native branch protection/rulesets are configured; those platform controls require separate direct evidence.
 
-The repository interface available to this execution can read but cannot write those settings. They MUST NOT be claimed as configured without direct live GitHub evidence.
+## Immediate order
 
-Recommended repository description:
-
-`Deterministic, agent-neutral delivery control plane for turning software work into small, bounded, independently verifiable changes.`
-
-Recommended topics: `spec-driven-development`, `ai-agents`, `coding-agents`, `developer-tools`, `software-delivery`, `software-engineering`, `verification`, `cli`, `python`, `spec-kit`.
-
-## Current frontier
-
-The program is back in observation. There is no evidence-supported active Specification 022. A successor may be shaped only from fresh evidence such as concrete user/adoption friction, a reproducible defect or security finding, a demonstrated authoring/recovery limitation, controlled benchmark data, a bounded interoperability/distribution blocker, or a new governance requirement.
-
-Deferred lifecycle mutation, generic editing, stronger concurrency, executor orchestration, PyPI/broader distribution, hosted/provider scope, and empirical benchmark claims remain outside current authority.
+1. Publish the documentation-only 022 shaping commit.
+2. Run permanent CI on the exact shaping head.
+3. Open and review the bounded shaping PR.
+4. Merge only with expected-head protection.
+5. Prove canonical post-shaping `main` and CI.
+6. Re-read the canonical 022 authority chain.
+7. Implement the bounded pre-Grain workflow on a fresh implementation branch from exact shaped canonical main.
