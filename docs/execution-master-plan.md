@@ -56,57 +56,72 @@ The latest published release remains `v0.3.0` at exact historical product source
 
 ## Closed frontier — Specification 022
 
-Fresh reproduced adoption friction selected Specification 022 — Native Grain Preparation. Its shaped authority merged through PR #37 as canonical base `4919a4261f649e81cb1f507c0e80bc5c98d848d8`; post-shaping CI `33260132438` succeeded before implementation.
-
-022's bounded outcome was exactly:
+Specification 022 was selected from reproduced native adoption friction and closed the exact bounded pre-execution preparation gap:
 
 ```text
 DRAFT -> SHAPED -> REFINING -> GRAIN
 ```
 
-using explicit existing-schema inputs and the existing Grain-readiness evaluator.
+Final product head `8af20015bd59424c7882b8c8fa7ea4c78e0af2e5` passed exact push CI `33261979828` and exact PR CI `33261982603`. PR #38 merged as product merge `653cfb64c8885174ea3ea729d1bbb6418613b10d`; post-product CI `33262123902` succeeded.
 
-ADR-0019 authorized only:
+Documentation closeout head `7b3b5beed297d024ad897e3b7e4d5376c8c5f24a` passed push CI `33262421052` and PR CI `33262442496`. PR #39 merged as canonical closeout merge `9cd52eb6d1ba6839910ceb973fedf5b3a727cc0a`; post-closeout CI `33262519733` succeeded.
 
-- semantic shaping of one existing DRAFT into SHAPED;
-- state-only SHAPED-to-REFINING mutation;
-- readiness-gated state-only REFINING-to-GRAIN promotion;
-- exact-preimage single-file replacement;
-- native `shape`, `refine`, and `grain` CLI surfaces.
+Evidence reconciliation PR #40 merged as canonical `ff9f640bf0e4de5bdd5bf2af0e11b98d86f6587b`; CI `33262914956` completed `success` across the permanent five-cell matrix.
 
-022 did not authorize:
+The historical `v0.3.0` tag, Release `378962445`, assets, digests, and historical command list remain unchanged. A bounded concurrent-writer race remains an explicit residual and requires separately shaped authority if future evidence selects stronger coordination.
 
-- `GRAIN -> READY` or later lifecycle transitions;
-- WorkPacket CLI generation/execution;
-- executor/provider invocation or agent orchestration;
-- verification/evidence execution or evidence mutation;
-- generic mature-SpecNode editing;
-- multi-writer locking/recovery expansion;
-- PyPI/new-release scope;
-- hosted/provider/account scope;
-- runtime dependency growth;
-- readiness weakening;
-- empirical benchmark claims.
+## Shaping frontier — Specification 023
 
-### Canonical closure evidence
+Post-022 observation produced a concrete compatibility finding against exact current GitHub Spec Kit truth.
 
-Final product head `8af20015bd59424c7882b8c8fa7ea4c78e0af2e5` passed exact push CI `33261979828` and exact PR CI `33261982603`, each across the permanent five-cell matrix. Ubuntu/Python 3.11 recorded 575 passing tests plus all required Ruff, cleanliness, compile, CLI, package build, wheel-install, and installed-smoke gates.
+Reviewed upstream:
 
-Exact review repaired one lifecycle-authority defect before the final head: full Grain readiness is evaluated only for `REFINING -> GRAIN`; `shape` validates its explicit input contract without becoming an early hidden Grain gate.
+- `github/spec-kit` main `51e52be6c3b26fed3ff5424c671f4a559519a759`;
+- latest observed release `v1.0.1` / `374643230`;
+- standard `templates/spec-template.md` blob `ceb28776215a098e977650ac090c785dcbf53651`;
+- bundled Lean README blob `ab17257f96091590d2289699aaf2b114cc05bbbe`;
+- bundled Lean specify blob `c15353557aa941b18e811c15aef605c41ff64133`;
+- bundled Lean plan blob `9fbbe4c3713203a363169b9ca4d7f0dedbd0d1e0`;
+- bundled Lean tasks blob `724a7b840074b8e34cf107f2ca37d211745d15be`.
 
-PR #38 merged with expected-head protection as signature-verified product merge `653cfb64c8885174ea3ea729d1bbb6418613b10d`; post-product CI `33262123902` completed `success` across all five permanent cells.
+Current SpecGrain importer blob `fe68ca91d9bca3b649a80bf7fc4d2942db6a18a0` establishes feature identity only from the canonical full-template `# Feature Specification:` heading. The official bundled Lean preset intentionally produces focused Markdown without requiring full-template boilerplate. Therefore an official current Spec Kit artifact can be rejected before the bounded migration report exists solely because of template shape.
 
-Documentation closeout head `7b3b5beed297d024ad897e3b7e4d5376c8c5f24a` changed only seven documentation/governance paths and passed push CI `33262421052` plus PR CI `33262442496`, each across all five permanent cells. Review-bot unavailability/rate-limiting was recorded without treating it as PASS.
+The exact audit lives at:
 
-PR #39 merged with expected-head protection as signature-verified canonical closeout merge `9cd52eb6d1ba6839910ceb973fedf5b3a727cc0a`, with exact parents `653cfb64c8885174ea3ea729d1bbb6418613b10d` and `7b3b5beed297d024ad897e3b7e4d5376c8c5f24a`.
+`docs/research/post-022-spec-kit-1.0-compatibility-audit-2026-08-29.md`
 
-Canonical post-closeout CI `33262519733` completed `success` across the permanent five-cell matrix. PR #38 and PR #39 are merged/closed. The historical `v0.3.0` tag, Release `378962445`, published assets, digests, and historical command list remain unchanged.
+### 023 candidate boundary
 
-Specification 022 is therefore `CLOSED_CANONICAL`.
+Specification 023 — Spec Kit Preset-Compatible Import is shaped to make only the smallest deterministic repair:
 
-### Residual state
+- canonical full-template imports remain behavior/report/digest-stable;
+- when the canonical feature heading is absent, migration-report identity may come only from the concrete final parent component of the already-normalized repository-relative `spec.md` path;
+- path fallback is explicit through `FEATURE_NAME_DERIVED_FROM_PATH`;
+- unrecognized prose is not inferred into structured semantics;
+- existing source path/role/UTF-8/size/digest/revision safety remains unchanged;
+- tasks remain non-core migration evidence;
+- constitutions remain source-bound but non-authoritative;
+- `SPECKIT_IMPORT_VERSION` remains `1`;
+- no runtime dependency or upstream command execution is added.
 
-A bounded concurrent-writer race remains an explicit residual. Specification 022 excluded multi-writer locking and recovery widening, so stronger coordination was not silently added. Future concurrency work requires separately shaped authority from fresh evidence.
+ADR-0020 governs this path-bound identity rule.
+
+### 023 execution gate
+
+023 is a shaping candidate, not yet implementation authority. T007 must first close from live GitHub evidence:
+
+- exact shaping diff is documentation/research/governance only;
+- permanent five-cell CI succeeds on exact shaping head;
+- review comments/threads/mergeability and unavailable review systems are dispositioned without false PASS claims;
+- shaping PR merges with expected-head protection;
+- resulting canonical `main` passes permanent five-cell CI;
+- historical `v0.3.0` remains unchanged.
+
+Only then may `feat/023-spec-kit-preset-compatible-import` begin.
+
+023 explicitly does not authorize arbitrary Markdown semantic inference, Spec Kit preset/hook/extension/bundle/workflow installation or execution, automatic SpecNode creation, constitution adoption, task promotion, READY/execution/verification authority, provider orchestration, concurrency expansion, or release publication.
+
+An external architectural review, including a Fable review, may add evidence but cannot widen 023 authority without canonical reshaping.
 
 ## Cross-spec execution rules
 
@@ -124,12 +139,8 @@ A bounded concurrent-writer race remains an explicit residual. Specification 022
 12. External ideas/code require license-aware provenance.
 13. Post-v0.1 work requires a newly shaped specification derived from live evidence; roadmap deferrals, audits, external reviewers, and upstream-tool comparisons are not implicit implementation authority.
 
-## Post-022 frontier rule
+## Program continuation rule
 
-The program is now at `POST_022_OBSERVATION`. No successor is pre-authorized or currently selected.
-
-A planned external architectural review and comparison with GitHub Spec Kit may be useful evidence collection. The review must compare against exact canonical SpecGrain truth and preserve SpecGrain's architectural independence. Neither an external reviewer nor Spec Kit may confer product authority. Concrete findings must be reproduced and shaped into a new bounded specification before implementation.
-
-In particular, READY mutation, WorkPacket CLI/execution, executor/provider orchestration, verification execution, evidence mutation, multi-writer locking, or a new release remain unselected until fresh evidence justifies one of those bounded frontiers.
+If Specification 023 closes canonically, re-read exact canonical `main` and return to observation/evidence gathering. Do not automatically continue into READY mutation, WorkPacket execution, executor/provider orchestration, verification execution, evidence mutation, stronger locking, release work, or broader Spec Kit integration.
 
 No empirical benchmark winner is claimed without a reproducible completed dataset. No aspirational CLI command is presented as shipped historical-release behavior.
