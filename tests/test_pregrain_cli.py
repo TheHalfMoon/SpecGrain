@@ -177,6 +177,26 @@ def test_cli_wrong_source_state_returns_stable_failure(
     assert "requires source state SHAPED" in payload["error"]
 
 
+def test_cli_shape_rejects_invalid_context_bounds(
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    spec_id = _draft(tmp_path, capsys)
+
+    budget_args = _shape_args(tmp_path, spec_id, as_json=True)
+    budget_args[budget_args.index("--context-budget") + 1] = "0"
+    assert main(budget_args) == 1
+    budget_payload = json.loads(capsys.readouterr().err)
+    assert "context_budget must be a positive integer" in budget_payload["error"]
+
+    estimate_args = _shape_args(tmp_path, spec_id, as_json=True)
+    estimate_args[estimate_args.index("--context-estimate") + 1] = "-1"
+    assert main(estimate_args) == 1
+    estimate_payload = json.loads(capsys.readouterr().err)
+    assert "context_estimate must be a non-negative integer" in estimate_payload["error"]
+    assert load_project(tmp_path).specs[0].state == "DRAFT"
+
+
 def test_cli_shape_requires_explicit_safety_requirements(
     tmp_path: Path,
     capsys: pytest.CaptureFixture[str],

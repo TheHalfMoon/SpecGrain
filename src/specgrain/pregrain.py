@@ -265,8 +265,12 @@ def shape_draft_spec(
     recovery_value = _text(recovery, "recovery")
     if isinstance(context_budget, bool) or not isinstance(context_budget, int):
         raise StoreValidationError("pregrain", "context_budget must be an integer")
+    if context_budget <= 0:
+        raise StoreValidationError("pregrain", "context_budget must be a positive integer")
     if isinstance(context_estimate, bool) or not isinstance(context_estimate, int):
         raise StoreValidationError("pregrain", "context_estimate must be an integer")
+    if context_estimate < 0:
+        raise StoreValidationError("pregrain", "context_estimate must be a non-negative integer")
 
     change_surface_values = _texts(
         change_surface,
