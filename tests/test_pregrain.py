@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from collections.abc import Mapping
 from pathlib import Path
 
 import pytest
@@ -8,7 +9,6 @@ import pytest
 import specgrain.pregrain as pregrain_module
 from specgrain import (
     GrainPromotionBlockedError,
-    SpecNode,
     StoreValidationError,
     check_project,
     create_draft_spec,
@@ -130,7 +130,7 @@ def test_shape_accepts_explicit_change_surface_exception(tmp_path: Path) -> None
 
     assert shaped.change_surface == ()
     readiness = shaped.metadata["readiness"]
-    assert isinstance(readiness, dict)
+    assert isinstance(readiness, Mapping)
     assert readiness["change_surface_exception"] == "No repository file mutation is expected."
 
 
@@ -178,7 +178,10 @@ def test_shape_refuses_pending_authoring_transaction(tmp_path: Path) -> None:
     assert raw["state"] == "DRAFT"
 
 
-def test_shape_detects_exact_preimage_drift(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_shape_detects_exact_preimage_drift(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     init_project(tmp_path, project_id="demo")
     draft = create_draft_spec(tmp_path, title="Concurrent", outcome="Detect drift")
     path = tmp_path / ".specgrain" / "specs" / f"{draft.id}.json"
