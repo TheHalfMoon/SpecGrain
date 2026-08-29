@@ -83,8 +83,8 @@ jobs:
               echo "GitHub Release $RELEASE_TAG exists without the expected Git tag." >&2
               exit 1
             fi
-            state="$(gh release view "$RELEASE_TAG" --json tagName,isDraft,isPrerelease --jq '[.tagName,.isDraft,.isPrerelease] | @tsv')"
-            expected_state="${RELEASE_TAG}"$'\tfalse\tfalse'
+            state="$(gh release view "$RELEASE_TAG" --json tagName,name,isDraft,isPrerelease --jq '[.tagName,.name,.isDraft,.isPrerelease] | @tsv')"
+            expected_state="${RELEASE_TAG}"$'\t'"${RELEASE_TITLE}"$'\tfalse\tfalse'
             if [ "$state" != "$expected_state" ]; then
               echo "Existing $RELEASE_TAG release is not the expected public immutable-by-contract release: $state" >&2
               exit 1

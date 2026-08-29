@@ -62,11 +62,13 @@ def test_release_workflow_is_metadata_derived_monotonic_and_installable() -> Non
     assert 'wheel="specgrain-${version}-py3-none-any.whl"' in workflow
     assert 'sdist="specgrain-${version}.tar.gz"' in workflow
     assert 'notes="docs/releases/${tag}.md"' in workflow
+    assert 'title="SpecGrain ${tag}"' in workflow
     assert "python -m build" in workflow
     assert 'git tag "$RELEASE_TAG" "$RELEASE_SHA"' in workflow
     assert 'git push origin "refs/tags/$RELEASE_TAG"' in workflow
     assert 'gh release create "$RELEASE_TAG"' in workflow
     assert "--verify-tag" in workflow
+    assert "--json tagName,name,isDraft,isPrerelease" in workflow
     assert "already published at historical tag target" in workflow
     assert "refusing ambiguous partial publication" in workflow
     assert "git fetch --tags --force" not in workflow
