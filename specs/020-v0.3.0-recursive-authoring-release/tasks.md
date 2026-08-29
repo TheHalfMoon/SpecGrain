@@ -6,13 +6,13 @@
 - [x] T002 Prove Specification 019 `CLOSED_CANONICAL` from closeout merge `3f8f3d825c3171a3a9ac7761ee5bc642e68a9d2d`, post-closeout CI `33248332725`, and no-mutation Release verification `33248368659` / job `99089652500`.
 - [x] T003 Re-evaluate the post-019 audit recommendation against live truth and select the v0.3.0 Recursive Authoring Release as the smallest distribution gap.
 - [x] T004 Define the bounded release/version/notes/changelog/README/test/publication/preservation scope with no product-behavior change.
-- [ ] T005 Merge this exact documentation-only shaping chain with expected-head protection and prove canonical shaping post-merge CI before implementation.
+- [x] T005 Merge the exact documentation-only shaping chain through PR #29 with expected-head protection as `05219b4ea7ce1be201c8fb2ff31e707ae02cba17`; prove canonical shaping post-merge CI `33248559704` across all five permanent cells before implementation.
 
 ## Release implementation
 
-- [ ] T006 Set package metadata to `0.3.0`, preserve zero runtime dependencies, and add truthful `docs/releases/v0.3.0.md`.
-- [ ] T007 Promote recursive-authoring/recovery Unreleased changelog entries to `[0.3.0] — 2026-08-29`, restore empty Unreleased, and update README release/install truth.
-- [ ] T008 Update launch/release contract tests for v0.3.0 while preserving generalized monotonic-release safeguards; change no `src/specgrain/` behavior.
+- [x] T006 Set package metadata to `0.3.0`, preserve zero runtime dependencies, and add truthful `docs/releases/v0.3.0.md`.
+- [x] T007 Promote recursive-authoring/recovery Unreleased changelog entries to `[0.3.0] — 2026-08-29`, restore empty Unreleased, and update README release/install truth.
+- [x] T008 Update launch/release contract tests for v0.3.0 while preserving generalized monotonic-release safeguards; change no `src/specgrain/` behavior.
 
 ## Verification and publication
 

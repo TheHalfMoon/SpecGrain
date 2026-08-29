@@ -3,9 +3,9 @@
 **Repository:** `TheHalfMoon/SpecGrain`  
 **Canonical branch:** `main`  
 **Program status:** `POST_V0.1_ACTIVE`  
-**Last closed specification:** `specs/019-native-child-draft-authoring/` — `CLOSED_CANONICAL` by live closure evidence  
-**Active specification:** `specs/020-v0.3.0-recursive-authoring-release/` — prospective `SHAPED` pending exact shaping merge  
-**Active branch:** `spec/020-v0.3.0-recursive-authoring-release`  
+**Last closed specification:** `specs/019-native-child-draft-authoring/` — `CLOSED_CANONICAL`  
+**Active specification:** `specs/020-v0.3.0-recursive-authoring-release/` — `IMPLEMENTING`  
+**Active branch:** `feat/020-v0.3.0-recursive-authoring-release`  
 **Next planned specification:** none after 020  
 **Published release:** `v0.2.0`  
 **Published release source commit:** `baf00995a7ae9cf01b6196d68c62f4eca2c1ec85`  
@@ -13,22 +13,29 @@
 
 ## Specification 019 canonical closeout
 
-Specification 019 product PR #27 merged with expected-head protection as canonical product merge `d6727b6c5cdafcf6265b6d999418c0fe853249a7`; canonical product CI `33248014390` succeeded and Release verification `33248070688` preserved historical `v0.2.0` without mutation.
+Specification 019 is `CLOSED_CANONICAL`. Product merge `d6727b6c5cdafcf6265b6d999418c0fe853249a7` passed canonical product CI `33248014390`. Documentation-only closeout merged as `3f8f3d825c3171a3a9ac7761ee5bc642e68a9d2d`; post-closeout CI `33248332725` succeeded and Release verification `33248368659` / job `99089652500` preserved historical `v0.2.0` at `baf00995...` without mutation.
 
-Documentation-only closeout PR #28 exact head `f83e0ed27fbb0e73c31804cc77a76643a0457b33` completed exact-head CI `33248240870` successfully and merged with expected-head protection as `3f8f3d825c3171a3a9ac7761ee5bc642e68a9d2d`. The merge second parent is the exact closeout head and GitHub signature verification is valid.
+## Specification 020 canonical shaping authority
 
-Canonical post-closeout CI `33248332725` completed successfully across the permanent five-cell matrix on exact closeout merge `3f8f3d8...`. Release workflow `33248368659`, job `99089652500`, checked out that exact closeout merge and recorded that `v0.2.0` was already published at historical tag target `baf00995...`; no release mutation was required.
+Documentation-only shaping PR #29 exact head `61f97bd24d2fe9e1ce5a216170368adae38671e3` completed exact-head CI run `33248501598` successfully across the permanent five-cell matrix with no submitted reviews or inline review threads.
 
-Therefore Specification 019 is `CLOSED_CANONICAL` by the live conditions declared in its closeout contract.
+PR #29 merged with expected-head protection as canonical shaping merge `05219b4ea7ce1be201c8fb2ff31e707ae02cba17`. Its first parent is exact 019 closeout merge `3f8f3d8...`; its second parent is exact shaping head `61f97bd...`; GitHub signature verification is valid.
 
-## Specification 020 shaping frontier
+Canonical shaping post-merge CI run `33248559704` completed successfully across Ubuntu/Python 3.11, 3.12, 3.13, macOS/Python 3.11, and Windows/Python 3.11. Therefore Specification 020 implementation authority is active from exact shaping merge `05219b4...`.
 
-The canonical fresh audit `docs/research/post-019-product-audit-2026-08-29.md` identifies a distribution discontinuity: current canonical `main` ships verified root/child DRAFT authoring and explicit recovery, while published `v0.2.0` predates the child/recovery surfaces.
+## Specification 020 implementation frontier
 
-ADR-0017 requires a backward-compatible public feature addition before 1.0 to advance the minor version. 020 therefore shapes a bounded `v0.3.0` GitHub Release that publishes existing canonical behavior without changing `src/specgrain/` product behavior.
+The release candidate is intentionally distribution-only:
 
-Shaped implementation scope is package version/release notes/changelog/README/release-contract tests plus exact CI, expected-head merge, first-publication evidence, historical release preservation, and documentation-only closeout. It does not authorize lifecycle/edit/refine behavior, PyPI, new runtime dependencies, hosted/provider behavior, or benchmark claims.
+- package version `0.3.0` with runtime dependencies still empty;
+- new `docs/releases/v0.3.0.md` describing already-canonical root/child DRAFT authoring and explicit recovery;
+- current recursive-authoring/recovery changelog entries promoted from Unreleased into v0.3.0;
+- README current-release/install truth updated to v0.3.0;
+- launch/release-contract tests updated for the new version while keeping Release workflow monotonic and metadata-derived;
+- no `src/specgrain/` product behavior or Release workflow change.
+
+At implementation entry, live GitHub truth had neither `refs/tags/v0.3.0` nor a GitHub Release for `v0.3.0`, so first publication remains eligible only after exact-head PR CI, expected-head merge, and successful canonical post-merge CI.
 
 ## Authority rule
 
-This branch is shaping only. Specification 020 implementation is not authorized until the exact shaping head completes required CI/review checks, merges with expected-head protection, canonical shaping post-merge CI succeeds, and canonical `main` is re-read.
+Do not claim v0.3.0 released before live tag/release/asset truth proves first publication from the exact successful canonical CI/product head. Historical v0.1.0/v0.2.0 identities must remain unchanged, and no PyPI publication is authorized.
