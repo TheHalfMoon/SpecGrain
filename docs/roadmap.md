@@ -2,7 +2,7 @@
 
 The roadmap is intentionally progressive. Only the nearest active specification should have implementation-level detail. Future work is shaped from current evidence rather than pre-authorized by stale backlog detail.
 
-**Current program state:** Specifications 000–017 are `CLOSED_CANONICAL` after post-closeout CI on `d7c3f8e5734264824cd6ed1d8e931802a242c50a`. Specification 018 has completed product merge, canonical post-merge CI, and live v0.2.0 publication; its documentation-only closeout carries prospective `CLOSED_CANONICAL` state until exact-head closeout merge and post-closeout proof. No later specification is planned or implicitly authorized.
+**Current program state:** Specifications 000–018 are `CLOSED_CANONICAL`. Specification 018 closeout is canonical at `c5282caa29fbfeb8c118755766b6a7b8a49d2781` after post-closeout CI `33246162550` and no-mutation release verification `33246212598`. Specification 019 — Native Child-DRAFT Authoring is shaped prospectively and becomes implementation authority only after its exact shaping head merges canonically. No later specification is planned or implicitly authorized.
 
 ## M0 — Foundation
 
@@ -52,11 +52,10 @@ The initial v0.1 sequence ended at Specification 016. Exact release and closeout
 ## Post-v0.1 — Evidence-shaped product adoption
 
 - **017 — Native DRAFT CLI:** `CLOSED_CANONICAL`; adds deterministic creation of the first native root `DRAFT` after `specgrain init` without Grain/readiness/execution authority.
-- **018 — v0.2.0 Authoring Release:** product merge `baf00995a7ae9cf01b6196d68c62f4eca2c1ec85`; v0.2.0 Release `378936896` published from that exact merge after successful canonical CI. Closeout canonicalization remains pending until its documentation-only exact-head merge and post-closeout proof.
+- **018 — v0.2.0 Authoring Release:** `CLOSED_CANONICAL`; product merge `baf00995a7ae9cf01b6196d68c62f4eca2c1ec85`, Release `378936896`, closeout merge `c5282caa29fbfeb8c118755766b6a7b8a49d2781`.
+- **019 — Native Child-DRAFT Authoring:** shaped prospectively from the post-v0.2 audit; permits a recoverable reciprocal child write only under a `DRAFT` parent, with no lifecycle promotion.
 
-018 was selected from `docs/research/post-017-product-audit-2026-08-29.md`. Its exact version/release contract is governed by `specs/018-v0.2.0-authoring-release/` and ADR-0017.
-
-The post-v0.2 audit recommends native child-DRAFT authoring as the strongest next shaping candidate. That recommendation does not create Specification 019 or authorize implementation.
+019 is bounded by ADR-0018. Its recommendation becomes executable only after the exact shaping chain is canonical.
 
 ## Explicitly deferred
 
@@ -74,4 +73,4 @@ Future work requires a newly shaped specification and fresh evidence. No item be
 - PyPI publication or broader distribution changes without publishing-governance shaping;
 - empirical benchmark superiority claims without a reproducible completed dataset.
 
-No successor after 018 is implied. A fresh canonical shaping chain must be created only after 018 closeout becomes authoritative.
+No successor after 019 is implied. A fresh post-019 audit must choose the next frontier from live product/adoption truth.
