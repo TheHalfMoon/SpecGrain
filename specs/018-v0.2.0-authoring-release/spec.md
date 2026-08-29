@@ -6,7 +6,7 @@
 
 ## Outcome
 
-Publish a new immutable GitHub release that makes the already-verified native root-DRAFT authoring surface from Specification 017 available through the public versioned product, without adding unrelated product behavior or mutating the existing `v0.1.0` release.
+Publish a new immutable-by-contract GitHub release that makes the already-verified native root-DRAFT authoring surface from Specification 017 available through the public versioned product, without adding unrelated product behavior or mutating the existing `v0.1.0` release.
 
 ## Why this is the next frontier
 
@@ -17,7 +17,7 @@ Specification 017 closed the first-use authoring gap on canonical `main`, but th
 ## In scope
 
 - package version `0.2.0`;
-- Git tag and GitHub Release `v0.2.0` bound to the exact successful canonical product merge;
+- Git tag and GitHub Release `v0.2.0` bound at first publication to the exact successful canonical product merge;
 - release notes that describe only behavior present on the release source revision;
 - changelog promotion of the current Unreleased native DRAFT authoring entries into `0.2.0`;
 - README/install/version references required to make the current public release surface truthful;
@@ -44,14 +44,15 @@ Specification 017 closed the first-use authoring gap on canonical `main`, but th
 3. The release workflow derives package version, tag, expected distribution filenames, release-note path, and public release title deterministically rather than embedding a one-off `0.1.0` release identity.
 4. The workflow is triggered only from a successful canonical `main` CI result and checks out that exact successful CI head SHA before any release decision.
 5. A historical tag/release for a different version is never mutated. Existing `v0.1.0` remains bound to `5eb46db0479cb8707afe070027dab4f3c558849a` with its original two assets.
-6. If the current version tag or GitHub Release already exists, the workflow fails closed on missing counterpart, wrong tag target, draft/prerelease state mismatch, unexpected assets, or other identity conflict; an exact already-published current release is treated as idempotent success without mutation.
-7. If the current version is not yet published, the workflow creates exactly the expected immutable-by-contract tag and public GitHub Release at the exact successful canonical product merge and uploads only the expected wheel and source distribution.
-8. The release source revision contains `specgrain draft`, the public `create_draft_spec` API, the current zero-runtime-dependency contract, and all permanent CI gates.
-9. Exact implementation PR-head CI succeeds across Ubuntu/Python 3.11, 3.12, and 3.13, macOS/Python 3.11, and Windows/Python 3.11 before merge.
-10. Exact-head review confirms no historical release mutation path, no hidden external publishing channel, no unrelated product scope, no unsupported claims, and no weakened evidence boundary.
-11. Product merge uses expected-head protection and canonical post-merge CI succeeds on that exact merge revision.
-12. Live GitHub proves `v0.2.0` tag target, GitHub Release target/state, asset names, asset SHA-256 digests, and publication state before `RELEASED` is claimed.
-13. Specification 018 is not `CLOSED_CANONICAL` until exact release evidence is recorded in a bounded documentation-only closeout PR, that exact closeout head is merged with expected-head protection, and post-closeout canonical CI is successful.
+6. If the current version is already fully published, the workflow verifies the tag/release counterpart, their consistent historical release identity, public non-draft/non-prerelease state, and exact expected assets, then exits successfully without mutation even when a later `main` CI head differs from the historical tag target.
+7. A candidate-version release-without-tag, tag-without-release, release/tag identity disagreement, unexpected asset set, or other ambiguous partial-publication state fails closed.
+8. If the current version is not yet published and neither its tag nor release exists, the workflow creates exactly the expected immutable-by-contract tag and public GitHub Release at the exact successful canonical product merge and uploads only the expected wheel and source distribution.
+9. The release source revision contains `specgrain draft`, the public `create_draft_spec` API, the current zero-runtime-dependency contract, and all permanent CI gates.
+10. Exact implementation PR-head CI succeeds across Ubuntu/Python 3.11, 3.12, and 3.13, macOS/Python 3.11, and Windows/Python 3.11 before merge.
+11. Exact-head review confirms no historical release mutation path, no hidden external publishing channel, no unrelated product scope, no unsupported claims, and no weakened evidence boundary.
+12. Product merge uses expected-head protection and canonical post-merge CI succeeds on that exact merge revision.
+13. Live GitHub proves `v0.2.0` tag target, GitHub Release target/state, asset names, asset SHA-256 digests, and publication state before `RELEASED` is claimed.
+14. Specification 018 is not `CLOSED_CANONICAL` until exact release evidence is recorded in a bounded documentation-only closeout PR, that exact closeout head is merged with expected-head protection, and post-closeout canonical CI is successful.
 
 ## Dependencies
 
@@ -66,7 +67,8 @@ Specification 017 closed the first-use authoring gap on canonical `main`, but th
 ## Risks and recovery
 
 - **Historical release mutation:** fail closed before any write when existing tag/release identity is inconsistent; never update `v0.1.0`.
-- **Wrong release source:** bind release work to the exact successful `workflow_run.head_sha`; a wrong or stale target blocks publication.
+- **Wrong release source:** bind new-publication writes to the exact successful `workflow_run.head_sha`; a wrong or stale target blocks publication.
+- **False rerun conflict:** once a version is fully published, treat its tag target as the historical source and verify it without requiring later `main` heads to match.
 - **Version/document drift:** deterministic repository checks bind package metadata, tag, asset names, and release-note path.
 - **Partial publication:** workflow detects tag-without-release and release-without-tag as conflicts instead of silently repairing ambiguous external state.
 - **Release rerun:** exact already-published `v0.2.0` becomes a no-mutation successful verification path.
