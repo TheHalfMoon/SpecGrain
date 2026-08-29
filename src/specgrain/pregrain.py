@@ -342,20 +342,6 @@ def shape_draft_spec(
 
     location = f".specgrain/specs/{node.id}.json"
     shaped = _node_from_data(data, location)
-    proposed = _validate_proposed(project, shaped)
-
-    probe_data = shaped.to_dict()
-    probe_data["state"] = SpecState.REFINING.value
-    probe = _node_from_data(probe_data, location)
-    probe_forest = tuple(probe if item.id == probe.id else item for item in proposed)
-    report = evaluate_grain_readiness(probe, probe_forest)
-    if not report.is_ready:
-        codes = ", ".join(issue.code.value for issue in report.issues)
-        raise StoreValidationError(
-            location,
-            f"shaped candidate would remain Grain-readiness blocked: {codes}",
-        )
-
     stored = _persist(project, node, shaped)
     return PreGrainMutationResult(stored, SpecState.DRAFT)
 

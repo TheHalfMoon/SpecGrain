@@ -134,17 +134,35 @@ def test_shape_accepts_explicit_change_surface_exception(tmp_path: Path) -> None
     assert readiness["change_surface_exception"] == "No repository file mutation is expected."
 
 
-def test_shape_rejects_readiness_blocker_without_mutation(tmp_path: Path) -> None:
+def test_shape_persists_readiness_blocker_until_grain_gate(tmp_path: Path) -> None:
     init_project(tmp_path, project_id="demo")
     draft = create_draft_spec(tmp_path, title="Context", outcome="Bound context")
     path = tmp_path / ".specgrain" / "specs" / f"{draft.id}.json"
+
+    shaped = _shape(
+        tmp_path,
+        draft.id,
+        context_budget=100,
+        context_estimate=101,
+    ).node
+    assert shaped.state == "SHAPED"
+
+    refining = refine_shaped_spec(tmp_path, spec_id=draft.id).node
+    assert refining.state == "REFINING"
+
+    check = check_project(tmp_path)
+    assert check.valid is True
+    assert check.grain_ready_count == 0
     before = path.read_bytes()
 
-    with pytest.raises(StoreValidationError, match="CONTEXT_BUDGET_EXCEEDED"):
-        _shape(tmp_path, draft.id, context_budget=100, context_estimate=101)
+    with pytest.raises(GrainPromotionBlockedError) as captured:
+        promote_refining_spec_to_grain(tmp_path, spec_id=draft.id)
 
+    assert [issue.code.value for issue in captured.value.report.issues] == [
+        "CONTEXT_BUDGET_EXCEEDED"
+    ]
     assert path.read_bytes() == before
-    assert load_project(tmp_path).specs[0].state == "DRAFT"
+    assert load_project(tmp_path).specs[0].state == "REFINING"
 
 
 def test_shape_rejects_missing_dependency_without_mutation(tmp_path: Path) -> None:
