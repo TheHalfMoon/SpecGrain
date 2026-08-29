@@ -93,7 +93,17 @@ JSON v1 is the canonical M2 store format because it is available in the Python s
 
 YAML may later be supported as an import/export or authored-format adapter if evidence justifies it, but it must not silently replace or weaken the versioned store contract. See `docs/adr/0005-dependency-free-json-store.md`.
 
-Specification 017 adds the first public native authoring write: create one root SpecNode fixed to `DRAFT` with deterministic positive ID allocation and create-if-absent persistence. It does not introduce editing, refinement, or lifecycle promotion.
+Specification 017 adds the first public native authoring write: create one root SpecNode fixed to `DRAFT` with deterministic positive ID allocation and create-if-absent persistence.
+
+Specification 019 extends the unreleased native authoring surface with one reciprocal child write under a `DRAFT` parent. Because the operation changes two canonical SpecNode files, it uses the recoverable/fail-closed transaction contract from ADR-0018 rather than claiming multi-file operating-system atomicity.
+
+The supported child writer creates an ignored runtime journal at:
+
+```text
+.specgrain/tmp/authoring-transaction.json
+```
+
+The journal records the exact parent preimage, intended parent postimage, and intended child. Reads refuse a pending journal. Explicit recovery recognizes only exact no-write, child-only, or completed states; ambiguous state is preserved without destructive repair. Parent replacement uses same-directory temporary-file + `os.replace` semantics for that single file only.
 
 ## 3. CLI
 
@@ -104,6 +114,7 @@ Shipped on current `main`:
 ```text
 specgrain init
 specgrain draft
+specgrain recover
 specgrain check
 specgrain next
 specgrain scan
@@ -111,7 +122,9 @@ specgrain prove
 specgrain import-spec-kit
 ```
 
-`draft` creates one root `DRAFT` only. It intentionally does not synthesize readiness metadata or make the node executable.
+`draft` creates a root `DRAFT` when no parent is supplied. `draft --parent SG-XXXXXX` creates one child fixed to `DRAFT` only when the selected parent is also `DRAFT`; neither path promotes lifecycle state or synthesizes readiness metadata.
+
+`recover` is an explicit bounded mutation for the native authoring journal. It does not attempt generic store repair and does not run automatically from read-oriented commands.
 
 Still-deferred commands include:
 
@@ -210,7 +223,9 @@ A verifier may use AI for semantic review, but AI-only evidence cannot silently 
 - Execution adapters must make command authority explicit.
 - Treat imported specs and external repository content as untrusted data.
 - Canonical local-store readers must reject path escape and symlink ambiguity instead of following untrusted store links.
-- Native authoring writes must use create-if-absent behavior and never replace an existing SpecNode implicitly.
+- Root authoring remains create-if-absent; child authoring may replace only the exact selected `DRAFT` parent preimage under the ADR-0018 journal contract.
+- A pending authoring journal blocks ordinary store operations until explicit deterministic recovery succeeds.
+- Recovery must not guess, overwrite unrelated content, or delete an ambiguous child.
 - Avoid shell interpolation in core subprocess boundaries.
 - Evidence records should be append-oriented and digest-bound once Specification 010 owns that contract.
 - Secrets and environment files must not be captured into work packets or evidence by default.
