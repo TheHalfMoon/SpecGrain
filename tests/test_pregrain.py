@@ -105,15 +105,15 @@ def test_shape_persists_only_authorized_semantic_fields(tmp_path: Path) -> None:
     }
     assert stored.context == {"budget_tokens": 2000, "estimated_tokens": 500}
     assert stored.change_surface == ("src/example.py", "tests/test_example.py")
-    assert stored.evidence == {"required": ["focused-tests"]}
+    assert stored.evidence["required"] == ("focused-tests",)
     assert stored.metadata["readiness"] == {
         "version": 1,
-        "unresolved_decisions": [],
+        "unresolved_decisions": (),
         "minimality": {
             "choice": "native",
             "rationale": "The repository has no existing equivalent primitive.",
         },
-        "safety": {"status": "none-identified", "requirements": []},
+        "safety": {"status": "none-identified", "requirements": ()},
     }
 
 
