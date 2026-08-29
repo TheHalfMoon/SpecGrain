@@ -19,7 +19,7 @@ Before changing the repository, read:
 
 SpecGrain is an independent, agent-neutral delivery system built around recursively refined specifications. A specification is refined until a leaf satisfies the deterministic Definition of Grain. Probabilistic systems may propose work; they are never the sole authority for correctness-sensitive state transitions.
 
-## Canonical program sequence
+## Canonical initial program sequence
 
 ```text
 001 SpecNode schema
@@ -44,7 +44,7 @@ Specification 000 established the project foundation and constitution.
 
 ## Initial v0.1 program completion
 
-Specifications 000 through 016 are closed canonically after the documentation-only 016 closeout reaches `main` and its exact merge evidence is verified.
+Specifications 000 through 016 are closed canonically.
 
 The v0.1.0 product release source commit is:
 
@@ -52,17 +52,19 @@ The v0.1.0 product release source commit is:
 
 This is the expected-head-protected merge of PR #18. Its second parent is exact reviewed PR head `1e4b36b169c7ac6d9e59741bb62b6a29b7649a17`. PR-head CI run `33234332746` and canonical post-merge CI run `33234395766` each completed the five-cell Linux/macOS/Windows matrix successfully.
 
-Release workflow run `33234424696` published tag `v0.1.0` at that exact product merge commit and GitHub Release `378876694` with the versioned wheel and source distribution. Exact asset digests and release-state evidence are recorded in `specs/016-public-launch/closeout.md`.
+Release workflow run `33234424696` published tag `v0.1.0` at that exact product merge commit and GitHub Release `378876694` with the versioned wheel and source distribution. Specification 016 documentation-only closeout then merged through PR #19 as canonical `main` `7c343841424ca48207f9c42eae725a53213d19e5`; final CI run `33234669930` and post-closeout release workflow `33234703124` succeeded.
 
-Completed capabilities include recursive/versioned specs, lifecycle/refinement/readiness validation, local state, dependency scheduling, brownfield scanning, context budgets, portable WorkPackets/results, independent evidence, method profiles, drift/metrics, Spec Kit import, generic agent adapters, benchmark comparability controls, permanent cross-platform CI, public migration/trust/community surfaces, and the published v0.1.0 release.
+Completed v0.1 capabilities include recursive/versioned specs, lifecycle/refinement/readiness validation, local state, dependency scheduling, brownfield scanning, context budgets, portable WorkPackets/results, independent evidence, method profiles, drift/metrics, Spec Kit import, generic agent adapters, benchmark comparability controls, permanent cross-platform CI, public migration/trust/community surfaces, and the published v0.1.0 release.
 
-## Program frontier
+## Post-v0.1 evidence-shaped frontier
 
-There is no active or next planned specification in the initial v0.1 program. Specification 016 Public Launch is the final planned specification in that sequence.
+The initial sequence ended at Specification 016 and does not authorize an automatic successor. Every post-v0.1 specification must be shaped from current product/repository evidence.
 
-No empirical benchmark winner is claimed without a reproducible completed dataset. No aspirational CLI command is presented as shipped behavior.
+The first post-v0.1 audit is `docs/research/post-v0.1-product-audit-2026-08-29.md`. It identifies the missing supported first-party path from an initialized empty store to the first native SpecNode as the smallest current adoption gap.
 
-Any future feature, release train, hosted product, empirical benchmark program, provider-specific integration, or other expansion must begin with a newly shaped specification derived from then-current repository truth. Deferred roadmap ideas are not implicitly authorized by completion of v0.1.
+**Specification 017 — Native DRAFT CLI** is therefore shaped to add only deterministic root-DRAFT creation through the local store and CLI. Implementation authority begins only after the shaped 017 authority chain is canonical on `main`.
+
+017 does not pre-authorize recursive refinement, WorkPacket/executor orchestration, hosted services, provider-specific integrations, empirical benchmark execution, PyPI publication, or a new release. After 017 closes canonically, the project must re-audit the frontier instead of assuming a next specification.
 
 ## Cross-spec execution rules
 
@@ -78,15 +80,18 @@ Any future feature, release train, hosted product, empirical benchmark program, 
 10. Do not make AI reasoning transcripts repository authority.
 11. Preserve residual risks and blockers.
 12. External ideas/code require license-aware provenance.
+13. Post-v0.1 work requires a newly shaped specification derived from live evidence; roadmap deferrals are not implicit authority.
 
-## Completion rule
+## Completion rule for a post-v0.1 specification
 
-The initial v0.1 program is complete only when all of the following are true in live GitHub truth:
+A post-v0.1 specification is canonical only when:
 
-- PR #18 is merged from exact reviewed head `1e4b36b169c7ac6d9e59741bb62b6a29b7649a17`;
-- canonical product merge `5eb46db0479cb8707afe070027dab4f3c558849a` passes post-merge CI;
-- tag `v0.1.0` and the public GitHub Release target that exact product merge and expose the expected distribution assets;
-- the post-release documentation-only closeout is merged with expected-head protection;
-- final canonical `specs/CURRENT.md` and Specification 016 report `CLOSED_CANONICAL` with no next planned specification.
+- its shaped authority chain is present on canonical `main` before implementation begins;
+- implementation is performed on a bounded branch from the exact shaped canonical base;
+- required exact-head CI and review evidence succeeds;
+- merge uses expected-head protection;
+- canonical post-merge state and required CI are re-verified;
+- closeout documentation records exact evidence before claiming `CLOSED_CANONICAL`;
+- the next product frontier is re-evaluated from current truth rather than assumed.
 
-The first three conditions are recorded as satisfied in `specs/016-public-launch/closeout.md`. The final two become canonical only after live post-merge verification of the closeout PR.
+No empirical benchmark winner is claimed without a reproducible completed dataset. No aspirational CLI command is presented as shipped behavior.
