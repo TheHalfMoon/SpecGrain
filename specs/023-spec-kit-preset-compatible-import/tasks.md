@@ -24,15 +24,15 @@
 - [x] T014 Review the exact shaped-base-to-final-head diff for semantic inference, unsafe path acceptance, task/constitution promotion, hidden upstream runtime coupling, report-version/digest churn, unrelated scope, and false historical release claims. No material defect remained on final head `83fcc6add4e982df523f6c606399f08c317d3ffe`.
 - [x] T015 Open bounded implementation PR #42 from canonical shaped base and prove permanent five-cell CI on exact head `83fcc6add4e982df523f6c606399f08c317d3ffe`. Push CI `33264389193` and PR CI `33264479954` both completed `success`.
 - [x] T016 Resolve/disposition every material review condition without treating unavailable/skipped review systems as PASS. PR #42 had no submitted reviews or inline threads; Qodo was billing-blocked, automatic CodeRabbit review was skipped by repository-star policy, and Cubic supplied descriptive summary text only.
-- [x] T017 Merge exact implementation head with expected-head protection and prove canonical product merge parentage, post-product five-cell CI, and historical `v0.3.0` preservation. PR #42 merged as `037f137cdd6e7a0fe224bd3fa3371d6da7460f22` with parents `99d8ee5bc7ce49c00ae542f3c06f564d05641a70` and `83fcc6add4e982df523f6c606399f08c317d3ffe`; post-product CI `33265277105` completed `success` across all five cells; v0.3.0 remained unchanged.
+- [x] T017 Merge exact implementation head with expected-head protection and prove canonical product merge parentage, post-product five-cell CI, and historical `v0.3.0` preservation. PR #42 merged as `037f137cdd6e7a0fe224bd3fa3371d6da7460f22`; post-product CI `33265277105` completed `success` across all five cells.
 
 ## Canonical closeout
 
 - [x] T018 Record final implementation head, exact verification, review state, merge parentage, post-product CI, compatibility proof, release preservation, and residual limitations in documentation-only closeout evidence.
 - [x] T019 Re-evaluate the next frontier from post-023 canonical product truth without pre-authorizing adjacent Spec Kit or execution scope. No successor product scope is selected; the program returns to observation/evidence gathering after closeout.
-- [ ] T020 Merge the exact documentation-only closeout head with expected-head protection after permanent push/PR five-cell CI and review/mergeability checks succeed.
-- [ ] T021 Prove resulting canonical `main`, post-closeout five-cell CI, preserved `v0.3.0`, merged/closed PR state, perform final evidence reconciliation, and only then declare Specification 023 `CLOSED_CANONICAL`.
+- [x] T020 Merge the exact documentation-only closeout head with expected-head protection after permanent push/PR five-cell CI and review/mergeability checks succeed. Closeout head `fb23602a3aa234b88b0a223443c8c974ff8ed25a` passed push CI `33265481647` and PR CI `33265501850`; PR #43 merged as canonical closeout merge `5b3a8b906309de642a0b35dfa8e260b5fa6bedd1`.
+- [x] T021 Prove resulting canonical `main`, post-closeout five-cell CI, preserved `v0.3.0`, merged/closed PR state, and perform final evidence reconciliation before declaring Specification 023 `CLOSED_CANONICAL`. Canonical post-closeout CI `33265589133` completed `success`; `v0.3.0` remained unchanged; this reconciliation publishes the final closed status when merged to canonical `main`.
 
-## Current gate
+## Final state
 
-T001 through T019 are complete. T020 and T021 remain open until the documentation-only closeout candidate and final evidence reconciliation are canonically merged and independently proven from live GitHub truth.
+All Specification 023 execution tasks are complete. The final reconciliation is documentation-only and does not authorize a successor product specification. After it becomes canonical, the program state is post-023 observation/evidence gathering.
