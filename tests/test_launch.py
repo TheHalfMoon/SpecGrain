@@ -84,6 +84,7 @@ def test_readme_uses_only_current_cli_commands() -> None:
     for command in (
         "specgrain init",
         "specgrain draft",
+        "specgrain recover",
         "specgrain check",
         "specgrain next",
         "specgrain scan",
@@ -94,6 +95,8 @@ def test_readme_uses_only_current_cli_commands() -> None:
     for unsupported in ("specgrain ask ", "specgrain packet ", "specgrain verify "):
         assert unsupported not in readme
     assert "refs/tags/v0.2.0.zip" in readme
+    assert "published v0.2.0 release contains every command in the table except `recover`" in readme
+    assert "no `--parent` option" in readme
 
 
 def test_zero_to_verified_example_executes() -> None:
@@ -141,11 +144,14 @@ def test_v020_release_notes_preserve_authoring_and_trust_boundaries() -> None:
     assert "Runtime third-party dependency count remains zero" in notes
 
 
-def test_changelog_promotes_v020_and_restores_unreleased_boundary() -> None:
+def test_changelog_tracks_unreleased_child_authoring_without_version_bump() -> None:
     changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
     assert "## [0.2.0] — 2026-08-29" in changelog
     assert changelog.index("## Unreleased") < changelog.index("## [0.2.0]")
-    assert "_No changes recorded yet._" in changelog
+    assert "create_child_draft_spec" in changelog
+    assert "specgrain recover" in changelog
+    assert "do not promote lifecycle state" in changelog
+    assert "package version `0.2.0`" in changelog
     assert "specgrain draft" in changelog
 
 

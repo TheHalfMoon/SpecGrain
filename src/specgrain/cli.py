@@ -11,7 +11,16 @@ from .model import SpecValidationError
 from .project import NextResult, check_project, next_project
 from .repository import RepositoryMap, RepositoryScanError, scan_repository
 from .speckit import SpecKitImportError, SpecKitImportReport, load_spec_kit_feature
-from .store import ProjectCheckResult, StoreError, create_draft_spec, init_project
+from .store import (
+    AuthoringRecoveryResult,
+    ChildDraftResult,
+    ProjectCheckResult,
+    StoreError,
+    create_child_draft_spec,
+    create_draft_spec,
+    init_project,
+    recover_authoring_transaction,
+)
 from .verification import ProofResult, VerificationError, load_proof
 
 
@@ -23,12 +32,19 @@ def _parser() -> argparse.ArgumentParser:
     init.add_argument("path", nargs="?", default=".")
     init.add_argument("--project-id")
 
-    draft = subparsers.add_parser("draft", help="create a native root DRAFT SpecNode")
+    draft = subparsers.add_parser("draft", help="create a native DRAFT SpecNode")
     draft.add_argument("path", nargs="?", default=".")
     draft.add_argument("--title", required=True)
     draft.add_argument("--outcome", required=True)
     draft.add_argument("--rationale", default="")
+    draft.add_argument("--parent")
     draft.add_argument("--json", action="store_true", dest="as_json")
+
+    recover = subparsers.add_parser(
+        "recover", help="recover a pending native authoring transaction"
+    )
+    recover.add_argument("path", nargs="?", default=".")
+    recover.add_argument("--json", action="store_true", dest="as_json")
 
     check = subparsers.add_parser("check", help="validate repository-local SpecGrain state")
     check.add_argument("path", nargs="?", default=".")
@@ -165,6 +181,32 @@ def _draft_payload(spec_id: str, state: str, revision_digest: str) -> dict[str, 
     }
 
 
+def _child_draft_payload(result: ChildDraftResult) -> dict[str, str]:
+    payload = _draft_payload(
+        result.child.id,
+        result.child.state,
+        result.child.revision_digest,
+    )
+    payload.update(
+        {
+            "parent_file": f".specgrain/specs/{result.parent_after.id}.json",
+            "parent_id": result.parent_after.id,
+            "parent_revision_after": result.parent_after.revision_digest,
+            "parent_revision_before": result.parent_before_revision,
+        }
+    )
+    return payload
+
+
+def _render_recovery_text(result: AuthoringRecoveryResult) -> str:
+    lines = [f"SpecGrain recover: {result.status.value.upper()}"]
+    if result.parent_id is not None:
+        lines.append(f"Parent: {result.parent_id}")
+    if result.child_id is not None:
+        lines.append(f"Child: {result.child_id}")
+    return "\n".join(lines)
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     """Run the SpecGrain CLI and return a process-compatible exit code."""
 
@@ -185,12 +227,23 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     if args.command == "draft":
         try:
-            node = create_draft_spec(
-                args.path,
-                title=args.title,
-                outcome=args.outcome,
-                rationale=args.rationale,
-            )
+            if args.parent is None:
+                node = create_draft_spec(
+                    args.path,
+                    title=args.title,
+                    outcome=args.outcome,
+                    rationale=args.rationale,
+                )
+                child_result = None
+            else:
+                child_result = create_child_draft_spec(
+                    args.path,
+                    parent_id=args.parent,
+                    title=args.title,
+                    outcome=args.outcome,
+                    rationale=args.rationale,
+                )
+                node = child_result.child
         except (StoreError, SpecValidationError) as exc:
             if args.as_json:
                 print(
@@ -209,7 +262,11 @@ def main(argv: Sequence[str] | None = None) -> int:
             print("SpecGrain draft: FAIL\n- internal error", file=sys.stderr)
             return 1
 
-        payload = _draft_payload(node.id, node.state, node.revision_digest)
+        payload = (
+            _draft_payload(node.id, node.state, node.revision_digest)
+            if child_result is None
+            else _child_draft_payload(child_result)
+        )
         if args.as_json:
             print(
                 json.dumps(
@@ -225,6 +282,49 @@ def main(argv: Sequence[str] | None = None) -> int:
             print(f"State: {node.state}")
             print(f"File: {payload['file']}")
             print(f"Revision: {node.revision_digest}")
+            if child_result is not None:
+                print(f"Parent: {child_result.parent_after.id}")
+                print(
+                    "Parent revision before: "
+                    f"{child_result.parent_before_revision}"
+                )
+                print(
+                    "Parent revision after: "
+                    f"{child_result.parent_after.revision_digest}"
+                )
+        return 0
+
+    if args.command == "recover":
+        try:
+            result = recover_authoring_transaction(args.path)
+        except StoreError as exc:
+            if args.as_json:
+                print(
+                    json.dumps(
+                        {"error": str(exc), "valid": False},
+                        sort_keys=True,
+                        ensure_ascii=False,
+                        separators=(",", ":"),
+                    ),
+                    file=sys.stderr,
+                )
+            else:
+                print(f"SpecGrain recover: FAIL\n- {exc}", file=sys.stderr)
+            return 1
+        except Exception:
+            print("SpecGrain recover: FAIL\n- internal error", file=sys.stderr)
+            return 1
+        if args.as_json:
+            print(
+                json.dumps(
+                    result.to_dict(),
+                    sort_keys=True,
+                    ensure_ascii=False,
+                    separators=(",", ":"),
+                )
+            )
+        else:
+            print(_render_recovery_text(result))
         return 0
 
     if args.command == "check":
