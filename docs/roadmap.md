@@ -2,7 +2,7 @@
 
 The roadmap is intentionally progressive. Only the nearest active specification should have implementation-level detail. Future work is shaped from current evidence rather than pre-authorized by stale backlog detail.
 
-**Current program state:** Specifications 000–021 are `CLOSED_CANONICAL`. Specification 022 — Native Grain Preparation is the active `SHAPED` specification. Its documentation-only shaping PR #37 is canonical at `4919a4261f649e81cb1f507c0e80bc5c98d848d8`, and canonical post-shaping CI `33260132438` succeeded. Product implementation is being verified on `feat/022-native-grain-preparation`. The latest published release remains GitHub Release `378962445` / tag `v0.3.0` at exact historical product source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
+**Current program state:** Specifications 000–021 are `CLOSED_CANONICAL`. Specification 022 — Native Grain Preparation has a merged and post-product-verified implementation and is in documentation-only canonical closeout. Canonical product merge is `653cfb64c8885174ea3ea729d1bbb6418613b10d`; canonical post-product CI `33262123902` succeeded across all five permanent cells. The latest published release remains GitHub Release `378962445` / tag `v0.3.0` at exact historical product source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
 
 ## M0 — Foundation
 
@@ -56,29 +56,31 @@ The initial v0.1 sequence ended at Specification 016. Exact release and closeout
 - **019 — Native Child-DRAFT Authoring:** `CLOSED_CANONICAL`; recoverable reciprocal child DRAFT authoring and explicit recovery without lifecycle promotion.
 - **020 — v0.3.0 Recursive Authoring Release:** `CLOSED_CANONICAL`; product/release source `70dd66aba0e68ae710e6ef12605ed153d107bab4`; Release `378962445` / `v0.3.0`; publishes root/child DRAFT authoring and explicit recovery with no new product behavior.
 - **021 — Public Launch Readiness Hardening:** `CLOSED_CANONICAL`; hardens README first-screen trust signals, v0.3.0 install prominence, current security/launch truth, licensing recognition, and launch regression checks without changing product behavior or release identity.
-- **022 — Native Grain Preparation:** active `SHAPED` specification. Canonical shaping base `4919a4261f649e81cb1f507c0e80bc5c98d848d8`; bounded current-source implementation adds explicit native `DRAFT -> SHAPED -> REFINING -> GRAIN` preparation using existing schema/lifecycle/readiness semantics. It does not authorize READY/execution/verification/evidence/provider scope or a release/version change.
+- **022 — Native Grain Preparation:** product merged and post-product verified; canonical closeout pending. Current source provides explicit native `DRAFT -> SHAPED -> REFINING -> GRAIN` preparation through bounded `shape`, `refine`, and `grain` surfaces using existing schema/lifecycle/readiness semantics.
 
-## Specification 022 implementation checkpoint
+## Specification 022 exact product proof
 
-Pre-document implementation checkpoint `05865fdfeb89e259be237f5e020a87424384d122` passed permanent CI `33260707422` across all five cells with 573 tests in the Ubuntu/Python 3.11 cell plus all static/package/CLI gates. The final product candidate includes public documentation and launch-guard reconciliation, so exact-head product CI/review remains required before merge.
+Final implementation head `8af20015bd59424c7882b8c8fa7ea4c78e0af2e5` passed exact push CI `33261979828` and exact PR CI `33261982603` across the permanent five-cell matrix, with 575 tests in Ubuntu/Python 3.11 plus all required static/package/CLI gates.
 
-The historical v0.3.0 release remains unchanged and does not contain `shape`, `refine`, or `grain`; those commands are Specification 022 current-source additions until a separately authorized future release publishes them.
+PR #38 merged with expected-head protection as canonical product merge `653cfb64c8885174ea3ea729d1bbb6418613b10d`. Canonical post-product CI `33262123902` succeeded across Ubuntu/Python 3.11, 3.12, 3.13, macOS/Python 3.11, and Windows/Python 3.11.
 
-## Evidence selecting 022
+The historical v0.3.0 release remains unchanged and does not contain `shape`, `refine`, or `grain`; those commands are unreleased current-source Specification 022 additions.
 
-The prior post-v0.3 audit selected observation because no concrete adoption blocker had yet been reproduced. A later maintainer-supplied adversarial product review exercised the public workflow and identified the native authoring dead end. Repository inspection then reproduced it at canonical source:
+## Explicit residual beyond 022
 
-- DRAFT authoring exists;
-- published v0.3.0 has no CLI that populates readiness fields on an existing DRAFT;
-- published v0.3.0 has no CLI that advances lifecycle into readiness evaluation;
-- `check` evaluates only REFINING leaves;
-- `next` consumes only GRAIN nodes.
+A bounded multi-writer race remains possible around exact-preimage validation and atomic replacement. Specification 022 intentionally did not widen into multi-writer locking or recovery semantics. Stronger concurrency requires fresh evidence and a separately shaped specification.
 
-`docs/research/post-v0.3-native-workflow-friction-2026-08-29.md` records the evidence and explains why 022 stops at GRAIN instead of combining authoring, WorkPacket, executor, verification, and evidence mutation in one oversized specification.
+## Post-022 observation frontier
 
-## Explicitly deferred beyond 022
+Once the documentation-only closeout is canonically merged and verified, the program returns to observation/evidence gathering. No successor is currently selected.
 
-Future work requires a newly shaped specification and fresh post-022 evidence. No item below is automatically authorized:
+A planned external architectural review and comparison with GitHub Spec Kit may provide useful evidence about interoperability, workflow gaps, excessive ceremony, missing bounded surfaces, or architectural divergence. That comparison must treat GitHub Spec Kit as an upstream influence/compatibility target, not as repository authority or an instruction to copy its architecture.
+
+Concrete review findings may shape a future specification only after they are reproduced against exact canonical SpecGrain truth.
+
+## Explicitly deferred unless fresh evidence selects them
+
+No item below is automatically authorized:
 
 - `GRAIN -> READY` or later lifecycle mutation;
 - WorkPacket CLI generation or executor/result orchestration;
@@ -90,4 +92,4 @@ Future work requires a newly shaped specification and fresh post-022 evidence. N
 - visual workflow designer or large agent-persona catalog;
 - empirical benchmark superiority claims without a reproducible completed dataset.
 
-After Specification 022 closes, the next frontier must be re-evaluated from actual post-022 product/adoption evidence rather than assumed to be WorkPacket/executor work.
+The next product frontier must be selected from actual post-022 evidence rather than assumed from this deferred list.

@@ -21,19 +21,19 @@
 
 ## Verification and product merge
 
-- [ ] T014 Run focused tests, full regression, Ruff, compileall, tracked-tree cleanliness, CLI help/smoke, package build, built-wheel install, launch/document guards, and permanent five-cell CI on the final documentation-reconciled exact head.
-- [ ] T015 Review the final exact diff for hidden defaults, readiness weakening, lifecycle edge skipping, semantic mutation outside shape, post-GRAIN authority, recovery widening, dependency creep, unrelated scope, and false historical v0.3.0 claims.
-- [ ] T016 Open a bounded implementation PR from the exact shaped canonical base and prove permanent five-cell CI on the exact PR head.
-- [ ] T017 Resolve every material exact-head review defect; do not treat unavailable/skipped review bots as PASS.
-- [ ] T018 Merge the product PR only with expected-head protection and prove canonical post-merge `main`, CI, and historical v0.3.0 release no-mutation behavior.
-
-### Verification checkpoint already proven
-
-Implementation checkpoint `05865fdfeb89e259be237f5e020a87424384d122` passed permanent CI run `33260707422` across all five cells with 573 tests and all static/package/CLI gates. T014 remains open because the final product candidate includes the documentation reconciliation committed after that checkpoint.
+- [x] T014 Bind focused/full/static/package/launch verification to final product head `8af20015bd59424c7882b8c8fa7ea4c78e0af2e5`. Push CI `33261979828` and PR CI `33261982603` both completed `success` across all five permanent cells; Ubuntu/Python 3.11 recorded 575 passing tests plus all required static/package/CLI gates.
+- [x] T015 Review the final exact diff for hidden defaults, readiness weakening, lifecycle edge skipping, semantic mutation outside shape, post-GRAIN authority, recovery widening, dependency creep, unrelated scope, and false historical v0.3.0 claims. The premature shape-time readiness gate was repaired forward before final head.
+- [x] T016 Open bounded implementation PR #38 from exact shaped canonical base `4919a4261f649e81cb1f507c0e80bc5c98d848d8` and prove permanent five-cell CI on exact PR head `8af20015bd59424c7882b8c8fa7ea4c78e0af2e5`.
+- [x] T017 Resolve every material review defect without treating unavailable/skipped bots as PASS. Both CodeRabbit inline threads were resolved; the global SpecNode-validation finding was withdrawn after scoped re-verification. Qodo and final-head automatic CodeRabbit review remained unavailable/skipped and were recorded as such.
+- [x] T018 Merge PR #38 with expected-head protection and prove canonical product merge `653cfb64c8885174ea3ea729d1bbb6418613b10d`, exact parentage, post-product five-cell CI `33262123902`, and historical v0.3.0 release preservation.
 
 ## Canonical closeout
 
-- [ ] T019 Record exact implementation head, CI jobs, review state, merge parentage, canonical post-merge CI, and release-verification evidence.
-- [ ] T020 Re-evaluate the next frontier from post-022 product truth; do not pre-authorize WorkPacket/executor scope merely because it is the likely next idea.
-- [ ] T021 Merge a documentation-only closeout with expected-head protection.
-- [ ] T022 Prove final canonical `main`, post-closeout CI, release target preservation, closed PRs, and Specification 022 `CLOSED_CANONICAL`.
+- [x] T019 Record exact implementation head, final candidate CI, review state, merge parentage, canonical post-product CI, historical-release preservation, and the bounded multi-writer residual in documentation-only closeout evidence.
+- [x] T020 Re-evaluate the next frontier from post-022 product truth. No successor product scope is automatically authorized; the program returns to observation/evidence gathering, including the planned external architectural review and GitHub Spec Kit comparison.
+- [ ] T021 Merge the exact documentation-only closeout head with expected-head protection after its permanent five-cell CI and review/mergeability checks succeed.
+- [ ] T022 Prove the resulting canonical `main`, post-closeout five-cell CI, preserved `v0.3.0` tag/release/assets, merged/closed implementation and closeout PRs, and only then declare Specification 022 `CLOSED_CANONICAL`.
+
+## Closure rule
+
+T021 and T022 are intentionally open on this closeout candidate. They may be marked complete only from exact canonical evidence after the closeout PR is merged. Until then, Specification 022 is product-merged and post-product verified but not `CLOSED_CANONICAL`.

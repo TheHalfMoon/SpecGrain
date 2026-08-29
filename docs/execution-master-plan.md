@@ -49,15 +49,15 @@ Specification 000 established the project foundation and constitution. Specifica
 - Specification 018 — v0.2.0 Authoring Release: `CLOSED_CANONICAL`; published root DRAFT authoring.
 - Specification 019 — Native Child-DRAFT Authoring: `CLOSED_CANONICAL`; recoverable reciprocal child authoring under ADR-0018.
 - Specification 020 — v0.3.0 Recursive Authoring Release: `CLOSED_CANONICAL`; product/release source `70dd66aba0e68ae710e6ef12605ed153d107bab4`; GitHub Release `378962445`.
-- Specification 021 — Public Launch Readiness Hardening: `CLOSED_CANONICAL`; canonical closeout `3b98914200c68909f09db08642faf56de48305eb` after reconciliation PR #36.
+- Specification 021 — Public Launch Readiness Hardening: `CLOSED_CANONICAL`; repository-side public launch hardening without product/release mutation.
 
 The latest published release remains `v0.3.0` at exact historical product source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
 
-## Active frontier — Specification 022
+## Closing frontier — Specification 022
 
-Fresh reproduced adoption friction selected Specification 022 — Native Grain Preparation. The shaping authority chain was merged through PR #37 as exact canonical shaped base `4919a4261f649e81cb1f507c0e80bc5c98d848d8`. Canonical post-shaping permanent CI `33260132438` succeeded before product implementation began.
+Fresh reproduced adoption friction selected Specification 022 — Native Grain Preparation. Its shaping authority was merged through PR #37 as exact canonical shaped base `4919a4261f649e81cb1f507c0e80bc5c98d848d8`; canonical post-shaping CI `33260132438` succeeded before implementation.
 
-022's bounded outcome is:
+022's bounded outcome is exactly:
 
 ```text
 DRAFT -> SHAPED -> REFINING -> GRAIN
@@ -76,41 +76,43 @@ ADR-0019 authorizes only:
 022 explicitly does not authorize:
 
 - `GRAIN -> READY` or later lifecycle transitions;
-- WorkPacket CLI generation;
+- WorkPacket CLI generation/execution;
 - executor/provider invocation or agent orchestration;
-- running verification/evidence commands;
-- evidence-record mutation;
-- AI-generated shaping or hidden readiness defaults;
-- readiness-rule weakening;
+- verification/evidence execution or evidence mutation;
+- generic mature-SpecNode editing;
+- multi-writer locking/recovery expansion;
 - PyPI/new-release scope;
 - hosted/provider/account scope;
+- runtime dependency growth;
+- readiness weakening;
 - empirical benchmark claims.
 
-### Implementation state
+### Product implementation state
 
-Implementation is on `feat/022-native-grain-preparation`, based exactly on shaped canonical `4919a4261f649e81cb1f507c0e80bc5c98d848d8` with no behind-main drift at the pre-document checkpoint.
+Final product head `8af20015bd59424c7882b8c8fa7ea4c78e0af2e5` passed exact push CI `33261979828` and exact PR CI `33261982603`, each across the permanent five-cell matrix. Ubuntu/Python 3.11 recorded 575 passing tests plus all required Ruff, cleanliness, compile, CLI, package build, wheel-install, and installed-smoke gates.
 
-Checkpoint `05865fdfeb89e259be237f5e020a87424384d122` delivered:
+Exact review repaired one lifecycle-authority defect before the final head: full Grain readiness is evaluated only for `REFINING -> GRAIN`; `shape` validates its explicit input contract without becoming an early hidden Grain gate.
 
-- dedicated bounded `src/specgrain/pregrain.py` mutation module reusing existing store safety primitives;
-- public APIs for explicit DRAFT shaping, state-only refinement, and readiness-gated Grain promotion;
-- `shape`, `refine`, and `grain` CLI commands;
-- exact-preimage single-file mutation with pending ADR-0018 refusal;
-- proposed refinement/dependency validation;
-- deterministic text/JSON output and blocker/no-mutation semantics;
-- semantic revision preservation for state-only transitions;
-- existing `next` integration;
-- zero runtime dependency growth.
+PR #38 merged with expected-head protection as signature-verified canonical product merge `653cfb64c8885174ea3ea729d1bbb6418613b10d`. Its exact parents are shaped canonical base `4919a4261f649e81cb1f507c0e80bc5c98d848d8` and final implementation head `8af20015bd59424c7882b8c8fa7ea4c78e0af2e5`.
 
-Permanent CI `33260707422` succeeded on exact checkpoint `05865fdfeb89e259be237f5e020a87424384d122` across all five supported cells. Ubuntu/Python 3.11 recorded 573 passing tests plus Ruff for source/tests/examples, editable installation, tracked-tree cleanliness, compile, CLI smoke, package build, built-wheel installation, and installed CLI smoke.
+Canonical post-product CI `33262123902` completed `success` across Ubuntu/Python 3.11, 3.12, 3.13, macOS/Python 3.11, and Windows/Python 3.11.
 
-The checkpoint was not yet the final product candidate because README/architecture/changelog/launch guards and current governance state still required reconciliation. Final product CI and review must bind to the documentation-reconciled exact head.
+### Review and residual state
+
+All material inline review threads were resolved before product merge. Unavailable/skipped Qodo and final-head automatic CodeRabbit review were recorded as unavailable/skipped rather than PASS. Cubic descriptive output was not treated as independent approval.
+
+A bounded concurrent-writer race remains an explicit residual. Specification 022 excludes multi-writer locking and recovery widening, so stronger coordination was not silently added. Future concurrency work requires separately shaped authority from fresh evidence.
 
 ### Published-release boundary
 
-The historical `v0.3.0` tag and GitHub Release remain the published contract. They contain root/child DRAFT authoring and explicit recovery, but do not contain `shape`, `refine`, or `grain`.
+The historical `v0.3.0` tag and GitHub Release remain the published contract. After the 022 product merge:
 
-Specification 022 is an unreleased current-source product change. No package version, tag, GitHub Release, release asset, or release note may be rewritten to imply otherwise.
+- tag target remains `70dd66aba0e68ae710e6ef12605ed153d107bab4`;
+- Release remains `378962445`;
+- published wheel/source asset IDs, sizes, and digests remain unchanged;
+- release notes still list only the historical command set and do not claim `shape`, `refine`, or `grain`.
+
+Specification 022 is an unreleased current-source product change. No package version, tag, GitHub Release, asset, or historical release note is rewritten by 022.
 
 ## Cross-spec execution rules
 
@@ -119,29 +121,35 @@ Specification 022 is an unreleased current-source product change. No package ver
 3. Use bounded feature branches and pull requests.
 4. Verify exact PR head, checks, threads, and scope before merge.
 5. Merge with expected-head protection where available.
-6. Never claim PASS, VERIFIED, MERGED, COMPLETE, or CLOSED_CANONICAL without exact evidence.
+6. Never claim PASS, VERIFIED, MERGED, COMPLETE, or `CLOSED_CANONICAL` without exact evidence.
 7. Re-read canonical `main` after every merge.
 8. Prefer smaller native implementations over dependencies without demonstrated need.
 9. Do not execute untrusted repository commands merely to inspect a brownfield project.
 10. Do not make AI reasoning transcripts repository authority.
 11. Preserve residual risks and blockers.
 12. External ideas/code require license-aware provenance.
-13. Post-v0.1 work requires a newly shaped specification derived from live evidence; roadmap deferrals and audit recommendations are not implicit authority.
+13. Post-v0.1 work requires a newly shaped specification derived from live evidence; roadmap deferrals, audits, external reviewers, and upstream-tool comparisons are not implicit implementation authority.
 
-## Completion rule for Specification 022
+## Remaining completion rule for Specification 022
 
-022 is canonical only when:
+Product implementation and canonical post-product verification are complete. 022 becomes canonical only when the remaining closeout sequence succeeds:
 
-- its shaped authority chain is present on canonical `main` before implementation begins;
-- implementation is performed on a bounded branch from the exact shaped canonical base;
-- all required focused, full, static, and package checks, plus permanent five-cell exact-head CI, succeed on the final product candidate;
-- exact-head review confirms no readiness weakening, hidden defaults, edge skipping, post-GRAIN authority, recovery widening, dependency creep, false historical-release claims, or unrelated scope;
-- implementation PR review threads/submitted reviews/mergeability and review-bot availability are rechecked without treating unavailable/skipped bots as PASS;
-- merge uses expected-head protection;
-- canonical post-merge state, CI, and historical v0.3.0 release no-mutation behavior are re-verified;
-- a documentation-only closeout records exact evidence and re-evaluates the next frontier;
-- the exact closeout head is merged with expected-head protection and final canonical state/CI are verified.
+- a documentation-only closeout records exact product/review/merge/CI/release evidence and next-frontier reevaluation;
+- permanent five-cell CI succeeds on the exact closeout head;
+- exact closeout diff, reviews, threads, mergeability, and review-bot availability are rechecked without treating unavailable/skipped bots as PASS;
+- closeout merge uses expected-head protection;
+- resulting canonical `main` passes permanent five-cell CI;
+- the historical v0.3.0 tag/release/assets remain unchanged;
+- implementation and closeout PRs are confirmed merged/closed.
 
-The likely later need for a WorkPacket/execution workflow is not pre-authorized. It must be selected, shaped, and implemented only from fresh post-022 evidence.
+Only after those conditions exist may Specification 022 be declared `CLOSED_CANONICAL`.
+
+## Post-022 frontier rule
+
+No successor is pre-authorized. After canonical 022 closeout, the program returns to observation/evidence gathering.
+
+A planned external architectural review and comparison with GitHub Spec Kit may be useful evidence collection. The review must compare against exact canonical SpecGrain truth and preserve SpecGrain's architectural independence. Neither an external reviewer nor Spec Kit may confer product authority. Concrete findings must be shaped into a new bounded specification before implementation.
+
+In particular, READY mutation, WorkPacket CLI/execution, executor/provider orchestration, verification execution, evidence mutation, multi-writer locking, or a new release remain unselected until fresh evidence justifies one of those bounded frontiers.
 
 No empirical benchmark winner is claimed without a reproducible completed dataset. No aspirational CLI command is presented as shipped historical-release behavior.
