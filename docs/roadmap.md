@@ -2,7 +2,7 @@
 
 The roadmap is intentionally progressive. Only the nearest active specification should have implementation-level detail. Future work is shaped from current evidence rather than pre-authorized by stale backlog detail.
 
-**Current program state:** Specifications 000–021 are `CLOSED_CANONICAL`. Specification 022 — Native Grain Preparation has a merged and post-product-verified implementation and is in documentation-only canonical closeout. Canonical product merge is `653cfb64c8885174ea3ea729d1bbb6418613b10d`; canonical post-product CI `33262123902` succeeded across all five permanent cells. The latest published release remains GitHub Release `378962445` / tag `v0.3.0` at exact historical product source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
+**Current program state:** Specifications 000–022 are `CLOSED_CANONICAL`. There is no active specification. The program is at `POST_022_OBSERVATION`. Specification 022 canonical product merge is `653cfb64c8885174ea3ea729d1bbb6418613b10d`; canonical closeout merge is `9cd52eb6d1ba6839910ceb973fedf5b3a727cc0a`; post-closeout CI `33262519733` succeeded across all five permanent cells. The latest published release remains GitHub Release `378962445` / tag `v0.3.0` at exact historical product source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
 
 ## M0 — Foundation
 
@@ -56,13 +56,15 @@ The initial v0.1 sequence ended at Specification 016. Exact release and closeout
 - **019 — Native Child-DRAFT Authoring:** `CLOSED_CANONICAL`; recoverable reciprocal child DRAFT authoring and explicit recovery without lifecycle promotion.
 - **020 — v0.3.0 Recursive Authoring Release:** `CLOSED_CANONICAL`; product/release source `70dd66aba0e68ae710e6ef12605ed153d107bab4`; Release `378962445` / `v0.3.0`; publishes root/child DRAFT authoring and explicit recovery with no new product behavior.
 - **021 — Public Launch Readiness Hardening:** `CLOSED_CANONICAL`; hardens README first-screen trust signals, v0.3.0 install prominence, current security/launch truth, licensing recognition, and launch regression checks without changing product behavior or release identity.
-- **022 — Native Grain Preparation:** product merged and post-product verified; canonical closeout pending. Current source provides explicit native `DRAFT -> SHAPED -> REFINING -> GRAIN` preparation through bounded `shape`, `refine`, and `grain` surfaces using existing schema/lifecycle/readiness semantics.
+- **022 — Native Grain Preparation:** `CLOSED_CANONICAL`; current source provides explicit native `DRAFT -> SHAPED -> REFINING -> GRAIN` preparation through bounded `shape`, `refine`, and `grain` surfaces using existing schema/lifecycle/readiness semantics.
 
-## Specification 022 exact product proof
+## Specification 022 canonical proof
 
 Final implementation head `8af20015bd59424c7882b8c8fa7ea4c78e0af2e5` passed exact push CI `33261979828` and exact PR CI `33261982603` across the permanent five-cell matrix, with 575 tests in Ubuntu/Python 3.11 plus all required static/package/CLI gates.
 
-PR #38 merged with expected-head protection as canonical product merge `653cfb64c8885174ea3ea729d1bbb6418613b10d`. Canonical post-product CI `33262123902` succeeded across Ubuntu/Python 3.11, 3.12, 3.13, macOS/Python 3.11, and Windows/Python 3.11.
+PR #38 merged with expected-head protection as product merge `653cfb64c8885174ea3ea729d1bbb6418613b10d`. Canonical post-product CI `33262123902` succeeded across all five permanent cells.
+
+Documentation closeout head `7b3b5beed297d024ad897e3b7e4d5376c8c5f24a` passed push CI `33262421052` and PR CI `33262442496`, then PR #39 merged with expected-head protection as canonical closeout merge `9cd52eb6d1ba6839910ceb973fedf5b3a727cc0a`. Canonical post-closeout CI `33262519733` succeeded across all five permanent cells. PR #38 and PR #39 are merged/closed.
 
 The historical v0.3.0 release remains unchanged and does not contain `shape`, `refine`, or `grain`; those commands are unreleased current-source Specification 022 additions.
 
@@ -72,7 +74,7 @@ A bounded multi-writer race remains possible around exact-preimage validation an
 
 ## Post-022 observation frontier
 
-Once the documentation-only closeout is canonically merged and verified, the program returns to observation/evidence gathering. No successor is currently selected.
+The program is now in observation/evidence gathering with no active successor specification.
 
 A planned external architectural review and comparison with GitHub Spec Kit may provide useful evidence about interoperability, workflow gaps, excessive ceremony, missing bounded surfaces, or architectural divergence. That comparison must treat GitHub Spec Kit as an upstream influence/compatibility target, not as repository authority or an instruction to copy its architecture.
 

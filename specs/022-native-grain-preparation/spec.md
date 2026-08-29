@@ -2,27 +2,27 @@
 
 ## Status
 
-`SHAPED`
+`CLOSED_CANONICAL`
 
 ## Outcome
 
 Let a user take an existing native SpecGrain candidate from `DRAFT` through the deterministic pre-execution lifecycle to `GRAIN` using supported API/CLI surfaces, without hand-editing internal JSON and without granting READY/execution/verification authority.
 
-## Why this is the next frontier
+## Why this frontier was selected
 
-Specifications 000 through 021 are `CLOSED_CANONICAL`. Canonical `main` is `3b98914200c68909f09db08642faf56de48305eb` and the published release remains `v0.3.0` at product source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
+Specifications 000 through 021 were `CLOSED_CANONICAL` when 022 was shaped. The pre-022 observation baseline was canonical `main` `3b98914200c68909f09db08642faf56de48305eb`, while the published release remained `v0.3.0` at product source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
 
-The post-v0.3 observation rule requires fresh evidence before a successor. `docs/research/post-v0.3-native-workflow-friction-2026-08-29.md` reproduces a maintainer-supplied external adoption finding against canonical source:
+The post-v0.3 observation rule required fresh evidence before a successor. `docs/research/post-v0.3-native-workflow-friction-2026-08-29.md` reproduced a maintainer-supplied external adoption finding against canonical source:
 
-- `draft` produces validated DRAFTs;
-- no supported CLI populates the fields needed by Grain readiness;
-- no supported CLI advances a candidate into `SHAPED`, `REFINING`, or `GRAIN`;
-- `check` evaluates readiness only for existing `REFINING` leaves;
-- `next` considers only existing `GRAIN` nodes.
+- `draft` produced validated DRAFTs;
+- no supported CLI populated the fields needed by Grain readiness;
+- no supported CLI advanced a candidate into `SHAPED`, `REFINING`, or `GRAIN`;
+- `check` evaluated readiness only for existing `REFINING` leaves;
+- `next` considered only existing `GRAIN` nodes.
 
-This is concrete user/adoption friction and satisfies the post-v0.1 evidence rule for shaping 022.
+This was concrete user/adoption friction and satisfied the post-v0.1 evidence rule for shaping 022.
 
-The external review recommends a full DRAFT-to-VERIFIED loop. 022 deliberately chooses the smaller authority boundary: close only the pre-execution dead end first. WorkPacket/executor/verification/evidence mutation remains separately shapeable later.
+The external review recommended a full DRAFT-to-VERIFIED loop. 022 deliberately chose the smaller authority boundary: close only the pre-execution dead end first. WorkPacket/executor/verification/evidence mutation remained separately shapeable later.
 
 ## In scope
 
@@ -44,7 +44,7 @@ The external review recommends a full DRAFT-to-VERIFIED loop. 022 deliberately c
 
 ## Shape contract
 
-`specgrain shape` operates only on an existing node in state `DRAFT` and preserves identity/refinement structure. The initial CLI must accept explicit values for the existing readiness-relevant fields without inventing hidden claims:
+`specgrain shape` operates only on an existing node in state `DRAFT` and preserves identity/refinement structure. The initial CLI accepts explicit values for the existing readiness-relevant fields without inventing hidden claims:
 
 - repeatable `--scope-in` (at least one);
 - repeatable `--scope-out` (optional);
@@ -69,7 +69,7 @@ The semantic fields `id`, `title`, `outcome`, `rationale`, `parent_id`, `childre
 
 ### `DRAFT -> SHAPED`
 
-Authorized only through successful bounded shaping. The replacement must construct and validate the complete proposed project before exact-preimage single-file replacement.
+Authorized only through successful bounded shaping. The replacement constructs and validates the complete proposed project before exact-preimage single-file replacement.
 
 ### `SHAPED -> REFINING`
 
@@ -141,19 +141,21 @@ No direct edge skipping is authorized.
 - Specification 005 / ADR-0005 supply the dependency-free local store.
 - Specifications 017 and 019 supply native DRAFT authoring/recovery.
 - ADR-0018 remains authoritative for child-authoring multi-file recovery only.
-- ADR-0019 defines the new bounded pre-Grain mutation authority.
+- ADR-0019 defines the bounded pre-Grain mutation authority.
 
 ## Risks and recovery
 
 - **Over-broad editing authority:** initial shaping mutates only a DRAFT and only the enumerated existing fields; mature states are rejected.
 - **Fabricated readiness assertions:** every readiness-sensitive declaration is explicit input; no model/default invents risk, context, evidence, minimality, or safety facts.
-- **Concurrent/manual edit:** exact preimage is checked immediately before same-directory replacement; detected drift fails closed.
+- **Concurrent/manual edit:** exact preimage is checked immediately before same-directory replacement; detected drift fails closed. A bounded concurrent-writer race remains an explicit residual and was not widened into a locking protocol under 022.
 - **Interaction with pending child transaction:** all new mutations refuse while ADR-0018 recovery is pending.
 - **Readiness bypass:** only the existing evaluator can authorize `REFINING -> GRAIN`; blockers produce no state mutation.
 - **Scope creep into execution:** 022 stops at `GRAIN`; READY/WorkPacket/executor/verification/evidence remain outside authority.
 
-## Constitution and architecture
+## Canonical closure evidence
 
-No constitution amendment is required. 022 advances Principle II (Grain before execution), Principle III (evidence over assertion), Principle V (minimal ceremony by removing hand-edited internal JSON), Principle VII (deterministic control plane), Principle VIII (agent/vendor neutrality), and Principle XI (reversibility/blast-radius control).
+The shaped authority was merged through PR #37 as `4919a4261f649e81cb1f507c0e80bc5c98d848d8`. The final implementation head `8af20015bd59424c7882b8c8fa7ea4c78e0af2e5` passed exact-head push/PR CI and merged through PR #38 as canonical product merge `653cfb64c8885174ea3ea729d1bbb6418613b10d`; post-product CI `33262123902` succeeded.
 
-This `SHAPED` status is prospective on a documentation-only branch. Implementation authority exists only after the exact shaping head is merged canonically and canonical `main` is re-read.
+Documentation-only closeout head `7b3b5beed297d024ad897e3b7e4d5376c8c5f24a` passed push CI `33262421052` and PR CI `33262442496`, then PR #39 merged with expected-head protection as `9cd52eb6d1ba6839910ceb973fedf5b3a727cc0a`. Canonical post-closeout CI `33262519733` completed `success` across the permanent five-cell matrix. PRs #38 and #39 are merged/closed, and historical `v0.3.0` remains unchanged at source `70dd66aba0e68ae710e6ef12605ed153d107bab4`, Release `378962445`, with the same published assets and digests.
+
+All Specification 022 closure conditions therefore exist. This specification is `CLOSED_CANONICAL`. No successor implementation is selected by this closure; the repository returns to post-022 observation and evidence gathering.
