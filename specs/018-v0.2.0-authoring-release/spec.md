@@ -2,7 +2,7 @@
 
 ## Status
 
-`RUNNING`
+`CLOSED_CANONICAL` — prospective inside the documentation-only closeout branch; authoritative only after exact-head closeout merge and post-closeout proof.
 
 ## Outcome
 
@@ -10,9 +10,9 @@ Publish a new immutable-by-contract GitHub release that makes the already-verifi
 
 ## Why this is the next frontier
 
-Specification 017 closed the first-use authoring gap on canonical `main`, but the latest public release remains `v0.1.0` and does not contain `specgrain draft` or `create_draft_spec`. The post-017 audit identified this distribution discontinuity as the smallest current adoption gap.
+Specification 017 closed the first-use authoring gap on canonical `main`, but the latest public release at shaping time remained `v0.1.0` and did not contain `specgrain draft` or `create_draft_spec`. The post-017 audit identified this distribution discontinuity as the smallest current adoption gap.
 
-`0.2.0` is selected as the next package/release version because the unreleased change adds a backward-compatible public CLI/API capability. For the pre-1.0 product line, backward-compatible feature additions advance the minor component; corrections that add no public capability may use the patch component. ADR-0017 records the durable release progression rule.
+`0.2.0` was selected as the next package/release version because the unreleased change added a backward-compatible public CLI/API capability. For the pre-1.0 product line, backward-compatible feature additions advance the minor component; corrections that add no public capability may use the patch component. ADR-0017 records the durable release progression rule.
 
 ## In scope
 
@@ -82,4 +82,17 @@ Specification 017 closed the first-use authoring gap on canonical `main`, but th
 
 No constitution amendment is required. The release remains vendor-neutral, dependency-free at runtime, evidence-bound, and reversible before publication. After publication, tags/releases are historical anchors and are protected by fail-closed monotonic release rules rather than rewritten.
 
-The shaped authority is canonical through merge `b170aed92812c367282fbacb5d46e5acb450a196`. Implementation must remain on a bounded branch from that exact base and satisfy the acceptance evidence above before product merge or release claims.
+The shaped authority is canonical through merge `b170aed92812c367282fbacb5d46e5acb450a196`. Implementation was performed on a bounded branch from that exact base.
+
+## Completion evidence
+
+- final exact product head: `bf63dbb4ef2259f79dc4e88e3b7f5abc0d05c178`;
+- final product-head CI: `33245686864` — success;
+- expected-head product merge: `baf00995a7ae9cf01b6196d68c62f4eca2c1ec85`;
+- canonical product post-merge CI: `33245753969` — success;
+- release workflow run: `33245783948` — success;
+- live GitHub Release: `v0.2.0`, ID `378936896`, exact target `baf00995a7ae9cf01b6196d68c62f4eca2c1ec85`;
+- exact asset names, sizes, SHA-256 digests, reviewer boundaries, and v0.1.0 preservation evidence: `closeout.md`;
+- fresh post-release frontier audit: `docs/research/post-v0.2-product-audit-2026-08-29.md`.
+
+The prospective `CLOSED_CANONICAL` status becomes authoritative only after the exact documentation-only closeout head is merged with expected-head protection and post-closeout canonical CI plus no-mutation release verification succeed.

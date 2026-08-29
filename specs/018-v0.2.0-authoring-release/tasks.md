@@ -20,13 +20,13 @@
 
 - [x] T011 Run full regression, Ruff, compileall, CLI smoke, package build/install, release-contract guards, and the permanent five-cell CI matrix on the exact implementation head.
 - [x] T012 Review the exact diff for release mutation risk, source-SHA binding, version drift, dependency creep, external publishing scope, unsupported claims, and accidental product behavior changes.
-- [x] T013 Resolve every material exact-head finding with forward commits and re-prove the current implementation state. The evidence/guard successor head still requires its own exact-head CI before merge.
-- [ ] T014 Merge the implementation PR only with expected-head protection and prove the exact product merge on canonical `main`.
+- [x] T013 Resolve every material exact-head finding with forward commits and re-prove the current implementation state.
+- [x] T014 Merge the implementation PR only with expected-head protection and prove exact product merge `baf00995a7ae9cf01b6196d68c62f4eca2c1ec85` on canonical `main`.
 
 ## Publication and canonical closeout
 
-- [ ] T015 Verify successful canonical post-merge CI on the exact product merge.
-- [ ] T016 Verify the release workflow publishes or idempotently verifies `v0.2.0` at the exact product merge without mutating `v0.1.0`.
-- [ ] T017 Record live tag/release identity, release ID/state, asset names/sizes/SHA-256 digests, and historical `v0.1.0` preservation evidence.
-- [ ] T018 Re-audit the next product frontier from post-release repository/adoption truth.
-- [ ] T019 Merge a documentation-only exact-evidence closeout PR with expected-head protection and prove post-closeout canonical CI before claiming `CLOSED_CANONICAL`.
+- [x] T015 Verify successful canonical post-merge CI run `33245753969` on exact product merge `baf00995a7ae9cf01b6196d68c62f4eca2c1ec85`.
+- [x] T016 Verify release workflow run `33245783948` publishes `v0.2.0` at the exact product merge without mutating `v0.1.0`.
+- [x] T017 Record live tag/release identity, release ID/state, asset names/sizes/SHA-256 digests, and historical `v0.1.0` preservation evidence in `closeout.md`.
+- [x] T018 Re-audit the next product frontier from post-release repository/adoption truth in `docs/research/post-v0.2-product-audit-2026-08-29.md`.
+- [x] T019 Prepare the documentation-only exact-evidence closeout for expected-head merge and post-closeout proof. This checkbox becomes canonical only after that exact closeout head is merged and live post-closeout CI/no-mutation release verification succeeds.

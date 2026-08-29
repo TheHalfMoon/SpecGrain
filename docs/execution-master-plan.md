@@ -64,9 +64,11 @@ Specification 017 — Native DRAFT CLI is `CLOSED_CANONICAL`. Its product merge 
 
 017 closes the empty-project authoring gap on current `main`: users can create one validated root `DRAFT` through `specgrain draft` without hand-authoring internal JSON or receiving implied Grain/readiness/execution authority.
 
-The fresh audit `docs/research/post-017-product-audit-2026-08-29.md` identifies the distribution discontinuity between current `main` and public `v0.1.0` as the smallest adoption-oriented gap. Specification 018 — v0.2.0 Authoring Release is therefore shaped prospectively to publish the already-completed authoring surface and establish monotonic metadata-derived GitHub release progression under ADR-0017. It adds no new product behavior and becomes implementation authority only after its exact shaping head is merged canonically.
+The fresh audit `docs/research/post-017-product-audit-2026-08-29.md` identified the distribution discontinuity between current `main` and public `v0.1.0` as the smallest adoption-oriented gap and shaped Specification 018 — v0.2.0 Authoring Release.
 
-No successor after 018 is implied. Recursive refinement, PyPI, executor orchestration, hosted services, and empirical benchmark claims remain deferred until fresh evidence separately shapes them.
+Specification 018 completed product delivery at merge `baf00995a7ae9cf01b6196d68c62f4eca2c1ec85`. Canonical product post-merge CI run `33245753969` succeeded, and release workflow run `33245783948` published GitHub Release `378936896` / tag `v0.2.0` from that exact merge. Live release and historical v0.1.0 preservation evidence is recorded in `specs/018-v0.2.0-authoring-release/closeout.md`.
+
+The fresh post-v0.2 audit `docs/research/post-v0.2-product-audit-2026-08-29.md` recommends native child-DRAFT authoring as the smallest next shaping candidate because the public product can create one root DRAFT while the deterministic recursive model is not yet writable through the supported authoring surface. The audit is not authority. No successor specification is implied until Specification 018 closeout becomes canonical and a separate shaping chain is merged.
 
 ## Cross-spec execution rules
 
@@ -98,3 +100,5 @@ A post-v0.1 specification is canonical only when:
 - the next product frontier is re-evaluated from current truth rather than assumed.
 
 No empirical benchmark winner is claimed without a reproducible completed dataset. No aspirational CLI command is presented as shipped behavior.
+
+The Specification 018 `CLOSED_CANONICAL` state authored on its documentation-only closeout branch is prospective until that exact closeout head is merged and post-closeout canonical CI plus the no-mutation release verification path succeed.
