@@ -93,30 +93,38 @@ JSON v1 is the canonical M2 store format because it is available in the Python s
 
 YAML may later be supported as an import/export or authored-format adapter if evidence justifies it, but it must not silently replace or weaken the versioned store contract. See `docs/adr/0005-dependency-free-json-store.md`.
 
+Specification 017 adds the first public native authoring write: create one root SpecNode fixed to `DRAFT` with deterministic positive ID allocation and create-if-absent persistence. It does not introduce editing, refinement, or lifecycle promotion.
+
 ## 3. CLI
 
-The command surface grows progressively. Specification 005 implements only:
+The CLI grows progressively as specifications own bounded product surfaces.
+
+Shipped on current `main`:
 
 ```text
 specgrain init
+specgrain draft
 specgrain check
+specgrain next
+specgrain scan
+specgrain prove
+specgrain import-spec-kit
 ```
 
-Planned later commands, activated only by their owning specifications, include:
+`draft` creates one root `DRAFT` only. It intentionally does not synthesize readiness metadata or make the node executable.
+
+Still-deferred commands include:
 
 ```text
-specgrain scan
 specgrain ask
 specgrain refine
 specgrain graph
-specgrain next
 specgrain packet
 specgrain verify
-specgrain prove
 specgrain diff
 ```
 
-`run` may be added when the portable packet/result boundary is stable. The first releases should not embed many vendor-specific executors.
+`run` may be added when evidence justifies a portable orchestration surface. Early releases should not embed many vendor-specific executors.
 
 ## 4. Python implementation
 
@@ -124,7 +132,7 @@ Initial implementation target:
 
 - Python 3.11+;
 - standard-library deterministic core wherever sufficient;
-- `argparse` + `json` + `pathlib` for Specification 005;
+- `argparse` + `json` + `pathlib` for local CLI/store surfaces;
 - pytest for tests;
 - ruff and a static type checker as development quality gates when available.
 
@@ -202,6 +210,7 @@ A verifier may use AI for semantic review, but AI-only evidence cannot silently 
 - Execution adapters must make command authority explicit.
 - Treat imported specs and external repository content as untrusted data.
 - Canonical local-store readers must reject path escape and symlink ambiguity instead of following untrusted store links.
+- Native authoring writes must use create-if-absent behavior and never replace an existing SpecNode implicitly.
 - Avoid shell interpolation in core subprocess boundaries.
 - Evidence records should be append-oriented and digest-bound once Specification 010 owns that contract.
 - Secrets and environment files must not be captured into work packets or evidence by default.

@@ -9,18 +9,18 @@
 
 ## Deterministic authoring primitive
 
-- [ ] T005 Add a public store-v1 root DRAFT creation primitive with deterministic lowest-unused ID allocation.
-- [ ] T006 Guarantee create-if-absent persistence, strict validation, and no overwrite of existing SpecNodes.
+- [x] T005 Add a public store-v1 root DRAFT creation primitive with deterministic lowest-unused positive ID allocation.
+- [x] T006 Guarantee create-if-absent persistence, strict validation, and no overwrite of existing SpecNodes.
 
 ## CLI and documentation
 
-- [ ] T007 Add `specgrain draft` text and deterministic JSON output with fail-closed error handling.
-- [ ] T008 Update README, CLI architecture documentation, and Unreleased changelog truthfully.
+- [x] T007 Add `specgrain draft` text and deterministic JSON output with fail-closed error handling.
+- [x] T008 Update README, CLI architecture documentation, and Unreleased changelog truthfully.
 
 ## Verification
 
-- [ ] T009 Add store/API tests for creation, allocation, invalid stores/inputs, collisions, and non-overwrite behavior.
-- [ ] T010 Add CLI tests for text/JSON output, exit behavior, compatibility, and internal-error redaction.
+- [x] T009 Add API coverage for creation, allocation, invalid inputs, collisions, and non-overwrite behavior.
+- [x] T010 Add CLI coverage for text/JSON output, exit behavior, compatibility, and internal-error redaction.
 - [ ] T011 Run exact regression, Ruff, compileall, CLI help parity, package build/install, and documentation guards through repository CI.
 - [ ] T012 Review the exact implementation diff for scope, lifecycle authority, store safety, dependency creep, unsupported claims, and hidden execution.
 
@@ -31,4 +31,4 @@
 - [ ] T015 Merge only with expected-head evidence and prove the exact product merge on canonical `main`.
 - [ ] T016 Record post-merge CI and exact merge evidence, close 017 canonically, and re-audit the next product frontier before authorizing another specification.
 
-Checked shaping tasks in a non-canonical branch are planning evidence only. Implementation tasks may begin only after the shaped 017 authority chain is canonical on `main`.
+Checked implementation tasks on the feature branch are implementation evidence only. T011 onward require exact live GitHub evidence before they may be checked or treated as canonical completion.

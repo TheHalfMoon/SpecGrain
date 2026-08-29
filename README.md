@@ -15,12 +15,17 @@ python -m pip install .
 specgrain scan .
 mkdir specgrain-demo
 specgrain init specgrain-demo --project-id demo
+specgrain draft specgrain-demo \
+  --title "Add a bounded health check" \
+  --outcome "The service exposes one deterministic health endpoint"
 specgrain check specgrain-demo
 ```
 
-The commands above are local and deterministic. `scan` maps bounded brownfield repository facts without executing repository commands or sending the repository to a model. `init` creates repository-local `.specgrain/` state, and `check` validates it.
+The commands above are local and deterministic. `scan` maps bounded brownfield repository facts without executing repository commands or sending the repository to a model. `init` creates repository-local `.specgrain/` state. `draft` creates the first validated native root SpecNode in state `DRAFT` without granting Grain/readiness/execution authority, and `check` validates local state.
 
-After `v0.1.0` is tagged, the same release can be installed directly from its source archive:
+Recursive child refinement is not yet exposed as a CLI authoring command. A newly created DRAFT is intentionally incomplete rather than silently promoted to an executable Grain.
+
+The published `v0.1.0` release predates the `draft` command. It can be installed directly from its source archive:
 
 ```bash
 python -m pip install "https://github.com/TheHalfMoon/SpecGrain/archive/refs/tags/v0.1.0.zip"
@@ -40,20 +45,21 @@ Intent
 
 When a change is too large, SpecGrain's default answer is further refinement—not a larger prompt.
 
-## Supported CLI in v0.1.0
+## Supported CLI on main
 
 | Command | Purpose |
 | --- | --- |
 | `specgrain init [path]` | Initialize repository-local SpecGrain state. |
+| `specgrain draft [path] --title ... --outcome ...` | Create a validated root DRAFT SpecNode without lifecycle promotion. |
 | `specgrain check [path]` | Validate local state and Grain-readiness reports. |
 | `specgrain next [path]` | Show dependency-eligible Grains and projected waves. |
 | `specgrain scan [path]` | Build a bounded deterministic brownfield repository map. |
 | `specgrain prove <spec-id> [path]` | Load and validate append-oriented evidence for a spec. |
 | `specgrain import-spec-kit <feature-dir>` | Produce a read-only, source-bound Spec Kit migration report. |
 
-Most inspection commands also provide deterministic JSON output with `--json`.
+Most inspection commands and `draft` provide deterministic JSON output with `--json`.
 
-SpecGrain v0.1.0 is a deterministic control plane, not an agent runner or hosted service. External agents integrate through portable WorkPacket/result adapter contracts rather than becoming verification authority.
+The published v0.1.0 release contains every command above except `draft`. SpecGrain remains a deterministic control plane, not an agent runner or hosted service. External agents integrate through portable WorkPacket/result adapter contracts rather than becoming verification authority.
 
 ## Zero to VERIFIED
 
