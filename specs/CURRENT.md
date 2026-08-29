@@ -2,69 +2,50 @@
 
 **Repository:** `TheHalfMoon/SpecGrain`  
 **Canonical branch:** `main`  
-**Program status:** `POST_V0.3_OBSERVATION`  
+**Program status:** `SPEC_021_SHAPING`  
 **Last closed specification:** `specs/020-v0.3.0-recursive-authoring-release/` — `CLOSED_CANONICAL`  
-**Active specification:** none  
-**Active branch:** none  
-**Next planned specification:** none; the fresh post-v0.3 audit selects observation and finds no evidence-supported successor  
+**Active specification:** `specs/021-public-launch-readiness-hardening/` — prospective `SHAPED` on its shaping branch; implementation is not authorized until canonical shaping merge and post-merge CI succeed  
+**Active branch:** `spec/021-public-launch-readiness-hardening` for shaping only  
+**Next planned work:** canonicalize Specification 021 shaping, prove post-merge CI, then implement only the bounded public-launch hardening tasks  
 **Published release:** `v0.3.0`  
 **Published release source commit:** `70dd66aba0e68ae710e6ef12605ed153d107bab4`  
 **Published release ID:** `378962445`
 
-## Specification 019 canonical closeout
-
-Specification 019 is `CLOSED_CANONICAL`. Product merge `d6727b6c5cdafcf6265b6d999418c0fe853249a7` passed canonical product CI `33248014390`. Documentation-only closeout merged as `3f8f3d825c3171a3a9ac7761ee5bc642e68a9d2d`; post-closeout CI `33248332725` succeeded and Release verification `33248368659` / job `99089652500` preserved historical `v0.2.0` without mutation.
-
-## Specification 020 canonical shaping and product delivery
-
-Documentation-only shaping PR #29 exact head `61f97bd24d2fe9e1ce5a216170368adae38671e3` passed exact-head CI `33248501598` and merged with expected-head protection as shaping merge `05219b4ea7ce1be201c8fb2ff31e707ae02cba17`. Canonical shaping post-merge CI `33248559704` succeeded across the permanent five-cell matrix.
-
-Implementation PR #30 repaired its only material manual-review finding forward before final evidence. Product candidate `d207d54317457a744cb8887a260fcb78dc0710be` passed CI `33249652226`; Ubuntu/Python 3.11 recorded `555 passed` plus successful v0.3.0 build/install/CLI smoke. Final evidence head `bf59a2ceba3e28cabc2294a0bd95e4e973b1e2bf` then passed exact-head PR CI `33249768557` across all five permanent cells.
-
-PR #30 merged with expected-head protection as canonical product merge `70dd66aba0e68ae710e6ef12605ed153d107bab4`. Its first parent is exact shaping merge `05219b4...`; its second parent is exact final PR head `bf59a2c...`; GitHub signature verification is valid.
-
-Canonical product post-merge CI run `33249920673` completed successfully across Ubuntu/Python 3.11, 3.12, 3.13, macOS/Python 3.11, and Windows/Python 3.11.
-
-## v0.3.0 publication
-
-Release workflow run `33249956337`, job `99093825183`, checked out exact canonical product merge `70dd66a...`, resolved package version `0.3.0`, built the exact expected wheel/source distribution, created new tag `v0.3.0`, and created GitHub Release `378962445`.
-
-Live release truth:
-
-- tag `v0.3.0` targets exact product merge `70dd66aba0e68ae710e6ef12605ed153d107bab4`;
-- release title is `SpecGrain v0.3.0`;
-- draft `false`, prerelease `false`;
-- wheel `specgrain-0.3.0-py3-none-any.whl`: asset `535129008`, size `70463`, digest `sha256:b4f724e5ae187db28053c264cf9b9612f864fe5052459c7341a7f470602fb817`;
-- source distribution `specgrain-0.3.0.tar.gz`: asset `535129009`, size `104057`, digest `sha256:e7dc5484b8439cf8a6c594c65b454e141fef7c94a7edb0c7cb4edfc839007835`.
-
-Historical v0.1.0 and v0.2.0 tag/release/asset identities were reverified unchanged after publication.
-
 ## Specification 020 canonical closeout
 
-Documentation-only closeout PR #31 exact head `a9cb5c65598b12e005034b3fec3b356239bbaf29` passed exact-head PR CI `33250227572` across all five permanent cells. Final recheck found no submitted reviews or inline review threads.
+Specification 020 is `CLOSED_CANONICAL`. Product merge `70dd66aba0e68ae710e6ef12605ed153d107bab4` passed canonical product CI `33249920673`; Release workflow `33249956337`, job `99093825183`, published new GitHub Release `378962445` / tag `v0.3.0` from that exact product revision. Documentation-only closeout merged as `123e1ded9d6bdc1aa15767ec7185bfffab5f8eba`; canonical post-closeout CI `33250422380` succeeded and Release verification `33250468134`, job `99095156240`, proved historical v0.3.0 remained published at product source `70dd66a...` without mutation.
 
-PR #31 merged with expected-head protection as canonical closeout merge `123e1ded9d6bdc1aa15767ec7185bfffab5f8eba`. Its first parent is exact product merge `70dd66aba0e68ae710e6ef12605ed153d107bab4`; its second parent is exact closeout head `a9cb5c65598b12e005034b3fec3b356239bbaf29`; GitHub signature verification is valid.
+Final canonical reconciliation merge `1ea1ee8554ce84f96f67d12eb86188324c81534a` recorded Specification 020 as `CLOSED_CANONICAL`, all 020 tasks complete, and the program frontier as `POST_V0.3_OBSERVATION` with no selected successor.
 
-Canonical post-closeout CI run `33250422380` completed `success` across Ubuntu/Python 3.11, 3.12, 3.13, macOS/Python 3.11, and Windows/Python 3.11 on exact closeout merge `123e1de...`.
+## Fresh Specification 021 evidence
 
-Triggered Release verification run `33250468134`, job `99095156240`, checked out exact closeout merge `123e1de...` and completed `success`. Its log proves historical `v0.3.0` remained published at product source `70dd66aba0e68ae710e6ef12605ed153d107bab4` and required no release mutation.
+An explicit maintainer public-launch-readiness request triggered a fresh repository audit at exact canonical revision `1ea1ee8554ce84f96f67d12eb86188324c81534a`.
 
-Live post-verification tag, Release ID, asset IDs, sizes, and digests remain unchanged. Specification 020 is therefore `CLOSED_CANONICAL`.
+`docs/research/public-launch-readiness-audit-2026-08-29.md` records the bounded evidence:
 
-## Delivered 020 boundary
+- GitHub repository metadata has no description and no topics;
+- `main` is not protected and no repository ruleset exists;
+- MIT licensing is present, recognized by GitHub, and consistent with package metadata;
+- package keywords, current v0.3.0 README install/CLI truth, community files, changelog, release notes, permanent cross-platform CI, and monotonic release automation are present;
+- `SECURITY.md` is stale because it still presents `0.1.x` as the supported release line;
+- `docs/launch-strategy.md` is stale because it still presents a `v0.1.0 launch demo`;
+- README is accurate but has a bounded first-screen presentation improvement available without capability expansion.
 
-Specification 020 is distribution-only. It publishes already-canonical root/child DRAFT authoring and explicit recovery without changing `src/specgrain/` product behavior or the Release workflow. Runtime dependencies remain empty.
+These reproducible documentation defects plus the concrete maintainer request are fresh evidence of launch/adoption friction and are sufficient to shape Specification 021 narrowly.
 
-020 does not authorize generic editing, lifecycle promotion, readiness synthesis, executor/provider behavior, PyPI publication, hosted surfaces, stronger multi-writer semantics, or empirical benchmark claims.
+## Specification 021 shaped boundary
 
-## Fresh frontier evidence
+Specification 021 is repository-side public launch hardening only. Expected implementation changes are limited to `README.md`, `SECURITY.md`, `docs/launch-strategy.md`, bounded launch tests, and 021 evidence/status files.
 
-`docs/research/post-v0.3-product-audit-2026-08-29.md` records that v0.3.0 closes the distribution discontinuity that motivated Specification 020. Canonical product behavior and the latest public versioned release are aligned for native recursive DRAFT authoring and supported explicit recovery.
+021 does not authorize `src/specgrain/` behavior changes, package version changes, runtime dependencies, release-workflow changes, PyPI, lifecycle/readiness/execution authority, hosted surfaces, provider integration, benchmark execution, or historical release mutation.
 
-The audit selects **no successor specification**. Repository adoption evidence remains too sparse to justify lifecycle mutation, generic editing, execution orchestration, broader distribution, multi-writer locking, hosted/provider scope, or benchmark claims. Observation is the smallest defensible next state.
+GitHub description/topics/ruleset targets are recorded as platform metadata recommendations. They must not be claimed as applied without live GitHub settings evidence.
 
-A future specification requires fresh evidence such as concrete user friction, a reproducible defect/security finding, controlled benchmark data, or a clearly bounded interoperability/governance blocker.
+## Implementation gate
 
-## Current frontier
+This shaping chain is prospective until merged to canonical `main` with expected-head protection. Implementation may begin only after:
 
-The program is `POST_V0.3_OBSERVATION` with no active specification and no pre-authorized successor. Live GitHub/repository truth remains authoritative. Any later Specification 021 must be shaped from fresh evidence under the constitution and execution master plan; deferred roadmap items are not implicit authority.
+1. the exact shaping head passes required PR CI/review;
+2. the shaping PR merges with expected-head protection;
+3. canonical post-merge CI succeeds on the exact shaping merge;
+4. canonical `main` is re-read and 021 implementation eligibility is confirmed.
