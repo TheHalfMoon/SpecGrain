@@ -1,4 +1,4 @@
-name: Release v0.1.0
+name: Release
 
 on:
   workflow_run:
@@ -24,64 +24,92 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: "3.11"
-      - name: Validate release metadata
+      - name: Resolve release metadata
+        id: metadata
+        shell: bash
         run: |
-          python -c "import tomllib; data=tomllib.load(open('pyproject.toml','rb')); assert data['project']['version'] == '0.1.0'"
+          set -euo pipefail
+          version="$(python -c 'import re,tomllib; data=tomllib.load(open("pyproject.toml","rb")); version=data["project"]["version"]; assert re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+", version), version; print(version)')"
+          tag="v${version}"
+          wheel="specgrain-${version}-py3-none-any.whl"
+          sdist="specgrain-${version}.tar.gz"
+          notes="docs/releases/${tag}.md"
+          title="SpecGrain ${tag}"
+          test -f "$notes"
+          {
+            echo "version=$version"
+            echo "tag=$tag"
+            echo "wheel=$wheel"
+            echo "sdist=$sdist"
+            echo "notes=$notes"
+            echo "title=$title"
+          } >> "$GITHUB_OUTPUT"
       - name: Build release distributions
+        env:
+          WHEEL: ${{ steps.metadata.outputs.wheel }}
+          SDIST: ${{ steps.metadata.outputs.sdist }}
         run: |
           python -m pip install build
           python -m build
-          python -c "from pathlib import Path; files=sorted(p.name for p in Path('dist').iterdir()); assert files == ['specgrain-0.1.0-py3-none-any.whl', 'specgrain-0.1.0.tar.gz'], files"
-      - name: Create immutable tag and GitHub Release
+          python -c 'import os; from pathlib import Path; files=sorted(p.name for p in Path("dist").iterdir()); expected=sorted([os.environ["WHEEL"], os.environ["SDIST"]]); assert files == expected, (files, expected)'
+      - name: Publish or verify immutable-by-contract release
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_SHA: ${{ github.event.workflow_run.head_sha }}
+          RELEASE_TAG: ${{ steps.metadata.outputs.tag }}
+          RELEASE_TITLE: ${{ steps.metadata.outputs.title }}
+          RELEASE_NOTES: ${{ steps.metadata.outputs.notes }}
+          WHEEL: ${{ steps.metadata.outputs.wheel }}
+          SDIST: ${{ steps.metadata.outputs.sdist }}
         shell: bash
         run: |
           set -euo pipefail
           git fetch --tags
 
           tag_exists=false
-          existing=""
-          if git rev-parse -q --verify refs/tags/v0.1.0 >/dev/null; then
+          tag_target=""
+          if git rev-parse -q --verify "refs/tags/$RELEASE_TAG" >/dev/null; then
             tag_exists=true
-            existing="$(git rev-list -n 1 v0.1.0)"
+            tag_target="$(git rev-list -n 1 "$RELEASE_TAG")"
           fi
 
-          if gh release view v0.1.0 >/dev/null 2>&1; then
+          release_exists=false
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            release_exists=true
+          fi
+
+          if [ "$release_exists" = "true" ]; then
             if [ "$tag_exists" != "true" ]; then
-              echo "GitHub Release v0.1.0 exists without the expected Git tag." >&2
+              echo "GitHub Release $RELEASE_TAG exists without the expected Git tag." >&2
               exit 1
             fi
-            state="$(gh release view v0.1.0 --json tagName,isDraft,isPrerelease --jq '[.tagName,.isDraft,.isPrerelease] | @tsv')"
-            if [ "$state" != $'v0.1.0\tfalse\tfalse' ]; then
-              echo "Existing v0.1.0 release is not the expected public immutable release: $state" >&2
+            state="$(gh release view "$RELEASE_TAG" --json tagName,name,isDraft,isPrerelease --jq '[.tagName,.name,.isDraft,.isPrerelease] | @tsv')"
+            expected_state="${RELEASE_TAG}"$'\t'"${RELEASE_TITLE}"$'\tfalse\tfalse'
+            if [ "$state" != "$expected_state" ]; then
+              echo "Existing $RELEASE_TAG release is not the expected public immutable-by-contract release: $state" >&2
               exit 1
             fi
-            assets="$(gh release view v0.1.0 --json assets --jq '.assets[].name' | sort)"
-            expected_assets="$(printf '%s\n' 'specgrain-0.1.0-py3-none-any.whl' 'specgrain-0.1.0.tar.gz' | sort)"
+            assets="$(gh release view "$RELEASE_TAG" --json assets --jq '.assets[].name' | sort)"
+            expected_assets="$(printf '%s\n' "$WHEEL" "$SDIST" | sort)"
             if [ "$assets" != "$expected_assets" ]; then
-              echo "Existing v0.1.0 release assets do not match the immutable release contract." >&2
+              echo "Existing $RELEASE_TAG assets do not match the release contract." >&2
               exit 1
             fi
-            echo "SpecGrain v0.1.0 is already published at immutable tag target $existing; no release mutation is required."
+            echo "SpecGrain $RELEASE_TAG is already published at historical tag target $tag_target; no release mutation is required."
             exit 0
           fi
 
           if [ "$tag_exists" = "true" ]; then
-            if [ "$existing" != "$RELEASE_SHA" ]; then
-              echo "v0.1.0 already points to $existing, expected first-release SHA $RELEASE_SHA" >&2
-              exit 1
-            fi
-          else
-            git tag v0.1.0 "$RELEASE_SHA"
-            git push origin refs/tags/v0.1.0
+            echo "$RELEASE_TAG exists at $tag_target without a GitHub Release; refusing ambiguous partial publication." >&2
+            exit 1
           fi
 
-          gh release create v0.1.0 \
-            dist/specgrain-0.1.0-py3-none-any.whl \
-            dist/specgrain-0.1.0.tar.gz \
+          git tag "$RELEASE_TAG" "$RELEASE_SHA"
+          git push origin "refs/tags/$RELEASE_TAG"
+          gh release create "$RELEASE_TAG" \
+            "dist/$WHEEL" \
+            "dist/$SDIST" \
             --verify-tag \
             --target "$RELEASE_SHA" \
-            --title "SpecGrain v0.1.0" \
-            --notes-file docs/releases/v0.1.0.md
+            --title "$RELEASE_TITLE" \
+            --notes-file "$RELEASE_NOTES"
