@@ -2,15 +2,11 @@
 
 ## Status
 
-`IMPLEMENTING`
+`CLOSED_CANONICAL`
 
 ## Outcome
 
 Let a new local SpecGrain project create its first native root SpecNode through a deterministic CLI command, producing a validated `DRAFT` artifact in store v1 without requiring users to hand-author internal JSON or granting any readiness/execution authority.
-
-## Evidence basis
-
-The post-v0.1 product audit at `docs/research/post-v0.1-product-audit-2026-08-29.md` identifies first-party native authoring as the smallest current adoption gap. `specgrain init` creates an empty store, while the shipped CLI has no command that creates a SpecNode. The Python model/store contracts already provide the deterministic validation boundary required for a small native implementation.
 
 ## In scope
 
@@ -50,16 +46,29 @@ The post-v0.1 product audit at `docs/research/post-v0.1-product-audit-2026-08-29
 10. Full regression, Ruff, compileall, CLI help parity, and the permanent Linux/macOS/Windows CI matrix succeed on the exact implementation PR head before merge.
 11. Exact-head review confirms no lifecycle promotion, overwrite path, hidden external execution, unsupported claim, or scope expansion.
 
+## Canonical product evidence
+
+- Canonical shaping merge: `5c7783dde897c975b3519b37bfd45b547244b273`.
+- Product PR #21 exact reviewed head: `1255a9187f85591edd041a3125359e70d2eea379`.
+- Exact final-head CI run: `33235889444` — success across all five permanent matrix jobs.
+- Product merge commit: `dedb9ee30a6b8856c9c06439c68f3a37225f0563`.
+- Product merge first parent: `5c7783dde897c975b3519b37bfd45b547244b273`.
+- Product merge second parent: exact reviewed head `1255a9187f85591edd041a3125359e70d2eea379`.
+- Canonical post-merge CI run: `33236142514` — success across all five permanent matrix jobs.
+- Exact job IDs and review-service boundaries are recorded in `closeout.md`.
+
 ## Risks and recovery
 
 - **False readiness:** creation is hard-coded to `DRAFT` and does not populate readiness metadata; recovery is removal of the newly created DRAFT file if the user does not want it.
-- **ID collision/race:** persistence must use create-if-absent semantics and fail closed rather than overwrite; the caller may retry after reloading current store truth.
-- **Store corruption:** validate the existing store before allocating or writing. Do not repair unrelated invalid state silently.
-- **CLI/API drift:** use one shared store creation primitive and test both public API and CLI surfaces.
-- **Scope creep into refinement:** parent/child authoring is explicitly deferred and requires a fresh post-017 decision.
+- **ID collision/race:** persistence uses create-if-absent semantics and fails closed rather than overwrite; the caller may retry after reloading current store truth.
+- **Store corruption:** existing store/refinement state is validated before allocation or writing; unrelated invalid state is not silently repaired.
+- **CLI/API drift:** API and CLI share the same creation primitive and are covered by regression tests.
+- **Scope creep into refinement:** parent/child authoring remains deferred to a separately shaped specification.
 
 ## Dependencies
 
-Specifications 000 through 016 are `CLOSED_CANONICAL`. Specification 017 was shaped from canonical `main` `7c343841424ca48207f9c42eae725a53213d19e5`; the shaped authority chain became canonical at merge `5c7783dde897c975b3519b37bfd45b547244b273` before implementation began.
+Specifications 000 through 016 were `CLOSED_CANONICAL` before 017 shaping. The shaped 017 authority chain became canonical at merge `5c7783dde897c975b3519b37bfd45b547244b273` before implementation began.
 
-No constitution amendment or new ADR is required: the change implements the existing deterministic local-store and progressive CLI architecture without changing a durable architectural decision.
+No constitution amendment or new ADR was required.
+
+The `CLOSED_CANONICAL` status in this file becomes authoritative only when the exact documentation-only closeout head containing it is merged with expected-head protection and live GitHub post-closeout evidence confirms canonical `main`.
