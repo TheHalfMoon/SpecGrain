@@ -134,7 +134,7 @@ Specification 022 is an unreleased current-source product change. No package ver
 
 - its shaped authority chain is present on canonical `main` before implementation begins;
 - implementation is performed on a bounded branch from the exact shaped canonical base;
-- required focused/full/static/package checks and permanent five-cell exact-head CI succeed on the final product candidate;
+- all required focused, full, static, and package checks, plus permanent five-cell exact-head CI, succeed on the final product candidate;
 - exact-head review confirms no readiness weakening, hidden defaults, edge skipping, post-GRAIN authority, recovery widening, dependency creep, false historical-release claims, or unrelated scope;
 - implementation PR review threads/submitted reviews/mergeability and review-bot availability are rechecked without treating unavailable/skipped bots as PASS;
 - merge uses expected-head protection;
