@@ -18,9 +18,9 @@
 
 ## Product verification and merge
 
-- [ ] T011 Run full regression, Ruff, compileall, CLI smoke, package build/install, release-contract guards, and the permanent five-cell CI matrix on the exact implementation head.
-- [ ] T012 Review the exact diff for release mutation risk, source-SHA binding, version drift, dependency creep, external publishing scope, unsupported claims, and accidental product behavior changes.
-- [ ] T013 Resolve every material exact-head finding with forward commits and re-prove the current head.
+- [x] T011 Run full regression, Ruff, compileall, CLI smoke, package build/install, release-contract guards, and the permanent five-cell CI matrix on the exact implementation head.
+- [x] T012 Review the exact diff for release mutation risk, source-SHA binding, version drift, dependency creep, external publishing scope, unsupported claims, and accidental product behavior changes.
+- [x] T013 Resolve every material exact-head finding with forward commits and re-prove the current implementation state. The evidence/guard successor head still requires its own exact-head CI before merge.
 - [ ] T014 Merge the implementation PR only with expected-head protection and prove the exact product merge on canonical `main`.
 
 ## Publication and canonical closeout
