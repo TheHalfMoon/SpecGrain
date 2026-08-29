@@ -2,7 +2,7 @@
 
 ## Status
 
-`VERIFYING`
+`PR_READY`
 
 ## Outcome
 

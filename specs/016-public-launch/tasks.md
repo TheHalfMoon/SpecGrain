@@ -28,9 +28,9 @@
 ## Verification
 
 - [x] T014 Add launch-surface tests for version, docs links/files, workflow matrix, example execution, and unsupported-claim guards.
-- [ ] T015 Run exact full regression, Ruff, compileall, CLI help parity, package build, wheel-install smoke, and documentation/line-length checks.
+- [x] T015 Run exact full regression, Ruff, compileall, CLI help parity, package build, wheel-install smoke, and documentation/line-length checks.
 - [ ] T016 Prove permanent CI success on Linux, macOS, and Windows for the exact PR head.
-- [ ] T017 Review the exact diff for unsupported commands, fabricated output/evidence, benchmark claims, dependency creep, security regressions, and accidental source changes.
+- [x] T017 Review the exact diff for unsupported commands, fabricated output/evidence, benchmark claims, dependency creep, security regressions, and accidental source changes.
 
 ## Product PR and release
 
