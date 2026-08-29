@@ -74,9 +74,13 @@ Specification 019 is `CLOSED_CANONICAL`. Product merge `d6727b6c5cdafcf6265b6d99
 
 019 adds bounded native child-DRAFT authoring and explicit recovery without lifecycle promotion, readiness synthesis, or execution authority.
 
-The fresh post-019 audit `docs/research/post-019-product-audit-2026-08-29.md` identifies the distribution discontinuity between current canonical recursive authoring and public `v0.2.0` as the smallest next gap. Specification 020 shapes a v0.3.0 Recursive Authoring Release under ADR-0017, limited to publishing already-canonical behavior without a `src/specgrain/` behavior change.
+The fresh post-019 audit `docs/research/post-019-product-audit-2026-08-29.md` identified the distribution discontinuity between canonical recursive authoring and public `v0.2.0` as the smallest next gap and shaped Specification 020 — v0.3.0 Recursive Authoring Release.
 
-Specification 020 is documentation-only shaping until its exact head merges canonically and canonical shaping post-merge CI succeeds. It does not authorize lifecycle promotion, generic editing, PyPI, runtime dependencies, hosted/provider behavior, empirical benchmark claims, or an automatic successor.
+Specification 020 product delivery is canonical at merge `70dd66aba0e68ae710e6ef12605ed153d107bab4`. Final implementation/evidence PR head `bf59a2ceba3e28cabc2294a0bd95e4e973b1e2bf` passed exact-head PR CI `33249768557`; canonical product post-merge CI `33249920673` succeeded across the permanent five-cell matrix. Release workflow `33249956337` published GitHub Release `378962445` / tag `v0.3.0` from that exact canonical product revision. Historical v0.1.0 and v0.2.0 identities were reverified unchanged.
+
+020 is distribution-only: it makes the already-canonical root/child DRAFT authoring and explicit recovery surface available in the latest versioned GitHub Release without changing `src/specgrain/` product behavior, release automation, or runtime dependencies. It remains open only for documentation-only canonical closeout.
+
+The fresh post-v0.3 audit `docs/research/post-v0.3-product-audit-2026-08-29.md` finds that the distribution discontinuity is closed and selects no evidence-supported successor. Repository adoption evidence is currently too sparse to justify lifecycle mutation, generic editing, stronger multi-writer semantics, executor orchestration, PyPI/broader distribution, hosted/provider scope, or empirical benchmark claims. After 020 closes canonically, the program enters observation until fresh evidence justifies a separately shaped specification.
 
 ## Cross-spec execution rules
 
