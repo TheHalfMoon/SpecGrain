@@ -1,8 +1,11 @@
 # Closeout — Specification 020 v0.3.0 Recursive Authoring Release
 
+**Status:** `CLOSED_CANONICAL`  
 **Canonical shaping merge:** `05219b4ea7ce1be201c8fb2ff31e707ae02cba17`  
 **Final implementation/evidence PR head:** `bf59a2ceba3e28cabc2294a0bd95e4e973b1e2bf`  
 **Canonical product merge:** `70dd66aba0e68ae710e6ef12605ed153d107bab4`  
+**Canonical closeout head:** `a9cb5c65598b12e005034b3fec3b356239bbaf29`  
+**Canonical closeout merge:** `123e1ded9d6bdc1aa15767ec7185bfffab5f8eba`  
 **GitHub Release:** `378962445` / `v0.3.0`
 
 ## Scope delivered
@@ -88,17 +91,29 @@ The audit finds no evidence-supported successor specification at this time. Defe
 
 This is an observation-state decision, not a claim that the product can never evolve. Fresh user/adoption evidence, bug reports, reproducible benchmark data, or a separately shaped governance need may justify later work.
 
-## Canonical closure gate
+## Canonical closeout evidence
 
-This closeout document does not by itself make 020 `CLOSED_CANONICAL`.
+Documentation-only closeout PR #31 used exact head `a9cb5c65598b12e005034b3fec3b356239bbaf29`.
 
-Specification 020 becomes `CLOSED_CANONICAL` only when this documentation-only closeout head:
+- exact-head PR CI `33250227572` completed `success` across the permanent five-cell matrix;
+- final recheck found no submitted reviews or inline review threads;
+- PR #31 merged with expected-head protection as `123e1ded9d6bdc1aa15767ec7185bfffab5f8eba`;
+- the closeout merge is GitHub-signature verified;
+- first parent is exact product merge `70dd66aba0e68ae710e6ef12605ed153d107bab4`;
+- second parent is exact closeout head `a9cb5c65598b12e005034b3fec3b356239bbaf29`;
+- canonical post-closeout CI `33250422380` completed `success` across Ubuntu/Python 3.11, 3.12, 3.13, macOS/Python 3.11, and Windows/Python 3.11;
+- Release verification `33250468134`, job `99095156240`, checked out exact closeout merge `123e1de...` and completed `success`;
+- the Release log states that `SpecGrain v0.3.0 is already published at historical tag target 70dd66aba0e68ae710e6ef12605ed153d107bab4; no release mutation is required.`
 
-1. passes required exact-head CI/review checks;
-2. merges with expected-head protection;
-3. the canonical closeout merge second parent is that exact head;
-4. canonical post-closeout CI succeeds across the permanent matrix;
-5. the triggered Release workflow verifies historical `v0.3.0` at product source `70dd66a...` without mutation;
-6. live tag/release/assets remain unchanged after that verification.
+Live post-verification release truth remains unchanged:
 
-Until those conditions are proven, status is `CLOSEOUT_PENDING_CANONICAL`.
+- tag `v0.3.0` still targets exact product merge `70dd66aba0e68ae710e6ef12605ed153d107bab4`;
+- Release ID remains `378962445`;
+- wheel asset remains ID `535129008`, size `70463`, digest `sha256:b4f724e5ae187db28053c264cf9b9612f864fe5052459c7341a7f470602fb817`;
+- source asset remains ID `535129009`, size `104057`, digest `sha256:e7dc5484b8439cf8a6c594c65b454e141fef7c94a7edb0c7cb4edfc839007835`.
+
+All canonical closure conditions are therefore satisfied. Specification 020 is `CLOSED_CANONICAL`.
+
+## Program state
+
+The program is now `POST_V0.3_OBSERVATION` with no active successor specification. Any later specification must be shaped from fresh evidence under the repository's post-v0.1 rules; deferred roadmap items are not implicit authority.

@@ -76,11 +76,22 @@ Specification 019 is `CLOSED_CANONICAL`. Product merge `d6727b6c5cdafcf6265b6d99
 
 The fresh post-019 audit `docs/research/post-019-product-audit-2026-08-29.md` identified the distribution discontinuity between canonical recursive authoring and public `v0.2.0` as the smallest next gap and shaped Specification 020 — v0.3.0 Recursive Authoring Release.
 
-Specification 020 product delivery is canonical at merge `70dd66aba0e68ae710e6ef12605ed153d107bab4`. Final implementation/evidence PR head `bf59a2ceba3e28cabc2294a0bd95e4e973b1e2bf` passed exact-head PR CI `33249768557`; canonical product post-merge CI `33249920673` succeeded across the permanent five-cell matrix. Release workflow `33249956337` published GitHub Release `378962445` / tag `v0.3.0` from that exact canonical product revision. Historical v0.1.0 and v0.2.0 identities were reverified unchanged.
+Specification 020 is `CLOSED_CANONICAL`.
 
-020 is distribution-only: it makes the already-canonical root/child DRAFT authoring and explicit recovery surface available in the latest versioned GitHub Release without changing `src/specgrain/` product behavior, release automation, or runtime dependencies. It remains open only for documentation-only canonical closeout.
+- final implementation/evidence PR head `bf59a2ceba3e28cabc2294a0bd95e4e973b1e2bf` passed exact-head PR CI `33249768557` across the permanent five-cell matrix;
+- canonical product merge `70dd66aba0e68ae710e6ef12605ed153d107bab4` passed canonical product CI `33249920673`;
+- Release workflow `33249956337` published GitHub Release `378962445` / tag `v0.3.0` from exact product merge `70dd66a...`;
+- documentation-only closeout PR #31 exact head `a9cb5c65598b12e005034b3fec3b356239bbaf29` passed exact-head CI `33250227572` and merged with expected-head protection as canonical closeout merge `123e1ded9d6bdc1aa15767ec7185bfffab5f8eba`;
+- the closeout merge has first parent exact product merge `70dd66a...`, second parent exact closeout head `a9cb5c6...`, and a valid GitHub signature;
+- canonical post-closeout CI `33250422380` succeeded across all five permanent cells;
+- Release verification `33250468134`, job `99095156240`, checked out exact closeout merge and proved historical `v0.3.0` remained published at product source `70dd66a...` without mutation;
+- live `v0.3.0` tag, Release ID, asset IDs, sizes, and digests remained unchanged after verification.
 
-The fresh post-v0.3 audit `docs/research/post-v0.3-product-audit-2026-08-29.md` finds that the distribution discontinuity is closed and selects no evidence-supported successor. Repository adoption evidence is currently too sparse to justify lifecycle mutation, generic editing, stronger multi-writer semantics, executor orchestration, PyPI/broader distribution, hosted/provider scope, or empirical benchmark claims. After 020 closes canonically, the program enters observation until fresh evidence justifies a separately shaped specification.
+020 is distribution-only: it makes the already-canonical root/child DRAFT authoring and explicit recovery surface available in the latest versioned GitHub Release without changing `src/specgrain/` product behavior, release automation, or runtime dependencies.
+
+The fresh post-v0.3 audit `docs/research/post-v0.3-product-audit-2026-08-29.md` finds that the distribution discontinuity is closed and selects no evidence-supported successor. Repository adoption evidence is currently too sparse to justify lifecycle mutation, generic editing, stronger multi-writer semantics, executor orchestration, PyPI/broader distribution, hosted/provider scope, or empirical benchmark claims.
+
+The current program state is `POST_V0.3_OBSERVATION`. No active specification exists. Any future Specification 021 must be shaped from fresh evidence such as concrete user/adoption friction, a reproducible defect/security finding, controlled benchmark data, or a clearly bounded interoperability/governance blocker.
 
 ## Cross-spec execution rules
 

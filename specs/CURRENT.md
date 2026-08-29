@@ -2,10 +2,10 @@
 
 **Repository:** `TheHalfMoon/SpecGrain`  
 **Canonical branch:** `main`  
-**Program status:** `POST_V0.3_CLOSEOUT`  
-**Last closed specification:** `specs/019-native-child-draft-authoring/` — `CLOSED_CANONICAL`  
-**Active specification:** `specs/020-v0.3.0-recursive-authoring-release/` — `CLOSEOUT_PENDING_CANONICAL`  
-**Active branch:** `chore/020-v0.3.0-recursive-authoring-release-closeout`  
+**Program status:** `POST_V0.3_OBSERVATION`  
+**Last closed specification:** `specs/020-v0.3.0-recursive-authoring-release/` — `CLOSED_CANONICAL`  
+**Active specification:** none  
+**Active branch:** none  
 **Next planned specification:** none; the fresh post-v0.3 audit selects observation and finds no evidence-supported successor  
 **Published release:** `v0.3.0`  
 **Published release source commit:** `70dd66aba0e68ae710e6ef12605ed153d107bab4`  
@@ -39,6 +39,18 @@ Live release truth:
 
 Historical v0.1.0 and v0.2.0 tag/release/asset identities were reverified unchanged after publication.
 
+## Specification 020 canonical closeout
+
+Documentation-only closeout PR #31 exact head `a9cb5c65598b12e005034b3fec3b356239bbaf29` passed exact-head PR CI `33250227572` across all five permanent cells. Final recheck found no submitted reviews or inline review threads.
+
+PR #31 merged with expected-head protection as canonical closeout merge `123e1ded9d6bdc1aa15767ec7185bfffab5f8eba`. Its first parent is exact product merge `70dd66aba0e68ae710e6ef12605ed153d107bab4`; its second parent is exact closeout head `a9cb5c65598b12e005034b3fec3b356239bbaf29`; GitHub signature verification is valid.
+
+Canonical post-closeout CI run `33250422380` completed `success` across Ubuntu/Python 3.11, 3.12, 3.13, macOS/Python 3.11, and Windows/Python 3.11 on exact closeout merge `123e1de...`.
+
+Triggered Release verification run `33250468134`, job `99095156240`, checked out exact closeout merge `123e1de...` and completed `success`. Its log proves historical `v0.3.0` remained published at product source `70dd66aba0e68ae710e6ef12605ed153d107bab4` and required no release mutation.
+
+Live post-verification tag, Release ID, asset IDs, sizes, and digests remain unchanged. Specification 020 is therefore `CLOSED_CANONICAL`.
+
 ## Delivered 020 boundary
 
 Specification 020 is distribution-only. It publishes already-canonical root/child DRAFT authoring and explicit recovery without changing `src/specgrain/` product behavior or the Release workflow. Runtime dependencies remain empty.
@@ -47,14 +59,12 @@ Specification 020 is distribution-only. It publishes already-canonical root/chil
 
 ## Fresh frontier evidence
 
-`docs/research/post-v0.3-product-audit-2026-08-29.md` records that v0.3.0 closes the distribution discontinuity that motivated Specification 020. Canonical `main` and the latest public versioned release are now aligned for native recursive DRAFT authoring and supported explicit recovery.
+`docs/research/post-v0.3-product-audit-2026-08-29.md` records that v0.3.0 closes the distribution discontinuity that motivated Specification 020. Canonical product behavior and the latest public versioned release are aligned for native recursive DRAFT authoring and supported explicit recovery.
 
 The audit selects **no successor specification**. Repository adoption evidence remains too sparse to justify lifecycle mutation, generic editing, execution orchestration, broader distribution, multi-writer locking, hosted/provider scope, or benchmark claims. Observation is the smallest defensible next state.
 
 A future specification requires fresh evidence such as concrete user friction, a reproducible defect/security finding, controlled benchmark data, or a clearly bounded interoperability/governance blocker.
 
-## Closeout rule
+## Current frontier
 
-This branch is documentation-only closeout. Specification 020 becomes `CLOSED_CANONICAL` only if the exact closeout head completes required CI/review checks, merges with expected-head protection, the closeout merge second parent is that exact head, canonical post-closeout CI succeeds, and the triggered Release workflow verifies historical `v0.3.0` at product source `70dd66a...` without mutation. Live v0.3.0 tag/release/assets must remain unchanged afterward.
-
-If those conditions succeed, the program enters `POST_V0.3_OBSERVATION` with no active successor specification.
+The program is `POST_V0.3_OBSERVATION` with no active specification and no pre-authorized successor. Live GitHub/repository truth remains authoritative. Any later Specification 021 must be shaped from fresh evidence under the constitution and execution master plan; deferred roadmap items are not implicit authority.
