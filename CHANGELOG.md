@@ -58,7 +58,7 @@ First public alpha release.
 - bounded brownfield repository scan and context-budget accounting;
 - portable WorkPacket/execution-result contracts and generic agent adapters;
 - independent verification, append-oriented evidence, and `prove` CLI output;
-- method profiles plus change-scope, drift signals, and delivery metrics;
+- method profiles plus change-scope, drift, and delivery metrics;
 - explicit read-only GitHub Spec Kit import reports;
 - SpecGrainBench experiment ledger and contamination/comparability preflight;
 - permanent Linux/macOS/Windows CI, runnable zero-to-verified example, migration guide, trust/security documentation, and launch assets.
