@@ -29,6 +29,6 @@
 ## Product PR and canonical closeout
 
 - [x] T015 Open bounded implementation PR #27 from exact canonical shaping merge `e10cce6b11cbe4724881936858d7721baa938667` and resolve every material product/verification finding forward through reviewed product head `994f40f84ad3696b4037ea05eaec746c19bb473f`.
-- [ ] T016 Merge only with expected-head evidence and prove the exact product merge plus canonical post-merge CI.
-- [ ] T017 Record exact implementation/review/merge evidence and run a fresh post-019 product audit.
-- [ ] T018 Close 019 through a documentation-only exact-head PR, expected-head merge, and post-closeout canonical CI before claiming `CLOSED_CANONICAL`.
+- [x] T016 Merge PR #27 with expected-head protection at exact final head `53cd8482b727d4f61bfafbea6ed363e4e8783d52`; verify canonical product merge `d6727b6c5cdafcf6265b6d999418c0fe853249a7`, post-merge CI `33248014390`, and no-mutation Release run `33248070688`.
+- [x] T017 Record exact implementation/review/merge/release-preservation evidence and run fresh `docs/research/post-019-product-audit-2026-08-29.md` from exact product source `d6727b6...`.
+- [ ] T018 Close 019 through this documentation-only exact-head PR, expected-head merge, post-closeout canonical CI, and any triggered historical-release no-mutation verification before claiming `CLOSED_CANONICAL`.

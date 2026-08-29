@@ -2,7 +2,7 @@
 
 The roadmap is intentionally progressive. Only the nearest active specification should have implementation-level detail. Future work is shaped from current evidence rather than pre-authorized by stale backlog detail.
 
-**Current program state:** Specifications 000–018 are `CLOSED_CANONICAL`. Specification 018 closeout is canonical at `c5282caa29fbfeb8c118755766b6a7b8a49d2781` after post-closeout CI `33246162550` and no-mutation release verification `33246212598`. Specification 019 — Native Child-DRAFT Authoring is shaped prospectively and becomes implementation authority only after its exact shaping head merges canonically. No later specification is planned or implicitly authorized.
+**Current program state:** Specifications 000–018 are `CLOSED_CANONICAL`. Specification 019 product delivery is canonical at `d6727b6c5cdafcf6265b6d999418c0fe853249a7` after post-merge CI `33248014390` and historical-release verification `33248070688`; 019 remains in documentation-only closeout until the exact closeout merge and post-closeout CI succeed. No later specification is planned or implicitly authorized. The fresh post-019 audit recommends a v0.3.0 Recursive Authoring Release candidate for later shaping only.
 
 ## M0 — Foundation
 
@@ -53,9 +53,9 @@ The initial v0.1 sequence ended at Specification 016. Exact release and closeout
 
 - **017 — Native DRAFT CLI:** `CLOSED_CANONICAL`; adds deterministic creation of the first native root `DRAFT` after `specgrain init` without Grain/readiness/execution authority.
 - **018 — v0.2.0 Authoring Release:** `CLOSED_CANONICAL`; product merge `baf00995a7ae9cf01b6196d68c62f4eca2c1ec85`, Release `378936896`, closeout merge `c5282caa29fbfeb8c118755766b6a7b8a49d2781`.
-- **019 — Native Child-DRAFT Authoring:** shaped prospectively from the post-v0.2 audit; permits a recoverable reciprocal child write only under a `DRAFT` parent, with no lifecycle promotion.
+- **019 — Native Child-DRAFT Authoring:** product delivery canonical at `d6727b6c5cdafcf6265b6d999418c0fe853249a7`; adds a recoverable reciprocal child write only under a `DRAFT` parent plus explicit recovery, with no lifecycle promotion; documentation-only closeout pending.
 
-019 is bounded by ADR-0018. Its recommendation becomes executable only after the exact shaping chain is canonical.
+019 remains bounded by ADR-0018. Fresh audit `docs/research/post-019-product-audit-2026-08-29.md` recommends a v0.3.0 Recursive Authoring Release as the smallest later shaping candidate because the latest versioned release still predates 019 behavior. The recommendation is not authority.
 
 ## Explicitly deferred
 
@@ -63,6 +63,7 @@ Future work requires a newly shaped specification and fresh evidence. No item be
 
 - lifecycle-aware broad recursive refinement or automatic state progression;
 - generic DRAFT editing or protected lifecycle mutation without a bounded authority contract;
+- stronger multi-writer/recovery concurrency without observed demand and a separately shaped locking contract;
 - WorkPacket/executor orchestration commands;
 - hosted SaaS or web dashboard;
 - own LLM or fine-tuning;
@@ -73,4 +74,4 @@ Future work requires a newly shaped specification and fresh evidence. No item be
 - PyPI publication or broader distribution changes without publishing-governance shaping;
 - empirical benchmark superiority claims without a reproducible completed dataset.
 
-No successor after 019 is implied. A fresh post-019 audit must choose the next frontier from live product/adoption truth.
+No successor after 019 is implied. A later shaping chain must re-check live truth after 019 is `CLOSED_CANONICAL`; the post-019 release recommendation may be superseded if evidence changes.
