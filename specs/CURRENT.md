@@ -3,22 +3,32 @@
 **Repository:** `TheHalfMoon/SpecGrain`  
 **Canonical branch:** `main`  
 **Program status:** `POST_V0.1_ACTIVE`  
-**Last closed specification:** `specs/017-native-draft-cli/` — `CLOSED_CANONICAL`  
-**Active specification:** `specs/018-v0.2.0-authoring-release/` — `RUNNING`  
-**Active branch:** `feat/018-v0.2.0-authoring-release`  
-**Next planned specification:** none beyond 018  
-**Published release:** `v0.1.0` until live v0.2.0 publication is verified  
-**Published v0.1.0 source:** `5eb46db0479cb8707afe070027dab4f3c558849a`  
-**Canonical 018 shaping merge:** `b170aed92812c367282fbacb5d46e5acb450a196`
+**Last closed specification:** `specs/018-v0.2.0-authoring-release/` — prospective `CLOSED_CANONICAL` pending exact closeout merge/post-closeout proof  
+**Active specification:** none after 018 closeout becomes canonical  
+**Active branch:** `chore/018-v0.2.0-authoring-release-closeout` until closeout merge  
+**Next planned specification:** none  
+**Published release:** `v0.2.0`  
+**Published release source commit:** `baf00995a7ae9cf01b6196d68c62f4eca2c1ec85`  
+**Published release ID:** `378936896`
 
-## Specification 018 authority
+## Specification 018 evidence
 
-Shaping PR #23 exact head `68e830dc51d0df4bc521607be46ce9f11dc34acd` completed exact-head CI run `33237175016` successfully with no submitted reviews or inline review threads. It merged with expected-head protection as `b170aed92812c367282fbacb5d46e5acb450a196`; that merge has the exact shaping head as its second parent. Canonical shaping post-merge CI run `33245330017` also completed the permanent five-cell matrix successfully.
+Specification 018 shaping became canonical through PR #23 and merge `b170aed92812c367282fbacb5d46e5acb450a196` after exact-head CI run `33237175016`; canonical shaping post-merge CI run `33245330017` also succeeded.
 
-ADR-0017 is therefore canonical authority for monotonic metadata-derived GitHub releases. Implementation is bounded to package/release identity, release automation, release-facing documentation, and deterministic release-contract guards; it adds no new SpecGrain product behavior.
+Product PR #24 exact final reviewed head `bf63dbb4ef2259f79dc4e88e3b7f5abc0d05c178` completed final-head CI run `33245686864` successfully and merged with expected-head protection as `baf00995a7ae9cf01b6196d68c62f4eca2c1ec85`. Its first parent is the canonical shaping merge and its second parent is the exact reviewed product head.
 
-## Product/release boundary
+Canonical product post-merge CI run `33245753969` completed the permanent five-cell matrix successfully on exact product merge `baf00995...`.
 
-Current canonical product behavior includes `specgrain draft` and public `create_draft_spec`. The implementation branch prepares package version `0.2.0`, release notes, and a reusable fail-closed GitHub release workflow. No `v0.2.0` release claim is valid until the product merge, exact post-merge CI, release workflow, live tag/release, and asset evidence required by Specification 018 succeed.
+Release workflow run `33245783948` successfully published `v0.2.0` from that exact product merge. Live GitHub confirms Release ID `378936896`, public/non-prerelease state, and exactly the expected wheel/source-distribution assets with SHA-256 digests recorded in `specs/018-v0.2.0-authoring-release/closeout.md`.
 
-No PyPI publication, recursive refinement CLI, executor orchestration, hosted service, runtime dependency, or benchmark winner is authorized by Specification 018.
+Live GitHub also confirms that `v0.1.0` remains at historical source `5eb46db0479cb8707afe070027dab4f3c558849a` with its original two assets and digests.
+
+## Product boundary
+
+v0.2.0 publicly exposes native root-DRAFT authoring. It does not expose native child authoring, generic SpecNode editing, lifecycle mutation, recursive readiness orchestration, executor/provider invocation, PyPI publication, a hosted service, or an empirical benchmark winner.
+
+The fresh audit `docs/research/post-v0.2-product-audit-2026-08-29.md` recommends native child-DRAFT authoring as the strongest next shaping candidate. That audit is not implementation authority and this file does not plan or authorize a successor specification.
+
+## Canonicalization rule
+
+The `CLOSED_CANONICAL` state in this documentation-only closeout tree is prospective. It becomes repository authority only if the exact closeout PR head is merged with expected-head protection and live GitHub post-closeout evidence confirms canonical `main`, successful post-closeout CI, and successful no-mutation verification of the already-published v0.2.0 release.

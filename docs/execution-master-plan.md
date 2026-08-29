@@ -46,13 +46,7 @@ Specification 000 established the project foundation and constitution.
 
 Specifications 000 through 016 are closed canonically.
 
-The v0.1.0 product release source commit is:
-
-`5eb46db0479cb8707afe070027dab4f3c558849a`
-
-This is the expected-head-protected merge of PR #18. Its second parent is exact reviewed PR head `1e4b36b169c7ac6d9e59741bb62b6a29b7649a17`. PR-head CI run `33234332746` and canonical post-merge CI run `33234395766` each completed the five-cell Linux/macOS/Windows matrix successfully.
-
-Release workflow run `33234424696` published tag `v0.1.0` at that exact product merge commit and GitHub Release `378876694` with the versioned wheel and source distribution. Specification 016 documentation-only closeout then merged through PR #19 as canonical `main` `7c343841424ca48207f9c42eae725a53213d19e5`; final CI run `33234669930` and post-closeout release workflow `33234703124` succeeded.
+The v0.1.0 product release source commit is `5eb46db0479cb8707afe070027dab4f3c558849a`. Exact first-release and closeout evidence is recorded under `specs/016-public-launch/`.
 
 Completed v0.1 capabilities include recursive/versioned specs, lifecycle/refinement/readiness validation, local state, dependency scheduling, brownfield scanning, context budgets, portable WorkPackets/results, independent evidence, method profiles, drift/metrics, Spec Kit import, generic agent adapters, benchmark comparability controls, permanent cross-platform CI, public migration/trust/community surfaces, and the published v0.1.0 release.
 
@@ -60,13 +54,11 @@ Completed v0.1 capabilities include recursive/versioned specs, lifecycle/refinem
 
 The initial sequence ended at Specification 016 and does not authorize an automatic successor. Every post-v0.1 specification must be shaped from current product/repository evidence.
 
-Specification 017 — Native DRAFT CLI is `CLOSED_CANONICAL`. Its product merge is `dedb9ee30a6b8856c9c06439c68f3a37225f0563`; its closeout merge is `d7c3f8e5734264824cd6ed1d8e931802a242c50a`; exact product and closeout CI evidence is recorded under `specs/017-native-draft-cli/`.
+Specification 017 — Native DRAFT CLI is `CLOSED_CANONICAL`. Its product merge is `dedb9ee30a6b8856c9c06439c68f3a37225f0563`; its closeout merge is `d7c3f8e5734264824cd6ed1d8e931802a242c50a`.
 
-017 closes the empty-project authoring gap on current `main`: users can create one validated root `DRAFT` through `specgrain draft` without hand-authoring internal JSON or receiving implied Grain/readiness/execution authority.
+Specification 018 — v0.2.0 Authoring Release completed product delivery at merge `baf00995a7ae9cf01b6196d68c62f4eca2c1ec85`. Canonical product post-merge CI run `33245753969` succeeded, and release workflow run `33245783948` published GitHub Release `378936896` / tag `v0.2.0` from that exact merge. Live release and historical v0.1.0 preservation evidence is recorded in `specs/018-v0.2.0-authoring-release/closeout.md`.
 
-The fresh audit `docs/research/post-017-product-audit-2026-08-29.md` identifies the distribution discontinuity between current `main` and public `v0.1.0` as the smallest adoption-oriented gap. Specification 018 — v0.2.0 Authoring Release is therefore shaped prospectively to publish the already-completed authoring surface and establish monotonic metadata-derived GitHub release progression under ADR-0017. It adds no new product behavior and becomes implementation authority only after its exact shaping head is merged canonically.
-
-No successor after 018 is implied. Recursive refinement, PyPI, executor orchestration, hosted services, and empirical benchmark claims remain deferred until fresh evidence separately shapes them.
+The fresh post-v0.2 audit `docs/research/post-v0.2-product-audit-2026-08-29.md` recommends native child-DRAFT authoring as the smallest next shaping candidate because the public product can create one root DRAFT while the deterministic recursive model is not yet writable through the supported authoring surface. The audit is not authority. No successor specification is implied until Specification 018 closeout becomes canonical and a separate shaping chain is merged.
 
 ## Cross-spec execution rules
 
@@ -98,3 +90,5 @@ A post-v0.1 specification is canonical only when:
 - the next product frontier is re-evaluated from current truth rather than assumed.
 
 No empirical benchmark winner is claimed without a reproducible completed dataset. No aspirational CLI command is presented as shipped behavior.
+
+The Specification 018 `CLOSED_CANONICAL` state authored on its documentation-only closeout branch is prospective until that exact closeout head is merged and post-closeout canonical CI plus the no-mutation release verification path succeed.
