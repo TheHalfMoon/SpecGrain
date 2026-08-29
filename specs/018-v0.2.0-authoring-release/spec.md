@@ -1,0 +1,79 @@
+# Specification 018 — v0.2.0 Authoring Release
+
+## Status
+
+`SHAPED`
+
+## Outcome
+
+Publish a new immutable GitHub release that makes the already-verified native root-DRAFT authoring surface from Specification 017 available through the public versioned product, without adding unrelated product behavior or mutating the existing `v0.1.0` release.
+
+## Why this is the next frontier
+
+Specification 017 closed the first-use authoring gap on canonical `main`, but the latest public release remains `v0.1.0` and does not contain `specgrain draft` or `create_draft_spec`. The post-017 audit identified this distribution discontinuity as the smallest current adoption gap.
+
+`0.2.0` is selected as the next package/release version because the unreleased change adds a backward-compatible public CLI/API capability. For the pre-1.0 product line, backward-compatible feature additions advance the minor component; corrections that add no public capability may use the patch component. ADR-0017 records the durable release progression rule.
+
+## In scope
+
+- package version `0.2.0`;
+- Git tag and GitHub Release `v0.2.0` bound to the exact successful canonical product merge;
+- release notes that describe only behavior present on the release source revision;
+- changelog promotion of the current Unreleased native DRAFT authoring entries into `0.2.0`;
+- README/install/version references required to make the current public release surface truthful;
+- replacement of the one-off hard-coded `v0.1.0` workflow with a deterministic monotonic versioned-release workflow that derives the release identity from package metadata and fails closed on historical-release conflicts;
+- preservation and verification of the existing `v0.1.0` tag/release/assets without mutation;
+- tests/static checks for release metadata, expected asset names, release-note presence, historical release protection, and version consistency where repository-local deterministic tests are practical;
+- exact-head CI, review, expected-head product merge, post-merge CI, live tag/release verification, asset digests, and documentation-only canonical closeout.
+
+## Out of scope
+
+- recursive child refinement or any new authoring behavior beyond Specification 017;
+- lifecycle promotion, readiness synthesis, WorkPacket/executor orchestration, agent/provider execution, or evidence mutation;
+- PyPI, trusted publishing, package registries, signing infrastructure, attestations, or new external credentials;
+- hosted services, networking, telemetry, dashboards, accounts, or model calls;
+- runtime dependency additions;
+- benchmark execution, benchmark superiority claims, or adoption claims unsupported by public evidence;
+- retargeting, deleting, replacing, or uploading new assets to `v0.1.0`;
+- branch-protection or repository-administration changes unrelated to the release contract.
+
+## Acceptance conditions
+
+1. `pyproject.toml` declares package version `0.2.0`, and repository version/release references that are intended to describe the current public release are consistent with `v0.2.0`.
+2. The `0.2.0` release notes truthfully include native root-DRAFT authoring and do not claim recursive refinement, provider execution, PyPI availability, empirical benchmark superiority, or any capability absent from the exact release revision.
+3. The release workflow derives package version, tag, expected distribution filenames, release-note path, and public release title deterministically rather than embedding a one-off `0.1.0` release identity.
+4. The workflow is triggered only from a successful canonical `main` CI result and checks out that exact successful CI head SHA before any release decision.
+5. A historical tag/release for a different version is never mutated. Existing `v0.1.0` remains bound to `5eb46db0479cb8707afe070027dab4f3c558849a` with its original two assets.
+6. If the current version tag or GitHub Release already exists, the workflow fails closed on missing counterpart, wrong tag target, draft/prerelease state mismatch, unexpected assets, or other identity conflict; an exact already-published current release is treated as idempotent success without mutation.
+7. If the current version is not yet published, the workflow creates exactly the expected immutable-by-contract tag and public GitHub Release at the exact successful canonical product merge and uploads only the expected wheel and source distribution.
+8. The release source revision contains `specgrain draft`, the public `create_draft_spec` API, the current zero-runtime-dependency contract, and all permanent CI gates.
+9. Exact implementation PR-head CI succeeds across Ubuntu/Python 3.11, 3.12, and 3.13, macOS/Python 3.11, and Windows/Python 3.11 before merge.
+10. Exact-head review confirms no historical release mutation path, no hidden external publishing channel, no unrelated product scope, no unsupported claims, and no weakened evidence boundary.
+11. Product merge uses expected-head protection and canonical post-merge CI succeeds on that exact merge revision.
+12. Live GitHub proves `v0.2.0` tag target, GitHub Release target/state, asset names, asset SHA-256 digests, and publication state before `RELEASED` is claimed.
+13. Specification 018 is not `CLOSED_CANONICAL` until exact release evidence is recorded in a bounded documentation-only closeout PR, that exact closeout head is merged with expected-head protection, and post-closeout canonical CI is successful.
+
+## Dependencies
+
+- Specifications 000 through 017 are `CLOSED_CANONICAL`.
+- Canonical starting revision: `d7c3f8e5734264824cd6ed1d8e931802a242c50a`.
+- Specification 017 product merge: `dedb9ee30a6b8856c9c06439c68f3a37225f0563`.
+- Specification 017 closeout merge: `d7c3f8e5734264824cd6ed1d8e931802a242c50a`.
+- Published `v0.1.0` source: `5eb46db0479cb8707afe070027dab4f3c558849a`.
+- ADR-0016 remains historical authority for the first public release invariants.
+- ADR-0017 defines monotonic post-v0.1 GitHub release progression.
+
+## Risks and recovery
+
+- **Historical release mutation:** fail closed before any write when existing tag/release identity is inconsistent; never update `v0.1.0`.
+- **Wrong release source:** bind release work to the exact successful `workflow_run.head_sha`; a wrong or stale target blocks publication.
+- **Version/document drift:** deterministic repository checks bind package metadata, tag, asset names, and release-note path.
+- **Partial publication:** workflow detects tag-without-release and release-without-tag as conflicts instead of silently repairing ambiguous external state.
+- **Release rerun:** exact already-published `v0.2.0` becomes a no-mutation successful verification path.
+- **Scope creep:** 018 changes distribution/versioning only; new product behavior requires a later shaped specification.
+
+## Constitution and architecture
+
+No constitution amendment is required. The release remains vendor-neutral, dependency-free at runtime, evidence-bound, and reversible before publication. After publication, tags/releases are historical anchors and are protected by fail-closed monotonic release rules rather than rewritten.
+
+This shaped authority becomes canonical only after the exact shaping PR head is merged with expected-head protection and canonical `main` is re-verified. Implementation must not begin from this branch before that merge.

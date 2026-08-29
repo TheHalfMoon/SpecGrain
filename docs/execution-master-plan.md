@@ -60,13 +60,13 @@ Completed v0.1 capabilities include recursive/versioned specs, lifecycle/refinem
 
 The initial sequence ended at Specification 016 and does not authorize an automatic successor. Every post-v0.1 specification must be shaped from current product/repository evidence.
 
-The first post-v0.1 audit is `docs/research/post-v0.1-product-audit-2026-08-29.md`. It identified the missing supported first-party path from an initialized empty store to the first native SpecNode as the smallest adoption gap and shaped Specification 017 — Native DRAFT CLI.
-
-017 shaping became canonical at `5c7783dde897c975b3519b37bfd45b547244b273`. Product PR #21 exact reviewed head `1255a9187f85591edd041a3125359e70d2eea379` completed final-head CI run `33235889444` successfully, then merged with expected-head protection as `dedb9ee30a6b8856c9c06439c68f3a37225f0563`. Canonical post-merge CI run `33236142514` completed the permanent five-cell matrix successfully.
+Specification 017 — Native DRAFT CLI is `CLOSED_CANONICAL`. Its product merge is `dedb9ee30a6b8856c9c06439c68f3a37225f0563`; its closeout merge is `d7c3f8e5734264824cd6ed1d8e931802a242c50a`; exact product and closeout CI evidence is recorded under `specs/017-native-draft-cli/`.
 
 017 closes the empty-project authoring gap on current `main`: users can create one validated root `DRAFT` through `specgrain draft` without hand-authoring internal JSON or receiving implied Grain/readiness/execution authority.
 
-The fresh audit `docs/research/post-017-product-audit-2026-08-29.md` observes that published `v0.1.0` predates `draft` and recommends a versioned public release of the already-completed current authoring surface as the strongest next shaping candidate. That recommendation is not authority. No successor specification, release version, tag, PyPI publication, recursive refinement, or executor work is authorized until a separate shaped authority chain becomes canonical.
+The fresh audit `docs/research/post-017-product-audit-2026-08-29.md` identifies the distribution discontinuity between current `main` and public `v0.1.0` as the smallest adoption-oriented gap. Specification 018 — v0.2.0 Authoring Release is therefore shaped prospectively to publish the already-completed authoring surface and establish monotonic metadata-derived GitHub release progression under ADR-0017. It adds no new product behavior and becomes implementation authority only after its exact shaping head is merged canonically.
+
+No successor after 018 is implied. Recursive refinement, PyPI, executor orchestration, hosted services, and empirical benchmark claims remain deferred until fresh evidence separately shapes them.
 
 ## Cross-spec execution rules
 
@@ -98,5 +98,3 @@ A post-v0.1 specification is canonical only when:
 - the next product frontier is re-evaluated from current truth rather than assumed.
 
 No empirical benchmark winner is claimed without a reproducible completed dataset. No aspirational CLI command is presented as shipped behavior.
-
-The 017 `CLOSED_CANONICAL` statement in its documentation-only closeout tree becomes authoritative only after the exact closeout head is merged and live GitHub post-closeout evidence confirms canonical `main`.

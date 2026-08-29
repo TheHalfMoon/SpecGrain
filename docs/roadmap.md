@@ -2,7 +2,7 @@
 
 The roadmap is intentionally progressive. Only the nearest active specification should have implementation-level detail. Future work is shaped from current evidence rather than pre-authorized by stale backlog detail.
 
-**Current program state:** Specifications 000–016 are `CLOSED_CANONICAL` and SpecGrain v0.1.0 is published from product release source commit `5eb46db0479cb8707afe070027dab4f3c558849a`. Specification 017 — Native DRAFT CLI has completed product delivery and canonical post-merge CI; its documentation-only closeout carries prospective `CLOSED_CANONICAL` state that becomes authoritative only after exact-head closeout merge and post-closeout verification. No later specification is planned or implicitly authorized.
+**Current program state:** Specifications 000–017 are `CLOSED_CANONICAL` after post-closeout CI on `d7c3f8e5734264824cd6ed1d8e931802a242c50a`. Specification 018 — v0.2.0 Authoring Release is shaped prospectively in its documentation-only authority branch and becomes executable only after exact-head shaping merge. No later specification is planned or implicitly authorized.
 
 ## M0 — Foundation
 
@@ -51,17 +51,15 @@ The initial v0.1 sequence ended at Specification 016. Exact release and closeout
 
 ## Post-v0.1 — Evidence-shaped product adoption
 
-- **017 — Native DRAFT CLI (CLOSEOUT):** create the first validated root SpecNode through a deterministic supported CLI command after `specgrain init`, without granting Grain/readiness/execution authority.
+- **017 — Native DRAFT CLI:** `CLOSED_CANONICAL`; adds deterministic creation of the first native root `DRAFT` after `specgrain init` without Grain/readiness/execution authority.
+- **018 — v0.2.0 Authoring Release:** shaped candidate to publish the already-verified 017 authoring surface through a new immutable-by-contract GitHub release and generalize monotonic release progression. It adds no new product behavior.
 
-017 was selected by `docs/research/post-v0.1-product-audit-2026-08-29.md`. Its product implementation merged through PR #21 as `dedb9ee30a6b8856c9c06439c68f3a37225f0563`, and canonical post-merge CI run `33236142514` succeeded across the permanent five-cell matrix.
-
-The fresh post-017 audit at `docs/research/post-017-product-audit-2026-08-29.md` identifies a versioned public release of the already-completed current authoring surface as the strongest next shaping candidate because published `v0.1.0` predates `specgrain draft`. The audit does not authorize a successor specification, version number, tag, release mutation, or distribution channel.
+018 was selected from `docs/research/post-017-product-audit-2026-08-29.md`. The exact version/release contract is governed by `specs/018-v0.2.0-authoring-release/` and ADR-0017 once the shaping authority becomes canonical.
 
 ## Explicitly deferred
 
 Future work requires a newly shaped specification and fresh evidence. No item below is automatically authorized by this roadmap:
 
-- a new release or exact version number until release scope is separately shaped;
 - recursive CLI refinement beyond the bounded 017 root-DRAFT surface;
 - WorkPacket/executor orchestration commands;
 - hosted SaaS or web dashboard;
@@ -70,7 +68,7 @@ Future work requires a newly shaped specification and fresh evidence. No item be
 - visual workflow designer;
 - large agent-persona catalog;
 - provider-specific orchestration without adoption evidence;
-- PyPI publication or broader distribution changes without release-governance shaping;
+- PyPI publication or broader distribution changes without publishing-governance shaping;
 - empirical benchmark superiority claims without a reproducible completed dataset.
 
-The 017 `CLOSED_CANONICAL` statement in the documentation-only closeout tree becomes authoritative only after the exact closeout head is merged and live GitHub post-closeout evidence confirms canonical `main`.
+No successor after 018 is implied. A fresh post-018 audit must choose the next frontier from live product/adoption truth.
