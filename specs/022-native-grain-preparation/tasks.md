@@ -31,9 +31,11 @@
 
 - [x] T019 Record exact implementation head, final candidate CI, review state, merge parentage, canonical post-product CI, historical-release preservation, and the bounded multi-writer residual in documentation-only closeout evidence.
 - [x] T020 Re-evaluate the next frontier from post-022 product truth. No successor product scope is automatically authorized; the program returns to observation/evidence gathering, including the planned external architectural review and GitHub Spec Kit comparison.
-- [ ] T021 Merge the exact documentation-only closeout head with expected-head protection after its permanent five-cell CI and review/mergeability checks succeed.
-- [ ] T022 Prove the resulting canonical `main`, post-closeout five-cell CI, preserved `v0.3.0` tag/release/assets, merged/closed implementation and closeout PRs, and only then declare Specification 022 `CLOSED_CANONICAL`.
+- [x] T021 Merge the exact documentation-only closeout head with expected-head protection after permanent five-cell CI and review/mergeability checks succeed. Closeout head `7b3b5beed297d024ad897e3b7e4d5376c8c5f24a`; push CI `33262421052` success; PR CI `33262442496` success; PR #39 merged with expected-head protection as `9cd52eb6d1ba6839910ceb973fedf5b3a727cc0a`.
+- [x] T022 Prove the resulting canonical `main`, post-closeout five-cell CI, preserved `v0.3.0` tag/release/assets, and merged/closed implementation and closeout PRs. Canonical post-closeout CI `33262519733` completed `success`; PR #38 and PR #39 are merged/closed; tag `v0.3.0` remains `70dd66aba0e68ae710e6ef12605ed153d107bab4`; Release `378962445` and asset identities/digests remain unchanged.
 
 ## Closure rule
 
-T021 and T022 are intentionally open on this closeout candidate. They may be marked complete only from exact canonical evidence after the closeout PR is merged. Until then, Specification 022 is product-merged and post-product verified but not `CLOSED_CANONICAL`.
+All Specification 022 tasks are complete with exact canonical evidence. Specification 022 is `CLOSED_CANONICAL`.
+
+No successor implementation is authorized by task completion. The repository returns to post-022 observation/evidence gathering; future work requires a newly shaped specification from concrete evidence.
