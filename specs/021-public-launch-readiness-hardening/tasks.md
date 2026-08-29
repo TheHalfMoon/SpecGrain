@@ -16,11 +16,11 @@
 
 ## Verification
 
-- [ ] T009 Run full regression, Ruff, compileall, package build/install, CLI smoke, and permanent five-cell CI on the exact implementation head.
-- [ ] T010 Review exact diff for `src/specgrain/`, package/version/dependency, release-workflow, historical-release, PyPI, hosted, benchmark, unsupported marketing, and unrelated scope drift.
-- [ ] T011 Merge the exact reviewed implementation head with expected-head protection; prove canonical post-merge CI and no-mutation historical v0.3.0 Release verification.
+- [x] T009 Exact implementation head `e95bbafdd2bc66ea67e40e0690c053806acf85c3` passed permanent five-cell CI `33256769276`; Ubuntu/Python 3.11 job `99111766462` recorded `558 passed in 1.58s` plus successful Ruff, tracked-tree cleanliness, compileall, package build/install, and CLI smoke.
+- [x] T010 Exact PR #34 diff review proved exactly six changed paths and no `src/specgrain/`, package/version/dependency, release-workflow, historical-release, PyPI, hosted/provider, lifecycle/readiness/execution, benchmark-data, unsupported marketing, or unrelated scope drift. Final review recheck found no submitted reviews or inline review threads.
+- [x] T011 PR #34 merged with expected-head protection from exact reviewed head `e95bbafdd2bc66ea67e40e0690c053806acf85c3` as canonical merge `88e174818870cb90d18537b0c8aea810c84fc244`; canonical CI `33256836246` succeeded across all five cells and Release verification `33256877372`, job `99112050245`, proved historical v0.3.0 remained at `70dd66aba0e68ae710e6ef12605ed153d107bab4` without mutation.
 
 ## Canonical closeout
 
-- [ ] T012 Record exact implementation/review/merge/CI/release-verification evidence, re-read live GitHub description/topics/ruleset state, and preserve unproven platform settings as explicit residual operations.
-- [ ] T013 Close Specification 021 through a bounded closeout change, exact-head CI/review, expected-head merge, canonical post-closeout CI, and post-closeout no-mutation Release verification.
+- [x] T012 Record exact implementation/review/merge/CI/release-verification evidence; re-read live GitHub repository metadata, `main` protection, and rulesets; preserve description/topics/ruleset gaps as explicit unproven platform residuals because the available repository interface is read-only for those settings.
+- [ ] T013 Close Specification 021 through this bounded closeout change, exact-head CI/review, expected-head merge, canonical post-closeout CI, and post-closeout no-mutation Release verification.
