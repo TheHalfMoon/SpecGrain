@@ -2,7 +2,7 @@
 
 ## Status
 
-`SHAPED`
+`RUNNING`
 
 ## Outcome
 
@@ -58,6 +58,10 @@ Specification 017 closed the first-use authoring gap on canonical `main`, but th
 
 - Specifications 000 through 017 are `CLOSED_CANONICAL`.
 - Canonical starting revision: `d7c3f8e5734264824cd6ed1d8e931802a242c50a`.
+- Canonical 018 shaping merge: `b170aed92812c367282fbacb5d46e5acb450a196`.
+- Exact 018 shaping head: `68e830dc51d0df4bc521607be46ce9f11dc34acd`.
+- Exact shaping CI run: `33237175016`.
+- Canonical shaping post-merge CI run: `33245330017`.
 - Specification 017 product merge: `dedb9ee30a6b8856c9c06439c68f3a37225f0563`.
 - Specification 017 closeout merge: `d7c3f8e5734264824cd6ed1d8e931802a242c50a`.
 - Published `v0.1.0` source: `5eb46db0479cb8707afe070027dab4f3c558849a`.
@@ -78,4 +82,4 @@ Specification 017 closed the first-use authoring gap on canonical `main`, but th
 
 No constitution amendment is required. The release remains vendor-neutral, dependency-free at runtime, evidence-bound, and reversible before publication. After publication, tags/releases are historical anchors and are protected by fail-closed monotonic release rules rather than rewritten.
 
-This shaped authority becomes canonical only after the exact shaping PR head is merged with expected-head protection and canonical `main` is re-verified. Implementation must not begin from this branch before that merge.
+The shaped authority is canonical through merge `b170aed92812c367282fbacb5d46e5acb450a196`. Implementation must remain on a bounded branch from that exact base and satisfy the acceptance evidence above before product merge or release claims.

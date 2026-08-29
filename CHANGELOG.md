@@ -4,6 +4,12 @@ All notable public release changes are recorded here.
 
 ## Unreleased
 
+_No changes recorded yet._
+
+## [0.2.0] — 2026-08-29
+
+Backward-compatible authoring release.
+
 ### Added
 
 - native root-DRAFT authoring through the public `create_draft_spec` API and `specgrain draft` CLI command, with deterministic local ID allocation and create-if-absent persistence;
@@ -11,7 +17,14 @@ All notable public release changes are recorded here.
 
 ### Changed
 
-- the README quickstart now demonstrates `init -> draft -> check` on current `main` while distinguishing the published v0.1.0 command surface.
+- the README quickstart now demonstrates the public `init -> draft -> check` path;
+- GitHub release automation now derives version, tag, distribution filenames, title, and release-note path from package metadata while preserving historical releases as immutable-by-contract anchors.
+
+### Evidence boundary
+
+v0.2.0 adds no recursive refinement, executor/provider invocation, PyPI distribution, runtime dependency, or empirical benchmark winner claim.
+
+See [`docs/releases/v0.2.0.md`](docs/releases/v0.2.0.md) for detailed release notes.
 
 ## [0.1.0] — 2026-08-28
 

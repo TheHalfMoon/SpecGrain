@@ -1,6 +1,6 @@
 # ADR-0017 — Monotonic Versioned GitHub Releases
 
-**Status:** Accepted by Specification 018 shaping; canonical only after the exact shaping authority merges to `main`
+**Status:** Accepted
 
 ## Context
 

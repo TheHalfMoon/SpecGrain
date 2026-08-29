@@ -25,10 +25,10 @@ The commands above are local and deterministic. `scan` maps bounded brownfield r
 
 Recursive child refinement is not yet exposed as a CLI authoring command. A newly created DRAFT is intentionally incomplete rather than silently promoted to an executable Grain.
 
-The published `v0.1.0` release predates the `draft` command. It can be installed directly from its source archive:
+The v0.2.0 versioned release includes the native `draft` authoring path and can be installed directly from its source archive:
 
 ```bash
-python -m pip install "https://github.com/TheHalfMoon/SpecGrain/archive/refs/tags/v0.1.0.zip"
+python -m pip install "https://github.com/TheHalfMoon/SpecGrain/archive/refs/tags/v0.2.0.zip"
 ```
 
 ## What is a Grain?
@@ -45,7 +45,7 @@ Intent
 
 When a change is too large, SpecGrain's default answer is further refinement—not a larger prompt.
 
-## Supported CLI on main
+## Supported CLI
 
 | Command | Purpose |
 | --- | --- |
@@ -59,7 +59,7 @@ When a change is too large, SpecGrain's default answer is further refinement—n
 
 Most inspection commands and `draft` provide deterministic JSON output with `--json`.
 
-The published v0.1.0 release contains every command above except `draft`. SpecGrain remains a deterministic control plane, not an agent runner or hosted service. External agents integrate through portable WorkPacket/result adapter contracts rather than becoming verification authority.
+The v0.2.0 release contains every command above. SpecGrain remains a deterministic control plane, not an agent runner or hosted service. External agents integrate through portable WorkPacket/result adapter contracts rather than becoming verification authority.
 
 ## Zero to VERIFIED
 
@@ -95,7 +95,7 @@ Read [`docs/trust-model.md`](docs/trust-model.md), [`docs/architecture.md`](docs
 
 ## Benchmarks: evidence before claims
 
-SpecGrainBench provides deterministic experiment plans, isolation/contamination preflight, run ledgers, and no-automatic-winner reports for prompt-only, GitHub Spec Kit, and SpecGrain arms. v0.1.0 does **not** claim an empirical winner because a public comparative run dataset has not yet been published. See [`docs/benchmark-report-v0.1.0.md`](docs/benchmark-report-v0.1.0.md) and [`docs/benchmark-strategy.md`](docs/benchmark-strategy.md).
+SpecGrainBench provides deterministic experiment plans, isolation/contamination preflight, run ledgers, and no-automatic-winner reports for prompt-only, GitHub Spec Kit, and SpecGrain arms. v0.2.0 does **not** claim an empirical winner because a public comparative run dataset has not yet been published. The current public benchmark methodology report remains [`docs/benchmark-report-v0.1.0.md`](docs/benchmark-report-v0.1.0.md); see also [`docs/benchmark-strategy.md`](docs/benchmark-strategy.md).
 
 ## Architecture in one view
 
