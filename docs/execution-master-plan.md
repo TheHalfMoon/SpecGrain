@@ -10,7 +10,7 @@ Before changing the repository, read:
 2. `specs/CURRENT.md`;
 3. `.specify/memory/constitution.md`;
 4. this file;
-5. the active `spec.md`, `plan.md`, and `tasks.md`;
+5. the active `spec.md`, `plan.md`, and `tasks.md` when an active specification exists;
 6. referenced ADRs, contracts, research, and implementation files.
 
 ## Product objective
@@ -42,37 +42,27 @@ SpecGrain is an independent, agent-neutral delivery system built around recursiv
 
 Specification 000 established the project foundation and constitution.
 
-## Completed frontier
+## Initial v0.1 program completion
 
-Specifications 000 through 015 are closed canonically on `main`.
+Specifications 000 through 016 are closed canonically after the documentation-only 016 closeout reaches `main` and its exact merge evidence is verified.
 
-The post-015 canonical baseline is:
+The v0.1.0 product release source commit is:
 
-`001a70fcabff497c565fa7339381c4da0b4a3881`
+`5eb46db0479cb8707afe070027dab4f3c558849a`
 
-This is the merge of PR #17. Its second parent is exact reviewed PR head `14e3d7e6a301148e0a25c2e98134fe8a6c573b54`.
+This is the expected-head-protected merge of PR #18. Its second parent is exact reviewed PR head `1e4b36b169c7ac6d9e59741bb62b6a29b7649a17`. PR-head CI run `33234332746` and canonical post-merge CI run `33234395766` each completed the five-cell Linux/macOS/Windows matrix successfully.
 
-Completed capabilities include recursive/versioned specs, lifecycle/refinement/readiness validation, local state, dependency scheduling, brownfield scanning, context budgets, portable WorkPackets/results, independent evidence, method profiles, drift/metrics, Spec Kit import, generic agent adapters, and benchmark comparability controls.
+Release workflow run `33234424696` published tag `v0.1.0` at that exact product merge commit and GitHub Release `378876694` with the versioned wheel and source distribution. Exact asset digests and release-state evidence are recorded in `specs/016-public-launch/closeout.md`.
 
-## Active frontier — 016 Public Launch
+Completed capabilities include recursive/versioned specs, lifecycle/refinement/readiness validation, local state, dependency scheduling, brownfield scanning, context budgets, portable WorkPackets/results, independent evidence, method profiles, drift/metrics, Spec Kit import, generic agent adapters, benchmark comparability controls, permanent cross-platform CI, public migration/trust/community surfaces, and the published v0.1.0 release.
 
-Active branch: `feat/016-public-launch`.
+## Program frontier
 
-Read `specs/016-public-launch/spec.md`, `plan.md`, `tasks.md`, and ADR-0016 before acting.
+There is no active or next planned specification in the initial v0.1 program. Specification 016 Public Launch is the final planned specification in that sequence.
 
-016 must ship:
+No empirical benchmark winner is claimed without a reproducible completed dataset. No aspirational CLI command is presented as shipped behavior.
 
-- versioned installable `0.1.0` package;
-- permanent Linux/macOS/Windows CI;
-- truthful README and runnable zero-to-verified example;
-- pinned brownfield examples;
-- Spec Kit migration and benchmark reports;
-- contribution/security/trust/conduct surfaces;
-- release notes and launch assets;
-- tag `v0.1.0` and a GitHub Release;
-- exact post-release canonical closeout.
-
-No empirical benchmark winner may be claimed without a reproducible completed dataset. No aspirational CLI command may be presented as shipped behavior.
+Any future feature, release train, hosted product, empirical benchmark program, provider-specific integration, or other expansion must begin with a newly shaped specification derived from then-current repository truth. Deferred roadmap ideas are not implicitly authorized by completion of v0.1.
 
 ## Cross-spec execution rules
 
@@ -91,6 +81,12 @@ No empirical benchmark winner may be claimed without a reproducible completed da
 
 ## Completion rule
 
-016 is the final planned specification in this program sequence. The program is complete only after the product PR merges, `v0.1.0` is published at the exact release commit, and a post-release documentation-only closeout leaves `specs/CURRENT.md` at `CLOSED_CANONICAL` with no next planned specification.
+The initial v0.1 program is complete only when all of the following are true in live GitHub truth:
 
-Any subsequent feature begins a new explicitly shaped specification derived from then-current repository truth; it is not implicitly authorized by this completed sequence.
+- PR #18 is merged from exact reviewed head `1e4b36b169c7ac6d9e59741bb62b6a29b7649a17`;
+- canonical product merge `5eb46db0479cb8707afe070027dab4f3c558849a` passes post-merge CI;
+- tag `v0.1.0` and the public GitHub Release target that exact product merge and expose the expected distribution assets;
+- the post-release documentation-only closeout is merged with expected-head protection;
+- final canonical `specs/CURRENT.md` and Specification 016 report `CLOSED_CANONICAL` with no next planned specification.
+
+The first three conditions are recorded as satisfied in `specs/016-public-launch/closeout.md`. The final two become canonical only after live post-merge verification of the closeout PR.
