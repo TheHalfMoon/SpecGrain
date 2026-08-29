@@ -4,7 +4,21 @@ All notable public release changes are recorded here.
 
 ## Unreleased
 
-_No changes recorded yet._
+### Added
+
+- bounded public pre-Grain APIs: `shape_draft_spec`, `refine_shaped_spec`, and `promote_refining_spec_to_grain`, plus deterministic result/blocker types;
+- native `specgrain shape`, `specgrain refine`, and `specgrain grain` commands for the exact `DRAFT -> SHAPED -> REFINING -> GRAIN` preparation lifecycle.
+
+### Changed
+
+- current source can populate one existing DRAFT with explicit readiness-relevant declarations through exact-preimage single-file mutation;
+- state-only SHAPED-to-REFINING and readiness-gated REFINING-to-GRAIN transitions preserve the semantic revision digest;
+- failed Grain promotion reports deterministic readiness blockers and leaves canonical state unchanged;
+- public documentation now distinguishes current-source Specification 022 commands from the historical v0.3.0 release contract.
+
+### Evidence boundary
+
+These are unreleased current-source changes. The historical `v0.3.0` tag and GitHub Release remain unchanged and do not contain `shape`, `refine`, or `grain`. Specification 022 adds no `GRAIN -> READY`, WorkPacket execution, agent/provider orchestration, verification execution, evidence mutation, runtime dependency, or release/version bump.
 
 ## [0.3.0] — 2026-08-29
 

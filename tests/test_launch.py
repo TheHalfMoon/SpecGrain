@@ -81,7 +81,7 @@ def test_release_workflow_is_metadata_derived_monotonic_and_installable() -> Non
     assert "v0.3.0" not in workflow
 
 
-def test_readme_uses_only_current_cli_commands() -> None:
+def test_readme_distinguishes_published_release_from_current_source() -> None:
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     for command in (
         "specgrain init",
@@ -92,23 +92,42 @@ def test_readme_uses_only_current_cli_commands() -> None:
         "specgrain scan",
         "specgrain prove",
         "specgrain import-spec-kit",
+        "specgrain shape",
+        "specgrain refine",
+        "specgrain grain",
     ):
         assert command in readme
     for unsupported in ("specgrain ask ", "specgrain packet ", "specgrain verify "):
         assert unsupported not in readme
     assert "refs/tags/v0.3.0.zip" in readme
-    assert "v0.3.0 versioned release contains every command in the table" in readme
-    assert "do not promote lifecycle state" in readme
+    assert "### Published v0.3.0 CLI" in readme
+    assert "### Current source additions after v0.3.0" in readme
+    assert (
+        "The historical v0.3.0 tag and GitHub Release do not contain `shape`, `refine`, "
+        "or `grain`."
+    ) in readme
+    assert "No `GRAIN -> READY`" in readme
 
 
 def test_readme_first_screen_states_current_public_contract() -> None:
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     assert "agent-neutral delivery control plane" in readme
-    assert "Current release:** `v0.3.0`" in readme
+    assert "Current published release:** `v0.3.0`" in readme
     assert "Python:** `3.11+`" in readme
     assert "License:** MIT" in readme
     assert "Runtime dependencies:** zero" in readme
     assert "actions/workflows/ci.yml/badge.svg" in readme
+
+
+def test_architecture_preserves_release_source_and_pregrain_boundaries() -> None:
+    architecture = (ROOT / "docs" / "architecture.md").read_text(encoding="utf-8")
+    assert "### Published v0.3.0" in architecture
+    assert "### Current source after Specification 022" in architecture
+    for command in ("specgrain shape", "specgrain refine", "specgrain grain"):
+        assert command in architecture
+    assert "These commands are not part of the historical v0.3.0 release" in architecture
+    assert "No 022 operation mutates evidence or grants post-GRAIN authority" in architecture
+    assert "runtime third-party dependency count at zero" in architecture
 
 
 def test_zero_to_verified_example_executes() -> None:
@@ -183,17 +202,20 @@ def test_v030_release_notes_preserve_recursive_authoring_and_trust_boundaries() 
     assert "No PyPI" in notes
     assert "no benchmark winner is claimed" in notes
     assert "Runtime third-party dependency count remains zero" in notes
+    for current_source_command in ("specgrain shape", "specgrain refine", "specgrain grain"):
+        assert current_source_command not in notes
 
 
-def test_changelog_promotes_v030_and_restores_unreleased_boundary() -> None:
+def test_changelog_preserves_v030_and_records_unreleased_pregrain_boundary() -> None:
     changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+    assert "## Unreleased" in changelog
     assert "## [0.3.0] — 2026-08-29" in changelog
     assert "## [0.2.0] — 2026-08-29" in changelog
     assert changelog.index("## Unreleased") < changelog.index("## [0.3.0]")
     assert changelog.index("## [0.3.0]") < changelog.index("## [0.2.0]")
-    assert "_No changes recorded yet._" in changelog
-    assert "create_child_draft_spec" in changelog
-    assert "specgrain recover" in changelog
+    assert "shape_draft_spec" in changelog
+    assert "specgrain refine" in changelog
+    assert "historical `v0.3.0` tag and GitHub Release remain unchanged" in changelog
     assert "Specification 020 changes no `src/specgrain/` product behavior" in changelog
 
 
@@ -212,6 +234,7 @@ def test_public_launch_relative_markdown_links_resolve() -> None:
         ROOT / "README.md",
         ROOT / "CONTRIBUTING.md",
         ROOT / "SECURITY.md",
+        ROOT / "docs" / "architecture.md",
         ROOT / "docs" / "launch-strategy.md",
         ROOT / "docs" / "migration-from-spec-kit.md",
         ROOT / "docs" / "benchmark-report-v0.1.0.md",

@@ -9,17 +9,17 @@
 
 SpecGrain is an open-source, local-first, agent-neutral delivery control plane for turning software work into small, bounded, independently verifiable changes. Its deterministic core owns specification structure, readiness, dependency ordering, context budgets, WorkPackets, evidence binding, drift/metrics, Spec Kit import, agent-adapter boundaries, and benchmark comparability checks.
 
-**Current release:** `v0.3.0` · **Python:** `3.11+` · **License:** MIT · **Runtime dependencies:** zero
+**Current published release:** `v0.3.0` · **Python:** `3.11+` · **License:** MIT · **Runtime dependencies:** zero
 
-## One-minute start
+## Published v0.3.0 quickstart
 
-Install the current versioned release directly from GitHub:
+Install the current published release directly from GitHub:
 
 ```bash
 python -m pip install "https://github.com/TheHalfMoon/SpecGrain/archive/refs/tags/v0.3.0.zip"
 ```
 
-Then try the native local workflow:
+Then try the native local workflow shipped by that historical release:
 
 ```bash
 specgrain scan .
@@ -45,7 +45,41 @@ specgrain recover specgrain-demo
 
 Recovery only clears, rolls back, or finalizes an exact recognized transaction state. Ambiguous parent/child state is preserved for manual investigation instead of being guessed or overwritten.
 
-The v0.3.0 versioned release includes root and child DRAFT authoring plus explicit recovery. Source checkouts may also be installed locally with `python -m pip install .` for development and contribution work.
+The published v0.3.0 release includes root and child DRAFT authoring plus explicit recovery. It does **not** contain `shape`, `refine`, or `grain`.
+
+## Current source workflow after Specification 022
+
+Current source adds a bounded native path from an existing `DRAFT` through deterministic Grain preparation:
+
+```text
+DRAFT -> SHAPED -> REFINING -> GRAIN
+```
+
+Install a current source checkout with `python -m pip install . --no-deps`, then provide every readiness-sensitive declaration explicitly:
+
+```bash
+specgrain shape SG-000001 specgrain-demo \
+  --scope-in "Implement the bounded health endpoint" \
+  --scope-out "No provider or hosted integration" \
+  --acceptance "Focused health endpoint tests pass" \
+  --risk-level low \
+  --recovery "Revert the bounded endpoint change." \
+  --context-budget 2000 \
+  --context-estimate 500 \
+  --change-surface "src/health.py" \
+  --evidence "focused-tests" \
+  --minimality-choice native \
+  --minimality-rationale "No existing equivalent primitive is present." \
+  --safety-status none-identified
+specgrain refine SG-000001 specgrain-demo
+specgrain check specgrain-demo
+specgrain grain SG-000001 specgrain-demo
+specgrain next specgrain-demo
+```
+
+`shape` mutates only one existing `DRAFT` and does not invent risk, recovery, context, evidence, minimality, or safety claims. `refine` is a state-only `SHAPED -> REFINING` transition. `grain` re-evaluates the unchanged deterministic Grain-readiness rules and refuses mutation with stable blockers unless the exact current candidate is ready. The state-only transitions preserve the semantic revision digest.
+
+Specification 022 stops at `GRAIN`. No `GRAIN -> READY`, WorkPacket execution, agent/provider orchestration, verification execution, or evidence mutation is authorized by these commands.
 
 ## What is a Grain?
 
@@ -63,6 +97,8 @@ When a change is too large, SpecGrain's default answer is further refinement—n
 
 ## Supported CLI
 
+### Published v0.3.0 CLI
+
 | Command | Purpose |
 | --- | --- |
 | `specgrain init [path]` | Initialize repository-local SpecGrain state. |
@@ -74,9 +110,19 @@ When a change is too large, SpecGrain's default answer is further refinement—n
 | `specgrain prove <spec-id> [path]` | Load and validate append-oriented evidence for a spec. |
 | `specgrain import-spec-kit <feature-dir>` | Produce a read-only, source-bound Spec Kit migration report. |
 
-Inspection commands, `draft`, and `recover` provide deterministic JSON output where `--json` is supported.
+Every command in this table exists in the historical `v0.3.0` tag and GitHub Release.
 
-The v0.3.0 versioned release contains every command in the table. Its `draft` command supports root creation and `--parent` child creation, while `recover` remains an explicit bounded mutation for exact recognized interrupted authoring states. These surfaces do not promote lifecycle state or synthesize Grain/readiness/execution authority. SpecGrain remains a deterministic control plane, not an agent runner or hosted service. External agents integrate through portable WorkPacket/result adapter contracts rather than becoming verification authority.
+### Current source additions after v0.3.0
+
+| Command | Purpose |
+| --- | --- |
+| `specgrain shape <spec-id> [path] ...` | Explicitly populate one DRAFT candidate and advance it to SHAPED. |
+| `specgrain refine <spec-id> [path]` | Advance exactly SHAPED to REFINING without semantic mutation. |
+| `specgrain grain <spec-id> [path]` | Promote exactly REFINING to GRAIN only after current readiness succeeds. |
+
+The historical v0.3.0 tag and GitHub Release do not contain `shape`, `refine`, or `grain`. These commands are current-source additions from Specification 022; no new release or version bump is claimed here.
+
+Inspection commands and the bounded mutation commands provide deterministic output; JSON is available where `--json` is supported. SpecGrain remains a deterministic control plane, not an agent runner or hosted service. External agents integrate through portable WorkPacket/result adapter contracts rather than becoming verification authority.
 
 ## Zero to VERIFIED
 
@@ -86,7 +132,7 @@ The repository includes a runnable API example that creates a Grain candidate, c
 python examples/zero_to_verified.py
 ```
 
-See [`examples/zero_to_verified.py`](examples/zero_to_verified.py). The example is executed by the test suite; `VERIFIED` is derived from independent checks, not from the executor's success claim.
+See [`examples/zero_to_verified.py`](examples/zero_to_verified.py). The example is executed by the test suite; `VERIFIED` is derived from independent checks, not from the executor's success claim. The example demonstrates existing API capability and is not a claim that Specification 022 authorizes a native CLI transition beyond `GRAIN`.
 
 ## Brownfield first
 
@@ -119,6 +165,7 @@ SpecGrainBench provides deterministic experiment plans, isolation/contamination 
 ```text
 Recursive SpecNode
   -> Lifecycle + refinement
+  -> Native pre-Grain preparation
   -> Grain readiness
   -> Local store + dependency DAG
   -> Brownfield repository map
