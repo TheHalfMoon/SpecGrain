@@ -68,9 +68,13 @@ The fresh audit `docs/research/post-017-product-audit-2026-08-29.md` identified 
 
 Specification 018 is `CLOSED_CANONICAL`. Product merge `baf00995a7ae9cf01b6196d68c62f4eca2c1ec85` passed canonical CI `33245753969`; release workflow `33245783948` published GitHub Release `378936896` / tag `v0.2.0`. Documentation-only closeout merged as `c5282caa29fbfeb8c118755766b6a7b8a49d2781`; post-closeout CI `33246162550` succeeded and release verification `33246212598` confirmed the existing historical `v0.2.0` release without mutation.
 
-The fresh post-v0.2 audit `docs/research/post-v0.2-product-audit-2026-08-29.md` identifies native child-DRAFT authoring as the smallest recursive product gap. Specification 019 shapes that candidate narrowly: a child fixed to `DRAFT` may be added only under a `DRAFT` parent, reciprocal structure must validate before publication, and the two-file mutation uses the recoverable/fail-closed journal contract in ADR-0018 rather than an unsupported atomicity claim.
+The fresh post-v0.2 audit `docs/research/post-v0.2-product-audit-2026-08-29.md` selected native child-DRAFT authoring as the smallest recursive product gap and shaped Specification 019 narrowly under ADR-0018.
 
-Specification 019 is documentation-only shaping until its exact head is merged canonically. It does not authorize lifecycle promotion, generic editing, readiness synthesis, execution/provider behavior, distribution changes, or a successor specification.
+Specification 019 product delivery is canonical at merge `d6727b6c5cdafcf6265b6d999418c0fe853249a7`. Final PR head `53cd8482b727d4f61bfafbea6ed363e4e8783d52` passed exact-head CI `33247844945`; canonical product post-merge CI `33248014390` succeeded across the permanent five-cell matrix. Release verification `33248070688` confirmed that historical `v0.2.0` remained at `baf00995...` with no release mutation.
+
+019 adds bounded native child-DRAFT authoring and explicit recovery without lifecycle promotion, readiness synthesis, or execution authority. It remains open only for documentation-only canonical closeout.
+
+The fresh post-019 audit `docs/research/post-019-product-audit-2026-08-29.md` recommends a v0.3.0 Recursive Authoring Release as the smallest next shaping candidate because current canonical `main` contains verified child-DRAFT/recovery behavior that published `v0.2.0` predates. This is evidence only; no successor is authorized until 019 closes canonically and a separate shaping chain merges.
 
 ## Cross-spec execution rules
 
