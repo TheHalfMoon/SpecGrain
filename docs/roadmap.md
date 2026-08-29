@@ -2,7 +2,7 @@
 
 The roadmap is intentionally progressive. Only the nearest active specification should have implementation-level detail. Future work is shaped from current evidence rather than pre-authorized by stale backlog detail.
 
-**Current program state:** Specifications 000–020 are `CLOSED_CANONICAL`. Specification 020 product merge `70dd66aba0e68ae710e6ef12605ed153d107bab4` passed canonical product CI `33249920673`; GitHub Release `378962445` / tag `v0.3.0` was published by Release workflow `33249956337`; documentation-only closeout merged as `123e1ded9d6bdc1aa15767ec7185bfffab5f8eba`; post-closeout CI `33250422380` succeeded; Release verification `33250468134` / job `99095156240` preserved historical `v0.3.0` at exact product source `70dd66a...` without mutation. The fresh post-v0.3 audit selects no evidence-supported successor, so the program is `POST_V0.3_OBSERVATION` with no active specification.
+**Current program state:** Specifications 000–021 are `CLOSED_CANONICAL`. The latest published release remains GitHub Release `378962445` / tag `v0.3.0` at exact product source `70dd66aba0e68ae710e6ef12605ed153d107bab4`. Specification 021 public-launch hardening merged as canonical implementation `88e174818870cb90d18537b0c8aea810c84fc244`; its closeout merged as `96df6391a0a6be5267e15f88d768d6c0c70c8bf5`; canonical post-closeout CI `33257485950` succeeded and Release verification `33257527462` / job `99113736087` preserved historical `v0.3.0` without mutation. The program is `POST_V0.3_OBSERVATION` with no active or selected successor specification.
 
 ## M0 — Foundation
 
@@ -55,8 +55,13 @@ The initial v0.1 sequence ended at Specification 016. Exact release and closeout
 - **018 — v0.2.0 Authoring Release:** `CLOSED_CANONICAL`; product merge `baf00995a7ae9cf01b6196d68c62f4eca2c1ec85`, Release `378936896`, closeout merge `c5282caa29fbfeb8c118755766b6a7b8a49d2781`.
 - **019 — Native Child-DRAFT Authoring:** `CLOSED_CANONICAL`; product merge `d6727b6c5cdafcf6265b6d999418c0fe853249a7`, closeout merge `3f8f3d825c3171a3a9ac7761ee5bc642e68a9d2d`; adds recoverable reciprocal child DRAFT authoring and explicit recovery without lifecycle promotion.
 - **020 — v0.3.0 Recursive Authoring Release:** `CLOSED_CANONICAL`; product merge `70dd66aba0e68ae710e6ef12605ed153d107bab4`; Release `378962445` / `v0.3.0`; closeout merge `123e1ded9d6bdc1aa15767ec7185bfffab5f8eba`; post-closeout CI `33250422380`; historical no-mutation Release verification `33250468134` / job `99095156240`. It publishes the already-canonical root/child DRAFT and explicit recovery surface with no new product behavior.
+- **021 — Public Launch Readiness Hardening:** `CLOSED_CANONICAL`; shaped from explicit maintainer launch-readiness evidence; shaping merge `5c8cfe64f5481c42c53b6fefa91f92e7a2c68811`; implementation merge `88e174818870cb90d18537b0c8aea810c84fc244`; closeout merge `96df6391a0a6be5267e15f88d768d6c0c70c8bf5`; post-closeout CI `33257485950`; no-mutation Release verification `33257527462` / job `99113736087`. It hardens README first-screen trust signals, v0.3.0 install prominence, current SECURITY/launch truth, and bounded launch regression tests without product behavior or release-identity changes.
 
-Fresh audit `docs/research/post-v0.3-product-audit-2026-08-29.md` selects no evidence-supported successor after 020. The roadmap is now in observation rather than pre-authorizing another specification. A later successor requires fresh user/adoption evidence, a reproducible defect/security finding, controlled benchmark data, or a clearly bounded interoperability/governance blocker.
+The fresh post-v0.3 audit initially selected no successor after 020. A later explicit maintainer public-launch-readiness request supplied fresh evidence and shaped 021 narrowly. With 021 now closed, the roadmap returns to observation rather than pre-authorizing another specification.
+
+Live GitHub platform metadata observed during 021 still has no repository description, no topics, no `main` branch protection, and no repository ruleset. The available repository interface is read-only for those settings. They remain explicit platform residuals and do not authorize unrelated product work.
+
+A later Specification 022 requires fresh user/adoption evidence, a reproducible defect/security finding, a demonstrated authoring/recovery limitation, controlled benchmark data, a bounded interoperability/distribution blocker, or a new governance requirement.
 
 ## Explicitly deferred
 
@@ -75,4 +80,4 @@ Future work requires a newly shaped specification and fresh evidence. No item be
 - PyPI publication or broader distribution changes without publishing-governance shaping;
 - empirical benchmark superiority claims without a reproducible completed dataset.
 
-No successor after 020 is implied or currently selected. Observation is the current evidence-shaped frontier.
+No successor after 021 is implied or currently selected. Observation is the current evidence-shaped frontier.
