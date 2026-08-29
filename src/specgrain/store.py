@@ -8,6 +8,7 @@ import re
 import shutil
 import tempfile
 from collections.abc import Mapping
+from contextlib import suppress
 from dataclasses import dataclass
 from enum import StrEnum
 from pathlib import Path
@@ -222,10 +223,8 @@ def _write_new_json(path: Path, value: Mapping[str, object], location: str) -> N
             handle.flush()
             os.fsync(handle.fileno())
     except Exception:
-        try:
+        with suppress(OSError):
             path.unlink(missing_ok=True)
-        except OSError:
-            pass
         raise
 
 
