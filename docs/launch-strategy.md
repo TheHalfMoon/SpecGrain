@@ -2,95 +2,45 @@
 
 ## Goal
 
-Make SpecGrain understandable in under one minute and credible after one hour of inspection.
-
-GitHub popularity is an outcome of usefulness, clarity, proof, and community execution; it cannot be guaranteed. The launch strategy should maximize those inputs rather than optimize for empty star acquisition.
+Make SpecGrain understandable in under one minute and credible after one hour of inspection. Popularity is an outcome of usefulness, clarity, proof, and community execution; it is not a guarantee the project can truthfully make.
 
 ## Core message
 
 > Big ideas. Small specs. Proven software.
 
-Expanded:
+SpecGrain recursively refines work until executable leaves are small enough to understand, contextually isolate, verify, recover, and prove.
 
-> SpecGrain recursively refines software work until every executable change is small enough to understand, contextually isolate, verify, recover, and prove.
+## v0.1.0 launch demo
 
-## 30-second demo
+The public demo uses only release surfaces that exist:
 
-The launch demo should show a real brownfield repository:
-
-```text
-$ specgrain ask "Add organization invitations"
-
-Outcome SG-001
-  SG-002 invitation persistence       GRAIN
-  SG-003 invitation creation          waiting on SG-002
-  SG-004 invitation acceptance        waiting on SG-002
-  SG-005 expiration                   GRAIN
-
-2 READY / 4 total
+```bash
+python -m pip install .
+specgrain scan .
+python examples/zero_to_verified.py
 ```
 
-Then:
+The first command installs the dependency-light package. `scan` shows bounded brownfield repository facts. The example then demonstrates Grain readiness, context budgeting, a digest-bound WorkPacket, independent verification, append-oriented evidence, and proof.
 
-```text
-$ specgrain packet SG-002
-$ <agent executes packet>
-$ specgrain verify SG-002 --result <revision>
-VERIFIED
-$ specgrain prove SG-002
-```
+Earlier planning examples referenced future orchestration commands. Those commands are not part of the v0.1.0 CLI and must not be advertised as shipped behavior.
 
-The audience should see decomposition, bounded context, exact scope, and proof without reading a methodology essay first.
+## Public proof order
 
-## README structure for launch
+1. real supported command or API surface;
+2. exact automated verification;
+3. exact source/release revision;
+4. public claim no stronger than the evidence.
 
-1. One-sentence problem and promise.
-2. Animated terminal demo.
-3. Why large specs fail.
-4. Recursive spec / Grain model diagram.
-5. Five-minute quickstart.
-6. Evidence and trust model.
-7. Spec Kit migration example.
-8. Reproducible benchmark results.
-9. Architecture and local-first guarantees.
-10. Roadmap and contribution entry points.
-
-## Proof before claims
-
-Do not publish fabricated comparison tables. Every numeric comparison must link to a reproducible SpecGrainBench run, repository snapshot, scoring logic, and configuration.
-
-## Community design
-
-The project should have contributor-sized Grains available publicly. Good first contributions should include:
-
-- adapter additions;
-- repository scanners for specific ecosystems;
-- validation rules;
-- benchmark cases;
-- documentation examples;
-- visualization layers over stable core JSON.
-
-## Launch assets
-
-Before a major public push, require:
-
-- installable release;
-- Linux/macOS/Windows verification;
-- three real example repositories;
-- a short demo video/GIF;
-- benchmark report;
-- architecture diagram;
-- migration guide from Spec Kit;
-- contribution guide;
-- security policy;
-- code of conduct;
-- issue templates;
-- release notes.
+Do not publish fabricated comparison tables. Every future numerical competitive comparison must link to a reproducible SpecGrainBench dataset, repository snapshot, scoring logic, configuration, contamination preflight, and raw run status.
 
 ## Adoption wedge
 
-The first adoption wedge is not "replace every project-management tool." It is:
+The first adoption wedge remains narrow:
 
-> Take one risky or over-large AI coding change and turn it into small, independently provable units.
+> Take one risky or over-large software change and make its execution boundary small, explicit, and independently provable.
 
-Spec Kit migration is the second wedge because it gives an established SDD community a low-friction path to test the model without discarding existing work.
+Brownfield scanning and Spec Kit migration make that idea testable without asking users to discard existing repositories or planning artifacts.
+
+## Community entry points
+
+Contributor-sized work should remain available in scanner signals, deterministic validators, benchmark cases, adapters, documentation examples, and visualization layers over stable JSON contracts. Hosted SaaS, large persona catalogs, and vendor-specific orchestration remain deferred until evidence justifies them.

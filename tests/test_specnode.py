@@ -199,7 +199,7 @@ def test_canonical_json_v1_golden_vector() -> None:
         '"outcome":"Stable bytes","parent_id":null,"rationale":"","risk":{"a":1.25,'
         '"z":1e-07},"schema_version":1,"scope_in":["a","z"],"scope_out":[],'
         '"title":"Canonical ✓"}'
-    ).encode("utf-8")
+    ).encode()
 
     assert node.canonical_content_json() == expected
     assert node.revision_digest == (

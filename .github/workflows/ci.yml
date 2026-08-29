@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: ${{ matrix.os }} / Python ${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            python: "3.11"
+          - os: ubuntu-latest
+            python: "3.12"
+          - os: ubuntu-latest
+            python: "3.13"
+          - os: macos-latest
+            python: "3.11"
+          - os: windows-latest
+            python: "3.11"
+
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install verification tools
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "pytest>=8.0" "ruff==0.6.9" build
+      - name: Ruff source
+        run: python -m ruff check src
+      - name: Ruff tests
+        run: python -m ruff check tests
+      - name: Ruff examples
+        run: python -m ruff check examples
+      - name: Install package editable
+        run: python -m pip install -e . --no-deps
+      - name: Full regression
+        run: python -m pytest
+      - name: Tracked tree unchanged after tests
+        run: git diff --exit-code
+      - name: Compile
+        run: python -m compileall -q src tests examples
+      - name: CLI smoke
+        run: |
+          python -m specgrain --help
+          specgrain --help
+      - name: Build package
+        run: python -m build
+      - name: Install built wheel
+        run: >-
+          python -c "import glob, subprocess, sys; wheels=glob.glob('dist/*.whl');
+          assert len(wheels) == 1, wheels;
+          subprocess.check_call([sys.executable, '-m', 'pip', 'install',
+          '--force-reinstall', '--no-deps', wheels[0]])"
+      - name: Installed CLI smoke
+        run: specgrain --help

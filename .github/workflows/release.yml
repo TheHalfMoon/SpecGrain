@@ -1,0 +1,87 @@
+name: Release v0.1.0
+
+on:
+  workflow_run:
+    workflows:
+      - CI
+    types:
+      - completed
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_branch == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+      - name: Validate release metadata
+        run: |
+          python -c "import tomllib; data=tomllib.load(open('pyproject.toml','rb')); assert data['project']['version'] == '0.1.0'"
+      - name: Build release distributions
+        run: |
+          python -m pip install build
+          python -m build
+          python -c "from pathlib import Path; files=sorted(p.name for p in Path('dist').iterdir()); assert files == ['specgrain-0.1.0-py3-none-any.whl', 'specgrain-0.1.0.tar.gz'], files"
+      - name: Create immutable tag and GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_SHA: ${{ github.event.workflow_run.head_sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --tags
+
+          tag_exists=false
+          existing=""
+          if git rev-parse -q --verify refs/tags/v0.1.0 >/dev/null; then
+            tag_exists=true
+            existing="$(git rev-list -n 1 v0.1.0)"
+          fi
+
+          if gh release view v0.1.0 >/dev/null 2>&1; then
+            if [ "$tag_exists" != "true" ]; then
+              echo "GitHub Release v0.1.0 exists without the expected Git tag." >&2
+              exit 1
+            fi
+            state="$(gh release view v0.1.0 --json tagName,isDraft,isPrerelease --jq '[.tagName,.isDraft,.isPrerelease] | @tsv')"
+            if [ "$state" != $'v0.1.0\tfalse\tfalse' ]; then
+              echo "Existing v0.1.0 release is not the expected public immutable release: $state" >&2
+              exit 1
+            fi
+            assets="$(gh release view v0.1.0 --json assets --jq '.assets[].name' | sort)"
+            expected_assets="$(printf '%s\n' 'specgrain-0.1.0-py3-none-any.whl' 'specgrain-0.1.0.tar.gz' | sort)"
+            if [ "$assets" != "$expected_assets" ]; then
+              echo "Existing v0.1.0 release assets do not match the immutable release contract." >&2
+              exit 1
+            fi
+            echo "SpecGrain v0.1.0 is already published at immutable tag target $existing; no release mutation is required."
+            exit 0
+          fi
+
+          if [ "$tag_exists" = "true" ]; then
+            if [ "$existing" != "$RELEASE_SHA" ]; then
+              echo "v0.1.0 already points to $existing, expected first-release SHA $RELEASE_SHA" >&2
+              exit 1
+            fi
+          else
+            git tag v0.1.0 "$RELEASE_SHA"
+            git push origin refs/tags/v0.1.0
+          fi
+
+          gh release create v0.1.0 \
+            dist/specgrain-0.1.0-py3-none-any.whl \
+            dist/specgrain-0.1.0.tar.gz \
+            --verify-tag \
+            --target "$RELEASE_SHA" \
+            --title "SpecGrain v0.1.0" \
+            --notes-file docs/releases/v0.1.0.md

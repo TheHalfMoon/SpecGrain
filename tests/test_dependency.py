@@ -93,8 +93,8 @@ def test_aggregate_error_preserves_exact_issues() -> None:
 
 
 def test_state_classifications_are_disjoint_and_exact() -> None:
-    assert DEPENDENCY_SATISFIED_STATES == frozenset({SpecState.VERIFIED, SpecState.CONTROLLED})
-    assert DEPENDENCY_BLOCKER_STATES == frozenset(
+    assert frozenset({SpecState.VERIFIED, SpecState.CONTROLLED}) == DEPENDENCY_SATISFIED_STATES
+    assert frozenset(
         {
             SpecState.BLOCKED,
             SpecState.FAILED,
@@ -102,7 +102,7 @@ def test_state_classifications_are_disjoint_and_exact() -> None:
             SpecState.CANCELLED,
             SpecState.SUPERSEDED,
         }
-    )
+    ) == DEPENDENCY_BLOCKER_STATES
     assert not (DEPENDENCY_SATISFIED_STATES & DEPENDENCY_BLOCKER_STATES)
 
 

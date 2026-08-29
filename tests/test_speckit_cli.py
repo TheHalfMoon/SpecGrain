@@ -5,7 +5,6 @@ from pathlib import Path
 
 from specgrain.cli import main
 
-
 SPEC = """# Feature Specification: CLI Import
 
 **Feature Branch**: `013-cli-import`

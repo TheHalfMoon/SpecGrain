@@ -24,6 +24,6 @@
 
 ## PR closeout
 
-- [ ] T014 Open bounded PR with exact-head evidence.
-- [ ] T015 Resolve every material exact-head review defect.
-- [ ] T016 Merge only with expected-head evidence, re-read canonical `main`, then begin 016.
+- [x] T014 Open bounded PR #17 at exact documentation head `14e3d7e6a301148e0a25c2e98134fe8a6c573b54`.
+- [x] T015 Resolve every material exact-head review defect; no material review threads remained, while CodeRabbit auto-review and Qodo review were unavailable as substantive reviewers.
+- [x] T016 Merge with expected-head protection into canonical merge commit `001a70fcabff497c565fa7339381c4da0b4a3881`; second parent is exact reviewed PR head `14e3d7e6a301148e0a25c2e98134fe8a6c573b54`.

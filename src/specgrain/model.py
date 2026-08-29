@@ -59,7 +59,7 @@ def _normalize_string_sequence(
     *,
     ids: bool = False,
 ) -> tuple[str, ...]:
-    if isinstance(value, (str, bytes, bytearray)) or not isinstance(value, Sequence):
+    if isinstance(value, str | bytes | bytearray) or not isinstance(value, Sequence):
         raise SpecValidationError(f"{field_name} must be a sequence of strings")
 
     normalized: list[str] = []
@@ -75,7 +75,7 @@ def _normalize_string_sequence(
 
 
 def _freeze_json(value: object, path: str) -> object:
-    if value is None or isinstance(value, (str, bool, int)):
+    if value is None or isinstance(value, str | bool | int):
         return value
     if isinstance(value, float):
         if not math.isfinite(value):
@@ -88,7 +88,7 @@ def _freeze_json(value: object, path: str) -> object:
                 raise SpecValidationError(f"{path} contains a non-string object key")
             frozen[key] = _freeze_json(nested, f"{path}.{key}")
         return MappingProxyType(frozen)
-    if isinstance(value, (list, tuple)):
+    if isinstance(value, list | tuple):
         return tuple(_freeze_json(item, f"{path}[{index}]") for index, item in enumerate(value))
     raise SpecValidationError(f"{path} contains unsupported JSON value type {type(value).__name__}")
 

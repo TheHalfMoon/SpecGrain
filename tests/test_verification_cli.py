@@ -3,11 +3,11 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from specgrain.cli import main
-from specgrain import init_project
-from specgrain.verification import append_verification_report
-
 from test_verification import verified_report
+
+from specgrain import init_project
+from specgrain.cli import main
+from specgrain.verification import append_verification_report
 
 
 def test_prove_empty_chain_fails_without_mutation(tmp_path: Path, capsys) -> None:

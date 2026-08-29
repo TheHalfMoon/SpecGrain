@@ -12,7 +12,6 @@ from specgrain.speckit import (
     load_spec_kit_feature,
 )
 
-
 SPEC = """# Feature Specification: Search Workspace
 
 **Feature Branch**: `013-search-workspace`

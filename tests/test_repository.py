@@ -2,11 +2,11 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 from pathlib import Path
 
 import pytest
 
-import sys
 sys.path.insert(0, str(Path(__file__).parents[1] / "src" / "specgrain"))
 
 from repository import RepositoryScanError, ScanLimits, scan_repository  # noqa: E402
