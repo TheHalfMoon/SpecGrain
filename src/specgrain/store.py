@@ -862,6 +862,25 @@ def create_child_draft_spec(
 
     try:
         _write_new_json(child_path, child.to_dict(), child_location)
+    except StoreExistsError as exc:
+        if _read_text(parent_path, parent_location) != parent_before_text:
+            raise StoreValidationError(
+                _AUTHORING_JOURNAL_LOCATION,
+                "child collision coincided with parent drift; explicit recovery required",
+            ) from exc
+        _remove_journal(journal_path)
+        raise
+    except Exception as exc:
+        try:
+            recover_authoring_transaction(project.root)
+        except StoreError as recovery_exc:
+            raise StoreValidationError(
+                _AUTHORING_JOURNAL_LOCATION,
+                f"authoring failed; explicit recovery required: {recovery_exc.detail}",
+            ) from exc
+        raise
+
+    try:
         _replace_json_exact(
             parent_path,
             parent_before_text,

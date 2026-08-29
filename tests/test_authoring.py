@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from collections.abc import Mapping
 from pathlib import Path
 
 import pytest
@@ -9,6 +10,7 @@ import specgrain.store as store_module
 from specgrain import (
     AuthoringRecoveryStatus,
     SpecNode,
+    StoreExistsError,
     StoreValidationError,
     create_child_draft_spec,
     create_draft_spec,
@@ -263,6 +265,44 @@ def test_parent_replace_failure_rolls_back_child_and_journal(
 
     assert parent_path.read_bytes() == parent_before
     assert not (tmp_path / ".specgrain" / "specs" / "SG-000002.json").exists()
+    assert not (tmp_path / ".specgrain" / "tmp" / "authoring-transaction.json").exists()
+
+
+def test_child_collision_does_not_delete_external_matching_file(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    init_project(tmp_path, project_id="demo")
+    parent = create_draft_spec(tmp_path, title="Parent", outcome="Parent outcome")
+    parent_path = tmp_path / ".specgrain" / "specs" / f"{parent.id}.json"
+    parent_before = parent_path.read_bytes()
+    foreign = SpecNode(
+        id="SG-000002",
+        title="Child",
+        outcome="Child outcome",
+        parent_id=parent.id,
+        state="DRAFT",
+    )
+    foreign_path = tmp_path / ".specgrain" / "specs" / f"{foreign.id}.json"
+
+    def collide(path: Path, value: Mapping[str, object], location: str) -> None:
+        del value
+        path.write_text(store_module._json_text(foreign.to_dict()), encoding="utf-8")
+        raise StoreExistsError(location, "spec already exists; refusing overwrite")
+
+    monkeypatch.setattr(store_module, "_write_new_json", collide)
+    with pytest.raises(StoreExistsError, match="refusing overwrite"):
+        create_child_draft_spec(
+            tmp_path,
+            parent_id=parent.id,
+            title="Child",
+            outcome="Child outcome",
+        )
+
+    assert parent_path.read_bytes() == parent_before
+    assert foreign_path.read_text(encoding="utf-8") == store_module._json_text(
+        foreign.to_dict()
+    )
     assert not (tmp_path / ".specgrain" / "tmp" / "authoring-transaction.json").exists()
 
 
