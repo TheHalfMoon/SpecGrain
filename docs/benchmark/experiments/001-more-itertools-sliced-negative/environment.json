@@ -1,0 +1,31 @@
+{
+  "case_id": "SGB-EXP-001",
+  "method_artifacts_excluded_from_product_diff": true,
+  "os": "ubuntu-24.04",
+  "preinstalled_project_tools": [
+    "coverage",
+    "ruff"
+  ],
+  "product_change_surface": [
+    "more_itertools/more.py",
+    "tests/test_more.py"
+  ],
+  "python": "3.11",
+  "regression_commands": [
+    "python -m unittest",
+    "ruff format --check .",
+    "ruff check more_itertools tests"
+  ],
+  "repository": "more-itertools/more-itertools",
+  "repository_revision": "ed86a1528aa015f219f8d3385ea2ebd3f63a5212",
+  "runner_image_digest": null,
+  "runner_lock_required": true,
+  "schema": "sgbench-experiment-environment-preregistration-v1",
+  "workspace": {
+    "future_repository_history_visible": false,
+    "git_metadata_present_during_agent_run": false,
+    "network_during_agent_run": "disabled",
+    "scorer_visible_during_agent_run": false,
+    "source": "source-archive-at-pinned-revision"
+  }
+}

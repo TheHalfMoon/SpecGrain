@@ -1,0 +1,25 @@
+{
+  "acceptance_oracle_digest": "sha256:139e6344de40568d6a94b0f3da11c56a0d4268c1c5a7c33ea3413eafc4c0f4fa",
+  "benchmark_version": 1,
+  "case_id": "SGB-EXP-001",
+  "environment_preregistration_digest": "sha256:e0ad12a29bba4125417d9b13cb93c5e0467de034179496979913943ff08bd33b",
+  "expected_cells": 9,
+  "final_benchmark_plan_digest": null,
+  "license": "MIT",
+  "method_config_preregistration_digests": {
+    "prompt-only": "sha256:ea940f324bd6b934362110cb32babfb044dbccf94a2d6be668bae231f32f75a0",
+    "spec-kit": "sha256:e77fdbd9c1687690cfa10216399ae61b393a10755672b3be02dadd015aa10ef1",
+    "specgrain": "sha256:0ecf30c2f2d5157f4e5643734b3401e56695153891dce12d5db5ed2f2d449258"
+  },
+  "model_config_digest": null,
+  "repetitions": 3,
+  "repository": "more-itertools/more-itertools",
+  "repository_revision": "ed86a1528aa015f219f8d3385ea2ebd3f63a5212",
+  "runner_image_digest": null,
+  "schema": "sgbench-case-preregistration-v1",
+  "scorer_hidden": true,
+  "scorer_revision": "sgbench-exp001-scorer-v1",
+  "status": "PRE_REGISTERED_AWAITING_RUNNER_AND_MODEL_LOCK",
+  "task_digest": "sha256:59ee44939820af0c29da7fa9b271bd798f2d2fc8a1e5e460612727f84a39fe23",
+  "title": "more-itertools sliced negative-size brownfield fix"
+}
