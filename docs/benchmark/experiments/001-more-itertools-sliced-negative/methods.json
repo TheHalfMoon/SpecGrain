@@ -1,0 +1,68 @@
+{
+  "case_id": "SGB-EXP-001",
+  "final_benchmark_plan_digest": null,
+  "methods": [
+    {
+      "arm": "prompt-only",
+      "rules": [
+        "Provide only the common task prompt and repository contents.",
+        "Do not initialize or expose Spec Kit, SpecGrain, or another SDD method.",
+        "Allow normal repository inspection, editing, and repository test commands.",
+        "Do not expose scorer fixtures, future repository history, or network access."
+      ],
+      "schema": "sgbench-method-config-preregistration-v1"
+    },
+    {
+      "arm": "spec-kit",
+      "brownfield_init": "specify init --here --force --integration <runner-integration> --non-interactive --script py",
+      "rules": [
+        "Use only project guardrails supported by the baseline repository.",
+        "Do not expose scorer fixtures, future repository history, or network access.",
+        "Do not add optional extensions unless the final runner lock explicitly authorizes them.",
+        "The exact runner integration must be locked before any benchmark cell starts."
+      ],
+      "schema": "sgbench-method-config-preregistration-v1",
+      "upstream_repository": "github/spec-kit",
+      "upstream_revision": "51e52be6c3b26fed3ff5424c671f4a559519a759",
+      "workflow": [
+        "speckit.constitution",
+        "speckit.specify",
+        "speckit.clarify",
+        "speckit.plan",
+        "speckit.tasks",
+        "speckit.analyze",
+        "speckit.implement",
+        "speckit.converge"
+      ]
+    },
+    {
+      "arm": "specgrain",
+      "repository": "TheHalfMoon/SpecGrain",
+      "revision": "3b07063fbc466ee051687c488ea93b95814dc7fb",
+      "rules": [
+        "Use native SpecGrain authoring/preparation commands through GRAIN.",
+        "Do not claim READY, RUNNING, VERIFYING, VERIFIED, or CONTROLLED state.",
+        "Do not use unavailable executor orchestration or verification mutation.",
+        "After GRAIN, perform the code change through the runner's ordinary editing surface and preserve the handoff as an observed process fact.",
+        "Do not expose scorer fixtures, future repository history, or network access."
+      ],
+      "schema": "sgbench-method-config-preregistration-v1",
+      "workflow": [
+        "specgrain scan",
+        "specgrain init",
+        "specgrain draft",
+        "specgrain shape",
+        "specgrain refine",
+        "specgrain grain",
+        "specgrain check",
+        "specgrain next",
+        "manual external implementation after GRAIN",
+        "repository verification commands"
+      ]
+    }
+  ],
+  "model_provider_lock": null,
+  "runner_integration_lock": null,
+  "schema": "sgbench-methods-preregistration-v1",
+  "status": "AWAITING_RUNNER_AND_MODEL_LOCK"
+}
