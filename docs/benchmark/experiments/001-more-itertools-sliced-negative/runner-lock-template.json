@@ -1,0 +1,26 @@
+{
+  "case_id": "SGB-EXP-001",
+  "environment_digest": "<sha256:...>",
+  "final_benchmark_plan_digest": "<sha256:...>",
+  "installed_spec_kit_artifact_digest": "<sha256:...>",
+  "installed_specgrain_artifact_digest": "<sha256:...>",
+  "method_config_digests": {
+    "prompt-only": "<sha256:...>",
+    "spec-kit": "<sha256:...>",
+    "specgrain": "<sha256:...>"
+  },
+  "model_config": {
+    "model": "<exact-model-id>",
+    "provider": "<provider>",
+    "settings": "<canonical-settings-description>"
+  },
+  "model_config_digest": "<sha256:...>",
+  "runner": {
+    "agent": "<coding-agent-or-runner>",
+    "integration_key": "<spec-kit-integration-key>",
+    "runner_image_digest": "<sha256-or-container-digest>",
+    "version": "<exact-version>"
+  },
+  "schema": "sgbench-runner-lock-v1",
+  "status": "LOCKED_BEFORE_FIRST_CELL"
+}
