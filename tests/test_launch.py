@@ -95,16 +95,17 @@ def test_readme_distinguishes_published_release_from_current_source() -> None:
         "specgrain shape",
         "specgrain refine",
         "specgrain grain",
+        "specgrain packet",
     ):
         assert command in readme
-    for unsupported in ("specgrain ask ", "specgrain packet ", "specgrain verify "):
+    for unsupported in ("specgrain ask ", "specgrain verify "):
         assert unsupported not in readme
     assert "refs/tags/v0.3.0.zip" in readme
     assert "### Published v0.3.0 CLI" in readme
     assert "### Current source additions after v0.3.0" in readme
     assert (
         "The historical v0.3.0 tag and GitHub Release do not contain `shape`, `refine`, "
-        "or `grain`."
+        "`grain`, or `packet`."
     ) in readme
     assert "No `GRAIN -> READY`" in readme
 
