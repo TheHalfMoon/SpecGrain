@@ -73,7 +73,7 @@ def test_competing_supported_writer_fails_closed_while_first_writer_holds_lock(
     assert injected is True
     assert competitor_error is not None
     assert competitor_error.location == ".specgrain/tmp/pregrain-mutation.lock"
-    assert "already in progress" in competitor_error.message
+    assert "already in progress" in competitor_error.detail
     stored = load_project(tmp_path).specs[0]
     assert stored.revision_digest == writer_a.node.revision_digest
     assert stored.scope_in == ("Implement writer_a",)
@@ -153,6 +153,7 @@ def test_persistent_anchor_does_not_block_sequential_shape_refine_grain(tmp_path
 def test_non_regular_lock_anchor_fails_closed_before_spec_mutation(tmp_path: Path) -> None:
     draft = _draft(tmp_path)
     lock_path = tmp_path / ".specgrain" / "tmp" / "pregrain-mutation.lock"
+    lock_path.parent.mkdir()
     lock_path.mkdir()
 
     before = (tmp_path / ".specgrain" / "specs" / f"{draft.id}.json").read_bytes()
