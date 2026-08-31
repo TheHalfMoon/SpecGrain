@@ -150,6 +150,25 @@ def test_persistent_anchor_does_not_block_sequential_shape_refine_grain(tmp_path
     assert (tmp_path / ".specgrain" / "tmp" / "pregrain-mutation.lock").is_file()
 
 
+def test_refine_and_grain_share_the_same_contention_boundary(tmp_path: Path) -> None:
+    draft = _draft(tmp_path)
+    _shape(tmp_path, draft.id)
+
+    with pregrain_module._pregrain_mutation_lock(tmp_path):
+        with pytest.raises(StoreValidationError, match="already in progress"):
+            refine_shaped_spec(tmp_path, spec_id=draft.id)
+
+    refined = refine_shaped_spec(tmp_path, spec_id=draft.id)
+    assert refined.node.state == "REFINING"
+
+    with pregrain_module._pregrain_mutation_lock(tmp_path):
+        with pytest.raises(StoreValidationError, match="already in progress"):
+            promote_refining_spec_to_grain(tmp_path, spec_id=draft.id)
+
+    grain = promote_refining_spec_to_grain(tmp_path, spec_id=draft.id)
+    assert grain.node.state == "GRAIN"
+
+
 def test_non_regular_lock_anchor_fails_closed_before_spec_mutation(tmp_path: Path) -> None:
     draft = _draft(tmp_path)
     lock_path = tmp_path / ".specgrain" / "tmp" / "pregrain-mutation.lock"
@@ -162,6 +181,28 @@ def test_non_regular_lock_anchor_fails_closed_before_spec_mutation(tmp_path: Pat
     after = (tmp_path / ".specgrain" / "specs" / f"{draft.id}.json").read_bytes()
 
     assert after == before
+
+
+def test_symlink_lock_anchor_fails_closed_without_following_target(tmp_path: Path) -> None:
+    draft = _draft(tmp_path)
+    lock_path = tmp_path / ".specgrain" / "tmp" / "pregrain-mutation.lock"
+    lock_path.parent.mkdir()
+    target = tmp_path / "lock-target"
+    target.write_bytes(b"sentinel")
+    try:
+        lock_path.symlink_to(target)
+    except OSError as exc:  # pragma: no cover - platform privilege dependent
+        pytest.skip(f"symlink creation unavailable: {exc}")
+
+    spec_path = tmp_path / ".specgrain" / "specs" / f"{draft.id}.json"
+    spec_before = spec_path.read_bytes()
+    target_before = target.read_bytes()
+
+    with pytest.raises(StoreValidationError, match="regular non-symlink file"):
+        _shape(tmp_path, draft.id)
+
+    assert spec_path.read_bytes() == spec_before
+    assert target.read_bytes() == target_before
 
 
 def test_process_exit_releases_lock_ownership_and_reads_remain_unlocked(tmp_path: Path) -> None:
