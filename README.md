@@ -45,11 +45,11 @@ specgrain recover specgrain-demo
 
 Recovery only clears, rolls back, or finalizes an exact recognized transaction state. Ambiguous parent/child state is preserved for manual investigation instead of being guessed or overwritten.
 
-The published v0.3.0 release includes root and child DRAFT authoring plus explicit recovery. It does **not** contain `shape`, `refine`, or `grain`.
+The published v0.3.0 release includes root and child DRAFT authoring plus explicit recovery. It does **not** contain `shape`, `refine`, `grain`, or `packet`.
 
-## Current source workflow after Specification 022
+## Current source workflow after Specification 024
 
-Current source adds a bounded native path from an existing `DRAFT` through deterministic Grain preparation:
+Current source includes the bounded native Grain-preparation path introduced by Specification 022:
 
 ```text
 DRAFT -> SHAPED -> REFINING -> GRAIN
@@ -79,7 +79,34 @@ specgrain next specgrain-demo
 
 `shape` mutates only one existing `DRAFT` and does not invent risk, recovery, context, evidence, minimality, or safety claims. `refine` is a state-only `SHAPED -> REFINING` transition. `grain` re-evaluates the unchanged deterministic Grain-readiness rules and refuses mutation with stable blockers unless the exact current candidate is ready. The state-only transitions preserve the semantic revision digest.
 
-Specification 022 stops at `GRAIN`. No `GRAIN -> READY`, WorkPacket execution, agent/provider orchestration, verification execution, or evidence mutation is authorized by these commands.
+Specification 024 adds one read-only handoff command for an already dependency-eligible `GRAIN`. Context accounting remains explicit; write a bounded UTF-8 JSON array containing exact `ContextSource` records, for example:
+
+```json
+[
+  {
+    "source_id": "health-contract",
+    "provenance": "repo:docs/health-contract.md",
+    "selection_reason": "Bind the explicit health response contract to execution.",
+    "revision": "git:0123456789abcdef",
+    "size_bytes": 640,
+    "token_cost": 160,
+    "requirement": "required",
+    "priority": 0
+  }
+]
+```
+
+Then export the existing deterministic WorkPacket contract:
+
+```bash
+specgrain packet SG-000001 specgrain-demo \
+  --context-sources context-sources.json \
+  --json
+```
+
+`packet` accepts at most 1 MiB of explicit context-source accounting records, applies the Grain's existing token budget through the existing context-budget rules, and emits the existing canonical WorkPacket representation. It does not read the content named by `provenance`, discover context, use a model or network, invoke an executor, write a packet into `.specgrain/`, or advance lifecycle state.
+
+Current source therefore still stops lifecycle authority at `GRAIN`. No `GRAIN -> READY`, WorkPacket execution, agent/provider orchestration, execution-result ingestion, verification execution, or evidence mutation is authorized by these commands.
 
 ## What is a Grain?
 
@@ -119,10 +146,11 @@ Every command in this table exists in the historical `v0.3.0` tag and GitHub Rel
 | `specgrain shape <spec-id> [path] ...` | Explicitly populate one DRAFT candidate and advance it to SHAPED. |
 | `specgrain refine <spec-id> [path]` | Advance exactly SHAPED to REFINING without semantic mutation. |
 | `specgrain grain <spec-id> [path]` | Promote exactly REFINING to GRAIN only after current readiness succeeds. |
+| `specgrain packet <spec-id> [path] --context-sources <json-file>` | Export an eligible GRAIN through the existing deterministic WorkPacket contract without lifecycle mutation or execution. |
 
-The historical v0.3.0 tag and GitHub Release do not contain `shape`, `refine`, or `grain`. These commands are current-source additions from Specification 022; no new release or version bump is claimed here.
+The historical v0.3.0 tag and GitHub Release do not contain `shape`, `refine`, `grain`, or `packet`. These are current-source additions; no new release or version bump is claimed here.
 
-Inspection commands and the bounded mutation commands provide deterministic output; JSON is available where `--json` is supported. SpecGrain remains a deterministic control plane, not an agent runner or hosted service. External agents integrate through portable WorkPacket/result adapter contracts rather than becoming verification authority.
+Inspection commands and the bounded mutation/export commands provide deterministic output; JSON is available where `--json` is supported. SpecGrain remains a deterministic control plane, not an agent runner or hosted service. External agents integrate through portable WorkPacket/result adapter contracts rather than becoming verification authority.
 
 ## Zero to VERIFIED
 
@@ -132,7 +160,7 @@ The repository includes a runnable API example that creates a Grain candidate, c
 python examples/zero_to_verified.py
 ```
 
-See [`examples/zero_to_verified.py`](examples/zero_to_verified.py). The example is executed by the test suite; `VERIFIED` is derived from independent checks, not from the executor's success claim. The example demonstrates existing API capability and is not a claim that Specification 022 authorizes a native CLI transition beyond `GRAIN`.
+See [`examples/zero_to_verified.py`](examples/zero_to_verified.py). The example is executed by the test suite; `VERIFIED` is derived from independent checks, not from the executor's success claim. The example demonstrates existing API capability and is not a claim that the native CLI authorizes a transition beyond `GRAIN`.
 
 ## Brownfield first
 

@@ -6,8 +6,19 @@ import argparse
 import json
 import sys
 from collections.abc import Sequence
+from pathlib import Path
 
-from .model import SpecValidationError
+from .context import (
+    ContextBudgetError,
+    ContextBudgetPolicy,
+    ContextSource,
+    ContextValidationError,
+    require_context_budget,
+    validate_context_sources,
+)
+from .lifecycle import SpecState
+from .model import SpecValidationError, is_spec_id
+from .packet import PacketValidationError, build_work_packet
 from .pregrain import (
     GrainPromotionBlockedError,
     PreGrainMutationResult,
@@ -26,9 +37,28 @@ from .store import (
     create_child_draft_spec,
     create_draft_spec,
     init_project,
+    load_project,
     recover_authoring_transaction,
 )
 from .verification import ProofResult, VerificationError, load_proof
+
+_PACKET_CONTEXT_SOURCE_MAX_BYTES = 1_048_576
+_PACKET_CONTEXT_SOURCE_FIELDS = frozenset(
+    {
+        "source_id",
+        "provenance",
+        "selection_reason",
+        "revision",
+        "size_bytes",
+        "token_cost",
+        "requirement",
+        "priority",
+    }
+)
+
+
+class _PacketCliError(ValueError):
+    """Expected fail-closed packet CLI input/state error."""
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -118,6 +148,19 @@ def _parser() -> argparse.ArgumentParser:
     next_parser.add_argument("path", nargs="?", default=".")
     next_parser.add_argument("--json", action="store_true", dest="as_json")
 
+    packet = subparsers.add_parser(
+        "packet",
+        help="export one dependency-eligible GRAIN as a portable WorkPacket",
+    )
+    packet.add_argument("spec_id")
+    packet.add_argument("path", nargs="?", default=".")
+    packet.add_argument(
+        "--context-sources",
+        required=True,
+        help="UTF-8 ContextSource JSON array (maximum 1048576 bytes)",
+    )
+    packet.add_argument("--json", action="store_true", dest="as_json")
+
     scan = subparsers.add_parser("scan", help="scan deterministic brownfield repository facts")
     scan.add_argument("path", nargs="?", default=".")
     scan.add_argument("--json", action="store_true", dest="as_json")
@@ -181,6 +224,18 @@ def _render_next_text(result: NextResult) -> str:
     for issue in result.issues:
         lines.append(f"- [{issue.code}] {issue.location}: {issue.message}")
     return "\n".join(lines)
+
+
+def _render_packet_text(packet) -> str:
+    return "\n".join(
+        [
+            "SpecGrain packet: EXPORTED",
+            f"Spec: {packet.spec_id}",
+            f"Revision: {packet.spec_revision}",
+            f"Context plan: {packet.context_plan_digest}",
+            f"Packet: {packet.packet_digest}",
+        ]
+    )
 
 
 def _render_scan_text(result: RepositoryMap) -> str:
@@ -294,6 +349,88 @@ def _json_error(message: str) -> str:
     )
 
 
+def _strict_json_object(pairs: list[tuple[str, object]]) -> dict[str, object]:
+    result: dict[str, object] = {}
+    for key, value in pairs:
+        if key in result:
+            raise _PacketCliError(
+                f"context source input contains duplicate object key {key!r}"
+            )
+        result[key] = value
+    return result
+
+
+def _reject_json_constant(token: str) -> object:
+    raise _PacketCliError(
+        f"context source input contains non-finite numeric token {token!r}"
+    )
+
+
+def _load_packet_context_sources(value: str) -> tuple[ContextSource, ...]:
+    path = Path(value)
+    try:
+        if path.is_symlink():
+            raise _PacketCliError("context source input must not be a symlink")
+        if not path.is_file():
+            raise _PacketCliError("context source input must be a regular file")
+        size = path.stat().st_size
+        if size > _PACKET_CONTEXT_SOURCE_MAX_BYTES:
+            raise _PacketCliError(
+                "context source input exceeds "
+                f"{_PACKET_CONTEXT_SOURCE_MAX_BYTES}-byte limit"
+            )
+        raw = path.read_bytes()
+    except _PacketCliError:
+        raise
+    except OSError as exc:
+        raise _PacketCliError("context source input could not be read") from exc
+
+    try:
+        text = raw.decode("utf-8")
+    except UnicodeDecodeError as exc:
+        raise _PacketCliError("context source input is not valid UTF-8") from exc
+
+    try:
+        payload = json.loads(
+            text,
+            object_pairs_hook=_strict_json_object,
+            parse_constant=_reject_json_constant,
+        )
+    except _PacketCliError:
+        raise
+    except json.JSONDecodeError as exc:
+        raise _PacketCliError(
+            f"context source input is malformed JSON: {exc.msg}"
+        ) from exc
+
+    if not isinstance(payload, list):
+        raise _PacketCliError("context source input top-level value must be an array")
+
+    sources: list[ContextSource] = []
+    for index, item in enumerate(payload):
+        if not isinstance(item, dict):
+            raise _PacketCliError(f"context_sources[{index}] must be an object")
+        unknown = sorted(set(item) - _PACKET_CONTEXT_SOURCE_FIELDS)
+        missing = sorted(_PACKET_CONTEXT_SOURCE_FIELDS - set(item))
+        if unknown:
+            raise _PacketCliError(
+                f"context_sources[{index}] has unknown fields: {', '.join(unknown)}"
+            )
+        if missing:
+            raise _PacketCliError(
+                f"context_sources[{index}] is missing fields: {', '.join(missing)}"
+            )
+        try:
+            source = ContextSource(**item)
+        except (ContextValidationError, TypeError) as exc:
+            raise _PacketCliError(
+                f"context_sources[{index}] is invalid: {exc}"
+            ) from exc
+        sources.append(source)
+
+    return validate_context_sources(sources)
+
+
 def _render_grain_blocked_json(exc: GrainPromotionBlockedError) -> str:
     report = exc.report
     return json.dumps(
@@ -390,6 +527,71 @@ def _run_pregrain_command(args: argparse.Namespace) -> int:
         )
     else:
         print(_render_pregrain_text(command, result))
+    return 0
+
+
+def _run_packet_command(args: argparse.Namespace) -> int:
+    try:
+        if not is_spec_id(args.spec_id):
+            raise _PacketCliError("spec_id must be a canonical SpecGrain ID")
+
+        project = load_project(args.path)
+        matches = tuple(node for node in project.specs if node.id == args.spec_id)
+        if not matches:
+            raise _PacketCliError(f"spec {args.spec_id} was not found")
+        if len(matches) != 1:
+            raise _PacketCliError(f"spec {args.spec_id} is not unique")
+        node = matches[0]
+        if node.state != SpecState.GRAIN.value:
+            raise _PacketCliError(
+                f"spec {args.spec_id} must be in GRAIN state for packet export"
+            )
+
+        next_result = next_project(args.path)
+        if not next_result.valid:
+            details = "; ".join(
+                f"[{issue.code}] {issue.location}: {issue.message}"
+                for issue in next_result.issues
+            )
+            raise _PacketCliError(
+                "project dependency state is invalid"
+                + (f": {details}" if details else "")
+            )
+        if args.spec_id not in next_result.eligible_ids:
+            raise _PacketCliError(f"spec {args.spec_id} is not dependency-eligible")
+
+        sources = _load_packet_context_sources(args.context_sources)
+        policy = ContextBudgetPolicy(max_tokens=node.context.get("budget_tokens"))
+        context_report = require_context_budget(sources, policy)
+        by_id = {source.source_id: source for source in sources}
+        selected_sources = tuple(
+            by_id[source_id] for source_id in context_report.selected_ids
+        )
+        packet = build_work_packet(node, selected_sources, context_report)
+    except (
+        _PacketCliError,
+        ContextBudgetError,
+        ContextValidationError,
+        PacketValidationError,
+        SpecValidationError,
+        StoreError,
+    ) as exc:
+        if args.as_json:
+            print(_json_error(str(exc)), file=sys.stderr)
+        else:
+            print(f"SpecGrain packet: FAIL\n- {exc}", file=sys.stderr)
+        return 1
+    except Exception:
+        if args.as_json:
+            print(_json_error("internal error"), file=sys.stderr)
+        else:
+            print("SpecGrain packet: FAIL\n- internal error", file=sys.stderr)
+        return 1
+
+    if args.as_json:
+        print(packet.to_json())
+    else:
+        print(_render_packet_text(packet))
     return 0
 
 
@@ -537,6 +739,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         else:
             print(_render_next_text(result))
         return 0 if result.valid else 1
+
+    if args.command == "packet":
+        return _run_packet_command(args)
 
     if args.command == "scan":
         try:
