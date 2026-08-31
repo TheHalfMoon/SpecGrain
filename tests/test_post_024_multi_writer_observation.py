@@ -4,52 +4,74 @@ from pathlib import Path
 
 import pytest
 
-import specgrain.store as store_module
-from specgrain import create_child_draft_spec, create_draft_spec, init_project, load_project
+import specgrain.pregrain as pregrain_module
+from specgrain import create_draft_spec, init_project, load_project, shape_draft_spec
 
 
-def test_parent_replace_can_overwrite_concurrent_edit_after_final_preimage_check(
+def _shape(root: Path, spec_id: str, marker: str):
+    return shape_draft_spec(
+        root,
+        spec_id=spec_id,
+        scope_in=(f"Implement {marker}",),
+        scope_out=("No provider integration",),
+        acceptance=(f"{marker} acceptance passes",),
+        dependencies=(),
+        risk_level="low",
+        recovery="Revert the bounded file change.",
+        context_budget=2000,
+        context_estimate=500,
+        change_surface=(f"src/{marker}.py",),
+        change_surface_exception=None,
+        evidence=(f"{marker}-evidence",),
+        minimality_choice="native",
+        minimality_rationale="Use the existing native mutation path.",
+        safety_status="none-identified",
+        safety_requirements=(),
+    )
+
+
+def test_supported_pregrain_writer_can_lose_successful_competing_write(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    """Reproduce the documented post-024 multi-writer race without fixing it."""
+    """Reproduce the documented post-024 supported multi-writer race without fixing it."""
 
     init_project(tmp_path, project_id="post-024-observation")
-    parent = create_draft_spec(tmp_path, title="Parent", outcome="Original outcome")
-    parent_path = tmp_path / ".specgrain" / "specs" / f"{parent.id}.json"
+    draft = create_draft_spec(tmp_path, title="Candidate", outcome="Bounded outcome")
+    spec_path = tmp_path / ".specgrain" / "specs" / f"{draft.id}.json"
 
-    real_replace = store_module.os.replace
-    injected = False
+    real_replace = pregrain_module.os.replace
+    competing_result = None
 
-    def replace_with_concurrent_parent_edit(src: object, dst: object) -> None:
-        nonlocal injected
+    def replace_with_supported_competing_shape(src: Path, dst: Path) -> None:
+        nonlocal competing_result
         destination = Path(dst)
-        if destination == parent_path and not injected:
-            injected = True
-            concurrent = parent.to_dict()
-            concurrent["outcome"] = "Concurrent writer outcome"
-            parent_path.write_text(
-                store_module._json_text(concurrent),
-                encoding="utf-8",
-            )
+        if destination == spec_path and competing_result is None:
+            # Writer B uses the same supported public mutation API. It loads the
+            # still-DRAFT preimage, commits a distinct SHAPED value, confirms it,
+            # and returns success while writer A is paused immediately before its
+            # own unconditional os.replace.
+            competing_result = _shape(tmp_path, draft.id, "writer_b")
         real_replace(src, dst)
 
-    monkeypatch.setattr(store_module.os, "replace", replace_with_concurrent_parent_edit)
-
-    result = create_child_draft_spec(
-        tmp_path,
-        parent_id=parent.id,
-        title="Child",
-        outcome="Child outcome",
+    monkeypatch.setattr(
+        pregrain_module.os,
+        "replace",
+        replace_with_supported_competing_shape,
     )
 
-    assert injected is True
-    stored = {node.id: node for node in load_project(tmp_path).specs}
+    writer_a = _shape(tmp_path, draft.id, "writer_a")
 
-    # The competing valid parent write occurred after _replace_json_exact's final
-    # preimage check, but os.replace then overwrote it without detecting drift.
-    assert stored[parent.id].outcome == "Original outcome"
-    assert stored[parent.id].children == (result.child.id,)
-    assert stored[parent.id].revision_digest == result.parent_after.revision_digest
-    assert stored[result.child.id].parent_id == parent.id
-    assert not (tmp_path / ".specgrain" / "tmp" / "authoring-transaction.json").exists()
+    assert competing_result is not None
+    writer_b = competing_result
+    assert writer_b.node.scope_in == ("Implement writer_b",)
+    assert writer_a.node.scope_in == ("Implement writer_a",)
+    assert writer_b.node.revision_digest != writer_a.node.revision_digest
+
+    stored = load_project(tmp_path).specs[0]
+
+    # Both supported calls returned success, but writer A's later os.replace
+    # silently overwrote writer B after A's final preimage check had already run.
+    assert stored.revision_digest == writer_a.node.revision_digest
+    assert stored.scope_in == ("Implement writer_a",)
+    assert stored.revision_digest != writer_b.node.revision_digest
