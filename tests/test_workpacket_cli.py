@@ -494,6 +494,6 @@ def test_packet_help_is_available_without_project_state(
     assert exc_info.value.code == 0
     captured = capsys.readouterr()
     assert "--context-sources" in captured.out
-    assert "WorkPacket" in captured.out
-    assert "dependency-eligible GRAIN" in captured.out
+    assert "UTF-8 ContextSource JSON array" in captured.out
+    assert "maximum 1048576 bytes" in captured.out
     assert captured.err == ""
