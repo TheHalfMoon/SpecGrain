@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+from dataclasses import replace
 from pathlib import Path
 
 import pytest
@@ -75,7 +76,7 @@ def _promote_to_grain(
         "--context-budget",
         str(budget),
         "--context-estimate",
-        "16",
+        str(min(16, budget)),
         "--change-surface",
         "src/example.py",
         "--evidence",
@@ -327,7 +328,15 @@ def test_packet_rejects_invalid_dependency_graph(
         title="Broken dependency graph",
         outcome="Fail closed when the dependency graph is invalid.",
     )
-    _promote_to_grain(tmp_path, capsys, target, dependencies=("SG-999999",))
+    _promote_to_grain(tmp_path, capsys, target)
+    project = load_project(tmp_path)
+    current = next(node for node in project.specs if node.id == target)
+    corrupted = replace(current, dependencies=("SG-999999",))
+    spec_path = tmp_path / ".specgrain" / "specs" / f"{target}.json"
+    spec_path.write_text(
+        json.dumps(corrupted.to_dict(), sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
     source_file = tmp_path / "context.json"
     _write_sources(source_file, [_record()])
     before = _store_snapshot(tmp_path)
@@ -485,5 +494,6 @@ def test_packet_help_is_available_without_project_state(
     assert exc_info.value.code == 0
     captured = capsys.readouterr()
     assert "--context-sources" in captured.out
-    assert "portable WorkPacket" in captured.out
+    assert "WorkPacket" in captured.out
+    assert "dependency-eligible GRAIN" in captured.out
     assert captured.err == ""
