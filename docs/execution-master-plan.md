@@ -53,7 +53,7 @@ Specification 000 established the project foundation and constitution. Specifica
 - Specification 022 — Native Grain Preparation: `CLOSED_CANONICAL`.
 - Specification 023 — Spec Kit Preset-Compatible Import: `CLOSED_CANONICAL`.
 - Specification 024 — Native WorkPacket Export: `CLOSED_CANONICAL`.
-- Specification 025 — Supported Pre-Grain Writer Serialization: `CLOSED_CANONICAL` when this final evidence reconciliation is canonical.
+- Specification 025 — Supported Pre-Grain Writer Serialization: `CLOSED_CANONICAL`.
 
 The latest published release remains `v0.3.0` at exact historical source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
 
@@ -107,7 +107,7 @@ post_product_ci = 33434910548
 
 The final push, PR, and canonical post-product CI each completed `success` across all five permanent cells. PR #55 merged with expected-head protection after exact head/base, scope, mergeability, reviews, threads, and comments were rechecked.
 
-## Specification 025 canonical closeout proof
+## Specification 025 canonical closeout and reconciliation proof
 
 ```text
 closeout_head = 885823e0e56dfd3e7c7c8e63d8dacc41b14448f2
@@ -116,17 +116,21 @@ closeout_pr = 56
 closeout_pr_ci = 33435703680
 closeout_merge = e05df4bd046590ee043115c1edbcd7b83163b4ad
 post_closeout_ci = 33436130730
+reconciliation_head = c145578694100383d7292fc76b5995cee8a0e121
+reconciliation_push_ci = 33436685449
+reconciliation_pr = 57
+reconciliation_pr_ci = 33436869583
+reconciliation_merge = 8a0da2908f6251100a0d7ab71178c2a7c3ed64bb
+post_reconciliation_ci = 33437077692
 ```
 
-The closeout diff changed exactly eight documentation/governance/evidence paths. It did not modify product code, tests, workflows, dependencies, package metadata, release assets, or benchmark state.
-
-PR #56 remained on exact base `5e3966fb0db3d8971b5abe19106949001ed55ba9` and exact head `885823e0e56dfd3e7c7c8e63d8dacc41b14448f2`, was mergeable, had no submitted reviews or inline review threads, and merged with expected-head protection as `e05df4bd046590ee043115c1edbcd7b83163b4ad`. Its exact parent is the product merge. Post-closeout CI `33436130730` completed `success` across all five permanent cells.
+The closeout and reconciliation diffs were documentation/governance/evidence-only. PR #56 merged with expected-head protection from the exact product merge. PR #57 merged as the final evidence reconciliation, and canonical post-reconciliation CI `33437077692` completed `success` across all five permanent cells.
 
 Qodo was billing-blocked, automatic CodeRabbit review was skipped by repository-star policy, and Cubic was descriptive only where those systems appeared. None was treated as PASS.
 
 ## Historical release preservation
 
-After Specification 025 closeout, historical `v0.3.0` remains unchanged:
+After final reconciliation, historical `v0.3.0` remains unchanged:
 
 - source `70dd66aba0e68ae710e6ef12605ed153d107bab4`;
 - Release `378962445`;
@@ -135,7 +139,7 @@ After Specification 025 closeout, historical `v0.3.0` remains unchanged:
 
 ## Closed frontier — Specification 025
 
-When this final evidence reconciliation is canonical, Specification 025 is `CLOSED_CANONICAL` and the program state is `POST_025_OBSERVATION`.
+Specification 025 is `CLOSED_CANONICAL` and the program state is `POST_025_OBSERVATION`.
 
 There is no active product specification. All currently shaped and authorized product work is complete.
 
@@ -159,4 +163,4 @@ Explicit residuals remain unselected: arbitrary non-cooperating writer coordinat
 
 ## Program continuation rule
 
-After this final reconciliation becomes canonical and its canonical post-merge CI succeeds, remain in observation/evidence gathering. Do not invent Specification 026 merely to continue activity. Shape another specification only when fresh reproducible evidence against the new live canonical truth selects a bounded product gap.
+Remain in observation/evidence gathering. Do not invent Specification 026 merely to continue activity. Shape another specification only when fresh reproducible evidence against live canonical truth selects a bounded product gap.
