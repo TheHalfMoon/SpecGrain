@@ -1,49 +1,50 @@
 # Closeout — Specification 024 Native WorkPacket Export
 
-**Closeout state:** `CLOSEOUT_CANDIDATE`  
+**Closeout state:** `CLOSED_CANONICAL` when this final evidence reconciliation is canonical  
 **Canonical shaping merge:** `440a8b14459ade2fe8235cc873229dd87ba926b5`  
 **Final implementation head:** `7e1db87f69108fc8693b987e77d20f92e4f46866`  
-**Implementation PR:** #50 — merged/closed  
 **Canonical product merge:** `1666ba8c135ee8575f1546019ab592db32947dd2`  
-**Canonical post-product CI:** `33422235433` — `completed/success`  
+**Canonical closeout merge:** `519680c5cf378dfcb4673cf7292bcf51e9c36af1`  
 **Published release preserved:** `v0.3.0` / Release `378962445`
 
-This document prepares the documentation-only closeout for Specification 024. It does not declare final canonical closure. `CLOSED_CANONICAL` requires the closeout PR, canonical post-closeout CI, historical release re-verification, and a final evidence reconciliation.
+This final reconciliation records only evidence already proven from live GitHub truth. It makes no product change and selects no successor specification.
 
-## Outcome delivered
+## Delivered outcome
 
-Current source now provides one bounded native export surface:
+Current source provides one bounded native export surface:
 
 ```text
 specgrain packet <spec_id> [path] --context-sources <json-file> [--json]
 ```
 
-The delivered boundary:
+The delivered boundary requires an exact dependency-eligible stored `GRAIN`, accepts only explicit bounded `ContextSource.to_dict()` JSON records, reuses the Grain's existing token budget and existing context-budget primitives, and builds output exclusively through existing `build_work_packet` semantics.
 
-- requires the exact stored target state `GRAIN`;
-- requires a valid dependency graph and current native dependency eligibility;
-- accepts only explicit bounded UTF-8 `ContextSource.to_dict()` JSON records;
-- rejects duplicate JSON keys, non-finite numbers, malformed/non-array input, missing/unknown fields, invalid ContextSource values, duplicate source IDs, symlinks, non-files, oversized files, and invalid UTF-8;
-- uses only the Grain's existing `budget_tokens` through existing context-budget primitives;
-- builds output only through existing `build_work_packet` semantics;
-- emits canonical WorkPacket JSON or a stable digest summary;
-- remains read-only with respect to `.specgrain/`, lifecycle, execution results, verification, and evidence.
+It rejects malformed/non-canonical/unsafe context input and remains read-only with respect to `.specgrain/`, lifecycle, execution results, verification, and evidence. It adds no executor, provider, network, LLM, runtime dependency, release, hosted, or later-lifecycle authority.
 
-No `GRAIN -> READY`, executor/provider invocation, result ingestion, verification execution, evidence mutation, automatic context discovery, source-content packing, network/LLM selection, schema/version redesign, stronger locking, release publication, or hosted authority was added.
+## Selection and shaping proof
 
-## Authority and shaping proof
+Selection evidence:
 
-Selection came from deterministic interoperability evidence on observation head `95e5358ed420cd2e6fbd0bc7c56690763cea1283`, fixture blob `58cb3e355468f6bcd7de63b676dba52361ff0dd7`, with CI run `33416110142` succeeding across all five permanent cells.
+```text
+canonical_base = f2e8378dcba0cfea2beedc6da61324b0c3fea95e
+observation_head = 95e5358ed420cd2e6fbd0bc7c56690763cea1283
+fixture_blob = 58cb3e355468f6bcd7de63b676dba52361ff0dd7
+ci_run = 33416110142
+ci_result = completed/success across all five permanent cells
+```
 
-Shaping PR #49 merged exact head `043abdf8f15f688cdbae746c0abd83dda74d0dae` with expected-head protection as canonical shaping merge `440a8b14459ade2fe8235cc873229dd87ba926b5`. Push CI `33416602621`, PR CI `33416635970`, and canonical post-shaping CI `33416908615` all completed `success` across the permanent five-cell matrix.
+Shaping proof:
 
-## Exact implementation evidence
+- exact head `043abdf8f15f688cdbae746c0abd83dda74d0dae`;
+- push CI `33416602621` and PR CI `33416635970` — success across five cells;
+- PR #49 expected-head merge `440a8b14459ade2fe8235cc873229dd87ba926b5`;
+- post-shaping CI `33416908615` — success across five cells.
 
-Final implementation head `7e1db87f69108fc8693b987e77d20f92e4f46866` passed exact push CI `33421885016` and exact PR CI `33422062846`, both `completed/success` across all five permanent cells.
+## Product proof
 
-Ubuntu/Python 3.11 on the final push run recorded `592 passed`, then passed tracked-tree cleanliness, compile, source CLI smoke, package build, built-wheel reinstall, and installed CLI smoke.
+Final implementation head `7e1db87f69108fc8693b987e77d20f92e4f46866` passed push CI `33421885016` and PR CI `33422062846` across all five permanent cells. Ubuntu/Python 3.11 recorded `592 passed` and then passed cleanliness, compile, source CLI smoke, build, built-wheel reinstall, and installed CLI smoke.
 
-The exact final product diff was bounded to five files:
+The exact product diff was bounded to:
 
 - `README.md`;
 - `src/specgrain/cli.py`;
@@ -51,47 +52,53 @@ The exact final product diff was bounded to five files:
 - `tests/test_launch.py`;
 - `tests/test_repository_cli.py`.
 
-The two additional existing test paths were explicit regression-only scope exceptions and introduced no runtime behavior.
+The last two were explicit test-only regression compatibility exceptions and introduced no runtime behavior.
 
-## Review disposition
+PR #50 had no submitted reviews and no inline review threads. Qodo was billing-blocked, automatic CodeRabbit review was skipped by repository-star policy, and Cubic was descriptive only. None was treated as PASS.
 
-Before product merge, PR #50 had no submitted reviews and no inline review threads. Qodo was billing-blocked, automatic CodeRabbit review was skipped by repository-star policy, and Cubic supplied descriptive summary text only. None was treated as independent approval or PASS.
+PR #50 merged with expected-head protection as canonical product merge `1666ba8c135ee8575f1546019ab592db32947dd2`. Post-product CI `33422235433` completed `success` across all five permanent cells.
 
-## Product merge proof
+## Closeout proof
 
-PR #50 merged with expected-head protection against exact reviewed head `7e1db87f69108fc8693b987e77d20f92e4f46866`, producing canonical product merge `1666ba8c135ee8575f1546019ab592db32947dd2`.
+Exact documentation-only closeout head:
 
-Canonical post-product CI `33422235433` completed `success` across Ubuntu/Python 3.11, 3.12, 3.13, macOS/Python 3.11, and Windows/Python 3.11.
+`12f89e22955efc632f62d52f2f0396430f4bee01`
+
+Its exact diff changed only seven governance/evidence/status documents. It changed no `src/`, tests, package metadata, workflow, dependency, or release artifact.
+
+Closeout gates all passed:
+
+- push CI `33422814705` — `completed/success` across five cells;
+- PR #51 CI `33422950629` — `completed/success` across five cells;
+- PR #51 exact head/base remained the reviewed head and canonical product merge;
+- PR #51 was mergeable before merge;
+- no submitted reviews or inline review threads existed;
+- Qodo was billing-blocked;
+- automatic CodeRabbit review was skipped by repository-star policy;
+- Cubic supplied descriptive summary text only;
+- expected-head closeout merge `519680c5cf378dfcb4673cf7292bcf51e9c36af1`;
+- closeout merge parent `1666ba8c135ee8575f1546019ab592db32947dd2`;
+- post-closeout CI `33423123321` — `completed/success` across all five permanent cells.
 
 ## Historical v0.3.0 preservation
 
-Live GitHub truth after product merge remains:
+Live GitHub truth after closeout remains:
 
 - `v0.3.0` -> `70dd66aba0e68ae710e6ef12605ed153d107bab4`;
 - Release `378962445`, target `70dd66aba0e68ae710e6ef12605ed153d107bab4`;
 - wheel asset `535129008`, size `70463`, digest `sha256:b4f724e5ae187db28053c264cf9b9612f864fe5052459c7341a7f470602fb817`;
 - source asset `535129009`, size `104057`, digest `sha256:e7dc5484b8439cf8a6c594c65b454e141fef7c94a7edb0c7cb4edfc839007835`.
 
-Historical release notes and published command claims remain unchanged. `packet` is a current-source addition only.
+Historical release notes and the published v0.3.0 command surface remain unchanged. `packet` is a current-source addition only.
 
 ## Residual boundaries
 
 The bounded concurrent-writer race retained after Specification 022 remains outside Specification 024 authority.
 
-Specification 024 exports a portable packet but deliberately does not execute it, ingest a result, run verification, mutate evidence, or advance lifecycle state. Any later native execution/result/verification workflow requires fresh reproducible evidence and separate canonical shaping.
+Specification 024 deliberately does not execute a WorkPacket, ingest an execution result, run verification, mutate evidence, advance lifecycle state, discover context automatically, or select a provider. Any such successor requires fresh reproducible evidence and separate canonical shaping.
 
-## Closeout gates
+## Final disposition
 
-This closeout candidate is eligible only for documentation/evidence/status changes. Before final closure:
+Every Specification 024 authority, implementation, review-availability, merge, CI, and historical-release-preservation gate is proven. When this reconciliation is canonical, Specification 024 is `CLOSED_CANONICAL`.
 
-1. the exact closeout head must remain documentation-only and inside Specification 024 closeout authority;
-2. exact push and PR CI must complete `success` across all five permanent cells;
-3. review comments, threads, mergeability, and review-system availability must be checked without false PASS claims;
-4. the closeout PR must merge with expected-head protection;
-5. resulting canonical `main` must pass permanent five-cell CI;
-6. historical `v0.3.0` identity must remain unchanged;
-7. final documentation-only reconciliation must publish those exact facts and only then declare `CLOSED_CANONICAL`.
-
-## Next frontier
-
-No successor product specification is selected by this closeout. After Specification 024 closes, the program returns to observation/evidence gathering unless fresh reproducible evidence independently selects another bounded successor.
+No successor product specification is selected. The program returns to observation/evidence gathering.
