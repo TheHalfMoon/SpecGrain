@@ -7,7 +7,9 @@ from pathlib import Path
 import pytest
 
 import specgrain.pregrain as pregrain_module
+import specgrain.store as store_module
 from specgrain import (
+    create_child_draft_spec,
     create_draft_spec,
     init_project,
     load_project,
@@ -15,6 +17,7 @@ from specgrain import (
     refine_shaped_spec,
     shape_draft_spec,
 )
+from specgrain.refinement import validate_refinement
 from specgrain.store import StoreValidationError
 
 
@@ -43,6 +46,10 @@ def _shape(root: Path, spec_id: str, marker: str = "writer_a"):
 def _draft(root: Path):
     init_project(root, project_id="spec-025-test")
     return create_draft_spec(root, title="Candidate", outcome="Bounded outcome")
+
+
+def test_pregrain_and_child_authoring_share_one_mutation_lock() -> None:
+    assert pregrain_module._pregrain_mutation_lock is store_module._supported_mutation_lock
 
 
 def test_competing_supported_writer_fails_closed_while_first_writer_holds_lock(
@@ -77,6 +84,112 @@ def test_competing_supported_writer_fails_closed_while_first_writer_holds_lock(
     stored = load_project(tmp_path).specs[0]
     assert stored.revision_digest == writer_a.node.revision_digest
     assert stored.scope_in == ("Implement writer_a",)
+
+
+def test_pregrain_owner_blocks_child_before_authoring_side_effects(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    draft = _draft(tmp_path)
+    real_replace = pregrain_module._replace_spec_exact
+    injected = False
+    competitor_error: StoreValidationError | None = None
+    journal_path = tmp_path / ".specgrain" / "tmp" / "authoring-transaction.json"
+    child_path = tmp_path / ".specgrain" / "specs" / "SG-000002.json"
+
+    def replace_with_child_competitor(path, before_text, after, location):
+        nonlocal injected, competitor_error
+        if not injected:
+            injected = True
+            try:
+                create_child_draft_spec(
+                    tmp_path,
+                    parent_id=draft.id,
+                    title="Competing child",
+                    outcome="Competing child outcome",
+                )
+            except StoreValidationError as exc:
+                competitor_error = exc
+            else:  # pragma: no cover - the invariant under test
+                raise AssertionError("competing child writer unexpectedly succeeded")
+            assert not journal_path.exists()
+            assert not child_path.exists()
+        return real_replace(path, before_text, after, location)
+
+    monkeypatch.setattr(
+        pregrain_module,
+        "_replace_spec_exact",
+        replace_with_child_competitor,
+    )
+
+    winner = _shape(tmp_path, draft.id, "pregrain_owner")
+
+    assert injected is True
+    assert competitor_error is not None
+    assert competitor_error.location == ".specgrain/tmp/pregrain-mutation.lock"
+    assert "already in progress" in competitor_error.detail
+    assert not journal_path.exists()
+    assert not child_path.exists()
+    stored = load_project(tmp_path)
+    assert stored.specs == (winner.node,)
+    assert winner.node.state == "SHAPED"
+    assert winner.node.children == ()
+    assert validate_refinement(stored.specs) == ()
+
+
+def test_child_owner_blocks_pregrain_before_target_mutation(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    draft = _draft(tmp_path)
+    parent_path = tmp_path / ".specgrain" / "specs" / f"{draft.id}.json"
+    parent_before = parent_path.read_bytes()
+    journal_path = tmp_path / ".specgrain" / "tmp" / "authoring-transaction.json"
+    real_write_journal = store_module._write_authoring_journal
+    injected = False
+    competitor_error: StoreValidationError | None = None
+
+    def write_with_pregrain_competitor(root_path, parent_before_text, parent_after, child):
+        nonlocal injected, competitor_error
+        if not injected:
+            injected = True
+            try:
+                _shape(tmp_path, draft.id, "pregrain_competitor")
+            except StoreValidationError as exc:
+                competitor_error = exc
+            else:  # pragma: no cover - the invariant under test
+                raise AssertionError("competing pre-Grain writer unexpectedly succeeded")
+            assert parent_path.read_bytes() == parent_before
+            assert not journal_path.exists()
+            child_path = tmp_path / ".specgrain" / "specs" / f"{child.id}.json"
+            assert not child_path.exists()
+        return real_write_journal(root_path, parent_before_text, parent_after, child)
+
+    monkeypatch.setattr(
+        store_module,
+        "_write_authoring_journal",
+        write_with_pregrain_competitor,
+    )
+
+    child_result = create_child_draft_spec(
+        tmp_path,
+        parent_id=draft.id,
+        title="Winning child",
+        outcome="Winning child outcome",
+    )
+
+    assert injected is True
+    assert competitor_error is not None
+    assert competitor_error.location == ".specgrain/tmp/pregrain-mutation.lock"
+    assert "already in progress" in competitor_error.detail
+    assert not journal_path.exists()
+    stored = load_project(tmp_path)
+    by_id = {node.id: node for node in stored.specs}
+    assert by_id[draft.id] == child_result.parent_after
+    assert by_id[child_result.child.id] == child_result.child
+    assert by_id[draft.id].state == "DRAFT"
+    assert by_id[draft.id].scope_in == ()
+    assert validate_refinement(stored.specs) == ()
 
 
 def test_stale_precomputed_writer_fails_after_lock_owner_commits(tmp_path: Path) -> None:
