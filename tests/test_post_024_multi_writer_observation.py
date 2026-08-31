@@ -42,16 +42,26 @@ def test_supported_pregrain_writer_can_lose_successful_competing_write(
 
     real_replace = pregrain_module.os.replace
     competing_result = None
+    injecting_competing_writer = False
 
     def replace_with_supported_competing_shape(src: Path, dst: Path) -> None:
-        nonlocal competing_result
+        nonlocal competing_result, injecting_competing_writer
         destination = Path(dst)
-        if destination == spec_path and competing_result is None:
+        if (
+            destination == spec_path
+            and competing_result is None
+            and not injecting_competing_writer
+        ):
             # Writer B uses the same supported public mutation API. It loads the
             # still-DRAFT preimage, commits a distinct SHAPED value, confirms it,
             # and returns success while writer A is paused immediately before its
-            # own unconditional os.replace.
-            competing_result = _shape(tmp_path, draft.id, "writer_b")
+            # own unconditional os.replace. Nested replacement by writer B uses
+            # the real primitive so this fixture injects exactly one competitor.
+            injecting_competing_writer = True
+            try:
+                competing_result = _shape(tmp_path, draft.id, "writer_b")
+            finally:
+                injecting_competing_writer = False
         real_replace(src, dst)
 
     monkeypatch.setattr(
