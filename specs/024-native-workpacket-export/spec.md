@@ -2,9 +2,9 @@
 
 ## Status
 
-`CLOSED_CANONICAL` when this final evidence reconciliation is canonical.
+`CLOSED_CANONICAL`
 
-All shaping, product, closeout, review-availability, permanent CI, merge, and historical-release-preservation gates are proven from live GitHub truth. This reconciliation changes documentation only.
+All shaping, product, closeout, final-reconciliation, review-availability, permanent CI, merge, and historical-release-preservation gates are proven from live GitHub truth. This post-closure normalization changes documentation only.
 
 ## Outcome
 
@@ -71,6 +71,15 @@ Closeout:
 - PR #51 expected-head merge `519680c5cf378dfcb4673cf7292bcf51e9c36af1` with exact parent `1666ba8c135ee8575f1546019ab592db32947dd2`;
 - post-closeout CI `33423123321` — success across five cells.
 
+Final closure reconciliation:
+
+- exact reconciliation head `e6ac770c191289ff3ddc58789c87d7a97e1c6178`;
+- push CI `33425082595` and PR #52 CI `33425201892` — success across five cells;
+- PR #52 had no submitted reviews or inline review threads and was mergeable before merge;
+- Qodo billing-blocked, automatic CodeRabbit skipped by repository-star policy, Cubic descriptive only; none treated as PASS;
+- PR #52 expected-head merge `326e013836814bd3566d1da8887fd028981a8cec` with parents `519680c5cf378dfcb4673cf7292bcf51e9c36af1` and `e6ac770c191289ff3ddc58789c87d7a97e1c6178`;
+- post-reconciliation CI `33425454115` — success across five cells.
+
 Superseded implementation failures remain recorded in `verification.md`; they were corrected before the final product head without weakening invariants.
 
 ## Existing contracts retained
@@ -90,7 +99,7 @@ No new ADR was required because this work exposes existing public contracts thro
 
 ## Historical release preservation
 
-After closeout, live GitHub truth remains:
+Live GitHub truth remains:
 
 - `v0.3.0` -> `70dd66aba0e68ae710e6ef12605ed153d107bab4`;
 - Release `378962445`, target `70dd66aba0e68ae710e6ef12605ed153d107bab4`;
@@ -121,4 +130,4 @@ The bounded concurrent-writer race retained after Specification 022 remains outs
 
 A later native executor/result/verification workflow remains separately shapeable only from fresh reproducible evidence. Specification 024 does not pre-build that authority.
 
-When this reconciliation is canonical, Specification 024 is closed and there is no active successor specification. The program returns to observation/evidence gathering.
+Specification 024 is closed and there is no active successor specification. The program is in observation/evidence gathering.

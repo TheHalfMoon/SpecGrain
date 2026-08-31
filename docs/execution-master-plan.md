@@ -52,7 +52,7 @@ Specification 000 established the project foundation and constitution. Specifica
 - Specification 021 — Public Launch Readiness Hardening: `CLOSED_CANONICAL`.
 - Specification 022 — Native Grain Preparation: `CLOSED_CANONICAL`; bounded `DRAFT -> SHAPED -> REFINING -> GRAIN` preparation.
 - Specification 023 — Spec Kit Preset-Compatible Import: `CLOSED_CANONICAL`; bounded path-bound identity fallback for template-light read-only imports.
-- Specification 024 — Native WorkPacket Export: `CLOSED_CANONICAL` when this final reconciliation becomes canonical; bounded read-only native export from one dependency-eligible stored `GRAIN`.
+- Specification 024 — Native WorkPacket Export: `CLOSED_CANONICAL`; bounded read-only native export from one dependency-eligible stored `GRAIN`.
 
 The latest published release remains `v0.3.0` at exact historical product source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
 
@@ -105,6 +105,15 @@ The command is constrained to an exact stored dependency-eligible `GRAIN`, expli
 - closeout merge parent `1666ba8c135ee8575f1546019ab592db32947dd2`;
 - canonical post-closeout CI `33423123321` — success across all five permanent cells.
 
+### Canonical closure reconciliation proof
+
+- exact reconciliation head `e6ac770c191289ff3ddc58789c87d7a97e1c6178`;
+- exact reconciliation diff changed only the seven governance/evidence/status paths used by the closeout chain;
+- push CI `33425082595` and PR #52 CI `33425201892` — success across all five permanent cells;
+- PR #52 had no submitted reviews or inline review threads and was mergeable before merge; Qodo was billing-blocked, automatic CodeRabbit review was skipped by repository-star policy, and Cubic was descriptive only;
+- PR #52 expected-head merge `326e013836814bd3566d1da8887fd028981a8cec` with parents `519680c5cf378dfcb4673cf7292bcf51e9c36af1` and `e6ac770c191289ff3ddc58789c87d7a97e1c6178`;
+- canonical post-reconciliation CI `33425454115` — success across all five permanent cells.
+
 Historical `v0.3.0` remains unchanged at source `70dd66aba0e68ae710e6ef12605ed153d107bab4`, Release `378962445`, wheel digest `sha256:b4f724e5ae187db28053c264cf9b9612f864fe5052459c7341a7f470602fb817`, and source digest `sha256:e7dc5484b8439cf8a6c594c65b454e141fef7c94a7edb0c7cb4edfc839007835`.
 
 The SGB-EXP-001 experiment remains `INVALIDATED_ORACLE_REVEALED_PRE_FREEZE`; it produced no valid comparative dataset, supports no superiority claim, and selected no product work.
@@ -113,9 +122,9 @@ The bounded multi-writer race retained after Specification 022 remains an explic
 
 ## Post-024 observation frontier
 
-When this final reconciliation becomes canonical, Specification 024 is `CLOSED_CANONICAL` and no product specification is active.
+Specification 024 is `CLOSED_CANONICAL` and no product specification is active.
 
-No further product mutation is authorized by Specification 024. The program returns to observation/evidence gathering.
+No further product mutation is authorized by Specification 024. The program is in observation/evidence gathering.
 
 ## Explicitly unselected after Specification 024
 
@@ -146,8 +155,8 @@ Without fresh canonical shaping, do not implement:
 10. Do not make AI reasoning transcripts repository authority.
 11. Preserve residual risks and blockers.
 12. External ideas/code require license-aware provenance.
-13. Post-v0.1 work requires a newly shaped specification derived from live evidence; roadmap deferrals, audits, external reviewers, and upstream-tool comparisons are not implicit implementation authority.
+13. Post-v0.1 product work requires a newly shaped specification derived from live evidence; roadmap deferrals, audits, external reviewers, and upstream-tool comparisons are not implicit implementation authority.
 
 ## Program continuation rule
 
-After this final reconciliation becomes canonical, return to observation/evidence gathering. Do not invent a successor merely to continue activity. Shape the next specification only when fresh reproducible evidence against live canonical truth selects a bounded product gap.
+Remain in observation/evidence gathering. Do not invent a successor merely to continue activity. Shape the next product specification only when fresh reproducible evidence against live canonical truth selects a bounded product gap.

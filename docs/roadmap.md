@@ -2,7 +2,7 @@
 
 The roadmap is intentionally progressive. Only the nearest active specification should have implementation-level detail. Future work is shaped from current evidence rather than pre-authorized by stale backlog detail.
 
-**Current program state:** Specifications 000–024 are `CLOSED_CANONICAL` when this final reconciliation becomes canonical. No successor product specification is selected. The program returns to `POST_024_OBSERVATION`. The latest published release remains GitHub Release `378962445` / tag `v0.3.0` at exact historical product source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
+**Current program state:** Specifications 000–024 are `CLOSED_CANONICAL`. No successor product specification is selected. The program is in `POST_024_OBSERVATION`. The canonical Specification 024 closure reconciliation merge is `326e013836814bd3566d1da8887fd028981a8cec`, with post-reconciliation CI `33425454115` completed `success` across all five permanent cells. The latest published release remains GitHub Release `378962445` / tag `v0.3.0` at exact historical product source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
 
 ## M0 — Foundation
 
@@ -56,7 +56,7 @@ Specification 010 closed the first complete MVP vertical slice at the API layer.
 - **021 — Public Launch Readiness Hardening:** `CLOSED_CANONICAL`.
 - **022 — Native Grain Preparation:** `CLOSED_CANONICAL`; bounded native `DRAFT -> SHAPED -> REFINING -> GRAIN` preparation.
 - **023 — Spec Kit Preset-Compatible Import:** `CLOSED_CANONICAL`; deterministic path-bound identity fallback for bounded template-light read-only Spec Kit imports.
-- **024 — Native WorkPacket Export:** `CLOSED_CANONICAL` when this final reconciliation becomes canonical; bounded read-only `packet` export from one exact dependency-eligible stored `GRAIN`.
+- **024 — Native WorkPacket Export:** `CLOSED_CANONICAL`; bounded read-only `packet` export from one exact dependency-eligible stored `GRAIN`.
 
 ## Specification 024 canonical proof
 
@@ -105,7 +105,15 @@ Closeout:
 - closeout merge parent `1666ba8c135ee8575f1546019ab592db32947dd2`;
 - post-closeout CI `33423123321` — success across five cells.
 
-At product and closeout review gates, unavailable or skipped review systems were never treated as PASS.
+Final closure reconciliation:
+
+- exact reconciliation head `e6ac770c191289ff3ddc58789c87d7a97e1c6178`;
+- push CI `33425082595` and PR #52 CI `33425201892` — success across five cells;
+- PR #52 had no submitted reviews or inline review threads and was mergeable before merge; Qodo was billing-blocked, automatic CodeRabbit review was skipped by repository-star policy, and Cubic was descriptive only;
+- PR #52 expected-head merge `326e013836814bd3566d1da8887fd028981a8cec`;
+- post-reconciliation CI `33425454115` — success across five cells.
+
+At product, closeout, and final reconciliation review gates, unavailable or skipped review systems were never treated as PASS.
 
 Historical `v0.3.0` remains unchanged at source `70dd66aba0e68ae710e6ef12605ed153d107bab4`, Release `378962445`, wheel digest `sha256:b4f724e5ae187db28053c264cf9b9612f864fe5052459c7341a7f470602fb817`, and source digest `sha256:e7dc5484b8439cf8a6c594c65b454e141fef7c94a7edb0c7cb4edfc839007835`.
 
@@ -128,4 +136,4 @@ A bounded multi-writer race remains possible around exact-preimage validation an
 
 ## Post-024 continuation discipline
 
-No successor product specification is selected by Specification 024. After this final reconciliation becomes canonical, return to observation/evidence gathering and shape a successor only from fresh reproducible evidence against live canonical truth.
+No successor product specification is selected by Specification 024. Remain in observation/evidence gathering and shape a successor only from fresh reproducible evidence against live canonical truth.
