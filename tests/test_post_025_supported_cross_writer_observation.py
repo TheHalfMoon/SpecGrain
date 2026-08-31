@@ -59,7 +59,9 @@ def test_supported_child_authoring_can_be_overwritten_by_failed_pregrain_mutatio
                 outcome="Supported child outcome",
             )
             child_committed = load_project(tmp_path)
-            parent_after_child = next(node for node in child_committed.specs if node.id == parent.id)
+            parent_after_child = next(
+                node for node in child_committed.specs if node.id == parent.id
+            )
             assert parent_after_child.children == (child_result.child.id,)
             assert child_result.child.parent_id == parent.id
         return real_replace(source, destination)
