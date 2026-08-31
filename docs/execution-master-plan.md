@@ -52,96 +52,87 @@ Specification 000 established the project foundation and constitution. Specifica
 - Specification 021 — Public Launch Readiness Hardening: `CLOSED_CANONICAL`.
 - Specification 022 — Native Grain Preparation: `CLOSED_CANONICAL`; bounded `DRAFT -> SHAPED -> REFINING -> GRAIN` preparation.
 - Specification 023 — Spec Kit Preset-Compatible Import: `CLOSED_CANONICAL`; bounded path-bound identity fallback for template-light read-only imports.
-- Specification 024 — Native WorkPacket Export: `SHAPED` candidate when the current shaping package is canonical; implementation blocked pending shaping merge and post-shaping CI.
+- Specification 024 — Native WorkPacket Export: product delivered and post-product verified; documentation closeout is the active gate.
 
 The latest published release remains `v0.3.0` at exact historical product source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
 
 ## Closed frontier — Specification 023
 
-Specification 023 was selected from reproduced compatibility evidence against GitHub Spec Kit `main` `51e52be6c3b26fed3ff5424c671f4a559519a759` and its official bundled Lean preset.
+Specification 023 remains closed with canonical shaping, product, closeout, reconciliation, and post-closeout evidence preserved in its specification directory. The canonical pre-023 full-template report digest remains `sha256:678fcc87985902002a9d2bc852196fbffdc59b332740660f1deeaf0d4f58746a`, and `SPECKIT_IMPORT_VERSION == 1`.
 
-The bounded outcome is complete:
+The later SGB-EXP-001 experiment remains `INVALIDATED_ORACLE_REVEALED_PRE_FREEZE`; it produced no valid comparative dataset, supports no superiority claim, and selected no product work.
 
-- canonical full-template imports remain stable;
-- template-light fallback identity comes only from a concrete explicit feature-path parent;
-- fallback emits `FEATURE_NAME_DERIVED_FROM_PATH`;
-- arbitrary prose is not inferred into structured semantics;
-- source safety, read-only behavior, legacy-task non-promotion, and constitution non-adoption remain intact;
-- `SPECKIT_IMPORT_VERSION == 1`;
-- the canonical pre-023 report digest remains `sha256:678fcc87985902002a9d2bc852196fbffdc59b332740660f1deeaf0d4f58746a`;
-- no Spec Kit runtime dependency or preset/hook/extension/bundle/workflow execution was added.
+The bounded multi-writer race retained after Specification 022 remains an explicit residual outside Specification 024 authority.
 
-### Canonical proof
+## Active closeout frontier — Specification 024
 
-- shaping PR #41: exact head `e19484f292c7601036e1993e58203554d1267594`; shaping merge `99d8ee5bc7ce49c00ae542f3c06f564d05641a70`; post-shaping CI `33263898618` success across five cells;
-- final implementation head `83fcc6add4e982df523f6c606399f08c317d3ffe`; push CI `33264389193` and PR CI `33264479954` success across five cells;
-- implementation PR #42: expected-head merge `037f137cdd6e7a0fe224bd3fa3371d6da7460f22`; post-product CI `33265277105` success across five cells;
-- documentation closeout head `fb23602a3aa234b88b0a223443c8c974ff8ed25a`; push CI `33265481647` and PR CI `33265501850` success across five cells;
-- closeout PR #43: expected-head merge `5b3a8b906309de642a0b35dfa8e260b5fa6bedd1`; post-closeout CI `33265589133` success across five cells;
-- historical `v0.3.0` tag, Release `378962445`, assets, digests, notes, and command surface remain unchanged.
+Fresh deterministic interoperability evidence selected exactly one bounded native handoff repair.
 
-The later SGB-EXP-001 experiment is preserved as `INVALIDATED_ORACLE_REVEALED_PRE_FREEZE`; it produced no valid comparative result, supports no superiority claim, and selects no product work.
-
-The bounded multi-writer race retained after Specification 022 remains an explicit residual outside 024 authority.
-
-## Active shaping frontier — Specification 024
-
-Fresh deterministic interoperability evidence now selects one bounded successor candidate.
-
-Evidence record:
-
-`docs/research/post-023-workpacket-handoff-reproduction-2026-08-31.md`
-
-Exact observation proof:
+Selection proof:
 
 ```text
 canonical_base = f2e8378dcba0cfea2beedc6da61324b0c3fea95e
 observation_head = 95e5358ed420cd2e6fbd0bc7c56690763cea1283
 fixture_blob = 58cb3e355468f6bcd7de63b676dba52361ff0dd7
 ci_run = 33416110142
-ci_result = success across five permanent cells
+ci_result = completed/success across all five permanent cells
 ```
 
-The reproduced discontinuity is exact:
-
-```text
-native DRAFT -> SHAPED -> REFINING -> GRAIN
--> native next reports the Grain eligible
--> no native packet export command exists
--> existing public Python WorkPacket APIs succeed only after custom glue
-```
-
-Specification 024 therefore shapes only a read-only native export boundary:
+Specification 024 delivered only:
 
 ```text
 specgrain packet <spec_id> [path] --context-sources <json-file> [--json]
 ```
 
-The command is constrained to:
+The command is constrained to an exact stored dependency-eligible `GRAIN`, explicit bounded ContextSource records, the Grain's existing token budget, existing context-budget primitives, and existing `build_work_packet` serialization/digest semantics. It is read-only and adds no lifecycle advancement, execution, verification, evidence mutation, provider, network, LLM, runtime-dependency, or release authority.
 
-- existing stored `GRAIN` state;
-- current dependency eligibility;
-- explicit bounded ContextSource records;
-- the Grain's existing token budget;
-- existing context-budget and WorkPacket primitives;
-- deterministic stdout export without store mutation.
+### Canonical shaping proof
 
-No new architectural authority is added. READY/later lifecycle mutation, executor/provider invocation, result ingestion, verification execution, evidence mutation, automatic context discovery, network access, LLM context selection, stronger locking, release publication, and hosted scope remain unselected.
+- shaping head `043abdf8f15f688cdbae746c0abd83dda74d0dae`;
+- push CI `33416602621` and PR CI `33416635970` — success across five cells;
+- shaping PR #49 expected-head merge `440a8b14459ade2fe8235cc873229dd87ba926b5`;
+- canonical post-shaping CI `33416908615` — success across five cells.
+
+### Product proof
+
+Final implementation head `7e1db87f69108fc8693b987e77d20f92e4f46866` passed exact push CI `33421885016` and PR CI `33422062846`, both across all five permanent cells. Ubuntu/Python 3.11 recorded `592 passed` plus cleanliness, compile, source CLI smoke, build, wheel reinstall, and installed CLI smoke.
+
+The exact product diff changed five files: `README.md`, `src/specgrain/cli.py`, `tests/test_workpacket_cli.py`, `tests/test_launch.py`, and `tests/test_repository_cli.py`. The last two were documented test-only regression compatibility exceptions with no runtime authority expansion.
+
+PR #50 had no submitted reviews or inline review threads. Qodo was billing-blocked, automatic CodeRabbit review was skipped by repository-star policy, and Cubic was descriptive only; none was treated as PASS.
+
+PR #50 merged exact reviewed head with expected-head protection as canonical product merge `1666ba8c135ee8575f1546019ab592db32947dd2`. Canonical post-product CI `33422235433` completed `success` across all five cells.
+
+Historical `v0.3.0` remains unchanged at source `70dd66aba0e68ae710e6ef12605ed153d107bab4`, Release `378962445`, wheel digest `sha256:b4f724e5ae187db28053c264cf9b9612f864fe5052459c7341a7f470602fb817`, and source digest `sha256:e7dc5484b8439cf8a6c594c65b454e141fef7c94a7edb0c7cb4edfc839007835`.
 
 ## Current execution gate
 
-Product implementation of Specification 024 is blocked until the documentation-only shaping package completes this gate:
+Product implementation is complete. The active work is documentation-only closeout:
 
-1. exact shaping head contains only authorized research/governance/specification changes;
-2. permanent five-cell CI succeeds on that exact head;
-3. review comments, threads, mergeability, and review-system availability are rechecked without false PASS claims;
-4. shaping PR merges with expected-head protection;
-5. resulting canonical `main` passes permanent five-cell CI;
-6. historical `v0.3.0` identity remains unchanged.
+1. exact closeout head must change only Specification 024 governance/evidence/status documentation;
+2. permanent push and PR five-cell CI must succeed on that exact head;
+3. reviews, inline threads, mergeability, and review-system availability must be rechecked without false PASS claims;
+4. closeout PR must merge with expected-head protection;
+5. resulting canonical `main` must pass permanent five-cell CI;
+6. historical `v0.3.0` must remain unchanged;
+7. final documentation-only evidence reconciliation must record exact closeout merge/post-closeout evidence and only then publish Specification 024 as `CLOSED_CANONICAL`.
 
-Only after that gate may `feat/024-native-workpacket-export` begin.
+No further product mutation is authorized under Specification 024.
 
-The implementation and closeout ordering is authoritative in `specs/024-native-workpacket-export/plan.md` and `tasks.md`.
+## Explicitly unselected after Specification 024
+
+Without fresh canonical shaping, do not implement:
+
+- `GRAIN -> READY` or later lifecycle mutation;
+- executor/provider invocation or result orchestration;
+- verification execution or evidence mutation;
+- automatic context discovery, source-content packing, retrieval, network access, or LLM context selection;
+- stronger multi-writer/recovery concurrency;
+- PyPI publication or broader distribution changes;
+- hosted SaaS, dashboard, account/enterprise, or provider runtime scope;
+- Spec Kit preset/hook/extension/bundle/workflow execution or architectural adoption;
+- arbitrary Markdown semantic inference;
+- empirical benchmark superiority claims without a reproducible completed dataset.
 
 ## Cross-spec execution rules
 
@@ -161,4 +152,4 @@ The implementation and closeout ordering is authoritative in `specs/024-native-w
 
 ## Program continuation rule
 
-At the Specification 024 shaping frontier, complete the shaping gate before product work. After Specification 024 closes, return to observation unless fresh reproducible evidence selects another bounded successor.
+Complete Specification 024 closeout and final evidence reconciliation before declaring it `CLOSED_CANONICAL`. After closure, return to observation/evidence gathering. Do not invent a successor merely to continue activity; shape the next specification only when fresh reproducible evidence against live canonical truth selects a bounded product gap.
