@@ -4,47 +4,37 @@
 **Canonical branch:** `main`  
 **Canonical Specification 025 shaping merge:** `e394ab0c7efabbfade91b64bcdf9a11c8146f469`  
 **Canonical Specification 025 product merge:** `5e3966fb0db3d8971b5abe19106949001ed55ba9`  
-**Canonical Specification 025 post-product CI:** `33434910548` — `completed/success` across all five permanent cells  
-**Program status:** `SPEC_025_CLOSEOUT`  
-**Last closed specification:** `specs/024-native-workpacket-export/` — `CLOSED_CANONICAL`  
-**Active specification:** `specs/025-supported-pregrain-writer-serialization/` — `CLOSEOUT_CANDIDATE`  
-**Product implementation:** canonical and post-product verified; product mutation complete  
+**Canonical Specification 025 closeout merge:** `e05df4bd046590ee043115c1edbcd7b83163b4ad`  
+**Canonical post-closeout CI:** `33436130730` — `completed/success` across all five permanent cells  
+**Program status:** `POST_025_OBSERVATION` when this final evidence reconciliation is canonical  
+**Last closed specification:** `specs/025-supported-pregrain-writer-serialization/` — `CLOSED_CANONICAL` when this reconciliation is canonical  
+**Active product specification:** none when this reconciliation is canonical  
+**Product implementation:** canonical, post-product verified, closeout verified  
 **Published release:** `v0.3.0`  
 **Published release source:** `70dd66aba0e68ae710e6ef12605ed153d107bab4`  
 **Published release ID:** `378962445`
 
 ## Previous canonical frontier
 
-Specification 024 — Native WorkPacket Export — remains `CLOSED_CANONICAL`.
+Specification 024 — Native WorkPacket Export — remains `CLOSED_CANONICAL`. Its final post-024 normalization merge is `101f018095868fc011c4ebea15dcac64f64d1061`, with canonical post-normalization CI `33427947122` succeeding across all five permanent cells.
 
-Its final post-024 normalization merge is `101f018095868fc011c4ebea15dcac64f64d1061`, with canonical post-normalization CI `33427947122` succeeding across all five permanent cells.
+The SGB-EXP-001 comparative experiment remains `INVALIDATED_ORACLE_REVEALED_PRE_FREEZE`; it produced no valid comparative result, supports no superiority claim, and selected no product work.
 
-The SGB-EXP-001 comparative experiment remains preserved as `INVALIDATED_ORACLE_REVEALED_PRE_FREEZE`; it produced no valid comparative result, supports no superiority claim, and selected no product work.
-
-## Specification 025 selection evidence
-
-Fresh post-024 evidence reproduced the previously retained supported-writer residual using only supported public pre-Grain APIs:
+## Specification 025 selection proof
 
 ```text
 canonical_base = 101f018095868fc011c4ebea15dcac64f64d1061
-observation_branch = obs/025-multi-writer-parent-replace-fixture
 observation_head = 58174dbc87e9c02ebbb3a19d38727e1f42149226
-fixture = tests/test_post_024_multi_writer_observation.py
 fixture_blob = b0852096a6f8916955a6a31b3a785ca8bb0d708d
 ci_run = 33431133156
 ci_result = completed/success across all five permanent cells
 reproduced_gap = SUPPORTED_PRE_GRAIN_MULTI_WRITER_LOST_UPDATE
 ```
 
-The fixture proved that writer A and writer B could both call `shape_draft_spec`, both return success with distinct semantic revisions, and writer A could then silently overwrite writer B's already-confirmed successful postimage because writer A's final exact-preimage check and `os.replace` were separate operations.
+The supported-writer fixture proved that two public `shape_draft_spec` calls could both report success while one confirmed semantic revision was silently overwritten in the final preimage-check / `os.replace` window.
 
-Selection record:
-
-`docs/research/post-024-supported-pregrain-multi-writer-reproduction-2026-08-31.md`
-
-Architectural decision:
-
-`docs/adr/0020-supported-pregrain-writer-serialization.md`
+Selection record: `docs/research/post-024-supported-pregrain-multi-writer-reproduction-2026-08-31.md`  
+Architectural decision: `docs/adr/0020-supported-pregrain-writer-serialization.md`
 
 ## Specification 025 shaping proof
 
@@ -57,11 +47,7 @@ shaping_merge = e394ab0c7efabbfade91b64bcdf9a11c8146f469
 post_shaping_ci = 33432447491
 ```
 
-The shaping push, PR, and canonical post-shaping CI gates all succeeded across the permanent five-cell matrix.
-
-At the PR #54 merge gate there were no submitted reviews or inline review threads. Qodo was billing-blocked, automatic CodeRabbit review was skipped by repository-star policy, and Cubic was descriptive only. None was treated as PASS.
-
-The shaping merge authorized only cooperative non-blocking serialization of the existing `src/specgrain/pregrain.py::_persist` critical section.
+All shaping CI gates succeeded across the permanent five-cell matrix. PR #54 had no submitted reviews or inline review threads; Qodo was billing-blocked, automatic CodeRabbit review was skipped, and Cubic was descriptive only. None was treated as PASS.
 
 ## Specification 025 product proof
 
@@ -69,23 +55,12 @@ Final implementation head:
 
 `bb1fa1406ef9dab6a65c1721378025943ba3f6de`
 
-Exact product diff from canonical shaping merge changed only:
+Exact product diff changed only:
 
 - `src/specgrain/pregrain.py`;
 - `tests/test_pregrain_serialization.py`.
 
-The delivered implementation:
-
-- serializes supported shape/refine/grain persistence with one project-scoped advisory lock;
-- uses `.specgrain/tmp/pregrain-mutation.lock` as an inert persistent regular-file anchor;
-- uses conditional standard-library `fcntl` / `msvcrt` non-blocking lock primitives;
-- fails closed immediately on supported-writer contention;
-- rejects symlink/non-regular anchors;
-- releases ownership after success, failure, and process exit;
-- preserves loaded-node comparison, exact preimage checks, temporary-file fsync, final preimage recheck, `os.replace`, postimage confirmation, project revalidation, lifecycle, readiness, dependency, and semantic-revision behavior;
-- leaves read-only project loading outside the serialization boundary.
-
-Exact verification:
+The delivered implementation serializes supported shape/refine/grain persistence with one project-scoped non-blocking advisory lock, uses `.specgrain/tmp/pregrain-mutation.lock` as an inert persistent regular-file anchor, uses conditional standard-library Unix/Windows lock primitives, fails closed on contention and unsafe anchors, releases ownership after success/failure/process exit, preserves all prior preimage/postimage/lifecycle/readiness/dependency/semantic-revision defenses, and leaves read-only project loading outside the serialization boundary.
 
 ```text
 final_product_head = bb1fa1406ef9dab6a65c1721378025943ba3f6de
@@ -98,23 +73,26 @@ post_product_ci = 33434910548
 
 Push CI, PR CI, and canonical post-product CI all completed `success` across Ubuntu/Python 3.11, 3.12, 3.13, macOS/Python 3.11, and Windows/Python 3.11. macOS/Python 3.11 on the final push head recorded `600 passed` plus all configured static, cleanliness, build, install, and CLI smoke gates.
 
-At the PR #55 merge gate:
+At the PR #55 merge gate exact head/base and two-file scope remained unchanged, mergeability was true, and no submitted reviews or inline review threads were present. Qodo was billing-blocked, CodeRabbit automatic review was skipped, and Cubic was descriptive only. None was treated as PASS.
 
-- exact head/base remained unchanged;
-- changed paths remained exactly the two authorized product/test paths;
-- mergeability was true;
-- no submitted reviews or inline review threads were present;
-- Qodo was billing-blocked;
-- automatic CodeRabbit review was skipped by repository-star policy;
-- Cubic supplied descriptive summary text only.
+## Specification 025 closeout proof
 
-No unavailable or skipped review system was treated as PASS.
+```text
+closeout_head = 885823e0e56dfd3e7c7c8e63d8dacc41b14448f2
+closeout_push_ci = 33435480927
+closeout_pr = 56
+closeout_pr_ci = 33435703680
+closeout_merge = e05df4bd046590ee043115c1edbcd7b83163b4ad
+post_closeout_ci = 33436130730
+```
 
-PR #55 merged with expected-head protection as `5e3966fb0db3d8971b5abe19106949001ed55ba9`, with parents `e394ab0c7efabbfade91b64bcdf9a11c8146f469` and `bb1fa1406ef9dab6a65c1721378025943ba3f6de`.
+The closeout diff changed exactly eight documentation/governance/evidence paths and no product/test/workflow/dependency/package/release path. PR #56 remained on exact product-merge base `5e3966fb0db3d8971b5abe19106949001ed55ba9`, was mergeable, had no submitted reviews or inline review threads, and merged with expected-head protection. Qodo was billing-blocked, CodeRabbit automatic review was skipped, and Cubic was descriptive only. None was treated as PASS.
+
+Canonical closeout merge `e05df4bd046590ee043115c1edbcd7b83163b4ad` has exact parent `5e3966fb0db3d8971b5abe19106949001ed55ba9`. Post-closeout CI `33436130730` completed `success` across all five permanent cells.
 
 ## Historical release preservation
 
-Live GitHub truth after the Specification 025 product merge remains:
+Live GitHub truth after closeout remains:
 
 - tag `v0.3.0` -> `70dd66aba0e68ae710e6ef12605ed153d107bab4`;
 - Release ID `378962445`, target `70dd66aba0e68ae710e6ef12605ed153d107bab4`;
@@ -123,41 +101,18 @@ Live GitHub truth after the Specification 025 product merge remains:
 
 Specification 025 did not publish or mutate a release.
 
-## Explicitly unselected under Specification 025
+## Explicitly unselected after Specification 025
 
-No authority exists under Specification 025 for:
-
-- coordination with arbitrary manual/non-SpecGrain writers;
-- general project-wide locking of unrelated mutations;
-- child-authoring journal/recovery redesign;
-- distributed/network locking;
-- blocking waits, retry loops, leases, heartbeats, or timeout ownership inference;
-- new runtime dependencies;
-- `GRAIN -> READY` or later lifecycle mutation;
-- executor/provider invocation or result orchestration;
-- verification execution or evidence mutation;
-- automatic source discovery, source-content packing, retrieval, network access, or LLM context selection;
-- SpecNode, WorkPacket, or ContextSource contract version redesign;
-- Spec Kit runtime integration or architectural adoption;
-- PyPI publication or broader distribution changes;
-- hosted/account/dashboard/enterprise scope;
-- empirical benchmark superiority claims.
+No current authority exists for arbitrary non-cooperating writer coordination, general project-wide or distributed locking, child-authoring journal redesign, blocking waits/retries/leases, new runtime dependencies, `GRAIN -> READY` or later lifecycle mutation, executor/provider orchestration, verification/evidence mutation, automatic context/network/model behavior, contract-version redesign, Spec Kit runtime adoption, broader package publication, hosted/account/dashboard scope, or benchmark superiority claims.
 
 ## Current execution gate
 
-Specification 025 product implementation is canonical and post-product verification is complete.
+When this final evidence reconciliation is canonical:
 
-The active branch is documentation-only closeout. Product code must not change during closeout.
+1. Specification 025 is `CLOSED_CANONICAL`;
+2. there is no active product specification;
+3. all currently shaped and authorized product work is complete;
+4. the program is in `POST_025_OBSERVATION`;
+5. future product work requires fresh reproducible evidence against the new live canonical baseline.
 
-The remaining authorized sequence is:
-
-1. exact-head closeout CI and scope review;
-2. closeout PR CI/review/thread/mergeability gate;
-3. expected-head closeout merge;
-4. permanent post-closeout CI and historical release recheck;
-5. final evidence reconciliation and canonical governance re-read;
-6. publish `CLOSED_CANONICAL` only after every preceding gate is proven.
-
-## Next frontier discipline
-
-Do not widen Specification 025 merely because adjacent concurrency work is visible. After canonical closure, return to observation/evidence gathering and shape any successor only from fresh reproducible evidence against the new canonical truth.
+Do not shape a successor merely because deferred work or residual risk exists. Observation/evidence gathering is the correct canonical frontier until new evidence independently selects a bounded product gap.

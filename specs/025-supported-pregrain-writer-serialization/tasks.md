@@ -29,13 +29,13 @@
 
 ## Canonical closeout
 
-- [x] **T019** Add Specification 025 verification/review/closeout evidence and reconcile the current program documentation as a documentation-only `CLOSEOUT_CANDIDATE` without widening the delivered boundary.
-- [ ] **T020** Require exact-head closeout CI, scope/review/thread/mergeability checks, and expected-head closeout merge.
-- [ ] **T021** Require successful permanent post-closeout CI, re-read canonical governance, complete final evidence reconciliation, and mark Specification 025 `CLOSED_CANONICAL` only if every preceding gate is proven.
+- [x] **T019** Add Specification 025 verification/review/closeout evidence and reconcile the current program documentation as a documentation-only closeout package without widening the delivered boundary.
+- [x] **T020** Closeout head `885823e0e56dfd3e7c7c8e63d8dacc41b14448f2` changed exactly eight documentation/governance/evidence paths, remained eight commits ahead and zero behind exact product merge `5e3966fb0db3d8971b5abe19106949001ed55ba9`, passed push CI `33435480927` and PR #56 CI `33435703680` across all five permanent cells, was `mergeable=true`, had no submitted reviews or inline review threads, and merged with expected-head protection as canonical closeout merge `e05df4bd046590ee043115c1edbcd7b83163b4ad`. Qodo was billing-blocked, automatic CodeRabbit review was skipped by repository-star policy, and Cubic was descriptive only; none was treated as PASS.
+- [x] **T021** Canonical closeout merge `e05df4bd046590ee043115c1edbcd7b83163b4ad` has exact parent `5e3966fb0db3d8971b5abe19106949001ed55ba9`; permanent post-closeout CI `33436130730` completed `success` across all five cells; historical `v0.3.0` was reverified unchanged; canonical `AGENTS.md`, `specs/CURRENT.md`, constitution, execution master plan, active spec/plan/tasks were re-read. This final documentation-only reconciliation publishes Specification 025 as `CLOSED_CANONICAL` and returns the program to post-025 observation when this reconciliation itself is canonical.
 
 ## Standing prohibitions
 
-Until a separately shaped successor exists, Specification 025 tasks MUST NOT implement:
+Until a separately shaped successor exists, Specification 025 does not authorize:
 
 - general project-wide locking;
 - child-authoring journal or recovery redesign;
