@@ -1,10 +1,10 @@
 # Review — Specification 025 Supported Pre-Grain Writer Serialization
 
-**Status:** `CLOSED_CANONICAL` when this final evidence reconciliation is canonical
+**Status:** `CLOSED_CANONICAL`
 
 ## Review conclusion
 
-The canonical Specification 025 implementation, merge chain, and documentation-only closeout remain consistent with the shaped boundary and ADR-0020.
+The canonical Specification 025 implementation, merge chain, documentation-only closeout, and final evidence reconciliation remain consistent with the shaped boundary and ADR-0020.
 
 The delivered change serializes only the existing supported pre-Grain persistence critical section and retains prior deterministic drift, lifecycle, readiness, dependency, and postimage defenses.
 
@@ -43,19 +43,24 @@ The exact closeout head `885823e0e56dfd3e7c7c8e63d8dacc41b14448f2` changed exact
 
 Closeout push CI `33435480927` and PR #56 CI `33435703680` both completed `success` across all five permanent cells.
 
-At the final PR #56 merge gate:
-
-- exact base remained `5e3966fb0db3d8971b5abe19106949001ed55ba9`;
-- exact head remained `885823e0e56dfd3e7c7c8e63d8dacc41b14448f2`;
-- mergeability was true;
-- the eight-path scope remained unchanged;
-- no submitted reviews were present;
-- no inline review threads were present;
-- Qodo was billing-blocked;
-- automatic CodeRabbit review was skipped;
-- Cubic was descriptive only.
-
 PR #56 merged with expected-head protection as `e05df4bd046590ee043115c1edbcd7b83163b4ad`. The closeout merge has exact parent `5e3966fb0db3d8971b5abe19106949001ed55ba9`. Canonical post-closeout CI `33436130730` completed `success` across all five permanent cells.
+
+## Final reconciliation review
+
+Final reconciliation evidence:
+
+```text
+head = c145578694100383d7292fc76b5995cee8a0e121
+push_ci = 33436685449
+pr = 57
+pr_ci = 33436869583
+merge = 8a0da2908f6251100a0d7ab71178c2a7c3ed64bb
+post_merge_ci = 33437077692
+```
+
+PR #57 was documentation/governance/evidence-only and became the canonical final evidence reconciliation. Canonical post-reconciliation CI completed `success` across all five permanent cells.
+
+At the applicable review gates, Qodo was billing-blocked, automatic CodeRabbit review was skipped by repository-star policy, and Cubic was descriptive only. None was treated as PASS.
 
 ## Residual risk review
 
@@ -63,8 +68,8 @@ Residual boundaries remain explicit and acceptable: non-cooperating external wri
 
 ## Historical release review
 
-After closeout, historical `v0.3.0` remains unchanged at source `70dd66aba0e68ae710e6ef12605ed153d107bab4`, Release `378962445`, with wheel/source asset IDs and digests unchanged.
+After final reconciliation, historical `v0.3.0` remains unchanged at source `70dd66aba0e68ae710e6ef12605ed153d107bab4`, Release `378962445`, with wheel/source asset IDs and digests unchanged.
 
 ## Final recommendation
 
-Canonical governance was re-read after closeout and successful post-closeout CI. All Specification 025 evidence gates are satisfied. This final documentation-only reconciliation may publish `CLOSED_CANONICAL` once it is canonical, after which the program returns to observation/evidence gathering with no active product specification and no automatically selected successor.
+Canonical governance was re-read after final reconciliation and successful post-reconciliation CI. All Specification 025 evidence gates are satisfied. Specification 025 is `CLOSED_CANONICAL`; the program is in observation/evidence gathering with no active product specification and no automatically selected successor.
