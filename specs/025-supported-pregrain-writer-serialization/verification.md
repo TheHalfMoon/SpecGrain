@@ -1,11 +1,13 @@
 # Verification — Specification 025 Supported Pre-Grain Writer Serialization
 
-**Status:** `CLOSED_CANONICAL` when this final evidence reconciliation is canonical  
+**Status:** `CLOSED_CANONICAL`  
 **Canonical shaping merge:** `e394ab0c7efabbfade91b64bcdf9a11c8146f469`  
 **Final implementation head:** `bb1fa1406ef9dab6a65c1721378025943ba3f6de`  
 **Canonical product merge:** `5e3966fb0db3d8971b5abe19106949001ed55ba9`  
 **Canonical closeout merge:** `e05df4bd046590ee043115c1edbcd7b83163b4ad`  
 **Canonical post-closeout CI:** `33436130730` — `completed/success` across all five permanent cells  
+**Canonical reconciliation merge:** `8a0da2908f6251100a0d7ab71178c2a7c3ed64bb`  
+**Canonical post-reconciliation CI:** `33437077692` — `completed/success` across all five permanent cells  
 **Published release preserved:** `v0.3.0` / Release `378962445`
 
 ## Selection evidence
@@ -73,7 +75,7 @@ PR #55:
 
 PR #55 merged with expected-head protection as `5e3966fb0db3d8971b5abe19106949001ed55ba9`. Canonical post-product CI `33434910548` completed `success` across all five permanent cells.
 
-## Closeout evidence
+## Closeout and reconciliation evidence
 
 Exact closeout head:
 
@@ -92,19 +94,28 @@ The closeout diff changed exactly these eight documentation/governance/evidence 
 
 Closeout gates:
 
-- push CI `33435480927` — `completed/success` across five cells;
-- PR #56 CI `33435703680` — `completed/success` across five cells;
-- exact PR base `5e3966fb0db3d8971b5abe19106949001ed55ba9` and head `885823e0e56dfd3e7c7c8e63d8dacc41b14448f2` remained unchanged;
-- `mergeable=true` at the final gate;
-- no submitted reviews or inline review threads;
-- Qodo billing-blocked, automatic CodeRabbit review skipped, Cubic descriptive only; none treated as PASS;
+- push CI `33435480927` — five-cell success;
+- PR #56 CI `33435703680` — five-cell success;
 - expected-head closeout merge `e05df4bd046590ee043115c1edbcd7b83163b4ad`;
 - exact closeout parent `5e3966fb0db3d8971b5abe19106949001ed55ba9`;
-- post-closeout CI `33436130730` — `completed/success` across all five permanent cells.
+- post-closeout CI `33436130730` — five-cell success.
+
+Final reconciliation gates:
+
+```text
+head = c145578694100383d7292fc76b5995cee8a0e121
+push_ci = 33436685449
+pr = 57
+pr_ci = 33436869583
+merge = 8a0da2908f6251100a0d7ab71178c2a7c3ed64bb
+post_merge_ci = 33437077692
+```
+
+PR #57 merged as the canonical final evidence reconciliation. Canonical post-reconciliation CI completed `success` across Ubuntu/Python 3.11, 3.12, 3.13, macOS/Python 3.11, and Windows/Python 3.11.
 
 ## Historical release preservation
 
-After closeout, live GitHub truth remains:
+After final reconciliation, live GitHub truth remains:
 
 - `v0.3.0` source `70dd66aba0e68ae710e6ef12605ed153d107bab4`;
 - Release ID `378962445`;
@@ -113,8 +124,8 @@ After closeout, live GitHub truth remains:
 
 ## Final governance reconciliation
 
-Canonical `AGENTS.md`, `specs/CURRENT.md`, constitution, execution master plan, Specification 025 `spec.md`, `plan.md`, and `tasks.md` were re-read after the closeout merge and successful post-closeout CI. No governance conflict or additional product authority was found.
+Canonical `AGENTS.md`, `specs/CURRENT.md`, constitution, execution master plan, and Specification 025 authority chain were re-read after the final reconciliation and successful post-reconciliation CI. No governance conflict or additional product authority was found.
 
 ## Closure conclusion
 
-All Specification 025 selection, shaping, product, review, merge, closeout, post-closeout, cross-platform CI, release-preservation, and governance gates are proven. When this final documentation-only evidence reconciliation is canonical, Specification 025 is `CLOSED_CANONICAL`, there is no active product specification, and the program returns to post-025 observation/evidence gathering.
+All Specification 025 selection, shaping, product, review, merge, closeout, reconciliation, cross-platform CI, release-preservation, and governance gates are proven. Specification 025 is `CLOSED_CANONICAL`, there is no active product specification, and the program is in post-025 observation/evidence gathering.
