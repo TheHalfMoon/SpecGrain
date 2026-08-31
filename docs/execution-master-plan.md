@@ -53,73 +53,19 @@ Specification 000 established the project foundation and constitution. Specifica
 - Specification 022 — Native Grain Preparation: `CLOSED_CANONICAL`; bounded `DRAFT -> SHAPED -> REFINING -> GRAIN` preparation.
 - Specification 023 — Spec Kit Preset-Compatible Import: `CLOSED_CANONICAL`; bounded path-bound identity fallback for template-light read-only imports.
 - Specification 024 — Native WorkPacket Export: `CLOSED_CANONICAL`; bounded read-only native export from one dependency-eligible stored `GRAIN`.
-- Specification 025 — Supported Pre-Grain Writer Serialization: current `SHAPED` candidate; product implementation blocked until canonical shaping merge and successful canonical post-shaping CI.
+- Specification 025 — Supported Pre-Grain Writer Serialization: `CLOSEOUT_CANDIDATE`; product is canonical and post-product verified, while documentation-only closeout remains active.
 
 The latest published release remains `v0.3.0` at exact historical product source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
 
-## Closed frontier — Specification 024
+## Specification 024 closed frontier
 
-Fresh deterministic interoperability evidence selected exactly one bounded native handoff repair.
+Specification 024 remains `CLOSED_CANONICAL`. Its final post-024 normalization merge is `101f018095868fc011c4ebea15dcac64f64d1061`, and canonical post-normalization CI `33427947122` succeeded across all five permanent cells.
 
-Selection proof:
+The invalidated SGB-EXP-001 experiment remains methodology evidence only. It produced no valid comparative dataset, supports no superiority claim, and selects no current product authority.
 
-```text
-canonical_base = f2e8378dcba0cfea2beedc6da61324b0c3fea95e
-observation_head = 95e5358ed420cd2e6fbd0bc7c56690763cea1283
-fixture_blob = 58cb3e355468f6bcd7de63b676dba52361ff0dd7
-ci_run = 33416110142
-ci_result = completed/success across all five permanent cells
-```
+## Specification 025 selection proof
 
-Specification 024 delivered only:
-
-```text
-specgrain packet <spec_id> [path] --context-sources <json-file> [--json]
-```
-
-The command is constrained to an exact stored dependency-eligible `GRAIN`, explicit bounded ContextSource records, the Grain's existing token budget, existing context-budget primitives, and existing `build_work_packet` serialization/digest semantics. It is read-only and adds no lifecycle advancement, execution, verification, evidence mutation, provider, network, LLM, runtime-dependency, or release authority.
-
-### Canonical shaping proof
-
-- shaping head `043abdf8f15f688cdbae746c0abd83dda74d0dae`;
-- push CI `33416602621` and PR CI `33416635970` — success across five cells;
-- shaping PR #49 expected-head merge `440a8b14459ade2fe8235cc873229dd87ba926b5`;
-- canonical post-shaping CI `33416908615` — success across five cells.
-
-### Product proof
-
-- final implementation head `7e1db87f69108fc8693b987e77d20f92e4f46866`;
-- push CI `33421885016` and PR CI `33422062846` — success across five cells;
-- Ubuntu/Python 3.11 final push evidence — `592 passed` plus cleanliness, compile, source CLI smoke, build, wheel reinstall, and installed CLI smoke;
-- exact product diff: `README.md`, `src/specgrain/cli.py`, `tests/test_workpacket_cli.py`, `tests/test_launch.py`, `tests/test_repository_cli.py`; the last two were test-only compatibility exceptions with no runtime authority expansion;
-- PR #50 had no submitted reviews or inline review threads; Qodo was billing-blocked, automatic CodeRabbit review was skipped by repository-star policy, and Cubic was descriptive only;
-- PR #50 expected-head product merge `1666ba8c135ee8575f1546019ab592db32947dd2`;
-- canonical post-product CI `33422235433` — success across five cells.
-
-### Canonical closeout, reconciliation, and normalization proof
-
-- exact closeout head `12f89e22955efc632f62d52f2f0396430f4bee01`;
-- closeout push CI `33422814705` and PR #51 CI `33422950629` — success across five cells;
-- PR #51 expected-head closeout merge `519680c5cf378dfcb4673cf7292bcf51e9c36af1`;
-- canonical post-closeout CI `33423123321` — success across five cells;
-- exact reconciliation head `e6ac770c191289ff3ddc58789c87d7a97e1c6178`;
-- reconciliation push CI `33425082595` and PR #52 CI `33425201892` — success across five cells;
-- PR #52 expected-head merge `326e013836814bd3566d1da8887fd028981a8cec`;
-- canonical post-reconciliation CI `33425454115` — success across five cells;
-- exact post-024 normalization head `6cd40b122021d6a4ca361d613cc88fd389cebc0f`;
-- normalization push CI `33427600665` and PR #53 CI `33427745392` — success across five cells;
-- PR #53 expected-head merge `101f018095868fc011c4ebea15dcac64f64d1061`;
-- canonical post-normalization CI `33427947122` — success across all five permanent cells.
-
-Historical `v0.3.0` remains unchanged at source `70dd66aba0e68ae710e6ef12605ed153d107bab4`, Release `378962445`, wheel digest `sha256:b4f724e5ae187db28053c264cf9b9612f864fe5052459c7341a7f470602fb817`, and source digest `sha256:e7dc5484b8439cf8a6c594c65b454e141fef7c94a7edb0c7cb4edfc839007835`.
-
-The SGB-EXP-001 experiment remains `INVALIDATED_ORACLE_REVEALED_PRE_FREEZE`; it produced no valid comparative dataset, supports no superiority claim, and selected no product work.
-
-## Active frontier — Specification 025
-
-Fresh post-024 deterministic evidence has now independently selected the previously retained supported-writer concurrency residual.
-
-Selection proof:
+Fresh deterministic post-024 evidence independently selected the supported pre-Grain writer race:
 
 ```text
 canonical_base = 101f018095868fc011c4ebea15dcac64f64d1061
@@ -130,7 +76,7 @@ ci_result = completed/success across all five permanent cells
 reproduced_gap = SUPPORTED_PRE_GRAIN_MULTI_WRITER_LOST_UPDATE
 ```
 
-The final fixture uses two supported `shape_draft_spec` calls. Writer B commits and confirms one distinct SHAPED revision while writer A is paused after its final preimage check; writer A then resumes its unconditional `os.replace`, silently removes B's successful revision, confirms its own postimage, and also returns success.
+The final fixture uses two supported `shape_draft_spec` calls. Writer B commits and confirms a distinct SHAPED revision while writer A is paused after its final preimage check; writer A then resumes `os.replace`, silently removes writer B's successful revision, confirms its own postimage, and also returns success.
 
 Selection evidence:
 
@@ -140,32 +86,82 @@ Architectural decision:
 
 `docs/adr/0020-supported-pregrain-writer-serialization.md`
 
-Specification 025 shapes only:
+## Specification 025 shaping proof
+
+```text
+shaping_head = e12dc2996f663f5d4a98eb5af212deb73ead5eff
+push_ci = 33432149125
+pr = 54
+pr_ci = 33432301056
+shaping_merge = e394ab0c7efabbfade91b64bcdf9a11c8146f469
+post_shaping_ci = 33432447491
+```
+
+Every shaping CI gate succeeded across the permanent five-cell matrix. PR #54 had no submitted reviews or inline review threads at the merge gate; Qodo was billing-blocked, CodeRabbit automatic review was skipped by repository-star policy, and Cubic was descriptive only. None was treated as PASS.
+
+The shaping merge authorized exactly:
 
 ```text
 cooperative project-scoped non-blocking advisory serialization
 for src/specgrain/pregrain.py::_persist
 ```
 
-The lock anchor is `.specgrain/tmp/pregrain-mutation.lock`. Its presence is inert runtime metadata; active ownership exists only while the operating system holds the advisory lock for an open descriptor/process.
+## Specification 025 canonical product proof
 
-Unix-family implementations use `fcntl` and Windows uses `msvcrt`; the exact implementation must remain runtime-dependency free and pass the permanent cross-platform CI matrix.
+Final implementation head:
 
-Existing exact-preimage checks, temporary-file fsync, atomic replacement, postimage confirmation, project revalidation, lifecycle, readiness, dependency, and semantic-digest contracts remain in force.
+`bb1fa1406ef9dab6a65c1721378025943ba3f6de`
 
-### Specification 025 shaping gate
+Exact product diff from the shaping merge changed only:
 
-Product implementation remains blocked until:
+- `src/specgrain/pregrain.py`;
+- `tests/test_pregrain_serialization.py`.
 
-1. the documentation-only shaping head changes only authorized research/ADR/specification/governance paths;
-2. exact-head permanent five-cell CI succeeds;
-3. exact PR head/base, review submissions, inline threads, comments, and mergeability are rechecked without treating unavailable systems as PASS;
-4. the shaping PR merges with expected-head protection;
-5. the resulting canonical `main` passes permanent post-shaping CI.
+The implementation uses `.specgrain/tmp/pregrain-mutation.lock` as an inert persistent anchor and conditional standard-library `fcntl` / `msvcrt` non-blocking advisory locks. It preserves existing exact-preimage checks, temporary-file fsync, atomic replacement, postimage confirmation, project validation, lifecycle, readiness, dependency, and semantic-digest contracts.
 
-Only then may `feat/025-supported-pregrain-writer-serialization` begin.
+Product verification:
 
-## Explicitly unselected after Specification 025 shaping
+```text
+push_ci = 33434286534
+product_pr = 55
+product_pr_ci = 33434757539
+product_merge = 5e3966fb0db3d8971b5abe19106949001ed55ba9
+post_product_ci = 33434910548
+```
+
+The final push CI, PR CI, and canonical post-product CI each completed `success` across all five permanent cells. macOS/Python 3.11 on the final push head recorded `600 passed` plus all configured static, cleanliness, package-build, install, and CLI smoke gates.
+
+At the PR #55 merge gate, exact head/base and the two-file diff remained unchanged, mergeability was true, and no submitted reviews or inline review threads were present. Qodo was billing-blocked, automatic CodeRabbit review was skipped, and Cubic was descriptive only. No unavailable or skipped system was treated as PASS.
+
+PR #55 merged with expected-head protection as `5e3966fb0db3d8971b5abe19106949001ed55ba9`, with parents `e394ab0c7efabbfade91b64bcdf9a11c8146f469` and `bb1fa1406ef9dab6a65c1721378025943ba3f6de`.
+
+## Historical release preservation
+
+After the Specification 025 product merge, historical `v0.3.0` remains unchanged:
+
+- source `70dd66aba0e68ae710e6ef12605ed153d107bab4`;
+- Release `378962445`;
+- wheel digest `sha256:b4f724e5ae187db28053c264cf9b9612f864fe5052459c7341a7f470602fb817`;
+- source digest `sha256:e7dc5484b8439cf8a6c594c65b454e141fef7c94a7edb0c7cb4edfc839007835`.
+
+## Active closeout frontier — Specification 025
+
+Product mutation is complete. The active authority is documentation-only closeout.
+
+The closeout package may update only Specification 025 evidence/status/governance records and program-level status documents. It must not modify product code, tests, workflows, dependencies, package metadata, release assets, or benchmark state.
+
+Remaining gates:
+
+1. exact-head closeout CI succeeds across all five permanent cells;
+2. closeout diff remains documentation/governance/evidence-only;
+3. closeout PR exact head/base, reviews, inline threads, comments, and mergeability are rechecked without treating unavailable systems as PASS;
+4. closeout PR merges with expected-head protection;
+5. canonical post-closeout CI succeeds across all five permanent cells;
+6. historical `v0.3.0` identity is reverified;
+7. final evidence reconciliation records the exact closeout merge/post-closeout evidence;
+8. only then may `CLOSED_CANONICAL` be published and the program return to observation.
+
+## Explicitly unselected after Specification 025
 
 Without separately shaped evidence, do not implement:
 
@@ -202,4 +198,4 @@ Without separately shaped evidence, do not implement:
 
 ## Program continuation rule
 
-Execute Specification 025 only through its canonical shaping, implementation, verification, closeout, and post-merge gates. Do not widen it into general concurrency work. After canonical closeout, return to observation/evidence gathering and shape another successor only when fresh reproducible evidence selects a bounded product gap.
+Finish Specification 025 only through its bounded documentation closeout, canonical post-closeout verification, and final evidence reconciliation. After canonical closure, return to observation/evidence gathering. Do not invent a successor merely to continue activity; shape another specification only when fresh reproducible evidence against the new live canonical truth selects a bounded product gap.
