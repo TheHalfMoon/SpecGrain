@@ -1,6 +1,6 @@
 # Closeout — Specification 025 Supported Pre-Grain Writer Serialization
 
-**Status:** `CLOSEOUT_CANDIDATE`
+**Status:** `CLOSED_CANONICAL` when this final evidence reconciliation is canonical
 
 ## Delivered outcome
 
@@ -14,7 +14,7 @@ one active supported pre-Grain persistence transaction per project
 
 A competing supported shape/refine/grain persistence call fails closed immediately instead of racing through the final preimage-check / `os.replace` window.
 
-## Canonical evidence through product
+## Canonical evidence
 
 Selection:
 
@@ -48,6 +48,17 @@ product_merge = 5e3966fb0db3d8971b5abe19106949001ed55ba9
 post_product_ci = 33434910548
 ```
 
+Closeout:
+
+```text
+closeout_head = 885823e0e56dfd3e7c7c8e63d8dacc41b14448f2
+closeout_push_ci = 33435480927
+closeout_pr = 56
+closeout_pr_ci = 33435703680
+closeout_merge = e05df4bd046590ee043115c1edbcd7b83163b4ad
+post_closeout_ci = 33436130730
+```
+
 Every final push/PR/post-merge CI listed above completed `success` across all five permanent cells at its applicable gate.
 
 ## Product surface
@@ -57,29 +68,29 @@ Final product diff changed exactly:
 - `src/specgrain/pregrain.py`;
 - `tests/test_pregrain_serialization.py`.
 
-No public API shape was expanded. No CLI command, schema version, lifecycle state, dependency, workflow, package version, release artifact, child-authoring transaction contract, provider, network, hosted service, or benchmark claim was added.
+No public API shape, CLI command, schema version, lifecycle state, dependency, workflow, package version, release artifact, child-authoring transaction contract, provider, network, hosted service, or benchmark claim was added.
 
-## Behavioral result
+The implementation serializes supported shape/refine/grain persistence through the common `_persist` boundary, uses `.specgrain/tmp/pregrain-mutation.lock` only as an inert persistent anchor, uses non-blocking standard-library Unix/Windows advisory locks, preserves existing preimage/postimage/lifecycle/readiness/dependency/semantic-digest defenses, releases ownership after success/failure/process exit, leaves read-only loading unlocked, and rejects unsafe anchors fail closed.
 
-The implementation now:
+## Product review disposition
 
-- serializes supported `shape_draft_spec`, `refine_shaped_spec`, and `promote_refining_spec_to_grain` persistence through the common `_persist` boundary;
-- uses `.specgrain/tmp/pregrain-mutation.lock` only as an inert persistent anchor;
-- uses non-blocking standard-library advisory lock primitives on Unix-family and Windows systems;
-- preserves existing preimage, replacement, postimage, validation, lifecycle, readiness, dependency, and semantic-digest defenses;
-- releases ownership after success, failure, and process exit;
-- leaves read-only project loading unlocked;
-- rejects unsafe lock anchors fail closed.
-
-## Review disposition
-
-PR #55 merged only after exact-head push CI and PR CI were green, exact head/base and changed paths were rechecked, mergeability was true, and no submitted reviews or inline review threads were present.
+PR #55 merged only after exact-head push and PR CI were green, exact head/base and changed paths were rechecked, mergeability was true, and no submitted reviews or inline review threads were present.
 
 Qodo was billing-blocked. Automatic CodeRabbit review was skipped by repository-star policy. Cubic was descriptive only. None was treated as PASS.
 
+## Closeout review disposition
+
+The closeout diff changed exactly eight documentation/governance/evidence paths and no product/test/workflow/dependency/package/release path.
+
+PR #56 remained on exact head `885823e0e56dfd3e7c7c8e63d8dacc41b14448f2` and exact base `5e3966fb0db3d8971b5abe19106949001ed55ba9`, was mergeable, had no submitted reviews or inline review threads, and merged with expected-head protection as `e05df4bd046590ee043115c1edbcd7b83163b4ad`.
+
+Qodo was billing-blocked, automatic CodeRabbit review was skipped, and Cubic was descriptive only; none was treated as PASS.
+
+The closeout merge has exact parent `5e3966fb0db3d8971b5abe19106949001ed55ba9`. Canonical post-closeout CI `33436130730` completed `success` across all five permanent cells.
+
 ## Historical release preservation
 
-Historical `v0.3.0` remains unchanged:
+Historical `v0.3.0` remains unchanged after closeout:
 
 - source `70dd66aba0e68ae710e6ef12605ed153d107bab4`;
 - Release `378962445`;
@@ -88,27 +99,8 @@ Historical `v0.3.0` remains unchanged:
 
 ## Explicit residuals
 
-Still outside Specification 025 authority:
+Still outside Specification 025 authority are arbitrary non-cooperating writer coordination, general project-wide or distributed locking, child-authoring journal/recovery redesign, blocking waits/retries/leases, later lifecycle mutation, executor/provider/result orchestration, verification/evidence mutation, automatic context/network/model behavior, new runtime dependencies, release publication, hosted scope, and benchmark superiority claims.
 
-- arbitrary manual/non-cooperating writer coordination;
-- general project-wide or distributed locking;
-- child-authoring journal/recovery redesign;
-- blocking waits, retries, leases, heartbeats, or timeout ownership inference;
-- READY/later lifecycle mutation;
-- executor/provider/result orchestration;
-- verification/evidence mutation;
-- automatic context/retrieval/network/LLM behavior;
-- dependency or release publication changes;
-- hosted/account/dashboard scope;
-- benchmark superiority claims.
+## Final disposition
 
-## Remaining closure gates
-
-This closeout candidate does not make Specification 025 `CLOSED_CANONICAL`.
-
-Remaining work is limited to:
-
-1. exact-head documentation-only closeout CI and scope review;
-2. closeout PR CI/reviews/threads/mergeability and expected-head merge;
-3. canonical post-closeout CI and historical release recheck;
-4. final evidence reconciliation that records the closeout merge/post-closeout CI and, only then, publishes `CLOSED_CANONICAL` and returns the program to observation.
+Canonical governance was re-read after the closeout merge and successful post-closeout CI. No further Specification 025 product work is authorized or required. When this final evidence reconciliation is canonical, Specification 025 is `CLOSED_CANONICAL`, no active product specification remains, and the program returns to post-025 observation/evidence gathering. No successor is selected merely to continue activity.
