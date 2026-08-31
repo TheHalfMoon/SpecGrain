@@ -2,7 +2,7 @@
 
 ## Status
 
-`SHAPED` candidate. Product implementation is blocked until this documentation-only shaping package is merged canonically and the resulting `main` passes the permanent five-cell CI matrix.
+`CLOSEOUT_CANDIDATE`. The bounded product implementation is canonical at merge `5e3966fb0db3d8971b5abe19106949001ed55ba9`, canonical post-product CI `33434910548` succeeded across all five permanent cells, and historical `v0.3.0` remains unchanged. `CLOSED_CANONICAL` is not claimed until the documentation-only closeout merge, permanent post-closeout CI, and final evidence reconciliation are proven.
 
 ## Outcome
 
@@ -10,7 +10,7 @@ Prevent one successful supported pre-Grain mutation from being silently overwrit
 
 ## Selection evidence
 
-Specification 025 is selected from the deterministic post-024 reproduction recorded in:
+Specification 025 was selected from the deterministic post-024 reproduction recorded in:
 
 `docs/research/post-024-supported-pregrain-multi-writer-reproduction-2026-08-31.md`
 
@@ -39,6 +39,22 @@ Implementation is governed by:
 `docs/adr/0020-supported-pregrain-writer-serialization.md`
 
 ADR-0020 selects a project-scoped, non-blocking advisory lock around the existing `pregrain.py::_persist` persistence-critical section. It does not authorize broad repository locking or coordination with arbitrary external writers.
+
+## Canonical implementation evidence
+
+```text
+shaping_head = e12dc2996f663f5d4a98eb5af212deb73ead5eff
+shaping_merge = e394ab0c7efabbfade91b64bcdf9a11c8146f469
+post_shaping_ci = 33432447491
+final_implementation_head = bb1fa1406ef9dab6a65c1721378025943ba3f6de
+push_ci = 33434286534
+product_pr = 55
+product_pr_ci = 33434757539
+product_merge = 5e3966fb0db3d8971b5abe19106949001ed55ba9
+post_product_ci = 33434910548
+```
+
+The final product diff changed only `src/specgrain/pregrain.py` and `tests/test_pregrain_serialization.py`. Push, PR, and post-product CI all succeeded across the permanent Ubuntu/Python 3.11, 3.12, 3.13, macOS/Python 3.11, and Windows/Python 3.11 matrix. No unavailable or skipped review system was treated as PASS.
 
 ## Required behavior
 
@@ -98,8 +114,6 @@ The implementation MUST release/close the advisory lock in `finally` on success 
 
 Process termination MUST NOT require stale-owner timeout inference or manual deletion of the persistent anchor before a future supported writer can acquire the lock.
 
-The implementation MUST prove this property with subprocess/process-exit evidence on supported CI platforms.
-
 ### 5. Fail closed on unsafe lock anchors
 
 The anchor MUST be a regular non-symlink file.
@@ -138,7 +152,7 @@ State-only transitions MUST preserve existing semantic revision-digest behavior.
 
 Specification 025 MUST NOT redesign or silently merge the ADR-0018 child-authoring journal with the new pre-Grain persistence lock.
 
-`create_draft_spec`, `create_child_draft_spec`, and `recover_authoring_transaction` remain outside the product mutation surface unless a test-only compatibility adjustment is strictly required and independently justified.
+`create_draft_spec`, `create_child_draft_spec`, and `recover_authoring_transaction` remain outside the product mutation surface.
 
 ### 9. No hidden retry policy
 
@@ -155,42 +169,42 @@ Specification 025 MUST NOT add:
 
 Caller-level retry policy remains outside the deterministic core.
 
-## Acceptance proof required
+## Acceptance proof
 
-Implementation must prove at minimum:
+Canonical evidence proves:
 
 1. the exact supported-writer observation topology can no longer produce two successful competing writes;
 2. writer A can succeed while injected writer B fails closed on active advisory-lock contention;
 3. final canonical state equals writer A's expected postimage and contains no silent successful competing revision;
-4. a stale caller that computed against an old preimage still fails existing exact-preimage checks after acquiring the lock later;
+4. a stale caller computed against an old preimage still fails existing exact-preimage checks after another writer commits;
 5. `shape_draft_spec`, `refine_shaped_spec`, and `promote_refining_spec_to_grain` share the same lock boundary;
 6. lock ownership is released after successful persistence;
 7. lock ownership is released after representative persistence failure;
-8. a subprocess/process holding the advisory lock can exit and a later supported mutation can acquire the same persistent anchor without timeout inference;
+8. process exit releases advisory ownership and a later supported mutation can reuse the persistent anchor without timeout inference;
 9. the persistent anchor's mere existence does not block mutation after ownership is released;
 10. symlink/non-regular lock anchors fail closed before SpecNode mutation;
 11. existing preimage-drift, postimage, readiness, dependency, and lifecycle tests remain green;
-12. read-only commands remain unaffected;
-13. no runtime dependency is added;
-14. permanent Ubuntu/Python 3.11, 3.12, 3.13, macOS/Python 3.11, and Windows/Python 3.11 CI succeeds;
+12. read-only project loading remains unaffected;
+13. no runtime dependency was added;
+14. the permanent five-cell CI matrix succeeded on the final implementation head, PR head, and canonical product merge;
 15. historical `v0.3.0` release identity remains unchanged.
 
-## Expected implementation surface
+Detailed proof is recorded in `verification.md` and review conclusions in `review.md`.
 
-Product implementation is expected to remain bounded to:
+## Product implementation surface
+
+Canonical product implementation changed exactly:
 
 ```text
 src/specgrain/pregrain.py
-tests/test_pregrain.py
+tests/test_pregrain_serialization.py
 ```
 
-A narrowly focused additional test module is permitted if it materially improves cross-process lock proof without widening runtime scope.
-
-Changes to CLI behavior, public schemas, lifecycle modules, child-authoring journal code, workflows, dependencies, or release metadata require explicit authority review before merge.
+No CLI behavior, public schema, lifecycle module, child-authoring journal code, workflow, dependency, package metadata, or release metadata changed.
 
 ## Existing contracts retained
 
-Specification 025 MUST preserve:
+Specification 025 preserves:
 
 - SpecNode schema/version and semantic digest;
 - lifecycle legality and authorization boundaries;
@@ -198,7 +212,7 @@ Specification 025 MUST preserve:
 - dependency validation and eligibility;
 - WorkPacket/context/evidence contracts;
 - ADR-0018 recovery behavior;
-- current CLI success/error conventions except where existing pre-Grain errors naturally surface the new `StoreValidationError`;
+- existing CLI success/error conventions except where existing pre-Grain errors naturally surface the new `StoreValidationError`;
 - zero runtime dependencies.
 
 ## Explicitly out of scope
@@ -226,3 +240,7 @@ Specification 025 does not authorize:
 Manual/non-cooperating writers remain outside the supported coordination contract. The exact-preimage checks continue to detect many such drifts, but Specification 025 does not claim an atomic compare-and-swap guarantee against arbitrary filesystem writers.
 
 Other deferred product areas remain separately shapeable only from future fresh evidence after Specification 025 is canonically closed.
+
+## Closure gate
+
+The product is merged and post-product evidence is proven. The specification remains `CLOSEOUT_CANDIDATE` until T020/T021 complete through documentation-only closeout, permanent post-closeout CI, final evidence reconciliation, and canonical governance re-read.
