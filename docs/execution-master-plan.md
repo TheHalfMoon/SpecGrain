@@ -52,19 +52,11 @@ Specification 000 established the project foundation and constitution. Specifica
 - Specification 021 — Public Launch Readiness Hardening: `CLOSED_CANONICAL`.
 - Specification 022 — Native Grain Preparation: `CLOSED_CANONICAL`; bounded `DRAFT -> SHAPED -> REFINING -> GRAIN` preparation.
 - Specification 023 — Spec Kit Preset-Compatible Import: `CLOSED_CANONICAL`; bounded path-bound identity fallback for template-light read-only imports.
-- Specification 024 — Native WorkPacket Export: product delivered and post-product verified; documentation closeout is the active gate.
+- Specification 024 — Native WorkPacket Export: `CLOSED_CANONICAL` when this final reconciliation becomes canonical; bounded read-only native export from one dependency-eligible stored `GRAIN`.
 
 The latest published release remains `v0.3.0` at exact historical product source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
 
-## Closed frontier — Specification 023
-
-Specification 023 remains closed with canonical shaping, product, closeout, reconciliation, and post-closeout evidence preserved in its specification directory. The canonical pre-023 full-template report digest remains `sha256:678fcc87985902002a9d2bc852196fbffdc59b332740660f1deeaf0d4f58746a`, and `SPECKIT_IMPORT_VERSION == 1`.
-
-The later SGB-EXP-001 experiment remains `INVALIDATED_ORACLE_REVEALED_PRE_FREEZE`; it produced no valid comparative dataset, supports no superiority claim, and selected no product work.
-
-The bounded multi-writer race retained after Specification 022 remains an explicit residual outside Specification 024 authority.
-
-## Active closeout frontier — Specification 024
+## Closed frontier — Specification 024
 
 Fresh deterministic interoperability evidence selected exactly one bounded native handoff repair.
 
@@ -95,29 +87,35 @@ The command is constrained to an exact stored dependency-eligible `GRAIN`, expli
 
 ### Product proof
 
-Final implementation head `7e1db87f69108fc8693b987e77d20f92e4f46866` passed exact push CI `33421885016` and PR CI `33422062846`, both across all five permanent cells. Ubuntu/Python 3.11 recorded `592 passed` plus cleanliness, compile, source CLI smoke, build, wheel reinstall, and installed CLI smoke.
+- final implementation head `7e1db87f69108fc8693b987e77d20f92e4f46866`;
+- push CI `33421885016` and PR CI `33422062846` — success across five cells;
+- Ubuntu/Python 3.11 final push evidence — `592 passed` plus cleanliness, compile, source CLI smoke, build, wheel reinstall, and installed CLI smoke;
+- exact product diff: `README.md`, `src/specgrain/cli.py`, `tests/test_workpacket_cli.py`, `tests/test_launch.py`, `tests/test_repository_cli.py`; the last two were test-only compatibility exceptions with no runtime authority expansion;
+- PR #50 had no submitted reviews or inline review threads; Qodo was billing-blocked, automatic CodeRabbit review was skipped by repository-star policy, and Cubic was descriptive only;
+- PR #50 expected-head product merge `1666ba8c135ee8575f1546019ab592db32947dd2`;
+- canonical post-product CI `33422235433` — success across five cells.
 
-The exact product diff changed five files: `README.md`, `src/specgrain/cli.py`, `tests/test_workpacket_cli.py`, `tests/test_launch.py`, and `tests/test_repository_cli.py`. The last two were documented test-only regression compatibility exceptions with no runtime authority expansion.
+### Canonical closeout proof
 
-PR #50 had no submitted reviews or inline review threads. Qodo was billing-blocked, automatic CodeRabbit review was skipped by repository-star policy, and Cubic was descriptive only; none was treated as PASS.
-
-PR #50 merged exact reviewed head with expected-head protection as canonical product merge `1666ba8c135ee8575f1546019ab592db32947dd2`. Canonical post-product CI `33422235433` completed `success` across all five cells.
+- exact closeout head `12f89e22955efc632f62d52f2f0396430f4bee01`;
+- exact closeout diff changed only seven authorized governance/evidence/status paths;
+- closeout push CI `33422814705` and PR CI `33422950629` — success across five cells;
+- PR #51 had no submitted reviews or inline review threads and was mergeable before merge; Qodo was billing-blocked, automatic CodeRabbit review was skipped by repository-star policy, and Cubic was descriptive only;
+- PR #51 expected-head closeout merge `519680c5cf378dfcb4673cf7292bcf51e9c36af1`;
+- closeout merge parent `1666ba8c135ee8575f1546019ab592db32947dd2`;
+- canonical post-closeout CI `33423123321` — success across all five permanent cells.
 
 Historical `v0.3.0` remains unchanged at source `70dd66aba0e68ae710e6ef12605ed153d107bab4`, Release `378962445`, wheel digest `sha256:b4f724e5ae187db28053c264cf9b9612f864fe5052459c7341a7f470602fb817`, and source digest `sha256:e7dc5484b8439cf8a6c594c65b454e141fef7c94a7edb0c7cb4edfc839007835`.
 
-## Current execution gate
+The SGB-EXP-001 experiment remains `INVALIDATED_ORACLE_REVEALED_PRE_FREEZE`; it produced no valid comparative dataset, supports no superiority claim, and selected no product work.
 
-Product implementation is complete. The active work is documentation-only closeout:
+The bounded multi-writer race retained after Specification 022 remains an explicit residual outside Specification 024 authority.
 
-1. exact closeout head must change only Specification 024 governance/evidence/status documentation;
-2. permanent push and PR five-cell CI must succeed on that exact head;
-3. reviews, inline threads, mergeability, and review-system availability must be rechecked without false PASS claims;
-4. closeout PR must merge with expected-head protection;
-5. resulting canonical `main` must pass permanent five-cell CI;
-6. historical `v0.3.0` must remain unchanged;
-7. final documentation-only evidence reconciliation must record exact closeout merge/post-closeout evidence and only then publish Specification 024 as `CLOSED_CANONICAL`.
+## Post-024 observation frontier
 
-No further product mutation is authorized under Specification 024.
+When this final reconciliation becomes canonical, Specification 024 is `CLOSED_CANONICAL` and no product specification is active.
+
+No further product mutation is authorized by Specification 024. The program returns to observation/evidence gathering.
 
 ## Explicitly unselected after Specification 024
 
@@ -152,4 +150,4 @@ Without fresh canonical shaping, do not implement:
 
 ## Program continuation rule
 
-Complete Specification 024 closeout and final evidence reconciliation before declaring it `CLOSED_CANONICAL`. After closure, return to observation/evidence gathering. Do not invent a successor merely to continue activity; shape the next specification only when fresh reproducible evidence against live canonical truth selects a bounded product gap.
+After this final reconciliation becomes canonical, return to observation/evidence gathering. Do not invent a successor merely to continue activity. Shape the next specification only when fresh reproducible evidence against live canonical truth selects a bounded product gap.
