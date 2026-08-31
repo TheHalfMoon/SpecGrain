@@ -2,12 +2,10 @@
 
 from __future__ import annotations
 
-import errno
 import os
-import stat
 import tempfile
-from collections.abc import Iterator, Sequence
-from contextlib import contextmanager, suppress
+from collections.abc import Sequence
+from contextlib import suppress
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -29,11 +27,11 @@ from .store import (
     _json_text,
     _parse_json_text,
     _read_text,
+    _supported_mutation_lock as _pregrain_mutation_lock,
     load_project,
 )
 
 _RISK_LEVELS = frozenset({"low", "medium", "high", "critical"})
-_PRE_GRAIN_LOCK_LOCATION = ".specgrain/tmp/pregrain-mutation.lock"
 
 
 @dataclass(frozen=True, slots=True)
@@ -156,136 +154,6 @@ def _validate_proposed(project: LocalProject, replacement: SpecNode) -> tuple[Sp
             f"proposed dependencies are invalid: {first.code.value}: {first.message}",
         )
     return proposed
-
-
-def _unsafe_lock_anchor(lock_path: Path) -> bool:
-    try:
-        metadata = os.lstat(lock_path)
-    except FileNotFoundError:
-        return False
-    except OSError as exc:
-        raise StoreValidationError(
-            _PRE_GRAIN_LOCK_LOCATION,
-            f"cannot inspect pre-Grain mutation lock: {exc}",
-        ) from exc
-    return stat.S_ISLNK(metadata.st_mode) or not stat.S_ISREG(metadata.st_mode)
-
-
-def _lock_unix(descriptor: int) -> None:
-    import fcntl
-
-    try:
-        fcntl.flock(descriptor, fcntl.LOCK_EX | fcntl.LOCK_NB)
-    except OSError as exc:
-        if exc.errno in {errno.EACCES, errno.EAGAIN}:
-            raise StoreValidationError(
-                _PRE_GRAIN_LOCK_LOCATION,
-                "pre-Grain mutation already in progress",
-            ) from exc
-        raise StoreValidationError(
-            _PRE_GRAIN_LOCK_LOCATION,
-            f"cannot acquire pre-Grain mutation lock: {exc}",
-        ) from exc
-
-
-def _unlock_unix(descriptor: int) -> None:
-    import fcntl
-
-    fcntl.flock(descriptor, fcntl.LOCK_UN)
-
-
-def _lock_windows(descriptor: int) -> None:
-    import msvcrt
-
-    os.lseek(descriptor, 0, os.SEEK_SET)
-    try:
-        msvcrt.locking(descriptor, msvcrt.LK_NBLCK, 1)
-    except OSError as exc:
-        if exc.errno in {errno.EACCES, errno.EAGAIN, errno.EDEADLK}:
-            raise StoreValidationError(
-                _PRE_GRAIN_LOCK_LOCATION,
-                "pre-Grain mutation already in progress",
-            ) from exc
-        raise StoreValidationError(
-            _PRE_GRAIN_LOCK_LOCATION,
-            f"cannot acquire pre-Grain mutation lock: {exc}",
-        ) from exc
-
-
-def _unlock_windows(descriptor: int) -> None:
-    import msvcrt
-
-    os.lseek(descriptor, 0, os.SEEK_SET)
-    msvcrt.locking(descriptor, msvcrt.LK_UNLCK, 1)
-
-
-@contextmanager
-def _pregrain_mutation_lock(root: str | os.PathLike[str]) -> Iterator[None]:
-    lock_path = Path(root) / _PRE_GRAIN_LOCK_LOCATION
-    lock_dir = lock_path.parent
-    descriptor: int | None = None
-    acquired = False
-
-    try:
-        if lock_dir.exists():
-            if lock_dir.is_symlink() or not lock_dir.is_dir():
-                raise StoreValidationError(
-                    ".specgrain/tmp",
-                    "pre-Grain mutation lock directory must be a real directory",
-                )
-        else:
-            lock_dir.mkdir(parents=True, exist_ok=False)
-
-        if _unsafe_lock_anchor(lock_path):
-            raise StoreValidationError(
-                _PRE_GRAIN_LOCK_LOCATION,
-                "pre-Grain mutation lock must be a regular non-symlink file",
-            )
-
-        flags = os.O_CREAT | os.O_RDWR
-        flags |= getattr(os, "O_NOFOLLOW", 0)
-        try:
-            descriptor = os.open(lock_path, flags, 0o600)
-        except OSError as exc:
-            raise StoreValidationError(
-                _PRE_GRAIN_LOCK_LOCATION,
-                f"cannot open pre-Grain mutation lock: {exc}",
-            ) from exc
-
-        opened = os.fstat(descriptor)
-        if not stat.S_ISREG(opened.st_mode) or _unsafe_lock_anchor(lock_path):
-            raise StoreValidationError(
-                _PRE_GRAIN_LOCK_LOCATION,
-                "pre-Grain mutation lock must be a regular non-symlink file",
-            )
-
-        if opened.st_size == 0:
-            os.write(descriptor, b"\0")
-            os.fsync(descriptor)
-
-        if os.name == "nt":
-            _lock_windows(descriptor)
-        else:
-            _lock_unix(descriptor)
-        acquired = True
-        yield
-    except StoreValidationError:
-        raise
-    except OSError as exc:
-        raise StoreValidationError(
-            _PRE_GRAIN_LOCK_LOCATION,
-            f"cannot use pre-Grain mutation lock: {exc}",
-        ) from exc
-    finally:
-        if descriptor is not None:
-            if acquired:
-                with suppress(OSError):
-                    if os.name == "nt":
-                        _unlock_windows(descriptor)
-                    else:
-                        _unlock_unix(descriptor)
-            with suppress(OSError):
-                os.close(descriptor)
 
 
 def _replace_spec_exact(path: Path, before_text: str, after: SpecNode, location: str) -> None:
