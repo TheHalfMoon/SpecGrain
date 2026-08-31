@@ -6,10 +6,12 @@
 **Canonical Specification 025 product merge:** `5e3966fb0db3d8971b5abe19106949001ed55ba9`  
 **Canonical Specification 025 closeout merge:** `e05df4bd046590ee043115c1edbcd7b83163b4ad`  
 **Canonical post-closeout CI:** `33436130730` — `completed/success` across all five permanent cells  
-**Program status:** `POST_025_OBSERVATION` when this final evidence reconciliation is canonical  
-**Last closed specification:** `specs/025-supported-pregrain-writer-serialization/` — `CLOSED_CANONICAL` when this reconciliation is canonical  
-**Active product specification:** none when this reconciliation is canonical  
-**Product implementation:** canonical, post-product verified, closeout verified  
+**Canonical Specification 025 reconciliation merge:** `8a0da2908f6251100a0d7ab71178c2a7c3ed64bb`  
+**Canonical post-reconciliation CI:** `33437077692` — `completed/success` across all five permanent cells  
+**Program status:** `POST_025_OBSERVATION`  
+**Last closed specification:** `specs/025-supported-pregrain-writer-serialization/` — `CLOSED_CANONICAL`  
+**Active product specification:** none  
+**Product implementation:** canonical, post-product verified, closeout verified, final reconciliation verified  
 **Published release:** `v0.3.0`  
 **Published release source:** `70dd66aba0e68ae710e6ef12605ed153d107bab4`  
 **Published release ID:** `378962445`
@@ -75,7 +77,7 @@ Push CI, PR CI, and canonical post-product CI all completed `success` across Ubu
 
 At the PR #55 merge gate exact head/base and two-file scope remained unchanged, mergeability was true, and no submitted reviews or inline review threads were present. Qodo was billing-blocked, CodeRabbit automatic review was skipped, and Cubic was descriptive only. None was treated as PASS.
 
-## Specification 025 closeout proof
+## Specification 025 closeout and reconciliation proof
 
 ```text
 closeout_head = 885823e0e56dfd3e7c7c8e63d8dacc41b14448f2
@@ -84,15 +86,21 @@ closeout_pr = 56
 closeout_pr_ci = 33435703680
 closeout_merge = e05df4bd046590ee043115c1edbcd7b83163b4ad
 post_closeout_ci = 33436130730
+reconciliation_head = c145578694100383d7292fc76b5995cee8a0e121
+reconciliation_push_ci = 33436685449
+reconciliation_pr = 57
+reconciliation_pr_ci = 33436869583
+reconciliation_merge = 8a0da2908f6251100a0d7ab71178c2a7c3ed64bb
+post_reconciliation_ci = 33437077692
 ```
 
-The closeout diff changed exactly eight documentation/governance/evidence paths and no product/test/workflow/dependency/package/release path. PR #56 remained on exact product-merge base `5e3966fb0db3d8971b5abe19106949001ed55ba9`, was mergeable, had no submitted reviews or inline review threads, and merged with expected-head protection. Qodo was billing-blocked, CodeRabbit automatic review was skipped, and Cubic was descriptive only. None was treated as PASS.
+The closeout and reconciliation diffs were documentation/governance/evidence-only. PR #56 merged from exact product-merge base with expected-head protection. PR #57 merged as the final evidence reconciliation. Canonical post-closeout and post-reconciliation CI each completed `success` across all five permanent cells.
 
-Canonical closeout merge `e05df4bd046590ee043115c1edbcd7b83163b4ad` has exact parent `5e3966fb0db3d8971b5abe19106949001ed55ba9`. Post-closeout CI `33436130730` completed `success` across all five permanent cells.
+Unavailable or skipped review systems were never treated as PASS. Qodo was billing-blocked, automatic CodeRabbit review was skipped by repository-star policy, and Cubic was descriptive only where those systems appeared.
 
 ## Historical release preservation
 
-Live GitHub truth after closeout remains:
+Live GitHub truth after final reconciliation remains:
 
 - tag `v0.3.0` -> `70dd66aba0e68ae710e6ef12605ed153d107bab4`;
 - Release ID `378962445`, target `70dd66aba0e68ae710e6ef12605ed153d107bab4`;
@@ -107,12 +115,12 @@ No current authority exists for arbitrary non-cooperating writer coordination, g
 
 ## Current execution gate
 
-When this final evidence reconciliation is canonical:
+Current canonical state:
 
 1. Specification 025 is `CLOSED_CANONICAL`;
 2. there is no active product specification;
 3. all currently shaped and authorized product work is complete;
 4. the program is in `POST_025_OBSERVATION`;
-5. future product work requires fresh reproducible evidence against the new live canonical baseline.
+5. future product work requires fresh reproducible evidence against live canonical truth.
 
 Do not shape a successor merely because deferred work or residual risk exists. Observation/evidence gathering is the correct canonical frontier until new evidence independently selects a bounded product gap.
