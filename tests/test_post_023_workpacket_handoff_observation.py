@@ -11,7 +11,6 @@ from specgrain import (
     build_work_packet,
     load_project,
     require_context_budget,
-    require_grain_readiness,
 )
 from specgrain.cli import main
 
@@ -73,7 +72,10 @@ def test_native_grain_handoff_requires_python_api_glue(
     assert main(["refine", spec_id, str(tmp_path)]) == 0
     capsys.readouterr()
     assert main(["grain", spec_id, str(tmp_path)]) == 0
-    capsys.readouterr()
+    grain_output = capsys.readouterr().out
+    assert "Source state: REFINING" in grain_output
+    assert "State: GRAIN" in grain_output
+
     assert main(["next", str(tmp_path), "--json"]) == 0
     next_payload = json.loads(capsys.readouterr().out)
     assert next_payload["eligible"] == [spec_id]
@@ -88,8 +90,7 @@ def test_native_grain_handoff_requires_python_api_glue(
 
     project = load_project(tmp_path)
     node = project.specs[0]
-    readiness = require_grain_readiness(node, project.specs)
-    assert readiness.is_ready
+    assert node.state == "GRAIN"
 
     outcome_bytes = node.outcome.encode("utf-8")
     source = ContextSource(
