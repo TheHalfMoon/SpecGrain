@@ -2,7 +2,7 @@
 
 The roadmap is intentionally progressive. Only the nearest active specification should have implementation-level detail. Future work is shaped from current evidence rather than pre-authorized by stale backlog detail.
 
-**Current program state:** Specifications 000–023 are `CLOSED_CANONICAL`. Specification 024 — Native WorkPacket Export has a canonical product merge and successful post-product CI; documentation-only closeout is the active gate. The latest published release remains GitHub Release `378962445` / tag `v0.3.0` at exact historical product source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
+**Current program state:** Specifications 000–024 are `CLOSED_CANONICAL` when this final reconciliation becomes canonical. No successor product specification is selected. The program returns to `POST_024_OBSERVATION`. The latest published release remains GitHub Release `378962445` / tag `v0.3.0` at exact historical product source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
 
 ## M0 — Foundation
 
@@ -56,13 +56,9 @@ Specification 010 closed the first complete MVP vertical slice at the API layer.
 - **021 — Public Launch Readiness Hardening:** `CLOSED_CANONICAL`.
 - **022 — Native Grain Preparation:** `CLOSED_CANONICAL`; bounded native `DRAFT -> SHAPED -> REFINING -> GRAIN` preparation.
 - **023 — Spec Kit Preset-Compatible Import:** `CLOSED_CANONICAL`; deterministic path-bound identity fallback for bounded template-light read-only Spec Kit imports.
-- **024 — Native WorkPacket Export:** product delivered and post-product verified; closeout candidate pending documentation-only merge/post-closeout proof/final reconciliation.
+- **024 — Native WorkPacket Export:** `CLOSED_CANONICAL` when this final reconciliation becomes canonical; bounded read-only `packet` export from one exact dependency-eligible stored `GRAIN`.
 
-## Specification 023 canonical proof
-
-Specification 023 remains canonically closed. Its shaping, implementation, documentation closeout, post-closeout CI, and final reconciliation evidence are preserved under `specs/023-spec-kit-preset-compatible-import/`. Its full-template report digest remains `sha256:678fcc87985902002a9d2bc852196fbffdc59b332740660f1deeaf0d4f58746a`, and `SPECKIT_IMPORT_VERSION == 1`.
-
-## Specification 024 evidence selection
+## Specification 024 canonical proof
 
 The invalidated SGB-EXP-001 experiment is retained as methodology evidence only and produced no comparative product authority.
 
@@ -84,8 +80,6 @@ specgrain packet <spec_id> [path] --context-sources <json-file> [--json]
 
 It exports the existing WorkPacket from an exact dependency-eligible stored `GRAIN`, using explicit bounded ContextSource records, the existing Grain token budget, current context-budget primitives, and `build_work_packet`, without lifecycle/evidence mutation or execution authority.
 
-## Specification 024 canonical product proof
-
 Shaping:
 
 - exact head `043abdf8f15f688cdbae746c0abd83dda74d0dae`;
@@ -101,25 +95,23 @@ Product:
 - PR #50 expected-head merge `1666ba8c135ee8575f1546019ab592db32947dd2`;
 - post-product CI `33422235433` — success across five cells.
 
-At product review gate, PR #50 had no submitted reviews or inline threads. Qodo was billing-blocked, automatic CodeRabbit review was skipped by repository-star policy, and Cubic supplied descriptive summary text only; none was treated as PASS.
+Closeout:
+
+- exact documentation-only head `12f89e22955efc632f62d52f2f0396430f4bee01`;
+- exact closeout diff contained only seven authorized governance/evidence/status paths;
+- push CI `33422814705` and PR CI `33422950629` — success across five cells;
+- PR #51 had no submitted reviews or inline review threads and was mergeable before merge; Qodo was billing-blocked, automatic CodeRabbit review was skipped by repository-star policy, and Cubic was descriptive only;
+- PR #51 expected-head merge `519680c5cf378dfcb4673cf7292bcf51e9c36af1`;
+- closeout merge parent `1666ba8c135ee8575f1546019ab592db32947dd2`;
+- post-closeout CI `33423123321` — success across five cells.
+
+At product and closeout review gates, unavailable or skipped review systems were never treated as PASS.
 
 Historical `v0.3.0` remains unchanged at source `70dd66aba0e68ae710e6ef12605ed153d107bab4`, Release `378962445`, wheel digest `sha256:b4f724e5ae187db28053c264cf9b9612f864fe5052459c7341a7f470602fb817`, and source digest `sha256:e7dc5484b8439cf8a6c594c65b454e141fef7c94a7edb0c7cb4edfc839007835`.
 
-## Specification 024 closeout gate
-
-Product mutation is complete. Closeout must now remain documentation-only and prove:
-
-1. exact closeout scope;
-2. exact-head push and PR five-cell CI;
-3. review/thread/mergeability state without false PASS claims;
-4. expected-head closeout merge;
-5. canonical post-closeout five-cell CI;
-6. preserved historical `v0.3.0` identity;
-7. final documentation-only evidence reconciliation before `CLOSED_CANONICAL` is published.
-
 ## Explicit residual beyond 022
 
-A bounded multi-writer race remains possible around exact-preimage validation and atomic replacement. Specification 024 does not select or alter that boundary.
+A bounded multi-writer race remains possible around exact-preimage validation and atomic replacement. Specification 024 did not select or alter that boundary.
 
 ## Still deferred unless newly shaped
 
@@ -136,4 +128,4 @@ A bounded multi-writer race remains possible around exact-preimage validation an
 
 ## Post-024 continuation discipline
 
-No successor product specification is selected by Specification 024. After final canonical closure, return to observation/evidence gathering and shape a successor only from fresh reproducible evidence against live canonical truth.
+No successor product specification is selected by Specification 024. After this final reconciliation becomes canonical, return to observation/evidence gathering and shape a successor only from fresh reproducible evidence against live canonical truth.
