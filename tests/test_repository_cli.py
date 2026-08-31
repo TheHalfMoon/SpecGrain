@@ -30,6 +30,7 @@ def cli_module(monkeypatch: pytest.MonkeyPatch):
     store.create_child_draft_spec = lambda path, parent_id, title, outcome, rationale="": None
     store.create_draft_spec = lambda path, title, outcome, rationale="": None
     store.init_project = lambda path, project_id=None: None
+    store.load_project = lambda path: None
     store.recover_authoring_transaction = lambda path: None
     monkeypatch.setitem(sys.modules, "specgrain.store", store)
 
