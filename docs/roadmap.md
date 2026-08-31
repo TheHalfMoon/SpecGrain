@@ -2,7 +2,7 @@
 
 The roadmap is intentionally progressive. Only the nearest active specification should have implementation-level detail. Future work is shaped from current evidence rather than pre-authorized by stale backlog detail.
 
-**Current program state:** Specifications 000–025 are `CLOSED_CANONICAL` when this final evidence reconciliation is canonical. There is no active product specification. The program returns to `POST_025_OBSERVATION`. The latest published release remains GitHub Release `378962445` / tag `v0.3.0` at exact historical product source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
+**Current program state:** Specifications 000–025 are `CLOSED_CANONICAL`. There is no active product specification. The program is in `POST_025_OBSERVATION`. The latest published release remains GitHub Release `378962445` / tag `v0.3.0` at exact historical product source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
 
 ## M0 — Foundation
 
@@ -57,7 +57,7 @@ Specification 010 closed the first complete MVP vertical slice at the API layer.
 - **022 — Native Grain Preparation:** `CLOSED_CANONICAL`.
 - **023 — Spec Kit Preset-Compatible Import:** `CLOSED_CANONICAL`.
 - **024 — Native WorkPacket Export:** `CLOSED_CANONICAL`.
-- **025 — Supported Pre-Grain Writer Serialization:** `CLOSED_CANONICAL` when this final evidence reconciliation is canonical; bounded cooperative non-blocking serialization of supported `pregrain.py::_persist` transactions.
+- **025 — Supported Pre-Grain Writer Serialization:** `CLOSED_CANONICAL`; bounded cooperative non-blocking serialization of supported `pregrain.py::_persist` transactions.
 
 ## Specification 024 canonical frontier
 
@@ -105,7 +105,7 @@ The final product diff changed only `src/specgrain/pregrain.py` and `tests/test_
 
 All final shaping/product CI gates succeeded across Ubuntu/Python 3.11, 3.12, 3.13, macOS/Python 3.11, and Windows/Python 3.11. Unavailable or skipped review systems were never treated as PASS.
 
-## Specification 025 canonical closeout proof
+## Specification 025 canonical closeout and reconciliation proof
 
 ```text
 closeout_head = 885823e0e56dfd3e7c7c8e63d8dacc41b14448f2
@@ -114,15 +114,21 @@ closeout_pr = 56
 closeout_pr_ci = 33435703680
 closeout_merge = e05df4bd046590ee043115c1edbcd7b83163b4ad
 post_closeout_ci = 33436130730
+reconciliation_head = c145578694100383d7292fc76b5995cee8a0e121
+reconciliation_push_ci = 33436685449
+reconciliation_pr = 57
+reconciliation_pr_ci = 33436869583
+reconciliation_merge = 8a0da2908f6251100a0d7ab71178c2a7c3ed64bb
+post_reconciliation_ci = 33437077692
 ```
 
-The closeout diff changed exactly eight documentation/governance/evidence paths. PR #56 stayed on exact base `5e3966fb0db3d8971b5abe19106949001ed55ba9`, was mergeable, had no submitted reviews or inline review threads, and merged with expected-head protection. The closeout merge has exact parent `5e3966fb0db3d8971b5abe19106949001ed55ba9`. Post-closeout CI completed `success` across all five permanent cells.
+The closeout and reconciliation changes remained documentation/governance/evidence-only. Canonical post-closeout and post-reconciliation CI each completed `success` across all five permanent cells.
 
 Historical `v0.3.0` remains unchanged at source `70dd66aba0e68ae710e6ef12605ed153d107bab4`, Release `378962445`, wheel digest `sha256:b4f724e5ae187db28053c264cf9b9612f864fe5052459c7341a7f470602fb817`, and source digest `sha256:e7dc5484b8439cf8a6c594c65b454e141fef7c94a7edb0c7cb4edfc839007835`.
 
 ## Post-025 observation frontier
 
-When this final evidence reconciliation is canonical, all currently shaped and authorized product work is complete and no active product specification remains.
+All currently shaped and authorized product work is complete and no active product specification remains.
 
 Still deferred unless newly selected by fresh reproducible evidence:
 
@@ -142,4 +148,4 @@ Still deferred unless newly selected by fresh reproducible evidence:
 
 ## Continuation discipline
 
-After canonical reconciliation and successful canonical post-reconciliation CI, remain in observation/evidence gathering. Do not invent a successor merely to continue activity. Shape another specification only when fresh reproducible evidence against the new live canonical truth selects a bounded product gap.
+Remain in observation/evidence gathering. Do not invent a successor merely to continue activity. Shape another specification only when fresh reproducible evidence against live canonical truth selects a bounded product gap.
