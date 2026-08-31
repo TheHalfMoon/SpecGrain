@@ -76,7 +76,7 @@ def test_native_grain_handoff_requires_python_api_glue(
     capsys.readouterr()
     assert main(["next", str(tmp_path), "--json"]) == 0
     next_payload = json.loads(capsys.readouterr().out)
-    assert next_payload["eligible_ids"] == [spec_id]
+    assert next_payload["eligible"] == [spec_id]
 
     with pytest.raises(SystemExit) as exc_info:
         main(["packet", spec_id, str(tmp_path), "--json"])
