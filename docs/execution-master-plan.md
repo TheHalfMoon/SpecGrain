@@ -51,7 +51,8 @@ Specification 000 established the project foundation and constitution. Specifica
 - Specification 020 — v0.3.0 Recursive Authoring Release: `CLOSED_CANONICAL`; product/release source `70dd66aba0e68ae710e6ef12605ed153d107bab4`; GitHub Release `378962445`.
 - Specification 021 — Public Launch Readiness Hardening: `CLOSED_CANONICAL`.
 - Specification 022 — Native Grain Preparation: `CLOSED_CANONICAL`; bounded `DRAFT -> SHAPED -> REFINING -> GRAIN` preparation.
-- Specification 023 — Spec Kit Preset-Compatible Import: `CLOSED_CANONICAL` when this final reconciliation is canonical; bounded path-bound identity fallback for template-light read-only imports.
+- Specification 023 — Spec Kit Preset-Compatible Import: `CLOSED_CANONICAL`; bounded path-bound identity fallback for template-light read-only imports.
+- Specification 024 — Native WorkPacket Export: `SHAPED` candidate when the current shaping package is canonical; implementation blocked pending shaping merge and post-shaping CI.
 
 The latest published release remains `v0.3.0` at exact historical product source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
 
@@ -79,28 +80,68 @@ The bounded outcome is complete:
 - closeout PR #43: expected-head merge `5b3a8b906309de642a0b35dfa8e260b5fa6bedd1`; post-closeout CI `33265589133` success across five cells;
 - historical `v0.3.0` tag, Release `378962445`, assets, digests, notes, and command surface remain unchanged.
 
-Review-system availability was recorded without false PASS claims: PRs #42 and #43 had no submitted reviews or inline threads; Qodo was billing-blocked, automatic CodeRabbit review was skipped by repository-star policy, and Cubic supplied descriptive summaries only.
+The later SGB-EXP-001 experiment is preserved as `INVALIDATED_ORACLE_REVEALED_PRE_FREEZE`; it produced no valid comparative result, supports no superiority claim, and selects no product work.
 
-The bounded multi-writer race retained after Specification 022 remains an explicit residual outside 023 authority.
+The bounded multi-writer race retained after Specification 022 remains an explicit residual outside 024 authority.
 
-## Current program frontier
+## Active shaping frontier — Specification 024
 
-After this final reconciliation becomes canonical, there is no active product specification. The program returns to observation/evidence gathering.
+Fresh deterministic interoperability evidence now selects one bounded successor candidate.
 
-A successor may be shaped only from fresh reproducible evidence against live canonical truth. No deferred item is implicit authority.
+Evidence record:
 
-Explicitly not authorized without fresh shaping:
+`docs/research/post-023-workpacket-handoff-reproduction-2026-08-31.md`
 
-- `GRAIN -> READY` or later lifecycle mutation;
-- WorkPacket CLI generation or executor/result orchestration;
-- verification execution or evidence mutation;
-- automatic/LLM-assisted shaping or provider-specific runtime installation;
-- stronger multi-writer/recovery concurrency;
-- release publication or distribution changes;
-- broader Spec Kit preset/hook/extension/bundle/workflow integration;
-- hosted/account/provider runtime scope;
-- arbitrary Markdown semantic inference;
-- empirical benchmark superiority claims without a reproducible completed dataset.
+Exact observation proof:
+
+```text
+canonical_base = f2e8378dcba0cfea2beedc6da61324b0c3fea95e
+observation_head = 95e5358ed420cd2e6fbd0bc7c56690763cea1283
+fixture_blob = 58cb3e355468f6bcd7de63b676dba52361ff0dd7
+ci_run = 33416110142
+ci_result = success across five permanent cells
+```
+
+The reproduced discontinuity is exact:
+
+```text
+native DRAFT -> SHAPED -> REFINING -> GRAIN
+-> native next reports the Grain eligible
+-> no native packet export command exists
+-> existing public Python WorkPacket APIs succeed only after custom glue
+```
+
+Specification 024 therefore shapes only a read-only native export boundary:
+
+```text
+specgrain packet <spec_id> [path] --context-sources <json-file> [--json]
+```
+
+The command is constrained to:
+
+- existing stored `GRAIN` state;
+- current dependency eligibility;
+- explicit bounded ContextSource records;
+- the Grain's existing token budget;
+- existing context-budget and WorkPacket primitives;
+- deterministic stdout export without store mutation.
+
+No new architectural authority is added. READY/later lifecycle mutation, executor/provider invocation, result ingestion, verification execution, evidence mutation, automatic context discovery, network access, LLM context selection, stronger locking, release publication, and hosted scope remain unselected.
+
+## Current execution gate
+
+Product implementation of Specification 024 is blocked until the documentation-only shaping package completes this gate:
+
+1. exact shaping head contains only authorized research/governance/specification changes;
+2. permanent five-cell CI succeeds on that exact head;
+3. review comments, threads, mergeability, and review-system availability are rechecked without false PASS claims;
+4. shaping PR merges with expected-head protection;
+5. resulting canonical `main` passes permanent five-cell CI;
+6. historical `v0.3.0` identity remains unchanged.
+
+Only after that gate may `feat/024-native-workpacket-export` begin.
+
+The implementation and closeout ordering is authoritative in `specs/024-native-workpacket-export/plan.md` and `tasks.md`.
 
 ## Cross-spec execution rules
 
@@ -120,4 +161,4 @@ Explicitly not authorized without fresh shaping:
 
 ## Program continuation rule
 
-At the post-023 observation frontier, inspect live canonical truth and gather evidence. Do not invent a successor merely to continue activity. Shape the next specification only when a reproducible bounded product gap exists.
+At the Specification 024 shaping frontier, complete the shaping gate before product work. After Specification 024 closes, return to observation unless fresh reproducible evidence selects another bounded successor.

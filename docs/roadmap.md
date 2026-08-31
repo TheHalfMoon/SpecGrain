@@ -2,7 +2,7 @@
 
 The roadmap is intentionally progressive. Only the nearest active specification should have implementation-level detail. Future work is shaped from current evidence rather than pre-authorized by stale backlog detail.
 
-**Current program state:** Specifications 000–023 are `CLOSED_CANONICAL` when the final Specification 023 reconciliation is canonical. No successor product specification is selected. The program returns to observation/evidence gathering. The latest published release remains GitHub Release `378962445` / tag `v0.3.0` at exact historical product source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
+**Current program state:** Specifications 000–023 are `CLOSED_CANONICAL`. Specification 024 — Native WorkPacket Export is the active `SHAPED` candidate when its shaping package is canonical; product implementation remains blocked pending shaping merge and post-shaping CI. The latest published release remains GitHub Release `378962445` / tag `v0.3.0` at exact historical product source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
 
 ## M0 — Foundation
 
@@ -55,7 +55,8 @@ Specification 010 closed the first complete MVP vertical slice at the API layer.
 - **020 — v0.3.0 Recursive Authoring Release:** `CLOSED_CANONICAL`; product/release source `70dd66aba0e68ae710e6ef12605ed153d107bab4`; Release `378962445` / `v0.3.0`.
 - **021 — Public Launch Readiness Hardening:** `CLOSED_CANONICAL`.
 - **022 — Native Grain Preparation:** `CLOSED_CANONICAL`; bounded native `DRAFT -> SHAPED -> REFINING -> GRAIN` preparation.
-- **023 — Spec Kit Preset-Compatible Import:** `CLOSED_CANONICAL` when this reconciliation is canonical; deterministic path-bound identity fallback for bounded template-light read-only Spec Kit imports.
+- **023 — Spec Kit Preset-Compatible Import:** `CLOSED_CANONICAL`; deterministic path-bound identity fallback for bounded template-light read-only Spec Kit imports.
+- **024 — Native WorkPacket Export:** `SHAPED` candidate; deterministic read-only CLI export of the existing WorkPacket contract from an existing dependency-eligible `GRAIN`.
 
 ## Specification 023 canonical proof
 
@@ -71,20 +72,51 @@ The canonical pre-023 full-template report digest remains `sha256:678fcc87985902
 
 The historical `v0.3.0` tag, Release `378962445`, asset identities, sizes, digests, release notes, and command surface remain unchanged.
 
+## Post-023 evidence selection
+
+The invalidated SGB-EXP-001 experiment is retained as methodology evidence only and produces no comparative product authority.
+
+A separate deterministic interoperability fixture selected Specification 024. Exact proof:
+
+```text
+canonical_base = f2e8378dcba0cfea2beedc6da61324b0c3fea95e
+observation_head = 95e5358ed420cd2e6fbd0bc7c56690763cea1283
+fixture_blob = 58cb3e355468f6bcd7de63b676dba52361ff0dd7
+ci_run = 33416110142
+ci_result = success across all five permanent cells
+```
+
+The fixture proves that native authoring reaches an eligible `GRAIN`, the current CLI has no `packet` export, and the exact same stored Grain can be converted into the existing WorkPacket only through custom Python API glue.
+
+## Specification 024 shaping boundary
+
+The selected candidate is intentionally narrower than execution orchestration:
+
+```text
+specgrain packet <spec_id> [path] --context-sources <json-file> [--json]
+```
+
+It may only:
+
+- load one exact stored `GRAIN`;
+- require current dependency eligibility;
+- accept explicit bounded ContextSource records;
+- apply the existing Grain token budget;
+- reuse existing context-budget and `build_work_packet` contracts;
+- emit deterministic portable output without mutation.
+
+Implementation remains blocked until the shaping package is canonically merged and post-shaping CI succeeds.
+
 ## Explicit residual beyond 022
 
-A bounded multi-writer race remains possible around exact-preimage validation and atomic replacement. Specification 023 does not select or alter that boundary.
+A bounded multi-writer race remains possible around exact-preimage validation and atomic replacement. Specification 024 does not select or alter that boundary.
 
-## Post-023 observation frontier
-
-No successor item is automatically authorized. Fresh reproducible evidence must select the next bounded specification.
-
-Deferred unless newly shaped:
+## Still deferred unless newly shaped
 
 - `GRAIN -> READY` or later lifecycle mutation;
-- WorkPacket CLI generation or executor/result orchestration;
+- executor/provider invocation or result orchestration;
 - verification execution or evidence mutation;
-- automatic/LLM-assisted shaping or provider-specific command installation;
+- automatic context discovery, source-content packing, retrieval, network access, or LLM context selection;
 - stronger multi-writer/recovery concurrency;
 - PyPI publication or broader distribution changes;
 - hosted SaaS, dashboard, account/enterprise, or provider runtime scope;
