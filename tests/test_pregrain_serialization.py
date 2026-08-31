@@ -154,16 +154,20 @@ def test_refine_and_grain_share_the_same_contention_boundary(tmp_path: Path) -> 
     draft = _draft(tmp_path)
     _shape(tmp_path, draft.id)
 
-    with pregrain_module._pregrain_mutation_lock(tmp_path):
-        with pytest.raises(StoreValidationError, match="already in progress"):
-            refine_shaped_spec(tmp_path, spec_id=draft.id)
+    with (
+        pregrain_module._pregrain_mutation_lock(tmp_path),
+        pytest.raises(StoreValidationError, match="already in progress"),
+    ):
+        refine_shaped_spec(tmp_path, spec_id=draft.id)
 
     refined = refine_shaped_spec(tmp_path, spec_id=draft.id)
     assert refined.node.state == "REFINING"
 
-    with pregrain_module._pregrain_mutation_lock(tmp_path):
-        with pytest.raises(StoreValidationError, match="already in progress"):
-            promote_refining_spec_to_grain(tmp_path, spec_id=draft.id)
+    with (
+        pregrain_module._pregrain_mutation_lock(tmp_path),
+        pytest.raises(StoreValidationError, match="already in progress"),
+    ):
+        promote_refining_spec_to_grain(tmp_path, spec_id=draft.id)
 
     grain = promote_refining_spec_to_grain(tmp_path, spec_id=draft.id)
     assert grain.node.state == "GRAIN"
