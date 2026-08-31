@@ -2,7 +2,7 @@
 
 ## Status
 
-`CLOSED_CANONICAL` when this final evidence reconciliation is canonical.
+`CLOSED_CANONICAL`.
 
 No successor specification is selected by this closure record.
 
@@ -72,7 +72,7 @@ Canonical tests and CI prove:
 10. no runtime dependency was added;
 11. all permanent Ubuntu, macOS, and Windows CI cells succeeded.
 
-## Canonical closeout evidence
+## Canonical closeout and reconciliation evidence
 
 ```text
 closeout_head = 885823e0e56dfd3e7c7c8e63d8dacc41b14448f2
@@ -81,11 +81,17 @@ closeout_pr = 56
 closeout_pr_ci = 33435703680
 closeout_merge = e05df4bd046590ee043115c1edbcd7b83163b4ad
 post_closeout_ci = 33436130730
+reconciliation_head = c145578694100383d7292fc76b5995cee8a0e121
+reconciliation_push_ci = 33436685449
+reconciliation_pr = 57
+reconciliation_pr_ci = 33436869583
+reconciliation_merge = 8a0da2908f6251100a0d7ab71178c2a7c3ed64bb
+post_reconciliation_ci = 33437077692
 ```
 
-The closeout diff changed exactly eight documentation/governance/evidence paths. PR #56 stayed on exact base `5e3966fb0db3d8971b5abe19106949001ed55ba9`, was mergeable, had no submitted reviews or inline review threads, and merged with expected-head protection. Qodo was billing-blocked, automatic CodeRabbit review was skipped by repository-star policy, and Cubic was descriptive only; none was treated as PASS.
+The closeout and reconciliation changes were documentation/governance/evidence-only. PR #56 merged from exact product-merge base with expected-head protection. PR #57 became the canonical final evidence reconciliation. Post-closeout and post-reconciliation CI each completed `success` across all five permanent cells.
 
-The closeout merge has exact parent `5e3966fb0db3d8971b5abe19106949001ed55ba9`. Post-closeout CI `33436130730` completed `success` across all five permanent cells.
+Qodo was billing-blocked, automatic CodeRabbit review was skipped by repository-star policy, and Cubic was descriptive only where those systems appeared; none was treated as PASS.
 
 ## Historical release preservation
 
@@ -104,4 +110,4 @@ Specification 025 does not claim or authorize arbitrary non-cooperating writer c
 
 ## Final disposition
 
-All shaped product, implementation, verification, review, merge, closeout, post-closeout, release-preservation, and canonical governance re-read gates are proven. When this final evidence reconciliation is canonical, Specification 025 is `CLOSED_CANONICAL`, there is no active product specification, and the program returns to post-025 observation/evidence gathering.
+All shaped product, implementation, verification, review, merge, closeout, post-closeout, reconciliation, post-reconciliation, release-preservation, and canonical governance gates are proven. Specification 025 is `CLOSED_CANONICAL`, there is no active product specification, and the program is in post-025 observation/evidence gathering.
