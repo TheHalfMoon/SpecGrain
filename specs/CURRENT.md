@@ -2,64 +2,107 @@
 
 **Repository:** `TheHalfMoon/SpecGrain`  
 **Canonical branch:** `main`  
-**Canonical closeout merge:** `5b3a8b906309de642a0b35dfa8e260b5fa6bedd1`  
-**Program status:** `POST_023_OBSERVATION` when this reconciliation is canonical  
-**Last closed specification:** `specs/023-spec-kit-preset-compatible-import/` — `CLOSED_CANONICAL` when this reconciliation is canonical  
-**Active product specification:** none selected  
+**Canonical base before current shaping:** `f2e8378dcba0cfea2beedc6da61324b0c3fea95e`  
+**Program status:** `SHAPING_024` when this shaping package is canonical  
+**Last closed specification:** `specs/023-spec-kit-preset-compatible-import/` — `CLOSED_CANONICAL`  
+**Active shaping candidate:** `specs/024-native-workpacket-export/` — `SHAPED` candidate; implementation blocked pending canonical shaping merge  
 **Published release:** `v0.3.0`  
 **Published release source:** `70dd66aba0e68ae710e6ef12605ed153d107bab4`  
 **Published release ID:** `378962445`
 
-## Specification 023 canonical proof
+## Last canonical closed state
 
-Specification 023 was selected from reproduced post-022 compatibility evidence against exact GitHub Spec Kit `main` `51e52be6c3b26fed3ff5424c671f4a559519a759` and official bundled Lean preset artifacts.
+Specification 023 is `CLOSED_CANONICAL`. Its bounded template-light Spec Kit import compatibility repair remains unchanged:
 
-Shaping PR #41 merged exact head `e19484f292c7601036e1993e58203554d1267594` as canonical shaping merge `99d8ee5bc7ce49c00ae542f3c06f564d05641a70`; post-shaping CI `33263898618` completed `success` across all five permanent cells before implementation began.
+- canonical full-template behavior and digest remain stable;
+- template-light fallback identity is path-bound and explicit;
+- arbitrary prose is not inferred into structured semantics;
+- no Spec Kit runtime dependency or workflow execution exists.
 
-Final implementation head `83fcc6add4e982df523f6c606399f08c317d3ffe` passed exact push CI `33264389193` and exact PR CI `33264479954`, both `completed/success` across the permanent five-cell matrix.
-
-PR #42 merged with expected-head protection as canonical product merge `037f137cdd6e7a0fe224bd3fa3371d6da7460f22`, whose exact parents are canonical shaped base `99d8ee5bc7ce49c00ae542f3c06f564d05641a70` and final implementation head `83fcc6add4e982df523f6c606399f08c317d3ffe`. Post-product CI `33265277105` completed `success` across all five permanent cells.
-
-Documentation-only closeout head `fb23602a3aa234b88b0a223443c8c974ff8ed25a` passed exact push CI `33265481647` and exact PR CI `33265501850`, both `completed/success` across the permanent five-cell matrix. PR #43 merged with expected-head protection as canonical closeout merge `5b3a8b906309de642a0b35dfa8e260b5fa6bedd1`, with parents product merge `037f137cdd6e7a0fe224bd3fa3371d6da7460f22` and exact closeout head `fb23602a3aa234b88b0a223443c8c974ff8ed25a`.
-
-Canonical post-closeout CI `33265589133` completed `success` across Ubuntu/Python 3.11, 3.12, 3.13, macOS/Python 3.11, and Windows/Python 3.11.
-
-## Delivered 023 boundary
-
-Current source preserves canonical full-template Spec Kit import behavior and adds only deterministic path-bound feature identity for template-light `spec.md` artifacts when the canonical feature heading is absent.
-
-Fallback identity:
-
-- comes only from a concrete explicit feature-path parent;
-- emits `FEATURE_NAME_DERIVED_FROM_PATH`;
-- does not infer arbitrary prose into structured stories, requirements, success criteria, tasks, or governance;
-- fails closed without concrete identity or for placeholder-like identity.
-
-`SPECKIT_IMPORT_VERSION == 1`, and the canonical pre-023 full-template report digest remains:
+The canonical pre-023 full-template report digest remains:
 
 `sha256:678fcc87985902002a9d2bc852196fbffdc59b332740660f1deeaf0d4f58746a`.
 
-No Spec Kit runtime dependency or preset/hook/extension/bundle/workflow execution was introduced.
+The historical `v0.3.0` tag and GitHub Release remain unchanged at `70dd66aba0e68ae710e6ef12605ed153d107bab4` / Release `378962445`.
 
-## Review truth
+The SGB-EXP-001 comparative experiment is preserved as `INVALIDATED_ORACLE_REVEALED_PRE_FREEZE`; it produced no valid comparative result and selects no product work.
 
-PRs #42 and #43 had no submitted reviews and no inline review threads at their merge gates. Qodo was billing-blocked and automatic CodeRabbit review was skipped by repository-star policy; neither was treated as PASS. Cubic supplied descriptive summary text only and was not treated as independent approval.
+A bounded concurrent-writer race around exact-preimage validation and atomic replacement remains an explicit residual outside Specification 024 authority.
 
-## Historical release preservation
+## Fresh post-023 evidence that selected Specification 024
 
-After canonical closeout, live GitHub truth remains:
+Selection evidence is recorded in:
 
-- tag `v0.3.0` -> `70dd66aba0e68ae710e6ef12605ed153d107bab4`;
-- Release ID `378962445`, target `70dd66aba0e68ae710e6ef12605ed153d107bab4`;
-- wheel asset ID `535129008`, size `70463`, digest `sha256:b4f724e5ae187db28053c264cf9b9612f864fe5052459c7341a7f470602fb817`;
-- source asset ID `535129009`, size `104057`, digest `sha256:e7dc5484b8439cf8a6c594c65b454e141fef7c94a7edb0c7cb4edfc839007835`.
+`docs/research/post-023-workpacket-handoff-reproduction-2026-08-31.md`
 
-Historical v0.3.0 release notes and published command surface remain unchanged.
+Exact machine-run evidence:
 
-## Current frontier
+```text
+observation_branch = obs/024-workpacket-handoff-fixture
+observation_head = 95e5358ed420cd2e6fbd0bc7c56690763cea1283
+fixture_blob = 58cb3e355468f6bcd7de63b676dba52361ff0dd7
+ci_run = 33416110142
+ci_result = completed/success across all five permanent cells
+```
 
-No successor product specification is selected or authorized.
+The fixture establishes on the exact canonical base that:
 
-The program returns to observation/evidence gathering. A new specification may be shaped only after fresh reproducible evidence identifies a bounded next product gap against live canonical truth.
+1. native CLI reaches an exact stored `GRAIN`;
+2. `next --json` reports that Grain as dependency-eligible;
+3. current CLI has no `packet` command;
+4. the repository already exposes `ContextSource`, context budgeting, `build_work_packet`, and WorkPacket JSON through the public Python API;
+5. the exact same Grain can be exported only after leaving the native CLI and assembling those API objects through custom Python glue.
 
-Deferred areas — `GRAIN -> READY`, WorkPacket execution, executor/provider orchestration, verification execution, evidence mutation, stronger locking, release publication, arbitrary Markdown semantic inference, automatic SpecNode creation, and broader Spec Kit runtime integration — remain unauthorized without fresh shaping.
+This satisfies the previously stated deterministic-interoperability evidence criterion for shaping a bounded successor. It is not a benchmark or superiority claim.
+
+## Specification 024 bounded outcome
+
+Specification 024 proposes only a read-only native WorkPacket export surface:
+
+```text
+specgrain packet <spec_id> [path] --context-sources <json-file> [--json]
+```
+
+The candidate:
+
+- requires the exact stored target state `GRAIN`;
+- requires the target to be in the current dependency-eligible `next` set;
+- accepts explicit bounded `ContextSource.to_dict()` records only;
+- applies the Grain's existing token budget through existing context-budget primitives;
+- calls the existing `build_work_packet` primitive;
+- emits deterministic portable WorkPacket output;
+- does not mutate lifecycle, store, execution result, verification, or evidence state;
+- adds no provider, executor, network, LLM, or runtime-dependency authority.
+
+No new ADR is selected because the candidate is constrained to expose existing public contracts through a bounded CLI adapter rather than create a new architectural authority boundary.
+
+## Current execution gate
+
+Specification 024 product implementation is **not yet authorized**.
+
+The only eligible work before the shaping merge is documentation-only shaping. T004 and T005 must prove from live GitHub truth that:
+
+1. the exact shaping head changes only authorized research/governance/specification paths;
+2. permanent five-cell CI passes on that exact head;
+3. reviews, threads, mergeability, and review-system availability are rechecked without treating unavailable systems as PASS;
+4. the shaping PR merges with expected-head protection;
+5. resulting canonical `main` passes permanent five-cell CI;
+6. historical `v0.3.0` remains unchanged.
+
+Only after T005 closes may implementation branch `feat/024-native-workpacket-export` begin.
+
+## Explicitly unselected
+
+Specification 024 does not authorize:
+
+- `GRAIN -> READY` or later lifecycle mutation;
+- executor/provider invocation;
+- `ExecutionResult` creation or ingestion;
+- verification execution or evidence mutation;
+- automatic source discovery, source-content packing, retrieval, network access, or LLM context selection;
+- SpecNode, WorkPacket, or context contract version redesign;
+- stronger multi-writer locking/recovery;
+- Spec Kit runtime integration;
+- release publication;
+- hosted/account/dashboard scope;
+- empirical benchmark superiority claims.
