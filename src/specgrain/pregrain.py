@@ -27,11 +27,12 @@ from .store import (
     _json_text,
     _parse_json_text,
     _read_text,
-    _supported_mutation_lock as _pregrain_mutation_lock,
+    _supported_mutation_lock,
     load_project,
 )
 
 _RISK_LEVELS = frozenset({"low", "medium", "high", "critical"})
+_pregrain_mutation_lock = _supported_mutation_lock
 
 
 @dataclass(frozen=True, slots=True)
