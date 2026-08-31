@@ -29,9 +29,9 @@
 
 ## Canonical closeout
 
-- [x] **T019** Add Specification 024 verification/closeout evidence and reconcile current program documentation without widening the delivered boundary. This documentation-only closeout candidate records all product evidence already proven and does not declare final canonical closure.
-- [ ] **T020** Require exact-head closeout CI, scope/review/thread/mergeability checks, and expected-head closeout merge.
-- [ ] **T021** Require successful permanent post-closeout CI, re-read canonical governance, and publish Specification 024 as `CLOSED_CANONICAL` only through final evidence reconciliation after every preceding gate is proven.
+- [x] **T019** Add Specification 024 verification/closeout evidence and reconcile current program documentation without widening the delivered boundary.
+- [x] **T020** Require exact-head closeout CI, scope/review/thread/mergeability checks, and expected-head closeout merge. Exact closeout head `12f89e22955efc632f62d52f2f0396430f4bee01` changed only seven authorized governance/evidence/status paths, passed push CI `33422814705` and PR CI `33422950629` across all five permanent cells, and remained mergeable with no submitted reviews or inline review threads. Qodo was billing-blocked, automatic CodeRabbit review was skipped by repository-star policy, and Cubic was descriptive only. PR #51 merged with expected-head protection as canonical closeout merge `519680c5cf378dfcb4673cf7292bcf51e9c36af1`.
+- [x] **T021** Require successful permanent post-closeout CI, re-read canonical governance, re-verify historical release identity, and publish Specification 024 as `CLOSED_CANONICAL` only through final evidence reconciliation. Closeout merge `519680c5cf378dfcb4673cf7292bcf51e9c36af1` has canonical product merge `1666ba8c135ee8575f1546019ab592db32947dd2` as its parent; post-closeout CI `33423123321` completed `success` across all five permanent cells; `v0.3.0` remained unchanged. This reconciliation publishes the final closed status when merged to canonical `main`.
 
 ## Superseded implementation evidence
 
@@ -41,9 +41,13 @@ Failed pre-final implementation runs are retained rather than hidden:
 - head `482606f0a8632d1a391aa2a059354b320419d477`, run `33421661140` — only the remaining help-format smoke assertion failed;
 - both were corrected without weakening product invariants before final head `7e1db87f69108fc8693b987e77d20f92e4f46866` passed all gates.
 
+## Final state
+
+All Specification 024 execution tasks are complete. The final reconciliation is documentation-only and authorizes no additional product mutation. After it becomes canonical, the program state is `POST_024_OBSERVATION` with no active successor specification.
+
 ## Standing prohibitions
 
-Until a separately shaped successor exists, Specification 024 tasks MUST NOT implement:
+Until a separately shaped successor exists, Specification 024 MUST NOT be used as authority for:
 
 - `GRAIN -> READY` or later lifecycle mutation;
 - executor/provider invocation;
