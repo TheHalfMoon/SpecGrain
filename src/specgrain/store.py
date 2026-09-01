@@ -2,13 +2,15 @@
 
 from __future__ import annotations
 
+import errno
 import json
 import os
 import re
 import shutil
+import stat
 import tempfile
-from collections.abc import Mapping
-from contextlib import suppress
+from collections.abc import Iterator, Mapping
+from contextlib import contextmanager, suppress
 from dataclasses import dataclass
 from enum import StrEnum
 from pathlib import Path
@@ -24,6 +26,7 @@ POLICY_VERSION = 1
 AUTHORING_TRANSACTION_VERSION = 1
 _AUTHORING_OPERATION = "create_child_draft"
 _AUTHORING_JOURNAL_LOCATION = ".specgrain/tmp/authoring-transaction.json"
+_SUPPORTED_MUTATION_LOCK_LOCATION = ".specgrain/tmp/pregrain-mutation.lock"
 _NAME_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$")
 
 
@@ -58,6 +61,138 @@ class StoreExistsError(StoreError):
 
 class StoreValidationError(StoreError):
     """Raised when repository-local state violates the store contract."""
+
+
+def _unsafe_mutation_lock_anchor(lock_path: Path) -> bool:
+    try:
+        metadata = os.lstat(lock_path)
+    except FileNotFoundError:
+        return False
+    except OSError as exc:
+        raise StoreValidationError(
+            _SUPPORTED_MUTATION_LOCK_LOCATION,
+            f"cannot inspect pre-Grain mutation lock: {exc}",
+        ) from exc
+    return stat.S_ISLNK(metadata.st_mode) or not stat.S_ISREG(metadata.st_mode)
+
+
+def _lock_mutation_unix(descriptor: int) -> None:
+    import fcntl
+
+    try:
+        fcntl.flock(descriptor, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except OSError as exc:
+        if exc.errno in {errno.EACCES, errno.EAGAIN}:
+            raise StoreValidationError(
+                _SUPPORTED_MUTATION_LOCK_LOCATION,
+                "supported mutation already in progress",
+            ) from exc
+        raise StoreValidationError(
+            _SUPPORTED_MUTATION_LOCK_LOCATION,
+            f"cannot acquire pre-Grain mutation lock: {exc}",
+        ) from exc
+
+
+def _unlock_mutation_unix(descriptor: int) -> None:
+    import fcntl
+
+    fcntl.flock(descriptor, fcntl.LOCK_UN)
+
+
+def _lock_mutation_windows(descriptor: int) -> None:
+    import msvcrt
+
+    os.lseek(descriptor, 0, os.SEEK_SET)
+    try:
+        msvcrt.locking(descriptor, msvcrt.LK_NBLCK, 1)
+    except OSError as exc:
+        if exc.errno in {errno.EACCES, errno.EAGAIN, errno.EDEADLK}:
+            raise StoreValidationError(
+                _SUPPORTED_MUTATION_LOCK_LOCATION,
+                "supported mutation already in progress",
+            ) from exc
+        raise StoreValidationError(
+            _SUPPORTED_MUTATION_LOCK_LOCATION,
+            f"cannot acquire pre-Grain mutation lock: {exc}",
+        ) from exc
+
+
+def _unlock_mutation_windows(descriptor: int) -> None:
+    import msvcrt
+
+    os.lseek(descriptor, 0, os.SEEK_SET)
+    msvcrt.locking(descriptor, msvcrt.LK_UNLCK, 1)
+
+
+@contextmanager
+def _supported_mutation_lock(root: str | os.PathLike[str]) -> Iterator[None]:
+    """Serialize the bounded supported local mutation families."""
+
+    lock_path = Path(root) / _SUPPORTED_MUTATION_LOCK_LOCATION
+    lock_dir = lock_path.parent
+    descriptor: int | None = None
+    acquired = False
+
+    try:
+        if lock_dir.exists():
+            if lock_dir.is_symlink() or not lock_dir.is_dir():
+                raise StoreValidationError(
+                    ".specgrain/tmp",
+                    "pre-Grain mutation lock directory must be a real directory",
+                )
+        else:
+            lock_dir.mkdir(parents=True, exist_ok=False)
+
+        if _unsafe_mutation_lock_anchor(lock_path):
+            raise StoreValidationError(
+                _SUPPORTED_MUTATION_LOCK_LOCATION,
+                "pre-Grain mutation lock must be a regular non-symlink file",
+            )
+
+        flags = os.O_CREAT | os.O_RDWR
+        flags |= getattr(os, "O_NOFOLLOW", 0)
+        try:
+            descriptor = os.open(lock_path, flags, 0o600)
+        except OSError as exc:
+            raise StoreValidationError(
+                _SUPPORTED_MUTATION_LOCK_LOCATION,
+                f"cannot open pre-Grain mutation lock: {exc}",
+            ) from exc
+
+        opened = os.fstat(descriptor)
+        if not stat.S_ISREG(opened.st_mode) or _unsafe_mutation_lock_anchor(lock_path):
+            raise StoreValidationError(
+                _SUPPORTED_MUTATION_LOCK_LOCATION,
+                "pre-Grain mutation lock must be a regular non-symlink file",
+            )
+
+        if opened.st_size == 0:
+            os.write(descriptor, b"\0")
+            os.fsync(descriptor)
+
+        if os.name == "nt":
+            _lock_mutation_windows(descriptor)
+        else:
+            _lock_mutation_unix(descriptor)
+        acquired = True
+        yield
+    except StoreValidationError:
+        raise
+    except OSError as exc:
+        raise StoreValidationError(
+            _SUPPORTED_MUTATION_LOCK_LOCATION,
+            f"cannot use pre-Grain mutation lock: {exc}",
+        ) from exc
+    finally:
+        if descriptor is not None:
+            if acquired:
+                with suppress(OSError):
+                    if os.name == "nt":
+                        _unlock_mutation_windows(descriptor)
+                    else:
+                        _unlock_mutation_unix(descriptor)
+            with suppress(OSError):
+                os.close(descriptor)
 
 
 @dataclass(frozen=True, slots=True)
@@ -841,68 +976,80 @@ def create_child_draft_spec(
             f"proposed refinement is invalid: {first.code.value}: {first.message}",
         )
 
-    parent_location = f".specgrain/specs/{parent.id}.json"
-    parent_path = project.root / parent_location
-    parent_before_text = _read_text(parent_path, parent_location)
-    try:
-        current_parent = SpecNode.from_dict(_parse_json_text(parent_before_text, parent_location))
-    except SpecValidationError as exc:
-        raise StoreValidationError(parent_location, f"invalid SpecNode: {exc}") from exc
-    if current_parent.to_dict() != parent.to_dict():
-        raise StoreValidationError(parent_location, "parent changed before authoring transaction")
-
-    journal_path = _write_authoring_journal(
-        project.root,
-        parent_before_text,
-        parent_after,
-        child,
-    )
-    child_location = f".specgrain/specs/{child.id}.json"
-    child_path = project.root / child_location
-
-    try:
-        _write_new_json(child_path, child.to_dict(), child_location)
-    except StoreExistsError as exc:
-        if _read_text(parent_path, parent_location) != parent_before_text:
-            raise StoreValidationError(
-                _AUTHORING_JOURNAL_LOCATION,
-                "child collision coincided with parent drift; explicit recovery required",
-            ) from exc
-        _remove_journal(journal_path)
-        raise
-    except Exception as exc:
+    with _supported_mutation_lock(project.root):
+        parent_location = f".specgrain/specs/{parent.id}.json"
+        parent_path = project.root / parent_location
+        parent_before_text = _read_text(parent_path, parent_location)
         try:
-            recover_authoring_transaction(project.root)
-        except StoreError as recovery_exc:
+            current_parent = SpecNode.from_dict(
+                _parse_json_text(parent_before_text, parent_location)
+            )
+        except SpecValidationError as exc:
+            raise StoreValidationError(parent_location, f"invalid SpecNode: {exc}") from exc
+        if current_parent.to_dict() != parent.to_dict():
             raise StoreValidationError(
-                _AUTHORING_JOURNAL_LOCATION,
-                f"authoring failed; explicit recovery required: {recovery_exc.detail}",
-            ) from exc
-        raise
+                parent_location,
+                "parent changed before authoring transaction",
+            )
 
-    try:
-        _replace_json_exact(
-            parent_path,
+        journal_path = _write_authoring_journal(
+            project.root,
             parent_before_text,
-            parent_after.to_dict(),
-            parent_location,
+            parent_after,
+            child,
         )
-        if _read_text(parent_path, parent_location) != _json_text(parent_after.to_dict()):
-            raise StoreValidationError(parent_location, "parent postimage confirmation failed")
-        if _read_text(child_path, child_location) != _json_text(child.to_dict()):
-            raise StoreValidationError(child_location, "child postimage confirmation failed")
-        _remove_journal(journal_path)
-    except Exception as exc:
+        child_location = f".specgrain/specs/{child.id}.json"
+        child_path = project.root / child_location
+
         try:
-            recovery = recover_authoring_transaction(project.root)
-        except StoreError as recovery_exc:
-            raise StoreValidationError(
-                _AUTHORING_JOURNAL_LOCATION,
-                f"authoring failed; explicit recovery required: {recovery_exc.detail}",
-            ) from exc
-        if recovery.status is AuthoringRecoveryStatus.FINALIZED:
-            return ChildDraftResult(child, parent.revision_digest, parent_after)
-        raise
+            _write_new_json(child_path, child.to_dict(), child_location)
+        except StoreExistsError as exc:
+            if _read_text(parent_path, parent_location) != parent_before_text:
+                raise StoreValidationError(
+                    _AUTHORING_JOURNAL_LOCATION,
+                    "child collision coincided with parent drift; explicit recovery required",
+                ) from exc
+            _remove_journal(journal_path)
+            raise
+        except Exception as exc:
+            try:
+                recover_authoring_transaction(project.root)
+            except StoreError as recovery_exc:
+                raise StoreValidationError(
+                    _AUTHORING_JOURNAL_LOCATION,
+                    f"authoring failed; explicit recovery required: {recovery_exc.detail}",
+                ) from exc
+            raise
+
+        try:
+            _replace_json_exact(
+                parent_path,
+                parent_before_text,
+                parent_after.to_dict(),
+                parent_location,
+            )
+            if _read_text(parent_path, parent_location) != _json_text(parent_after.to_dict()):
+                raise StoreValidationError(
+                    parent_location,
+                    "parent postimage confirmation failed",
+                )
+            if _read_text(child_path, child_location) != _json_text(child.to_dict()):
+                raise StoreValidationError(
+                    child_location,
+                    "child postimage confirmation failed",
+                )
+            _remove_journal(journal_path)
+        except Exception as exc:
+            try:
+                recovery = recover_authoring_transaction(project.root)
+            except StoreError as recovery_exc:
+                raise StoreValidationError(
+                    _AUTHORING_JOURNAL_LOCATION,
+                    f"authoring failed; explicit recovery required: {recovery_exc.detail}",
+                ) from exc
+            if recovery.status is AuthoringRecoveryStatus.FINALIZED:
+                return ChildDraftResult(child, parent.revision_digest, parent_after)
+            raise
 
     return ChildDraftResult(child, parent.revision_digest, parent_after)
 
