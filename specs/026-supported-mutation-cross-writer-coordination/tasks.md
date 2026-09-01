@@ -31,31 +31,28 @@
 - [x] **T021** Pass full pytest, Ruff source/tests/examples, tracked-tree cleanliness, compileall, source CLI smoke, package build, built-wheel install, and installed CLI smoke on qualifying exact-head CI.
 - [x] **T022** Verify exact implementation diff changes only `src/specgrain/store.py`, `src/specgrain/pregrain.py`, and `tests/test_pregrain_serialization.py`, with no runtime dependency addition.
 - [x] **T023** Require exact-head permanent CI success across all five cells: push CI `33443061640` and PR CI `33443161567`.
-- [x] **T024** Recheck PR #60 exact head/base/three-path scope/CI/reviews/comments/threads/mergeability and record Qodo billing-blocked, CodeRabbit skipped by star policy, and Cubic neutral due plan limit; none treated as PASS.
+- [x] **T024** Recheck PR #60 exact head/base/three-path scope/CI/reviews/comments/threads/mergeability and record Qodo billing-blocked, CodeRabbit skipped by star policy, and Cubic neutral due to its plan limit; none treated as PASS.
 - [x] **T025** Merge PR #60 with expected-head protection as `69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b`.
 - [x] **T026** Require canonical post-product CI `33485603844` success across all five permanent cells and reverify historical `v0.3.0` source/assets unchanged.
 
 ## Canonical closeout
 
 - [x] **T027** Add exact verification/review/closeout evidence and reconcile Specification 026/current program documents without widening delivered authority.
-- [ ] **T028** Verify the documentation/governance/evidence-only closeout exact head/diff, push CI, PR head/base/scope/PR CI/reviews/comments/threads/mergeability, merge with expected-head protection, then perform the final evidence reconciliation.
-- [ ] **T029** Require canonical post-closeout and post-reconciliation permanent CI success, reverify historical release preservation, re-read all canonical authority, and return to observation unless fresh independent evidence selects another bounded unit.
+- [x] **T028** Verify closeout head `9b6cd1769c24688172ca435b2a77118fa6f4228c` against product merge `69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b`, exact eight-path documentation/governance/evidence scope, push CI `33486149999`, PR #61 CI `33486307568`, reviews/comments/threads/mergeability, exact canonical merge `2c9b18afb74e2254beb254bb84d9c07feec68aa0`, and post-closeout CI `33486523094` success across all five permanent cells. The merge commit is GitHub-signature verified with exact parents `69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b` and `9b6cd1769c24688172ca435b2a77118fa6f4228c`; GitHub REST does not expose whether the concurrent merge caller supplied an `expected_head_sha` parameter, so no such claim is made.
+- [ ] **T029** On the exact final reconciliation head, require documentation/governance/evidence-only eight-path scope, permanent push CI, PR exact head/base/scope/PR CI/reviews/comments/threads/mergeability, expected-head merge, canonical post-reconciliation five-cell CI success, historical `v0.3.0` preservation, and canonical reread. When those live post-merge conditions are satisfied, Specification 026 is `CLOSED_CANONICAL` and the program returns to post-026 observation. Do not create another documentation-only PR solely to flip this checkbox or restate the reconciliation merge/CI identifiers.
+
+## Closeout evidence now canonical
+
+```text
+closeout_base = 69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b
+closeout_head = 9b6cd1769c24688172ca435b2a77118fa6f4228c
+closeout_push_ci = 33486149999
+closeout_pr = 61
+closeout_pr_ci = 33486307568
+closeout_merge = 2c9b18afb74e2254beb254bb84d9c07feec68aa0
+post_closeout_ci = 33486523094
+```
 
 ## Standing prohibitions
 
-Specification 026 does not authorize:
-
-- arbitrary external/manual writer coordination;
-- a universal project transaction manager;
-- child-authoring journal schema/version/recovery redesign;
-- distributed/network locking;
-- blocking waits, retries, sleeps, backoff, leases, heartbeats, or timeout ownership inference;
-- runtime dependency additions;
-- lifecycle expansion;
-- executor/provider/result/verification/evidence orchestration;
-- automatic context/network/model behavior;
-- Spec Kit runtime integration;
-- release publication;
-- hosted scope;
-- benchmark or superiority claims;
-- inspection, search, materialization, reproduction, or use of the invalidated `SGB-EXP-001` hidden scorer.
+Specification 026 does not authorize arbitrary external/manual writer coordination, a universal project transaction manager, child-authoring journal schema/version/recovery redesign, distributed/network locking, blocking waits, retries, sleeps, backoff, timeouts, leases, heartbeats, stale-owner inference, runtime dependencies, lifecycle expansion, executor/provider/result/verification/evidence orchestration, automatic context/network/model behavior, Spec Kit runtime integration, release publication, hosted scope, benchmark/superiority claims, or inspection/search/materialization/reproduction/use of the invalidated `SGB-EXP-001` hidden scorer.
