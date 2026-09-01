@@ -20,7 +20,7 @@ Final product head `24728cd52b2daef2c83c5b83f084421b8096a11f` changed exactly:
 
 The lower-level store module owns the shared private advisory-lock helper; `pregrain.py::_persist` and `create_child_draft_spec` use the identical lock boundary. Child authoring acquires the lock before journal creation. Existing lock-anchor, platform, fail-closed contention, unsafe-anchor, process-lifetime, exact-preimage/postimage, journal/recovery, lifecycle, read-only, and zero-runtime-dependency contracts remain preserved.
 
-Final product push CI `33443061640`, PR #60 CI `33443161567`, and canonical post-product CI `33485603844` all completed `success` across the permanent five-cell matrix. At the PR #60 merge gate there were zero submitted reviews and zero inline review threads; Qodo was billing-blocked, CodeRabbit automatic review was skipped by repository-star policy, and Cubic was neutral/descriptive due its plan limit. None was treated as PASS. PR #60 was merged by this execution with expected-head protection as canonical merge `69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b`.
+Final product push CI `33443061640`, PR #60 CI `33443161567`, and canonical post-product CI `33485603844` all completed `success` across the permanent five-cell matrix. At the PR #60 merge gate there were zero submitted reviews and zero inline review threads; Qodo was billing-blocked, CodeRabbit automatic review was skipped by repository-star policy, and Cubic was neutral/descriptive due to its plan limit. None was treated as PASS. PR #60 was merged by this execution with expected-head protection as canonical merge `69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b`.
 
 ## Closeout review
 
