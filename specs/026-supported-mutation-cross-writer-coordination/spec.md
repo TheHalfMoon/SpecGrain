@@ -30,70 +30,21 @@ Architectural decision: `docs/adr/0021-supported-mutation-cross-writer-coordinat
 
 ## Authorized and delivered scope
 
-Specification 026 authorized only:
+Specification 026 authorized only one project-scoped non-blocking advisory lock shared by supported pre-Grain persistence and native child authoring; retention of `.specgrain/tmp/pregrain-mutation.lock`; a private dependency-safe helper; child acquisition before journal creation; preservation of the complete pre-Grain `_persist` critical section; deterministic two-direction contention coverage; standard-library-only Ubuntu/macOS/Windows behavior; and zero runtime dependencies.
 
-- one project-scoped non-blocking advisory lock shared by supported pre-Grain persistence and native child authoring;
-- retention of `.specgrain/tmp/pregrain-mutation.lock` as the advisory anchor;
-- placement of the private lock abstraction where `store.py` and `pregrain.py` can share it without circular imports;
-- acquisition by `create_child_draft_spec` before authoring journal creation;
-- preservation of the complete pre-Grain `_persist` critical section;
-- deterministic two-direction contention tests;
-- preservation of standard-library-only Ubuntu/macOS/Windows behavior and zero runtime dependencies.
-
-Explicitly outside authority:
-
-- arbitrary manual/non-SpecGrain writer coordination;
-- universal project transaction management;
-- child-authoring journal schema/version/recovery redesign or automatic hidden recovery;
-- blocking waits, retries, sleeps, backoff, timeouts, leases, heartbeats, or stale-owner inference;
-- distributed/network/database locking;
-- SpecNode schema or semantic revision changes;
-- lifecycle expansion;
-- executor/provider/result/verification/evidence orchestration;
-- automatic context discovery, network access, or model selection;
-- Spec Kit runtime integration;
-- release publication or mutation of `v0.3.0`;
-- hosted scope;
-- benchmark or superiority claims;
-- any inspection, search, materialization, reproduction, or use of the invalidated `SGB-EXP-001` hidden scorer.
+Explicitly outside authority are arbitrary manual/non-SpecGrain writer coordination, universal project transaction management, child-authoring journal redesign, blocking waits/retries/timeouts/leases, distributed/network/database locking, SpecNode schema changes, lifecycle expansion, executor/provider/result/verification/evidence orchestration, automatic context/network/model behavior, Spec Kit runtime integration, release publication, hosted scope, benchmark/superiority claims, and any inspection/search/materialization/reproduction/use of the invalidated `SGB-EXP-001` hidden scorer.
 
 ## Functional requirements and verified disposition
 
-### FR-001 — One shared advisory ownership boundary
-
-Supported pre-Grain persistence and `create_child_draft_spec` use the same project-scoped non-blocking operating-system advisory lock. Active contention fails immediately with deterministic `StoreValidationError` semantics. **VERIFIED**.
-
-### FR-002 — Child authoring acquires before transaction state
-
-`create_child_draft_spec` acquires the shared lock before `.specgrain/tmp/authoring-transaction.json` creation. A contention loser creates no journal, child, or parent mutation. **VERIFIED**.
-
-### FR-003 — Pre-Grain persistence remains fully serialized
-
-The Specification 025 `_persist` boundary remains serialized through exact stored-postimage confirmation and full project revalidation. **VERIFIED**.
-
-### FR-004 — Journal recovery remains separate and authoritative
-
-The existing authoring journal remains the durable recovery mechanism after journal creation. Advisory lock contents/presence do not encode transaction or stale-owner state. **VERIFIED**.
-
-### FR-005 — Safe dependency direction
-
-The shared private helper is owned by lower-level `store.py`; `pregrain.py` reuses it without circular imports and no public locking API was added. **VERIFIED**.
-
-### FR-006 — Cross-platform standard-library only
-
-The implementation preserves standard-library advisory primitives and passes permanent CI on Ubuntu, macOS, and Windows. **VERIFIED**.
-
-### FR-007 — Lock anchor safety and lifetime
-
-The lock anchor remains a regular non-symlink file, ownership remains descriptor/process-bound, and existing process-exit/handled-failure/persistent-anchor/unsafe-anchor behavior remains covered. **VERIFIED**.
-
-### FR-008 — Read-only behavior remains unlocked
-
-Read-only project surfaces remain outside the mutation lock. **VERIFIED** through retained regression.
-
-### FR-009 — No hidden contention policy
-
-The deterministic core does not wait, retry, sleep, back off, or infer timeout ownership. **VERIFIED**.
+- **FR-001 — One shared advisory ownership boundary:** **VERIFIED**.
+- **FR-002 — Child authoring acquires before transaction state:** **VERIFIED**.
+- **FR-003 — Pre-Grain persistence remains fully serialized:** **VERIFIED**.
+- **FR-004 — Journal recovery remains separate and authoritative:** **VERIFIED**.
+- **FR-005 — Safe dependency direction:** **VERIFIED**.
+- **FR-006 — Cross-platform standard-library only:** **VERIFIED**.
+- **FR-007 — Lock anchor safety and lifetime:** **VERIFIED**.
+- **FR-008 — Read-only behavior remains unlocked:** **VERIFIED** through retained regression.
+- **FR-009 — No hidden contention policy:** **VERIFIED**.
 
 ## Shaping evidence
 
@@ -145,7 +96,9 @@ post_closeout_ci = 33486523094
 
 The closeout changed exactly eight documentation/governance/evidence paths. Push CI, PR CI, and canonical post-closeout CI all completed `success` across the permanent five-cell matrix.
 
-At the final PR #61 merge gate, exact base/head/eight-path scope remained unchanged, `mergeable=true`, submitted reviews and inline review threads were both `0`, Qodo was billing-blocked, CodeRabbit automatic review was skipped by repository-star policy, and Cubic supplied descriptive auto-generated summary text rather than a submitted approval. None was treated as PASS. PR #61 merged with expected-head protection as signed GitHub merge `2c9b18afb74e2254beb254bb84d9c07feec68aa0`.
+At the final PR #61 merge gate, exact base/head/eight-path scope remained unchanged, `mergeable=true`, submitted reviews and inline review threads were both `0`, Qodo was billing-blocked, CodeRabbit automatic review was skipped by repository-star policy, and Cubic produced no submitted approval. None was treated as PASS.
+
+PR #61 was merged by concurrent activity as signed GitHub merge `2c9b18afb74e2254beb254bb84d9c07feec68aa0`, with exact parents `69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b` and `9b6cd1769c24688172ca435b2a77118fa6f4228c`. GitHub REST verifies that the exact qualified closeout head became the second parent. It does not expose whether the concurrent merge caller supplied an `expected_head_sha` parameter, so this specification makes no claim about that unobservable mechanism.
 
 ## Historical release preservation
 
@@ -178,6 +131,6 @@ POST_CLOSEOUT_VERIFIED = true
 FURTHER_PRODUCT_WORK_AUTHORIZED = false
 ```
 
-This reconciliation is the terminal documentation/evidence unit. `CLOSED_CANONICAL` is realized only after the exact reconciliation head is qualified, its PR merge gate is rechecked, it is merged with expected-head protection, and canonical post-reconciliation CI succeeds across all five permanent cells while historical `v0.3.0` remains unchanged.
+This reconciliation is the terminal documentation/evidence unit. `CLOSED_CANONICAL` is realized only after the exact reconciliation head is confirmed as an eight-path documentation/governance/evidence-only diff, passes push and PR CI, has exact PR head/base/scope/reviews/comments/threads/mergeability rechecked, is merged with expected-head protection, receives canonical post-reconciliation CI success across all five permanent cells, preserves historical `v0.3.0`, and canonical authority is reread.
 
 After that live gate succeeds, return to post-026 observation. Do not create another documentation-only PR solely to record the final reconciliation merge SHA or post-reconciliation CI identifier.
