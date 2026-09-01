@@ -12,6 +12,8 @@ A local-first, agent-neutral delivery control plane for turning software work in
 [![Runtime dependencies](https://img.shields.io/badge/runtime%20dependencies-0-2ea44f)](pyproject.toml)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
+**Current published release:** `v0.3.0` · **Python:** `3.11+` · **License:** MIT · **Runtime dependencies:** zero
+
 [Quickstart](#quickstart) · [Why SpecGrain](#why-specgrain) · [Architecture](#architecture) · [Developer map](#developer-map) · [Contributing](#contributing)
 
 </div>
@@ -164,11 +166,11 @@ specgrain packet SG-000001 specgrain-demo \
 
 `packet` does not fetch the content named by `provenance`, discover context, invoke a model, run an executor, write a packet into `.specgrain/`, or advance lifecycle state.
 
-Current native CLI authority still stops at `GRAIN`; it does not provide automatic `GRAIN -> READY`, agent/provider execution, or automatic verification orchestration.
+No `GRAIN -> READY`, WorkPacket execution, agent/provider orchestration, execution-result ingestion, verification execution, or evidence mutation is authorized by these native commands.
 
 ## Supported CLI
 
-### Published `v0.3.0`
+### Published v0.3.0 CLI
 
 | Command | Purpose |
 | --- | --- |
@@ -181,7 +183,7 @@ Current native CLI authority still stops at `GRAIN`; it does not provide automat
 | `specgrain prove <spec-id> [path]` | Load and validate append-oriented evidence for a spec. |
 | `specgrain import-spec-kit <feature-dir>` | Produce a read-only, source-bound Spec Kit migration report. |
 
-### Current `main` additions
+### Current source additions after v0.3.0
 
 | Command | Purpose |
 | --- | --- |
@@ -189,6 +191,8 @@ Current native CLI authority still stops at `GRAIN`; it does not provide automat
 | `specgrain refine <spec-id> [path]` | Advance exactly SHAPED to REFINING without semantic mutation. |
 | `specgrain grain <spec-id> [path]` | Promote exactly REFINING to GRAIN only after current readiness succeeds. |
 | `specgrain packet <spec-id> [path] --context-sources <json-file>` | Export an eligible GRAIN through the deterministic WorkPacket contract. |
+
+The historical v0.3.0 tag and GitHub Release do not contain `shape`, `refine`, `grain`, or `packet`.
 
 ## Reliability model
 
