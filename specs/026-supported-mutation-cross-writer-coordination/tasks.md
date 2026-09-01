@@ -9,37 +9,37 @@
 - [x] **T005** Record the bounded reproduced gap `SUPPORTED_CHILD_PRE_GRAIN_CROSS_WRITER_PARTIAL_MUTATION` and its explicit non-authority boundaries.
 - [x] **T006** Shape Specification 026 around one shared project-scoped non-blocking advisory lock for existing supported pre-Grain persistence and native child authoring while preserving journal recovery.
 - [x] **T007** Record ADR-0021 selecting shared advisory ownership without journal redesign, retry/wait policy, public locking API, distributed coordination, dependency addition, lifecycle expansion, release work, or benchmark claims.
-- [ ] **T008** Verify the exact final shaping head/base/diff, permanent push CI, open PR head/base/scope, PR CI, reviews/comments/inline threads/mergeability, and review-system availability without treating unavailable/skipped systems as PASS.
-- [ ] **T009** Merge the shaping PR with expected-head protection only after T008 is proven.
-- [ ] **T010** Re-read canonical governance on the exact shaping merge and require permanent five-cell canonical post-shaping CI `success` before any product implementation begins.
+- [x] **T008** Verify final shaping head `51079a25cdd0f90a9af1cc34ae7577c72ecdf2d6` on base `1931d5a90ded5f7b2d4f5ea0f0ccffa03e2affc1`, documentation-only eight-path scope, push CI `33441902147`, PR #59 CI `33442057984`, mergeability/review state, and review-system availability without treating unavailable/skipped systems as PASS.
+- [x] **T009** Merge shaping PR #59 with expected-head protection as `d27e000728823e93d2fce9ecd669629a839bfdb3`.
+- [x] **T010** Re-read canonical governance on the shaping merge and require canonical post-shaping CI `33442261877` success across all five permanent cells before product implementation.
 
-## Product implementation — blocked until T010
+## Product implementation
 
-- [ ] **T011** Refactor or relocate the existing private Specification 025 advisory-lock abstraction only as needed so both `store.py` and `pregrain.py` can use one dependency-safe helper without circular imports.
-- [ ] **T012** Preserve the existing lock anchor `.specgrain/tmp/pregrain-mutation.lock`, non-blocking `fcntl`/`msvcrt` semantics, unsafe-anchor rejection, descriptor/process ownership, and deterministic contention error behavior.
-- [ ] **T013** Keep pre-Grain `_persist` under the complete existing advisory critical section with all exact-preimage, fsync, replace, postimage, and project-validation defenses intact.
-- [ ] **T014** Acquire the same advisory lock in `create_child_draft_spec` before authoring journal creation and hold it through normal completion or handled recovery of the authoring attempt.
-- [ ] **T015** Preserve `AUTHORING_TRANSACTION_VERSION`, journal schema, recovery classifications, child creation order inside the transaction, and explicit recovery semantics.
-- [ ] **T016** Add corrected-invariant tests proving pre-Grain ownership makes a competing child writer fail before journal/child/parent side effects and leaves a valid project.
-- [ ] **T017** Add corrected-invariant tests proving child-authoring ownership makes competing shape/refine/grain persistence fail before target mutation and leaves a valid project.
-- [ ] **T018** Prove losing-writer contention paths leave canonical parent/child bytes unchanged and successful sequential operations preserve existing lifecycle and authoring behavior.
-- [ ] **T019** Keep all Specification 025 serialization/lifetime/unsafe-anchor/read-only tests and existing child-authoring recovery tests green.
+- [x] **T011** Relocate the existing private Specification 025 advisory-lock implementation into lower-level `store.py` so `store.py` and `pregrain.py` use one dependency-safe helper without circular imports.
+- [x] **T012** Preserve `.specgrain/tmp/pregrain-mutation.lock`, non-blocking `fcntl`/`msvcrt` semantics, unsafe-anchor rejection, descriptor/process ownership, and deterministic contention errors.
+- [x] **T013** Keep pre-Grain `_persist` under the complete existing advisory critical section with exact-preimage, fsync, replace, postimage, and project-validation defenses intact.
+- [x] **T014** Acquire the same advisory lock in `create_child_draft_spec` before authoring journal creation and hold it through normal completion or handled recovery of the authoring attempt.
+- [x] **T015** Preserve `AUTHORING_TRANSACTION_VERSION`, journal schema, recovery classifications, child creation order inside the transaction, and explicit recovery semantics.
+- [x] **T016** Add corrected-invariant coverage proving pre-Grain ownership makes a competing child writer fail before journal/child/parent side effects and leaves a valid project.
+- [x] **T017** Add corrected-invariant coverage proving child-authoring ownership makes competing pre-Grain persistence fail before target mutation and leaves a valid project; refine/grain remain on the common `_persist` boundary.
+- [x] **T018** Prove losing-writer contention paths do not publish their canonical mutation and successful writer results leave valid refinement; preserve sequential supported behavior through regression.
+- [x] **T019** Keep Specification 025 serialization/lifetime/unsafe-anchor/read-only coverage and existing child-authoring recovery coverage green in the full regression suite.
 
-## Product merge gates — blocked until T011-T019
+## Product merge gates
 
-- [ ] **T020** Run focused shared-lock, child-authoring recovery, and Specification 025 regression tests on the exact implementation head.
-- [ ] **T021** Run full pytest, Ruff source/tests/examples, tracked-tree cleanliness, compileall, source CLI smoke, package build, built-wheel install, and installed CLI smoke.
-- [ ] **T022** Verify exact implementation diff remains within the Specification 026 product surface and adds no runtime dependency.
-- [ ] **T023** Require permanent CI `success` across Ubuntu/Python 3.11, Ubuntu/Python 3.12, Ubuntu/Python 3.13, macOS/Python 3.11, and Windows/Python 3.11 on the exact implementation head.
-- [ ] **T024** Open/update the product PR, recheck exact head/base/scope/CI/reviews/comments/threads/mergeability immediately before merge, and record unavailable/skipped review systems accurately.
-- [ ] **T025** Merge product work only with expected-head protection and only when all product gates are proven.
-- [ ] **T026** Require canonical post-product CI `success` across all five permanent cells and reverify historical `v0.3.0` source/assets unchanged.
+- [x] **T020** Qualify focused shared-lock/corrected-invariant behavior and retained recovery/Specification 025 regressions on exact implementation head `24728cd52b2daef2c83c5b83f084421b8096a11f`.
+- [x] **T021** Pass full pytest, Ruff source/tests/examples, tracked-tree cleanliness, compileall, source CLI smoke, package build, built-wheel install, and installed CLI smoke on qualifying exact-head CI.
+- [x] **T022** Verify exact implementation diff changes only `src/specgrain/store.py`, `src/specgrain/pregrain.py`, and `tests/test_pregrain_serialization.py`, with no runtime dependency addition.
+- [x] **T023** Require exact-head permanent CI success across all five cells: push CI `33443061640` and PR CI `33443161567`.
+- [x] **T024** Recheck PR #60 exact head/base/three-path scope/CI/reviews/comments/threads/mergeability and record Qodo billing-blocked, CodeRabbit skipped by star policy, and Cubic neutral due plan limit; none treated as PASS.
+- [x] **T025** Merge PR #60 with expected-head protection as `69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b`.
+- [x] **T026** Require canonical post-product CI `33485603844` success across all five permanent cells and reverify historical `v0.3.0` source/assets unchanged.
 
 ## Canonical closeout
 
-- [ ] **T027** Add exact verification/review/closeout evidence and reconcile Specification 026/current program documents without widening delivered authority.
-- [ ] **T028** Verify documentation-only closeout/reconciliation exact heads, diffs, CI, reviews/comments/threads/mergeability, and merge with expected-head protection only when proven.
-- [ ] **T029** Require canonical post-closeout/reconciliation permanent CI success, reverify historical release preservation, re-read all canonical authority, and return to observation unless fresh independent evidence selects another bounded unit.
+- [x] **T027** Add exact verification/review/closeout evidence and reconcile Specification 026/current program documents without widening delivered authority.
+- [ ] **T028** Verify the documentation/governance/evidence-only closeout exact head/diff, push CI, PR head/base/scope/PR CI/reviews/comments/threads/mergeability, merge with expected-head protection, then perform the final evidence reconciliation.
+- [ ] **T029** Require canonical post-closeout and post-reconciliation permanent CI success, reverify historical release preservation, re-read all canonical authority, and return to observation unless fresh independent evidence selects another bounded unit.
 
 ## Standing prohibitions
 
