@@ -4,50 +4,27 @@ The roadmap is intentionally progressive. Only the nearest active specification 
 
 **Current program state:** Specifications 000–025 are `CLOSED_CANONICAL`. Specification 026 — Supported Mutation Cross-Writer Coordination — is in its terminal final reconciliation. It has `CLOSED_CANONICAL` disposition if and only if this exact reconciliation becomes canonical and canonical post-reconciliation CI succeeds across all five permanent cells. No further Specification 026 product work is authorized. The latest published release remains GitHub Release `378962445` / tag `v0.3.0` at exact historical source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
 
-## M0 — Foundation
+## M0–M7 canonical program
 
-**000 — Foundation** established the constitution, product thesis, domain model, architecture, methodology, competitive boundaries, donor policy, benchmark strategy, launch thesis, and program sequence.
-
-## M1 — Deterministic specification kernel
-
-- **001 — SpecNode Schema:** immutable/versioned recursive data model and semantic digest.
-- **002 — Lifecycle State:** legal states and deterministic transition validation.
-- **003 — Refinement Tree:** recursive structural integrity and parent/child rules.
-- **004 — Grain Readiness:** deterministic Definition of Grain and structured blockers.
-
-## M2 — Local product surface
-
-- **005 — CLI and Local Store:** `init`, `check`, repository-local `.specgrain/` storage.
-- **006 — Dependency Graph:** dependency validation, blockers, eligible Grains, waves, `next`.
-
-## M3 — Brownfield context
-
-- **007 — Repository Scan:** bounded deterministic repository map.
-- **008 — Context Budget:** revision-bound source accounting and required-context blockers.
-
-## M4 — Portable execution boundary
-
-- **009 — Work Packet:** immutable digest-bound WorkPacket and execution-result contracts.
-- **010 — Verification and Evidence:** exact-revision independent verification, changed-scope checks, evidence records, and `prove`.
-
-Specification 010 closed the first complete MVP vertical slice at the API layer.
-
-## M5 — Adaptive delivery control
-
-- **011 — Method Profiles:** `quick`, `dmaic-lite`, `dmadv-lite`, `experiment`, `controlled`.
-- **012 — Diff, Drift, and Metrics:** scope analysis, drift signals, and delivery metrics.
-
-## M6 — Ecosystem interoperability
-
+- **000 — Foundation:** `CLOSED_CANONICAL`.
+- **001 — SpecNode Schema:** `CLOSED_CANONICAL`.
+- **002 — Lifecycle State:** `CLOSED_CANONICAL`.
+- **003 — Refinement Tree:** `CLOSED_CANONICAL`.
+- **004 — Grain Readiness:** `CLOSED_CANONICAL`.
+- **005 — CLI and Local Store:** `CLOSED_CANONICAL`.
+- **006 — Dependency Graph:** `CLOSED_CANONICAL`.
+- **007 — Repository Scan:** `CLOSED_CANONICAL`.
+- **008 — Context Budget:** `CLOSED_CANONICAL`.
+- **009 — Work Packet:** `CLOSED_CANONICAL`.
+- **010 — Verification and Evidence:** `CLOSED_CANONICAL`.
+- **011 — Method Profiles:** `CLOSED_CANONICAL`.
+- **012 — Diff, Drift, and Metrics:** `CLOSED_CANONICAL`.
 - **013 — Spec Kit Import:** `CLOSED_CANONICAL`.
-- **014 — Agent Adapters:** generic deterministic WorkPacket/result adapter boundary.
+- **014 — Agent Adapters:** `CLOSED_CANONICAL`.
+- **015 — SpecGrainBench:** `CLOSED_CANONICAL` as the repository benchmark framework; invalidated SGB-EXP-001 provides no comparative authority.
+- **016 — Public Launch:** `CLOSED_CANONICAL`.
 
-## M7 — Public proof
-
-- **015 — SpecGrainBench:** reproducible experiment ledger and contamination/comparability preflight.
-- **016 — Public Launch:** versioned package, cross-platform CI, public examples/guides/trust surfaces, release notes/assets, and `v0.1.0` publication.
-
-## Post-v0.1 — Evidence-shaped product adoption
+## Post-v0.1 evidence-shaped product adoption
 
 - **017 — Native DRAFT CLI:** `CLOSED_CANONICAL`.
 - **018 — v0.2.0 Authoring Release:** `CLOSED_CANONICAL`.
@@ -92,24 +69,9 @@ product_merge = 69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b
 post_product_ci = 33485603844
 ```
 
-Exact product scope:
+Exact product scope was `src/specgrain/store.py`, `src/specgrain/pregrain.py`, and `tests/test_pregrain_serialization.py`. Delivered behavior is one shared project-scoped non-blocking advisory lock for existing supported pre-Grain persistence and native child authoring, with the existing lock anchor, separate authoring journal/recovery mechanism, Specification 025 preimage/postimage/platform/lifetime/unsafe-anchor/read-only guarantees, lifecycle semantics, and zero runtime dependencies preserved.
 
-- `src/specgrain/store.py`;
-- `src/specgrain/pregrain.py`;
-- `tests/test_pregrain_serialization.py`.
-
-Delivered behavior:
-
-- one shared project-scoped non-blocking advisory lock for existing supported pre-Grain persistence and native child authoring;
-- existing `.specgrain/tmp/pregrain-mutation.lock` anchor retained;
-- child authoring acquires the lock before journal creation and holds it through completion or handled recovery;
-- existing authoring journal remains the separate durable recovery mechanism;
-- Specification 025 lock/preimage/postimage/platform/lifetime/unsafe-anchor/read-only guarantees remain preserved;
-- no journal schema/version, lifecycle, public locking API, runtime dependency, or release change.
-
-The superseded final-logic head `fd27a146b8c39c777b5fb3f1611b2689a1fad3d5` / CI `33442865903` remains non-acceptance evidence because Ruff stopped before tests.
-
-Final product push, PR, and canonical post-product CI all completed `success` across Ubuntu/Python 3.11, Ubuntu/Python 3.12, Ubuntu/Python 3.13, macOS/Python 3.11, and Windows/Python 3.11. PR #60 merged with expected-head protection after exact head/base/scope/review/thread/comment/mergeability rechecks; unavailable/skipped/neutral systems were not treated as PASS.
+The superseded final-logic head `fd27a146b8c39c777b5fb3f1611b2689a1fad3d5` / CI `33442865903` remains non-acceptance evidence because Ruff stopped before tests. Final product push, PR, and canonical post-product CI all completed `success` across the permanent five-cell matrix. PR #60 merged with expected-head protection after exact gate qualification; unavailable/skipped/neutral review systems were not treated as PASS.
 
 ## Specification 026 canonical closeout proof
 
@@ -123,11 +85,9 @@ closeout_merge = 2c9b18afb74e2254beb254bb84d9c07feec68aa0
 post_closeout_ci = 33486523094
 ```
 
-The closeout changed exactly eight documentation/governance/evidence paths. Push CI, PR CI, and canonical post-closeout CI completed `success` across the permanent five-cell matrix.
+The closeout changed exactly eight documentation/governance/evidence paths. Push CI, PR CI, and canonical post-closeout CI completed `success` across the permanent five-cell matrix. At the final PR #61 gate, exact base/head/eight-path scope remained unchanged, `mergeable=true`, submitted reviews and inline review threads were zero, Qodo was billing-blocked, CodeRabbit automatic review was skipped by repository-star policy, and Cubic produced no submitted approval. None was treated as PASS.
 
-At the final PR #61 gate, exact base/head/eight-path scope remained unchanged, `mergeable=true`, submitted reviews and inline review threads were zero, Qodo was billing-blocked, CodeRabbit automatic review was skipped by repository-star policy, and Cubic provided descriptive auto-generated summary text rather than a submitted approval. None was treated as PASS.
-
-PR #61 merged with expected-head protection as GitHub-signature-verified merge `2c9b18afb74e2254beb254bb84d9c07feec68aa0`.
+PR #61 was merged by concurrent activity as GitHub-signature-verified merge `2c9b18afb74e2254beb254bb84d9c07feec68aa0`, with exact parents `69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b` and `9b6cd1769c24688172ca435b2a77118fa6f4228c`. GitHub REST confirms the exact qualified head was merged but does not expose whether the concurrent caller supplied `expected_head_sha`; no claim is made about that unobservable parameter.
 
 ## Historical release preservation
 
@@ -140,27 +100,12 @@ Historical `v0.3.0` remains unchanged after canonical closeout:
 
 ## Still unselected
 
-- arbitrary external/manual writer coordination;
-- universal project transaction management;
-- child-authoring journal schema/version/recovery redesign;
-- distributed/network locking;
-- blocking waits, retries, leases, heartbeats, or timeout ownership inference;
-- lifecycle expansion;
-- executor/provider/result/verification/evidence orchestration;
-- automatic context/network/model behavior;
-- new runtime dependencies;
-- broader package publication;
-- hosted/account/dashboard scope;
-- Spec Kit runtime adoption;
-- release publication;
-- empirical benchmark superiority claims.
-
-The invalidated `SGB-EXP-001` hidden scorer remains outside inspection/search/materialization/reproduction/use authority.
+Arbitrary external/manual writer coordination, universal project transaction management, child-authoring journal redesign, distributed/network locking, blocking waits/retries/leases/timeouts, lifecycle expansion, executor/provider/result/verification/evidence orchestration, automatic context/network/model behavior, new runtime dependencies, broader package publication, hosted/account/dashboard scope, Spec Kit runtime adoption, release publication, empirical benchmark superiority claims, and use of the invalidated `SGB-EXP-001` hidden scorer remain unselected.
 
 ## Final reconciliation and continuation discipline
 
-The terminal reconciliation must remain documentation/governance/evidence only and change exactly the same eight program/specification paths used by the closeout family. It must receive exact-head push CI and PR CI success across all five permanent cells, unchanged head/base/scope, rechecked reviews/comments/threads/mergeability, and an expected-head merge followed by canonical post-reconciliation five-cell CI.
+The terminal reconciliation must remain documentation/governance/evidence only and change exactly eight paths. It must receive exact-head push CI and PR CI success across all five permanent cells, unchanged head/base/scope, rechecked reviews/comments/threads/mergeability, and an expected-head merge followed by canonical post-reconciliation five-cell CI.
 
-If those live gates succeed and `v0.3.0` remains unchanged, Specification 026 is `CLOSED_CANONICAL` and the program enters `POST_026_OBSERVATION` without another meta-closeout PR solely to restate the merge/CI facts.
+If those live gates succeed and `v0.3.0` remains unchanged, Specification 026 is `CLOSED_CANONICAL` and the program enters `POST_026_OBSERVATION` without another meta-closeout PR solely to restate merge/CI facts.
 
 After closure, perform a bounded observation/evidence pass against live canonical `main`. Do not invent Specification 027 merely to continue activity; shape a successor only when fresh reproducible evidence independently selects another bounded product gap.
