@@ -31,7 +31,7 @@
 - [x] **T021** Pass full pytest, Ruff source/tests/examples, tracked-tree cleanliness, compileall, source CLI smoke, package build, built-wheel install, and installed CLI smoke on qualifying exact-head CI.
 - [x] **T022** Verify exact implementation diff changes only `src/specgrain/store.py`, `src/specgrain/pregrain.py`, and `tests/test_pregrain_serialization.py`, with no runtime dependency addition.
 - [x] **T023** Require exact-head permanent CI success across all five cells: push CI `33443061640` and PR CI `33443161567`.
-- [x] **T024** Recheck PR #60 exact head/base/three-path scope/CI/reviews/comments/threads/mergeability and record Qodo billing-blocked, CodeRabbit skipped by star policy, and Cubic neutral due plan limit; none treated as PASS.
+- [x] **T024** Recheck PR #60 exact head/base/three-path scope/CI/reviews/comments/threads/mergeability and record Qodo billing-blocked, CodeRabbit skipped by star policy, and Cubic neutral due to its plan limit; none treated as PASS.
 - [x] **T025** Merge PR #60 with expected-head protection as `69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b`.
 - [x] **T026** Require canonical post-product CI `33485603844` success across all five permanent cells and reverify historical `v0.3.0` source/assets unchanged.
 
@@ -55,4 +55,4 @@ post_closeout_ci = 33486523094
 
 ## Standing prohibitions
 
-Specification 026 does not authorize arbitrary external/manual writer coordination, a universal project transaction manager, child-authoring journal redesign, distributed/network locking, blocking waits/retries/leases/timeouts, runtime dependencies, lifecycle expansion, executor/provider/result/verification/evidence orchestration, automatic context/network/model behavior, Spec Kit runtime integration, release publication, hosted scope, benchmark/superiority claims, or inspection/search/materialization/reproduction/use of the invalidated `SGB-EXP-001` hidden scorer.
+Specification 026 does not authorize arbitrary external/manual writer coordination, a universal project transaction manager, child-authoring journal schema/version/recovery redesign, distributed/network locking, blocking waits, retries, sleeps, backoff, timeouts, leases, heartbeats, stale-owner inference, runtime dependencies, lifecycle expansion, executor/provider/result/verification/evidence orchestration, automatic context/network/model behavior, Spec Kit runtime integration, release publication, hosted scope, benchmark/superiority claims, or inspection/search/materialization/reproduction/use of the invalidated `SGB-EXP-001` hidden scorer.
