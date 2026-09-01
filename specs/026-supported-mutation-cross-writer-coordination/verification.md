@@ -61,7 +61,7 @@ product_merge = 69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b
 post_product_ci = 33485603844
 ```
 
-All qualifying product CI runs completed `success` across the permanent five-cell matrix. At the PR #60 merge gate there were zero submitted reviews and zero inline review threads; Qodo was billing-blocked, CodeRabbit automatic review was skipped by repository-star policy, and Cubic was neutral/descriptive due its plan limit. None was treated as PASS. PR #60 merged with expected-head protection.
+All qualifying product CI runs completed `success` across the permanent five-cell matrix. At the PR #60 merge gate there were zero submitted reviews and zero inline review threads; Qodo was billing-blocked, CodeRabbit automatic review was skipped by repository-star policy, and Cubic was neutral/descriptive due to its plan limit. None was treated as PASS. PR #60 merged with expected-head protection.
 
 ## Canonical closeout evidence
 
