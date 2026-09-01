@@ -40,7 +40,7 @@ SpecGrain is an independent, agent-neutral delivery system built around recursiv
   -> 016 public launch
 ```
 
-Specification 000 established the project foundation and constitution. Specifications 000 through 016 are `CLOSED_CANONICAL`.
+Specification 000 established the project foundation and constitution. Specifications 000 through 025 are `CLOSED_CANONICAL`. Specification 026 is in its terminal final reconciliation gate; no further Specification 026 product work is authorized.
 
 ## Versioned product history
 
@@ -49,18 +49,12 @@ Specification 000 established the project foundation and constitution. Specifica
 - Specification 018 — v0.2.0 Authoring Release: `CLOSED_CANONICAL`.
 - Specification 019 — Native Child-DRAFT Authoring: `CLOSED_CANONICAL`.
 - Specification 020 — v0.3.0 Recursive Authoring Release: `CLOSED_CANONICAL`; release source `70dd66aba0e68ae710e6ef12605ed153d107bab4`; Release `378962445`.
-- Specification 021 — Public Launch Readiness Hardening: `CLOSED_CANONICAL`.
-- Specification 022 — Native Grain Preparation: `CLOSED_CANONICAL`.
-- Specification 023 — Spec Kit Preset-Compatible Import: `CLOSED_CANONICAL`.
-- Specification 024 — Native WorkPacket Export: `CLOSED_CANONICAL`.
-- Specification 025 — Supported Pre-Grain Writer Serialization: `CLOSED_CANONICAL`.
-- Specification 026 — Supported Mutation Cross-Writer Coordination: terminal final reconciliation; `CLOSED_CANONICAL` is realized if and only if this exact reconciliation becomes canonical and canonical post-reconciliation CI succeeds across all five permanent cells.
+- Specifications 021–025: `CLOSED_CANONICAL`.
+- Specification 026 — Supported Mutation Cross-Writer Coordination: product and closeout canonical; final reconciliation pending.
 
 The latest published release remains historical `v0.3.0` at exact source `70dd66aba0e68ae710e6ef12605ed153d107bab4` / Release `378962445`.
 
 ## Specification 026 selection and shaping proof
-
-Fresh reproducible evidence against exact canonical post-025 baseline independently selected one bounded gap:
 
 ```text
 canonical_base = 1931d5a90ded5f7b2d4f5ea0f0ccffa03e2affc1
@@ -92,7 +86,7 @@ src/specgrain/pregrain.py
 tests/test_pregrain_serialization.py
 ```
 
-The delivered implementation shares one project-scoped non-blocking advisory lock between existing supported pre-Grain persistence and native child authoring. `create_child_draft_spec` acquires the shared lock before journal creation; pre-Grain `_persist` retains its complete critical section. The historical `.specgrain/tmp/pregrain-mutation.lock` anchor, standard-library Unix/Windows primitives, unsafe-anchor rejection, descriptor/process ownership, exact-preimage/postimage defenses, child-authoring journal/recovery contract, lifecycle behavior, read-only behavior, and zero runtime dependencies are preserved.
+The implementation shares one project-scoped non-blocking advisory lock between supported pre-Grain persistence and native child authoring. `create_child_draft_spec` acquires the shared lock before journal creation; pre-Grain `_persist` retains its complete critical section. The historical lock anchor, standard-library platform primitives, unsafe-anchor rejection, descriptor/process ownership, exact-preimage/postimage defenses, separate child-authoring journal/recovery contract, lifecycle behavior, read-only behavior, and zero runtime dependencies are preserved.
 
 ```text
 first_final_logic_head = fd27a146b8c39c777b5fb3f1611b2689a1fad3d5
@@ -107,7 +101,7 @@ product_merge = 69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b
 post_product_ci = 33485603844
 ```
 
-Final push CI, PR CI, and canonical post-product CI completed `success` across all five permanent cells. At the final PR #60 merge gate exact head/base/three-path scope remained unchanged, `mergeable=true`, submitted reviews and inline review threads were zero, and unavailable/skipped/neutral review systems were not treated as PASS. PR #60 merged with expected-head protection.
+Final push CI, PR CI, and canonical post-product CI completed `success` across all five permanent cells. PR #60 merged with expected-head protection after exact gate qualification; unavailable/skipped/neutral review systems were not treated as PASS.
 
 ## Specification 026 canonical closeout proof
 
@@ -123,9 +117,9 @@ post_closeout_ci = 33486523094
 
 The closeout diff changed exactly eight documentation/governance/evidence paths and no product/test/workflow/dependency/release surface. Push CI, PR CI, and canonical post-closeout CI all completed `success` across the permanent five-cell matrix.
 
-At the final PR #61 merge gate exact base/head/eight-path scope remained unchanged, `mergeable=true`, submitted reviews and inline review threads were zero, Qodo was billing-blocked, CodeRabbit automatic review was skipped by repository-star policy, and Cubic provided descriptive auto-generated summary text rather than a submitted approval. None was treated as PASS.
+At the final PR #61 gate, exact base/head/eight-path scope remained unchanged, `mergeable=true`, submitted reviews and inline review threads were zero, Qodo was billing-blocked, CodeRabbit automatic review was skipped by repository-star policy, and Cubic produced no submitted approval. None was treated as PASS.
 
-PR #61 merged with expected-head protection as signed GitHub merge `2c9b18afb74e2254beb254bb84d9c07feec68aa0` with parents `69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b` and `9b6cd1769c24688172ca435b2a77118fa6f4228c`.
+PR #61 was merged by concurrent activity as signed GitHub merge `2c9b18afb74e2254beb254bb84d9c07feec68aa0`, with exact parents `69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b` and `9b6cd1769c24688172ca435b2a77118fa6f4228c`. GitHub REST proves the exact qualified closeout head was merged but does not expose whether the concurrent caller supplied an `expected_head_sha` parameter; this plan makes no claim about that unobservable mechanism.
 
 ## Historical release preservation
 
@@ -142,9 +136,7 @@ Specification 026 did not authorize release work.
 
 Specification 026 delivered only cooperative mutual exclusion between pre-Grain persistence and native child authoring through one existing project-scoped non-blocking advisory lock while preserving the journal as the separate durable recovery mechanism.
 
-It does not authorize arbitrary external writer coordination, universal transaction management, journal schema/version/recovery redesign, distributed locking, blocking waits/retries/timeouts/leases, runtime dependencies, lifecycle expansion, executor/provider/result/verification/evidence orchestration, automatic context/network/model behavior, Spec Kit runtime adoption, release publication, hosted scope, or benchmark/superiority claims.
-
-The invalidated `SGB-EXP-001` hidden scorer remains outside inspection/search/materialization/reproduction/use authority.
+It does not authorize arbitrary external writer coordination, universal transaction management, journal schema/version/recovery redesign, distributed locking, blocking waits/retries/timeouts/leases, runtime dependencies, lifecycle expansion, executor/provider/result/verification/evidence orchestration, automatic context/network/model behavior, Spec Kit runtime adoption, release publication, hosted scope, benchmark/superiority claims, or any use of the invalidated `SGB-EXP-001` hidden scorer.
 
 ## Final reconciliation gate
 
@@ -152,7 +144,7 @@ This reconciliation is the terminal Specification 026 documentation/evidence uni
 
 Required live sequence:
 
-1. verify the exact final reconciliation diff from closeout merge `2c9b18afb74e2254beb254bb84d9c07feec68aa0` remains exactly eight documentation/governance/evidence paths;
+1. verify the exact final reconciliation diff from closeout merge `2c9b18afb74e2254beb254bb84d9c07feec68aa0` is exactly eight documentation/governance/evidence paths;
 2. require permanent push CI success across all five cells on the exact final head;
 3. open/update the final reconciliation PR and recheck exact head/base/scope/PR CI/reviews/comments/threads/mergeability;
 4. record unavailable/skipped/neutral review systems accurately and never treat them as PASS;
