@@ -2,9 +2,11 @@
 
 ## Status
 
-`SHAPED_CANDIDATE`.
+`PRODUCT_VERIFIED_CLOSEOUT_PENDING`.
 
-Product implementation is not authorized until this documentation/governance-only shaping package is merged canonically and the resulting `main` passes the permanent five-cell CI matrix.
+The shaped product authority was satisfied by canonical shaping merge `d27e000728823e93d2fce9ecd669629a839bfdb3` and post-shaping CI `33442261877`. The bounded product implementation merged as `69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b`, and canonical post-product CI `33485603844` completed `success` across all five permanent cells.
+
+Specification 026 is not `CLOSED_CANONICAL` until its documentation/evidence closeout and final reconciliation are merged and their canonical post-merge CI gates succeed.
 
 ## Outcome
 
@@ -24,49 +26,23 @@ ci_result = completed/success across all five permanent cells
 reproduced_gap = SUPPORTED_CHILD_PRE_GRAIN_CROSS_WRITER_PARTIAL_MUTATION
 ```
 
-The observation uses only supported public mutation APIs and is independent of the invalidated `SGB-EXP-001` experiment.
-
-The reproduced topology is:
-
-```text
-shape_draft_spec(parent)
-  -> passes final exact preimage check inside pre-Grain persistence
-  -> pauses before os.replace
-
-create_child_draft_spec(parent)
-  -> creates recoverable journal
-  -> creates child DRAFT
-  -> updates parent children
-  -> confirms both postimages
-  -> removes journal
-  -> returns success
-
-shape_draft_spec resumes
-  -> os.replace overwrites the successful child-parent postimage
-  -> stores a SHAPED parent with the stale children list
-  -> project revalidation detects structural invalidity
-  -> raises StoreValidationError after mutation already occurred
-```
-
-The final store contains the child file but the SHAPED parent no longer references it. The failed pre-Grain operation is therefore not mutation-free and has invalidated a supported writer's successfully confirmed result.
+The observation used only supported public mutation APIs and is independent of the invalidated `SGB-EXP-001` experiment. The earlier observation head `975c47b288cddbfbde34fbbca06afa77ee86f9af` / CI `33441425481` is non-selection evidence because Ruff stopped the harness before test execution.
 
 ## Problem statement
 
-Specification 025 correctly prevents concurrent supported pre-Grain writers from silently overwriting one another, but its advisory lock is private to `pregrain.py::_persist`. Native child authoring uses a separate journal transaction in `store.py` and does not acquire that lock.
+Specification 025 serialized concurrent supported pre-Grain writers, but native child authoring used its recoverable journal without participating in that advisory lock. Both writer families could mutate the same DRAFT parent. A supported child authoring call could complete after the pre-Grain writer's final exact preimage check but before `os.replace`; the pre-Grain writer could then overwrite the successful parent postimage and fail only during later full-project validation, leaving structurally invalid stored refinement.
 
-Both writer families can mutate the same DRAFT parent file. Because neither mechanism excludes the other, they can interleave after exact preimage checks and before replacement.
-
-A journal-presence check alone cannot close this race because checking for a journal and replacing the parent would still be separate operations. The selected gap therefore requires one shared operating-system advisory exclusion primitive across the two supported writer families.
+A journal-presence check alone cannot close this race because checking for a journal and replacing the parent are separate operations. The selected gap therefore required one shared operating-system advisory exclusion primitive across the two supported writer families.
 
 ## Scope in
 
 - Reuse one project-scoped non-blocking advisory lock for supported pre-Grain persistence and supported native child authoring.
-- Preserve the current lock anchor path `.specgrain/tmp/pregrain-mutation.lock` unless implementation evidence proves a migration-free equivalent is required.
-- Move or refactor the current private lock abstraction only as needed to make it safely importable by both `store.py` and `pregrain.py` without a circular import.
+- Preserve the lock anchor `.specgrain/tmp/pregrain-mutation.lock`.
+- Place the private lock abstraction so `store.py` and `pregrain.py` can use it without circular imports.
 - Acquire the shared lock before native child authoring creates its transaction journal and hold it through completion or handled recovery of that authoring attempt.
 - Keep the existing pre-Grain `_persist` critical section under the same shared lock.
-- Preserve all existing exact-preimage, temp-file fsync, `os.replace`, exact postimage, full project revalidation, authoring journal, and recovery defenses.
-- Add deterministic focused tests for both contention directions and the exact reproduced cross-writer topology.
+- Preserve exact-preimage, temp-file fsync, `os.replace`, exact postimage, full project revalidation, authoring journal, and recovery defenses.
+- Add deterministic tests for both contention directions and the corrected reproduced topology.
 - Preserve cross-platform standard-library behavior on Ubuntu, macOS, and Windows.
 - Preserve runtime dependency count at zero.
 - Preserve historical `v0.3.0` identity and assets.
@@ -74,12 +50,12 @@ A journal-presence check alone cannot close this race because checking for a jou
 ## Scope out
 
 - Coordination with arbitrary manual editors, direct filesystem writes, or non-SpecGrain applications.
-- A universal project-wide transaction manager for all future mutation families.
-- Child-authoring journal schema changes, version changes, recovery-state redesign, or automatic hidden recovery.
-- Blocking lock acquisition, retry loops, sleeps, backoff, timeouts, leases, heartbeats, or stale-owner inference.
+- A universal project-wide transaction manager.
+- Child-authoring journal schema/version/recovery redesign or automatic hidden recovery.
+- Blocking lock acquisition, retries, sleeps, backoff, timeouts, leases, heartbeats, or stale-owner inference.
 - Distributed/network/database locking.
 - SpecNode schema or semantic revision changes.
-- New lifecycle states or later lifecycle transitions.
+- Lifecycle expansion.
 - Execution/provider/result/verification/evidence orchestration.
 - Automatic context discovery, network access, or model selection.
 - Spec Kit runtime integration.
@@ -92,86 +68,92 @@ A journal-presence check alone cannot close this race because checking for a jou
 
 ### FR-001 — One shared advisory ownership boundary
 
-Supported pre-Grain persistence and `create_child_draft_spec` MUST acquire the same project-scoped operating-system advisory lock before entering their mutation-critical sections.
-
-The lock MUST remain non-blocking. Active contention MUST fail immediately with deterministic `StoreValidationError` semantics.
+Supported pre-Grain persistence and `create_child_draft_spec` MUST acquire the same project-scoped operating-system advisory lock before entering their mutation-critical sections. The lock MUST remain non-blocking and active contention MUST fail immediately with deterministic `StoreValidationError` semantics.
 
 ### FR-002 — Child authoring must acquire before transaction state
 
-`create_child_draft_spec` MUST acquire the shared advisory lock before creating `.specgrain/tmp/authoring-transaction.json`.
-
-If contention prevents acquisition, the losing call MUST NOT create a journal, child file, or parent mutation.
+`create_child_draft_spec` MUST acquire the shared advisory lock before creating `.specgrain/tmp/authoring-transaction.json`. If contention prevents acquisition, the losing call MUST NOT create a journal, child file, or parent mutation.
 
 ### FR-003 — Pre-Grain persistence remains fully serialized
 
-The Specification 025 `_persist` boundary MUST remain serialized from proposed-state validation through exact stored-postimage confirmation and full project revalidation.
-
-No existing defense may be weakened to accommodate the shared lock.
+The Specification 025 `_persist` boundary MUST remain serialized from proposed-state validation through exact stored-postimage confirmation and full project revalidation. No existing defense may be weakened.
 
 ### FR-004 — Journal recovery remains separate and authoritative
 
-The existing authoring journal MUST continue to define recoverable child-authoring interruption states after journal creation.
-
-The advisory lock MUST NOT encode transaction state, owner identity, recovery status, or stale-state inference in lock-file contents or presence.
+The existing authoring journal MUST continue to define recoverable child-authoring interruption states after journal creation. The advisory lock MUST NOT encode transaction state, owner identity, recovery status, or stale-state inference in lock-file contents or presence.
 
 ### FR-005 — Safe dependency direction
 
-The shared private lock abstraction MUST be placed so `store.py` and `pregrain.py` can use it without circular imports.
-
-No public locking API is required or authorized.
+The shared private lock abstraction MUST be placed so `store.py` and `pregrain.py` can use it without circular imports. No public locking API is authorized.
 
 ### FR-006 — Cross-platform standard-library only
 
-The implementation MUST preserve the standard-library-only operating-system primitives selected by ADR-0021 / Specification 025 behavior:
+The implementation MUST preserve standard-library primitives:
 
 ```text
 Unix-family = fcntl.flock(fd, LOCK_EX | LOCK_NB)
 Windows = msvcrt.locking(fd, LK_NBLCK, 1)
 ```
 
-The exact implementation head MUST pass the permanent CI matrix rather than relying on documentation claims.
-
 ### FR-007 — Lock anchor safety and lifetime
 
-The lock anchor MUST remain a regular non-symlink file. Ownership MUST remain tied to the live file descriptor/process, not file presence.
-
-Existing process-exit release, handled-failure release, persistent-anchor reuse, and unsafe-anchor fail-closed behavior MUST remain valid.
+The lock anchor MUST remain a regular non-symlink file. Ownership MUST remain tied to the live file descriptor/process, not file presence. Existing process-exit release, handled-failure release, persistent-anchor reuse, and unsafe-anchor fail-closed behavior remain required.
 
 ### FR-008 — Read-only behavior remains unlocked
 
-Read-only project loading/checking/selection/packet behavior MUST remain outside the mutation lock unless independently evidenced and separately authorized.
+Read-only project loading/checking/selection/packet behavior remains outside the mutation lock unless separately evidenced and authorized.
 
 ### FR-009 — No hidden contention policy
 
 The core MUST NOT wait, retry, sleep, back off, or infer timeout ownership. Callers remain responsible for any explicit retry policy outside the deterministic core.
 
-## Acceptance criteria
+## Acceptance criteria and disposition
 
-1. The final product head includes a corrected-invariant test derived from the post-025 observation and proves that the reproduced topology cannot leave invalid parent/child refinement.
-2. With pre-Grain persistence holding the shared lock, a competing `create_child_draft_spec` fails closed before journal creation, child creation, or parent mutation.
-3. With child authoring holding the shared lock, competing `shape_draft_spec` fails closed before target mutation.
-4. Equivalent contention behavior is covered for pre-Grain refine/grain persistence through their common `_persist` path.
-5. The losing writer cannot alter canonical parent/child bytes in a contention test.
-6. Successful sequential child authoring remains valid and recoverable under existing journal semantics.
-7. Existing child-authoring recovery fixtures remain green without journal-version or schema changes.
-8. Existing Specification 025 serialization, stale-writer, success/failure release, process-exit release, persistent-anchor, unsafe-anchor, shape/refine/grain, and read-only tests remain green.
-9. Full regression, Ruff, compileall, source CLI smoke, package build, built-wheel install, and installed CLI smoke pass on the exact product head.
-10. Permanent CI succeeds on Ubuntu/Python 3.11, Ubuntu/Python 3.12, Ubuntu/Python 3.13, macOS/Python 3.11, and Windows/Python 3.11.
-11. The final product diff contains only the minimum source/test surface justified by this specification.
-12. No runtime dependency is added.
-13. `v0.3.0` still points to `70dd66aba0e68ae710e6ef12605ed153d107bab4`, Release `378962445`, with the historical wheel/source digests unchanged.
-14. Review, comments, threads, mergeability, exact head/base, and CI are rechecked immediately before merge; unavailable/skipped review systems are recorded as unavailable/skipped, never PASS.
-15. Product merge uses expected-head protection and canonical post-merge CI succeeds before closeout proceeds.
+1. Corrected-invariant test prevents the reproduced topology from leaving invalid parent/child refinement — **PASS**.
+2. Pre-Grain lock ownership makes competing child authoring fail before journal/child/parent side effects — **PASS**.
+3. Child-authoring ownership makes competing `shape_draft_spec` fail before target mutation — **PASS**.
+4. Refine/grain continue through the same shared `_persist` contention boundary — **PASS** via common lock path and retained Specification 025 coverage.
+5. Losing writer does not alter canonical bytes in contention coverage — **PASS**.
+6. Successful sequential child authoring remains valid under existing journal semantics — **PASS** through regression.
+7. Existing child-authoring recovery fixtures remain green with no journal version/schema change — **PASS**.
+8. Specification 025 serialization/lifetime/unsafe-anchor/read-only tests remain green — **PASS**.
+9. Ruff, full regression, cleanliness, compileall, source CLI smoke, build, wheel install, and installed CLI smoke pass on exact product head — **PASS**.
+10. Permanent five-cell CI succeeds on exact product head and canonical merge — **PASS**.
+11. Final product diff contains only the minimum three source/test paths — **PASS**.
+12. No runtime dependency added — **PASS**.
+13. Historical `v0.3.0` source/release/assets remain unchanged — **PASS**.
+14. PR head/base/scope/CI/reviews/comments/threads/mergeability and review-system availability were rechecked without treating unavailable/skipped systems as PASS — **PASS**.
+15. Product merge used expected-head protection and canonical post-product CI succeeded — **PASS**.
+
+## Delivered product evidence
+
+```text
+shaping_head = 51079a25cdd0f90a9af1cc34ae7577c72ecdf2d6
+shaping_push_ci = 33441902147
+shaping_pr = 59
+shaping_pr_ci = 33442057984
+shaping_merge = d27e000728823e93d2fce9ecd669629a839bfdb3
+post_shaping_ci = 33442261877
+
+final_product_head = 24728cd52b2daef2c83c5b83f084421b8096a11f
+push_ci = 33443061640
+product_pr = 60
+product_pr_ci = 33443161567
+product_merge = 69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b
+post_product_ci = 33485603844
+```
+
+The first final-logic head `fd27a146b8c39c777b5fb3f1611b2689a1fad3d5` / CI `33442865903` is explicitly not acceptance evidence because Ruff source stopped the run before tests. The subsequent change normalized imports only.
 
 ## Risk
 
 `medium`
 
-This change touches two persistence paths and a cross-platform lock abstraction. The boundary is intentionally small, but an incorrectly placed lock could interfere with child recovery or create a circular import. Verification therefore requires exact contention-direction tests, recovery regression, and the permanent cross-platform matrix.
+The selected boundary touched two persistence paths and cross-platform locking. The delivered implementation keeps the lock helper private, leaves durable recovery in the journal, adds no schema migration, and preserves rollback by reverting the bounded implementation commits.
 
 ## Recovery
 
-Revert the bounded implementation commits to restore the exact Specification 025 behavior. No schema or journal migration is permitted, so rollback must not require data conversion.
+Revert the bounded Specification 026 product merge/implementation to restore exact Specification 025 behavior. No schema or journal migration is required.
 
 ## Context
 
@@ -180,68 +162,50 @@ budget_tokens = 8000
 estimated_tokens = 5500
 ```
 
-## Change surface
+## Product change surface
 
-Expected product surface:
+Delivered product surface:
 
 ```text
-src/specgrain/pregrain.py
 src/specgrain/store.py
-src/specgrain/mutation_lock.py   # only if a dependency-neutral helper is required
+src/specgrain/pregrain.py
 tests/test_pregrain_serialization.py
-tests/test_store_authoring.py    # or the existing canonical child-authoring focused module
 ```
 
-A smaller equivalent surface is preferred. A new private module is authorized only to avoid circular import and centralize the already-selected advisory lock implementation.
+No new private module was required.
 
-Documentation/evidence closeout may later update only the Specification 026 authority chain and canonical program-state documents necessary to record verified truth.
+## Historical release preservation
 
-## Evidence required
-
-- Exact post-025 selection evidence above.
-- Exact shaping head/base/diff and permanent shaping CI.
-- Exact canonical post-shaping merge and five-cell CI before product work starts.
-- Focused corrected-invariant and two-direction contention tests.
-- Child-authoring recovery regression.
-- Specification 025 lock regression.
-- Full exact-head CI and package verification.
-- Exact product PR head/base/scope, comments, threads, reviews, mergeability, and expected-head merge evidence.
-- Canonical post-product CI.
-- Historical release preservation evidence.
-- Documentation-only closeout and reconciliation if required by canonical governance.
+```text
+tag = v0.3.0
+source = 70dd66aba0e68ae710e6ef12605ed153d107bab4
+release_id = 378962445
+wheel_asset = 535129008
+wheel_sha256 = b4f724e5ae187db28053c264cf9b9612f864fe5052459c7341a7f470602fb817
+source_asset = 535129009
+source_sha256 = e7dc5484b8439cf8a6c594c65b454e141fef7c94a7edb0c7cb4edfc839007835
+```
 
 ## Minimality choice
 
 `native`
 
-The smallest justified solution extends the advisory serialization primitive already selected and proven by Specification 025 to the one additional supported mutation family that fresh evidence shows can overlap the same canonical parent state. No broader transaction framework is selected.
+The delivered solution extends the advisory serialization primitive already proven by Specification 025 to exactly one additional supported mutation family selected by fresh evidence. No broader transaction framework was introduced.
 
 ## Safety status
 
 `requirements-defined`
 
-Safety requirements:
+Safety requirements remain satisfied at the product gate: fail closed before mutation on contention; preserve explicit journal recovery; preserve exact-preimage/postimage validation; reject unsafe anchors; release advisory ownership on handled paths/process exit; no hidden waiting/retry/timeout policy; no runtime dependency; no historical release mutation; no use of invalidated hidden-scorer material.
 
-- fail closed before mutation on lock contention;
-- preserve explicit journal recovery after journal creation;
-- do not weaken exact-preimage/postimage validation;
-- reject unsafe lock anchors;
-- release advisory ownership on all handled paths and process exit;
-- no hidden waiting/retry/timeout policy;
-- no runtime dependency addition;
-- no historical release mutation;
-- no use of invalidated benchmark hidden-scorer material.
-
-## Authority gate
+## Closeout authority gate
 
 ```text
 SHAPING_JUSTIFIED = true
-IMPLEMENTATION_AUTHORIZED = false
+IMPLEMENTATION_AUTHORIZED = true
+PRODUCT_MERGED = true
+POST_PRODUCT_VERIFIED = true
+CLOSED_CANONICAL = false
 ```
 
-Implementation becomes authorized only after:
-
-1. this shaping package is reviewed as documentation/governance-only and merged with exact-head protection;
-2. canonical `main` is re-read after that merge;
-3. the permanent five-cell CI matrix completes `success` on the exact canonical shaping merge;
-4. no new live repository fact supersedes this authority.
+Only documentation/evidence closeout and final reconciliation remain. No further Specification 026 product implementation is authorized.
