@@ -54,32 +54,28 @@ Specification 000 established the project foundation and constitution. Specifica
 - Specification 023 — Spec Kit Preset-Compatible Import: `CLOSED_CANONICAL`.
 - Specification 024 — Native WorkPacket Export: `CLOSED_CANONICAL`.
 - Specification 025 — Supported Pre-Grain Writer Serialization: `CLOSED_CANONICAL`.
-- Specification 026 — Supported Mutation Cross-Writer Coordination: `SHAPED_CANDIDATE`; implementation blocked until canonical shaping merge and post-shaping CI.
+- Specification 026 — Supported Mutation Cross-Writer Coordination: `PRODUCT_VERIFIED_CLOSEOUT_PENDING`.
 
 The latest published release remains `v0.3.0` at exact historical source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
 
 ## Closed frontier — Specification 025
 
-Specification 025 remains `CLOSED_CANONICAL`. Its product implementation introduced one project-scoped non-blocking advisory lock around supported pre-Grain persistence and preserved exact-preimage/postimage, lifecycle, readiness, dependency, and runtime-dependency-free behavior.
-
-Canonical evidence remains:
+Specification 025 remains `CLOSED_CANONICAL`. Its final normalized post-closeout state is anchored by:
 
 ```text
 product_merge = 5e3966fb0db3d8971b5abe19106949001ed55ba9
 post_product_ci = 33434910548
-closeout_merge = e05df4bd046590ee043115c1edbcd7b83163b4ad
-post_closeout_ci = 33436130730
 reconciliation_merge = 8a0da2908f6251100a0d7ab71178c2a7c3ed64bb
 post_reconciliation_ci = 33437077692
 post_normalization_merge = 1931d5a90ded5f7b2d4f5ea0f0ccffa03e2affc1
 post_normalization_ci = 33440739066
 ```
 
-All permanent post-product/closeout/reconciliation/normalization CI gates succeeded across Ubuntu/Python 3.11, Ubuntu/Python 3.12, Ubuntu/Python 3.13, macOS/Python 3.11, and Windows/Python 3.11. Unavailable or skipped review systems were never treated as PASS.
+Unavailable or skipped review systems were never treated as PASS.
 
-## Post-025 observation and Specification 026 selection
+## Specification 026 selection
 
-Fresh reproducible evidence against exact canonical baseline `1931d5a90ded5f7b2d4f5ea0f0ccffa03e2affc1` independently selected a new bounded gap:
+Fresh reproducible evidence against exact canonical baseline `1931d5a90ded5f7b2d4f5ea0f0ccffa03e2affc1` independently selected:
 
 ```text
 observation_branch = obs/post-025-supported-cross-writer-fixture
@@ -90,105 +86,130 @@ ci_result = completed/success across all five permanent cells
 reproduced_gap = SUPPORTED_CHILD_PRE_GRAIN_CROSS_WRITER_PARTIAL_MUTATION
 ```
 
-The fixture uses only supported `shape_draft_spec` and `create_child_draft_spec` APIs. A child writer can successfully create and confirm a child plus parent reference after the pre-Grain writer's final exact preimage check but before `os.replace`. The pre-Grain writer then overwrites that successful parent postimage, fails project revalidation after mutation, and leaves a structurally invalid stored refinement.
+The fixture used only supported `shape_draft_spec` and `create_child_draft_spec` APIs. Native child authoring could complete after the pre-Grain writer's final exact parent preimage check but before `os.replace`; the pre-Grain writer could then overwrite the successful parent postimage and leave structurally invalid refinement before failing full-project revalidation.
 
-The first observation head `975c47b288cddbfbde34fbbca06afa77ee86f9af` / CI `33441425481` is harness-invalid for selection because Ruff stopped execution before the fixture ran. No product inference is taken from it.
+The earlier observation head `975c47b288cddbfbde34fbbca06afa77ee86f9af` / CI `33441425481` remains harness-invalid for selection because Ruff stopped before the fixture ran.
 
-Selection record:
+Selection record: `docs/research/post-025-supported-cross-writer-reproduction-2026-09-01.md`  
+Architectural decision: `docs/adr/0021-supported-mutation-cross-writer-coordination.md`
 
-```text
-docs/research/post-025-supported-cross-writer-reproduction-2026-09-01.md
-```
-
-Architectural decision:
+## Specification 026 canonical shaping proof
 
 ```text
-docs/adr/0021-supported-mutation-cross-writer-coordination.md
+shaping_base = 1931d5a90ded5f7b2d4f5ea0f0ccffa03e2affc1
+shaping_head = 51079a25cdd0f90a9af1cc34ae7577c72ecdf2d6
+shaping_push_ci = 33441902147
+shaping_pr = 59
+shaping_pr_ci = 33442057984
+shaping_merge = d27e000728823e93d2fce9ecd669629a839bfdb3
+post_shaping_ci = 33442261877
 ```
 
-## Specification 026 shaped boundary
+The shaping diff was documentation/governance/evidence only. Permanent push, PR, and canonical post-shaping CI all succeeded across Ubuntu/Python 3.11, Ubuntu/Python 3.12, Ubuntu/Python 3.13, macOS/Python 3.11, and Windows/Python 3.11 before implementation authority became live.
 
-Specification 026 selects only cooperative mutual exclusion between two already-supported mutation families that can touch the same canonical DRAFT parent:
+## Specification 026 canonical product proof
+
+Final implementation head:
+
+```text
+24728cd52b2daef2c83c5b83f084421b8096a11f
+```
+
+Exact product diff changed only:
+
+- `src/specgrain/store.py`;
+- `src/specgrain/pregrain.py`;
+- `tests/test_pregrain_serialization.py`.
+
+The implementation reuses the existing `.specgrain/tmp/pregrain-mutation.lock` project-scoped non-blocking advisory anchor for both supported pre-Grain persistence and native child authoring. The private lock implementation moved to lower-level `store.py`; `pregrain.py` reuses the identical callable. Child authoring acquires the lock before journal creation and holds it through normal completion or handled recovery. The existing journal remains the separate durable recovery mechanism.
+
+Specification 025 preimage/postimage, unsafe-anchor, platform, descriptor/process lifetime, persistent-anchor, shape/refine/grain, and read-only guarantees remain required and covered. `AUTHORING_TRANSACTION_VERSION`, journal schema, recovery classifications, lifecycle rules, child-ID behavior, and runtime dependency count remain unchanged.
+
+```text
+first_final_logic_head = fd27a146b8c39c777b5fb3f1611b2689a1fad3d5
+first_final_logic_ci = 33442865903
+first_final_logic_result = Ruff failure before tests; not acceptance evidence
+
+final_product_head = 24728cd52b2daef2c83c5b83f084421b8096a11f
+push_ci = 33443061640
+product_pr = 60
+product_pr_ci = 33443161567
+product_merge = 69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b
+post_product_ci = 33485603844
+```
+
+Final push CI, PR CI, and canonical post-product CI completed `success` across all five permanent cells.
+
+At the final PR #60 merge gate:
+
+```text
+base = d27e000728823e93d2fce9ecd669629a839bfdb3
+head = 24728cd52b2daef2c83c5b83f084421b8096a11f
+changed_files = 3
+mergeable = true
+submitted_reviews = 0
+inline_review_threads = 0
+```
+
+Qodo was billing-blocked, automatic CodeRabbit review was skipped by repository-star policy, and Cubic was neutral because its monthly review line limit was reached. None was treated as PASS. PR #60 merged with expected-head protection.
+
+## Specification 026 delivered boundary
+
+Delivered authority is limited to cooperative mutual exclusion between:
 
 1. pre-Grain persistence through `src/specgrain/pregrain.py::_persist`;
 2. native child authoring through `src/specgrain/store.py::create_child_draft_spec`.
 
-The candidate reuses the existing project-scoped non-blocking advisory anchor:
+Explicit non-authority remains:
 
-```text
-.specgrain/tmp/pregrain-mutation.lock
-```
+- arbitrary manual/non-SpecGrain writer coordination;
+- universal project transaction management;
+- child-authoring journal schema/version/recovery redesign;
+- distributed/network/database locking;
+- blocking waits, retries, sleeps, backoff, leases, heartbeats, or timeout ownership inference;
+- runtime dependencies;
+- lifecycle expansion;
+- executor/provider/result/verification/evidence orchestration;
+- automatic context/network/model behavior;
+- Spec Kit runtime adoption;
+- release publication;
+- hosted scope;
+- benchmark or superiority claims.
 
-The private lock abstraction may be moved to a dependency-neutral module so both `store.py` and `pregrain.py` can use it without a circular import. Child authoring must acquire the shared lock before journal creation and hold it through completion or handled recovery of that authoring attempt. The journal remains the separate durable recovery mechanism.
-
-### Explicit non-authority
-
-Specification 026 does not authorize arbitrary external-writer coordination, universal project transaction management, journal schema/version/recovery redesign, distributed locking, blocking waits/retries/timeouts/leases, runtime dependencies, lifecycle expansion, executor/provider/result/verification/evidence orchestration, automatic context/network/model behavior, Spec Kit runtime integration, release publication, hosted scope, or benchmark claims.
-
-The invalidated SGB-EXP-001 hidden scorer remains outside all inspection/search/materialization/use authority.
-
-## Specification 026 authority gate
-
-Current shaping state:
-
-```text
-SHAPING_JUSTIFIED = true
-SHAPED_CANDIDATE = true
-IMPLEMENTATION_AUTHORIZED = false
-```
-
-Product implementation MUST NOT begin until:
-
-1. the documentation/governance-only shaping branch is verified against exact canonical base;
-2. shaping push CI succeeds across all five permanent cells on the exact final head;
-3. the shaping PR exact head/base/scope, CI, mergeability, reviews, comments, and inline threads are rechecked;
-4. unavailable/skipped review systems are recorded accurately and not treated as PASS;
-5. the shaping PR is merged with expected-head protection;
-6. canonical `main` is re-read;
-7. permanent post-shaping CI succeeds across all five permanent cells on the exact shaping merge;
-8. no new live repository truth supersedes the authority.
-
-Only then may implementation proceed on:
-
-```text
-feat/026-supported-mutation-cross-writer-coordination
-```
-
-## Specification 026 implementation sequence after authority
-
-1. place/refactor the existing private advisory-lock helper into a dependency-safe location only if required;
-2. keep `pregrain.py::_persist` under the existing complete critical section;
-3. make `create_child_draft_spec` acquire the same advisory lock before authoring journal creation;
-4. preserve `AUTHORING_TRANSACTION_VERSION`, journal schema, recovery classifications, child-ID behavior, and explicit recovery semantics;
-5. add deterministic tests for both contention directions and the corrected post-025 race invariant;
-6. keep all Specification 025 lock regression and child-authoring recovery tests green;
-7. run full regression/static/build/install/CLI verification;
-8. prove exact-head permanent five-cell CI;
-9. verify exact product diff and runtime dependency count;
-10. open/update product PR and recheck exact head/base/scope/CI/reviews/threads/comments/mergeability;
-11. merge only with expected-head protection;
-12. require canonical post-product CI;
-13. reverify historical `v0.3.0` unchanged;
-14. complete documentation/evidence closeout and reconciliation if canonically required;
-15. re-read live canonical truth and return to observation unless fresh independent evidence selects another bounded unit.
+The invalidated `SGB-EXP-001` hidden scorer remains outside inspection/search/materialization/reproduction/use authority.
 
 ## Historical release preservation
 
-Historical `v0.3.0` remains unchanged:
+Historical `v0.3.0` remains unchanged after the Specification 026 product merge:
 
 - source `70dd66aba0e68ae710e6ef12605ed153d107bab4`;
 - Release `378962445`;
-- wheel digest `sha256:b4f724e5ae187db28053c264cf9b9612f864fe5052459c7341a7f470602fb817`;
-- source digest `sha256:e7dc5484b8439cf8a6c594c65b454e141fef7c94a7edb0c7cb4edfc839007835`.
+- wheel asset `535129008`, digest `sha256:b4f724e5ae187db28053c264cf9b9612f864fe5052459c7341a7f470602fb817`;
+- source asset `535129009`, digest `sha256:e7dc5484b8439cf8a6c594c65b454e141fef7c94a7edb0c7cb4edfc839007835`.
 
-Specification 026 shaping does not authorize release work.
+Specification 026 does not authorize release work.
+
+## Specification 026 closeout sequence
+
+Product work is complete and no further Specification 026 product mutation is authorized. Remaining closeout is documentation/governance/evidence only:
+
+1. record exact verification, review, and closeout evidence;
+2. reconcile `spec.md`, `tasks.md`, `specs/CURRENT.md`, this master plan, and the roadmap without widening authority;
+3. qualify the exact closeout head and documentation-only diff with permanent push CI;
+4. open/update closeout PR and recheck exact head/base/scope/PR CI/reviews/comments/threads/mergeability and review-system availability;
+5. merge only with expected-head protection;
+6. require canonical post-closeout five-cell CI;
+7. create one final evidence reconciliation recording exact closeout merge/CI facts and `CLOSED_CANONICAL` disposition;
+8. qualify and merge that reconciliation with expected-head protection;
+9. require canonical post-reconciliation five-cell CI;
+10. reverify `v0.3.0`, re-read all canonical authority, and return to observation unless fresh reproducible evidence independently selects another bounded product gap.
 
 ## Cross-spec execution rules
 
 1. Live GitHub/repository truth overrides chat handoffs.
 2. No force-push, rebase, or destructive shared-history rewriting.
 3. Use bounded feature branches and pull requests.
-4. Verify exact PR head, checks, threads, and scope before merge.
+4. Verify exact PR head, checks, threads, comments, scope, and mergeability before merge.
 5. Merge with expected-head protection where available.
 6. Never claim PASS, VERIFIED, MERGED, COMPLETE, or `CLOSED_CANONICAL` without exact evidence.
 7. Re-read canonical `main` after every merge.
@@ -197,8 +218,8 @@ Specification 026 shaping does not authorize release work.
 10. Do not make AI reasoning transcripts repository authority.
 11. Preserve residual risks and blockers.
 12. External ideas/code require license-aware provenance.
-13. Post-v0.1 product work requires a newly shaped specification derived from live evidence; roadmap deferrals, audits, external reviewers, and upstream-tool comparisons are not implicit implementation authority.
+13. Post-v0.1 product work requires a newly shaped specification derived from live evidence; deferred roadmap categories, audits, external reviewers, and upstream-tool comparisons are not implicit implementation authority.
 
 ## Program continuation rule
 
-Proceed only through the exact Specification 026 shaping gate. Do not begin product implementation from the candidate branch itself. After any completed canonical unit, re-read live `main` and the full active authority chain before continuing.
+Complete only the exact Specification 026 closeout/reconciliation sequence. After canonical closure, return to observation/evidence gathering. Do not invent Specification 027 merely to continue activity; shape a successor only when fresh reproducible evidence against live canonical truth selects a bounded product gap.
