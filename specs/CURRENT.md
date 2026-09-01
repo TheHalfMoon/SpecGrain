@@ -9,7 +9,8 @@
 **Canonical Specification 026 post-product CI:** `33485603844` — `completed/success` across all five permanent cells  
 **Canonical Specification 026 closeout merge:** `2c9b18afb74e2254beb254bb84d9c07feec68aa0`  
 **Canonical Specification 026 post-closeout CI:** `33486523094` — `completed/success` across all five permanent cells  
-**Specification 026 disposition:** `CLOSED_CANONICAL` if and only if this exact final reconciliation becomes canonical and its canonical post-merge CI succeeds across all five permanent cells; otherwise final reconciliation remains pending  
+**Program status:** `SPEC_026_FINAL_RECONCILIATION_CANDIDATE`  
+**Specification 026 disposition:** `CLOSED_CANONICAL` if and only if this exact final reconciliation becomes canonical and canonical post-reconciliation CI succeeds across all five permanent cells; otherwise final reconciliation remains pending  
 **Active product implementation:** none  
 **Published release:** `v0.3.0`  
 **Published release source:** `70dd66aba0e68ae710e6ef12605ed153d107bab4`  
@@ -34,9 +35,7 @@ observation_ci = 33441481985
 reproduced_gap = SUPPORTED_CHILD_PRE_GRAIN_CROSS_WRITER_PARTIAL_MUTATION
 ```
 
-The qualifying fixture used only supported public `shape_draft_spec` and `create_child_draft_spec` APIs and proved a supported child writer could complete between a pre-Grain writer's final exact preimage check and `os.replace`, after which the pre-Grain writer could overwrite the successful parent postimage and leave structurally invalid refinement before failing project validation.
-
-The earlier observation head `975c47b288cddbfbde34fbbca06afa77ee86f9af` / CI `33441425481` remains non-selection evidence because Ruff stopped before the fixture executed.
+The qualifying fixture used only supported public `shape_draft_spec` and `create_child_draft_spec` APIs. The earlier observation head `975c47b288cddbfbde34fbbca06afa77ee86f9af` / CI `33441425481` remains non-selection evidence because Ruff stopped before the fixture executed.
 
 Selection record: `docs/research/post-025-supported-cross-writer-reproduction-2026-09-01.md`  
 Architectural decision: `docs/adr/0021-supported-mutation-cross-writer-coordination.md`
@@ -59,17 +58,9 @@ product_merge = 69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b
 post_product_ci = 33485603844
 ```
 
-Exact product diff changed only:
+Exact product diff changed only `src/specgrain/store.py`, `src/specgrain/pregrain.py`, and `tests/test_pregrain_serialization.py`. The implementation shares one project-scoped non-blocking advisory lock between supported pre-Grain persistence and native child authoring while preserving the lock anchor, standard-library platform primitives, fail-closed contention/unsafe-anchor behavior, descriptor/process ownership, exact-preimage/postimage defenses, separate authoring journal/recovery contract, lifecycle rules, read-only behavior, and zero runtime dependencies.
 
-- `src/specgrain/store.py`;
-- `src/specgrain/pregrain.py`;
-- `tests/test_pregrain_serialization.py`.
-
-The implementation shares one project-scoped non-blocking advisory lock between supported pre-Grain persistence and native child authoring while preserving `.specgrain/tmp/pregrain-mutation.lock`, standard-library Unix/Windows primitives, fail-closed contention/unsafe-anchor behavior, descriptor/process ownership, exact-preimage/postimage defenses, the separate authoring journal/recovery contract, lifecycle rules, read-only behavior, and zero runtime dependencies.
-
-The superseded final-logic head `fd27a146b8c39c777b5fb3f1611b2689a1fad3d5` / CI `33442865903` is not acceptance evidence because Ruff stopped before tests. The only subsequent repair normalized imports.
-
-At the final PR #60 merge gate, exact head/base/three-path scope remained unchanged, `mergeable=true`, submitted reviews and inline review threads were `0`, and unavailable/skipped/neutral review systems were not treated as PASS. PR #60 merged with expected-head protection.
+The superseded final-logic head `fd27a146b8c39c777b5fb3f1611b2689a1fad3d5` / CI `33442865903` is not acceptance evidence because Ruff stopped before tests. PR #60 was merged with expected-head protection after exact-head qualification; canonical post-product CI `33485603844` succeeded across all five permanent cells.
 
 ## Specification 026 canonical closeout proof
 
@@ -83,22 +74,9 @@ closeout_merge = 2c9b18afb74e2254beb254bb84d9c07feec68aa0
 post_closeout_ci = 33486523094
 ```
 
-The closeout changed exactly eight documentation/governance/evidence paths. Push CI, PR CI, and canonical post-closeout CI completed `success` across Ubuntu/Python 3.11, Ubuntu/Python 3.12, Ubuntu/Python 3.13, macOS/Python 3.11, and Windows/Python 3.11.
+The closeout changed exactly eight documentation/governance/evidence paths. Push CI, PR CI, and canonical post-closeout CI completed `success` across all five permanent cells. At the final PR #61 merge gate, exact base/head/eight-path scope remained unchanged, `mergeable=true`, submitted reviews and inline review threads were `0`, Qodo was billing-blocked, CodeRabbit automatic review was skipped by repository-star policy, and Cubic produced no submitted approval. None was treated as PASS.
 
-At the final PR #61 merge gate:
-
-```text
-base = 69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b
-head = 9b6cd1769c24688172ca435b2a77118fa6f4228c
-changed_files = 8
-mergeable = true
-submitted_reviews = 0
-inline_review_threads = 0
-```
-
-Qodo was billing-blocked, CodeRabbit automatic review was skipped because the repository did not meet its star-policy threshold, and Cubic supplied descriptive auto-generated summary text rather than a submitted approval. None was treated as PASS.
-
-PR #61 merged with expected-head protection as GitHub-signature-verified merge `2c9b18afb74e2254beb254bb84d9c07feec68aa0`, with parents `69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b` and `9b6cd1769c24688172ca435b2a77118fa6f4228c`.
+PR #61 was merged by concurrent activity as GitHub-signature-verified merge `2c9b18afb74e2254beb254bb84d9c07feec68aa0`, with exact parents `69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b` and `9b6cd1769c24688172ca435b2a77118fa6f4228c`. GitHub REST confirms the exact qualified closeout head was merged but does not expose whether the concurrent caller supplied `expected_head_sha`; no claim is made about that unobservable parameter.
 
 ## Historical release preservation
 
@@ -113,16 +91,14 @@ Specification 026 did not publish or mutate a release.
 
 ## Explicitly unselected
 
-No Specification 026 authority exists for arbitrary non-cooperating writer coordination, universal project transaction management, child-authoring journal schema/recovery redesign, distributed locking, blocking waits/retries/timeouts/leases, runtime dependencies, lifecycle expansion, executor/provider/result/verification/evidence orchestration, automatic context/network/model behavior, Spec Kit runtime adoption, release publication, hosted scope, or benchmark superiority claims.
+No Specification 026 authority exists for arbitrary non-cooperating writer coordination, universal project transaction management, child-authoring journal redesign, distributed locking, blocking waits/retries/timeouts/leases, runtime dependencies, lifecycle expansion, executor/provider/result/verification/evidence orchestration, automatic context/network/model behavior, Spec Kit runtime adoption, release publication, hosted scope, benchmark superiority claims, or use of the invalidated SGB-EXP-001 hidden scorer.
 
 ## Current execution gate
 
-The only remaining Specification 026 gate is the exact final reconciliation represented by this branch state.
+The only remaining Specification 026 gate is this exact final reconciliation. Required live conditions:
 
-Required live conditions:
-
-1. exact reconciliation diff remains the same eight documentation/governance/evidence paths as the closeout family and contains no product/test/workflow/dependency/release mutation;
-2. permanent push CI succeeds on the exact final reconciliation head across all five cells;
+1. exact reconciliation diff is documentation/governance/evidence only and contains exactly eight paths;
+2. permanent push CI succeeds on the exact reconciliation head across all five cells;
 3. reconciliation PR exact head/base/scope, PR CI, reviews, comments, inline threads, mergeability, and review-system availability are rechecked without treating unavailable/skipped systems as PASS;
 4. reconciliation merges with expected-head protection;
 5. canonical post-reconciliation CI succeeds across all five permanent cells;
