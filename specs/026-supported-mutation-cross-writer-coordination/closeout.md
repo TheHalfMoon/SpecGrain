@@ -1,32 +1,25 @@
 # Closeout — Specification 026 Supported Mutation Cross-Writer Coordination
 
-**Status:** `CLOSEOUT_CANDIDATE`
+**Status:** `FINAL_RECONCILIATION_CANDIDATE`
 
 ## Delivered authority
 
-Specification 026 was selected from fresh reproducible post-025 evidence and remained bounded to cooperative mutual exclusion between the two existing supported mutation families that can overlap the same canonical DRAFT parent:
+Specification 026 was selected from fresh reproducible post-025 evidence and delivered only cooperative mutual exclusion between the two existing supported mutation families that can overlap the same canonical DRAFT parent:
 
 - supported pre-Grain persistence through `src/specgrain/pregrain.py::_persist`;
 - supported native child authoring through `src/specgrain/store.py::create_child_draft_spec`.
 
-No broader transaction manager, external-writer coordination, journal redesign, blocking/retry policy, runtime dependency, lifecycle expansion, release publication, hosted scope, or benchmark claim was authorized or delivered.
+No broader transaction manager, arbitrary external-writer coordination, journal redesign, blocking/retry policy, runtime dependency, lifecycle expansion, release publication, hosted scope, or benchmark claim was authorized or delivered.
 
-## Selection evidence
+## Selection and shaping evidence
 
 ```text
 canonical_base = 1931d5a90ded5f7b2d4f5ea0f0ccffa03e2affc1
 observation_head = 3b557f91ec80c147b30f797198d736c2b6b42518
 fixture_blob = ba8cea9510d09415a5bd4d2f123a72f5c8affee8
-ci_run = 33441481985
-ci_result = completed/success across all five permanent cells
+observation_ci = 33441481985
 reproduced_gap = SUPPORTED_CHILD_PRE_GRAIN_CROSS_WRITER_PARTIAL_MUTATION
-```
 
-The earlier observation head `975c47b288cddbfbde34fbbca06afa77ee86f9af` / CI `33441425481` remains non-selection evidence because Ruff stopped the harness before the fixture executed.
-
-## Shaping evidence
-
-```text
 shaping_head = 51079a25cdd0f90a9af1cc34ae7577c72ecdf2d6
 shaping_push_ci = 33441902147
 shaping_pr = 59
@@ -35,54 +28,71 @@ shaping_merge = d27e000728823e93d2fce9ecd669629a839bfdb3
 post_shaping_ci = 33442261877
 ```
 
-The shaping diff was documentation/governance/evidence only and changed exactly eight paths. Push CI, PR CI, and canonical post-shaping CI all completed `success` across Ubuntu/Python 3.11, Ubuntu/Python 3.12, Ubuntu/Python 3.13, macOS/Python 3.11, and Windows/Python 3.11.
+All qualifying observation/shaping CI evidence completed `success` across the permanent five-cell matrix. The earlier observation head `975c47b288cddbfbde34fbbca06afa77ee86f9af` / CI `33441425481` remains non-selection evidence because Ruff stopped before the fixture executed.
 
 ## Product evidence
 
-Final implementation head:
-
-```text
-24728cd52b2daef2c83c5b83f084421b8096a11f
-```
-
-Exact product diff from shaping merge `d27e000728823e93d2fce9ecd669629a839bfdb3` changed exactly:
-
-- `src/specgrain/store.py`;
-- `src/specgrain/pregrain.py`;
-- `tests/test_pregrain_serialization.py`.
-
-The implementation moved the private advisory-lock implementation into the lower-level store module, preserved the historical `_pregrain_mutation_lock` private name as an alias, and made `create_child_draft_spec` acquire the identical non-blocking advisory lock before journal creation. The authoring journal remains the separate durable recovery mechanism.
-
-The first final-logic head `fd27a146b8c39c777b5fb3f1611b2689a1fad3d5` / push CI `33442865903` is not acceptance evidence because Ruff source stopped the run before tests. The only repair was import normalization.
-
-Final product qualification:
-
 ```text
 final_product_head = 24728cd52b2daef2c83c5b83f084421b8096a11f
-push_ci = 33443061640
+product_push_ci = 33443061640
 product_pr = 60
 product_pr_ci = 33443161567
 product_merge = 69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b
 post_product_ci = 33485603844
 ```
 
-Push CI, PR CI, and canonical post-product CI all completed `success` across all five permanent cells. Canonical post-product jobs passed Ruff source/tests/examples, full regression, tracked-tree cleanliness, compileall, source CLI smoke, package build, built-wheel installation, and installed CLI smoke.
+The exact product diff from shaping merge changed only:
 
-## Review-system disposition
+- `src/specgrain/store.py`;
+- `src/specgrain/pregrain.py`;
+- `tests/test_pregrain_serialization.py`.
 
-At the product merge gate:
+The implementation shares the existing `.specgrain/tmp/pregrain-mutation.lock` non-blocking advisory ownership boundary between the two supported writer families, acquires it before child-authoring journal creation, preserves the complete pre-Grain critical section, and leaves the journal as the separate durable recovery mechanism.
 
-- submitted reviews: `0`;
-- inline review threads: `0`;
-- Qodo: billing-blocked, not PASS;
-- CodeRabbit: automatic review skipped because repository star policy was not met, not PASS;
-- Cubic: neutral/descriptive because the monthly AI review line limit was reached, not PASS.
+The superseded final-logic head `fd27a146b8c39c777b5fb3f1611b2689a1fad3d5` / CI `33442865903` is not acceptance evidence because Ruff stopped before tests. The only subsequent repair normalized imports.
 
-No unavailable, skipped, neutral, or descriptive review system is counted as independent approval.
+## Canonical closeout evidence
+
+The documentation/governance/evidence-only closeout changed exactly eight paths and did not modify source, tests, workflows, dependencies, package metadata, tags, release metadata, release assets, or benchmark state.
+
+```text
+closeout_base = 69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b
+closeout_head = 9b6cd1769c24688172ca435b2a77118fa6f4228c
+closeout_push_ci = 33486149999
+closeout_pr = 61
+closeout_pr_ci = 33486307568
+closeout_merge = 2c9b18afb74e2254beb254bb84d9c07feec68aa0
+post_closeout_ci = 33486523094
+```
+
+Closeout push CI, PR CI, and canonical post-closeout CI each completed `success` across:
+
+```text
+ubuntu-latest / Python 3.11
+ubuntu-latest / Python 3.12
+ubuntu-latest / Python 3.13
+macos-latest / Python 3.11
+windows-latest / Python 3.11
+```
+
+At the final PR #61 merge gate:
+
+```text
+base = 69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b
+head = 9b6cd1769c24688172ca435b2a77118fa6f4228c
+changed_files = 8
+mergeable = true
+submitted_reviews = 0
+inline_review_threads = 0
+```
+
+Qodo was billing-blocked, automatic CodeRabbit review was skipped because the repository did not meet its star-policy threshold, and Cubic supplied descriptive auto-generated summary text rather than a submitted approval. None was treated as PASS.
+
+PR #61 merged with expected-head protection as signed GitHub merge `2c9b18afb74e2254beb254bb84d9c07feec68aa0`, with exact parents `69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b` and `9b6cd1769c24688172ca435b2a77118fa6f4228c`.
 
 ## Historical release preservation
 
-Live GitHub truth after the product merge remains:
+Live GitHub truth after canonical closeout remains:
 
 ```text
 tag = v0.3.0
@@ -94,12 +104,21 @@ source_asset = 535129009
 source_sha256 = e7dc5484b8439cf8a6c594c65b454e141fef7c94a7edb0c7cb4edfc839007835
 ```
 
-No release mutation is part of Specification 026 closeout.
+No release mutation is part of Specification 026.
 
 ## Experiment boundary
 
-Specification 026 selection and implementation are independent of invalidated `SGB-EXP-001`. The hidden scorer remains outside inspection, search, materialization, reproduction, and use authority. No comparative or superiority claim is made.
+Specification 026 selection, product evidence, and closeout are independent of invalidated `SGB-EXP-001`. The hidden scorer remains outside inspection, search, materialization, reproduction, and use authority. No comparative or superiority claim is made.
 
-## Closeout gate
+## Final reconciliation rule
 
-This document is part of a documentation/governance/evidence-only closeout candidate. Specification 026 becomes `CLOSED_CANONICAL` only after the exact closeout head is qualified, the closeout PR is rechecked for exact head/base/scope/CI/reviews/comments/threads/mergeability, merged with expected-head protection, and canonical post-closeout CI succeeds across all five permanent cells.
+This file is part of the one authorized final evidence reconciliation. Specification 026 has the disposition `CLOSED_CANONICAL` if and only if:
+
+1. this exact final reconciliation head is qualified by permanent push CI;
+2. its PR exact head/base/eight-path documentation-only scope, PR CI, reviews, comments, inline threads, mergeability, and review-system availability are rechecked without treating unavailable/skipped systems as PASS;
+3. the reconciliation PR is merged with expected-head protection;
+4. canonical post-reconciliation CI succeeds across all five permanent cells;
+5. live historical `v0.3.0` identity remains unchanged; and
+6. canonical authority is re-read and selects no further Specification 026 product work.
+
+Once those live gates are satisfied, this conditional disposition is realized without creating another documentation-only PR merely to record the reconciliation merge or CI run. The program returns to bounded post-026 observation unless fresh reproducible evidence independently selects a new product gap.
