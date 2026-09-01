@@ -2,7 +2,7 @@
 
 The roadmap is intentionally progressive. Only the nearest active specification should have implementation-level detail. Future work is shaped from current evidence rather than pre-authorized by stale backlog detail.
 
-**Current program state:** Specifications 000–025 are `CLOSED_CANONICAL`. **026 — Supported Mutation Cross-Writer Coordination** has canonical shaping, a merged bounded product implementation, and successful canonical post-product five-cell CI; it is now `PRODUCT_VERIFIED_CLOSEOUT_PENDING`. No further Specification 026 product work is authorized. The latest published release remains GitHub Release `378962445` / tag `v0.3.0` at exact historical product source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
+**Current program state:** Specifications 000–025 are `CLOSED_CANONICAL`. Specification 026 — Supported Mutation Cross-Writer Coordination — is in its terminal final reconciliation. It has `CLOSED_CANONICAL` disposition if and only if this exact reconciliation becomes canonical and canonical post-reconciliation CI succeeds across all five permanent cells. No further Specification 026 product work is authorized. The latest published release remains GitHub Release `378962445` / tag `v0.3.0` at exact historical source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
 
 ## M0 — Foundation
 
@@ -58,55 +58,38 @@ Specification 010 closed the first complete MVP vertical slice at the API layer.
 - **023 — Spec Kit Preset-Compatible Import:** `CLOSED_CANONICAL`.
 - **024 — Native WorkPacket Export:** `CLOSED_CANONICAL`.
 - **025 — Supported Pre-Grain Writer Serialization:** `CLOSED_CANONICAL`.
-- **026 — Supported Mutation Cross-Writer Coordination:** `PRODUCT_VERIFIED_CLOSEOUT_PENDING`; product scope is complete and only closeout/reconciliation remains.
-
-## Specification 025 closed frontier
-
-Specification 025 remains `CLOSED_CANONICAL`. Its post-closeout normalization baseline is:
-
-```text
-post_normalization_merge = 1931d5a90ded5f7b2d4f5ea0f0ccffa03e2affc1
-post_normalization_ci = 33440739066
-```
+- **026 — Supported Mutation Cross-Writer Coordination:** product and closeout are canonical; final reconciliation is the only remaining gate.
 
 ## Specification 026 selection proof
 
-Fresh evidence against exact post-025 canonical truth:
-
 ```text
 canonical_base = 1931d5a90ded5f7b2d4f5ea0f0ccffa03e2affc1
-canonical_tree = ffe4dbff9658524eedf359451578a9d0446fed4c
-observation_branch = obs/post-025-supported-cross-writer-fixture
 observation_head = 3b557f91ec80c147b30f797198d736c2b6b42518
 fixture_blob = ba8cea9510d09415a5bd4d2f123a72f5c8affee8
-ci_run = 33441481985
-ci_result = completed/success across all five permanent cells
+observation_ci = 33441481985
 reproduced_gap = SUPPORTED_CHILD_PRE_GRAIN_CROSS_WRITER_PARTIAL_MUTATION
 ```
 
-The fixture used only supported public APIs. `create_child_draft_spec` could successfully create/confirm a child and parent reference between `shape_draft_spec`'s final exact preimage check and `os.replace`; the pre-Grain writer could then overwrite that successful parent postimage and leave structurally invalid stored refinement before failing full-project validation.
+The qualifying fixture used only supported public APIs. A supported child writer could complete between the pre-Grain writer's final exact preimage check and `os.replace`; the pre-Grain writer could then overwrite that successful parent postimage and leave structurally invalid refinement before failing full-project validation.
 
-The earlier observation run `33441425481` on head `975c47b288cddbfbde34fbbca06afa77ee86f9af` stopped at Ruff before test execution and remains explicitly non-selection evidence.
+The earlier observation head `975c47b288cddbfbde34fbbca06afa77ee86f9af` / run `33441425481` stopped at Ruff before test execution and remains non-selection evidence.
 
-## Specification 026 shaping proof
+## Specification 026 shaping and product proof
 
 ```text
 shaping_head = 51079a25cdd0f90a9af1cc34ae7577c72ecdf2d6
-push_ci = 33441902147
-pr = 59
-pr_ci = 33442057984
+shaping_push_ci = 33441902147
+shaping_pr = 59
+shaping_pr_ci = 33442057984
 shaping_merge = d27e000728823e93d2fce9ecd669629a839bfdb3
 post_shaping_ci = 33442261877
-```
 
-The shaping diff was documentation/governance/evidence only, and every shaping gate above completed `success` across the permanent five-cell matrix before product work began.
-
-## Specification 026 product proof
-
-Final exact product head:
-
-```text
-24728cd52b2daef2c83c5b83f084421b8096a11f
+final_product_head = 24728cd52b2daef2c83c5b83f084421b8096a11f
+product_push_ci = 33443061640
+product_pr = 60
+product_pr_ci = 33443161567
+product_merge = 69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b
+post_product_ci = 33485603844
 ```
 
 Exact product scope:
@@ -124,47 +107,36 @@ Delivered behavior:
 - Specification 025 lock/preimage/postimage/platform/lifetime/unsafe-anchor/read-only guarantees remain preserved;
 - no journal schema/version, lifecycle, public locking API, runtime dependency, or release change.
 
-Product evidence:
+The superseded final-logic head `fd27a146b8c39c777b5fb3f1611b2689a1fad3d5` / CI `33442865903` remains non-acceptance evidence because Ruff stopped before tests.
+
+Final product push, PR, and canonical post-product CI all completed `success` across Ubuntu/Python 3.11, Ubuntu/Python 3.12, Ubuntu/Python 3.13, macOS/Python 3.11, and Windows/Python 3.11. PR #60 merged with expected-head protection after exact head/base/scope/review/thread/comment/mergeability rechecks; unavailable/skipped/neutral systems were not treated as PASS.
+
+## Specification 026 canonical closeout proof
 
 ```text
-first_final_logic_head = fd27a146b8c39c777b5fb3f1611b2689a1fad3d5
-first_final_logic_ci = 33442865903
-first_final_logic_result = Ruff failure before tests; not acceptance evidence
-
-final_head = 24728cd52b2daef2c83c5b83f084421b8096a11f
-push_ci = 33443061640
-pr = 60
-pr_ci = 33443161567
-product_merge = 69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b
-post_product_ci = 33485603844
+closeout_base = 69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b
+closeout_head = 9b6cd1769c24688172ca435b2a77118fa6f4228c
+closeout_push_ci = 33486149999
+closeout_pr = 61
+closeout_pr_ci = 33486307568
+closeout_merge = 2c9b18afb74e2254beb254bb84d9c07feec68aa0
+post_closeout_ci = 33486523094
 ```
 
-Final push, PR, and canonical post-product CI all completed `success` across Ubuntu/Python 3.11, Ubuntu/Python 3.12, Ubuntu/Python 3.13, macOS/Python 3.11, and Windows/Python 3.11.
+The closeout changed exactly eight documentation/governance/evidence paths. Push CI, PR CI, and canonical post-closeout CI completed `success` across the permanent five-cell matrix.
 
-At the product merge gate, exact head/base/three-path scope remained unchanged, mergeability was true, submitted reviews and inline review threads were both zero, and unavailable/skipped review systems were not treated as PASS. PR #60 merged with expected-head protection.
+At the final PR #61 gate, exact base/head/eight-path scope remained unchanged, `mergeable=true`, submitted reviews and inline review threads were zero, Qodo was billing-blocked, CodeRabbit automatic review was skipped by repository-star policy, and Cubic provided descriptive auto-generated summary text rather than a submitted approval. None was treated as PASS.
+
+PR #61 merged with expected-head protection as GitHub-signature-verified merge `2c9b18afb74e2254beb254bb84d9c07feec68aa0`.
 
 ## Historical release preservation
 
-Historical `v0.3.0` remains unchanged:
+Historical `v0.3.0` remains unchanged after canonical closeout:
 
 - source `70dd66aba0e68ae710e6ef12605ed153d107bab4`;
 - Release `378962445`;
 - wheel asset `535129008`, digest `sha256:b4f724e5ae187db28053c264cf9b9612f864fe5052459c7341a7f470602fb817`;
 - source asset `535129009`, digest `sha256:e7dc5484b8439cf8a6c594c65b454e141fef7c94a7edb0c7cb4edfc839007835`.
-
-## Specification 026 closeout gate
-
-The product is complete. Remaining work is documentation/governance/evidence only:
-
-1. qualify the exact closeout head/diff with permanent push CI;
-2. open/update closeout PR and verify exact head/base/scope/PR CI/reviews/comments/threads/mergeability;
-3. record unavailable/skipped review systems accurately and never treat them as PASS;
-4. merge closeout with expected-head protection;
-5. require canonical post-closeout five-cell CI;
-6. perform one final evidence reconciliation recording exact closeout merge/CI facts and `CLOSED_CANONICAL` disposition;
-7. qualify/merge reconciliation with expected-head protection and require canonical post-reconciliation five-cell CI;
-8. reverify the historical release and canonical governance;
-9. return to observation unless fresh reproducible evidence independently selects another bounded product gap.
 
 ## Still unselected
 
@@ -185,6 +157,10 @@ The product is complete. Remaining work is documentation/governance/evidence onl
 
 The invalidated `SGB-EXP-001` hidden scorer remains outside inspection/search/materialization/reproduction/use authority.
 
-## Continuation discipline
+## Final reconciliation and continuation discipline
 
-Complete Specification 026 closeout and reconciliation only. Do not widen the specification from deferred roadmap categories. When Specification 026 is genuinely `CLOSED_CANONICAL`, return to observation. Do not invent a successor merely to continue activity.
+The terminal reconciliation must remain documentation/governance/evidence only and change exactly the same eight program/specification paths used by the closeout family. It must receive exact-head push CI and PR CI success across all five permanent cells, unchanged head/base/scope, rechecked reviews/comments/threads/mergeability, and an expected-head merge followed by canonical post-reconciliation five-cell CI.
+
+If those live gates succeed and `v0.3.0` remains unchanged, Specification 026 is `CLOSED_CANONICAL` and the program enters `POST_026_OBSERVATION` without another meta-closeout PR solely to restate the merge/CI facts.
+
+After closure, perform a bounded observation/evidence pass against live canonical `main`. Do not invent Specification 027 merely to continue activity; shape a successor only when fresh reproducible evidence independently selects another bounded product gap.
