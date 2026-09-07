@@ -4,34 +4,37 @@ The roadmap is progressive and evidence-shaped. Only selected work receives impl
 
 ## Current frontier
 
-Specifications 000–026 are `CLOSED_CANONICAL`.
-
-Specification 027 — Execution Attempt Identity Contract has completed product implementation and canonical post-product qualification. A documentation-only closeout package is now the active unit.
+Specifications 000–027 are `CLOSED_CANONICAL`.
 
 ```text
-product_merge = 08f3ca9e6bb46386e23a196339d7157362b2a9b6
-post_product_ci = 34164674946 = completed/success across all five permanent cells
-closeout_state = CLOSEOUT_CANDIDATE
+canonical_main = 86ad90e97d9addfc0e7125a9753e1da6fb838005
+active_product_specification = none
+program_state = POST_027_OBSERVATION
+latest_canonical_ci = 34166425318 = completed/success across all five permanent cells
+published_release = v0.3.0
 ```
 
-After exact closeout merge + five-cell canonical post-closeout CI + release preservation + authority reread, Specification 027 is `CLOSED_CANONICAL` and the roadmap returns to `POST_027_OBSERVATION` with no preselected Specification 028.
+No Specification 028 is preselected.
 
-## Completed/active program
+## Completed program
 
 - 000–026: `CLOSED_CANONICAL`.
-- 027 — Execution Attempt Identity Contract: product complete; closeout candidate active.
+- 027 — Execution Attempt Identity Contract: `CLOSED_CANONICAL`.
 
-## Specification 027 delivered outcome
+Specification 027 added a separate deterministic portable occurrence-identity contract so distinct execution attempts can bind identical packet/request/result content identities without changing existing v1 schemas or granting lifecycle or verification authority.
 
-A separate deterministic portable occurrence-identity contract now lets different execution attempts bind identical packet/request/result content identities without altering existing v1 schemas or granting lifecycle/verification authority.
+## Current-source capabilities after v0.3.0
 
-Exact product surface:
+Current `main` is intentionally ahead of the historical `v0.3.0` release and includes bounded capabilities delivered after that release, including:
 
-```text
-src/specgrain/attempt.py
-src/specgrain/__init__.py
-tests/test_attempt.py
-```
+- explicit `DRAFT -> SHAPED -> REFINING -> GRAIN` preparation;
+- Spec Kit preset-compatible read-only import;
+- native read-only WorkPacket export;
+- supported pre-Grain writer serialization;
+- shared coordination between supported pre-Grain and child writers;
+- portable execution-attempt occurrence identity.
+
+These current-source capabilities do not imply a newer published release.
 
 ## Deferred by evidence boundary
 
@@ -41,8 +44,8 @@ These are not backlog promises. They may become candidates only if future fresh 
 
 ## Historical release
 
-`v0.3.0` remains unchanged at source `70dd66aba0e68ae710e6ef12605ed153d107bab4`, Release `378962445`, with recorded wheel/source asset digests unchanged.
+`v0.3.0` remains unchanged at source `70dd66aba0e68ae710e6ef12605ed153d107bab4`, Release `378962445`, with the recorded wheel/source asset digests unchanged.
 
 ## Continuation rule
 
-Do not create work merely to continue activity. After Specification 027 closure, perform bounded observation against live canonical truth and shape no successor without fresh selection evidence.
+Do not create work merely to continue activity. Perform bounded observation against live canonical truth and shape no successor without fresh selection evidence.

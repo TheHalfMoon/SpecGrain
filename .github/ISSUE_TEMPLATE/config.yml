@@ -1,1 +1,8 @@
 blank_issues_enabled: true
+contact_links:
+  - name: Security policy
+    url: https://github.com/TheHalfMoon/SpecGrain/security/policy
+    about: Do not post vulnerability details in a public issue; follow the private reporting guidance first.
+  - name: Support and usage guidance
+    url: https://github.com/TheHalfMoon/SpecGrain/blob/main/SUPPORT.md
+    about: Check supported surfaces and issue-routing guidance before opening a support request.

@@ -7,18 +7,26 @@ All notable public release changes are recorded here.
 ### Added
 
 - bounded public pre-Grain APIs: `shape_draft_spec`, `refine_shaped_spec`, and `promote_refining_spec_to_grain`, plus deterministic result/blocker types;
-- native `specgrain shape`, `specgrain refine`, and `specgrain grain` commands for the exact `DRAFT -> SHAPED -> REFINING -> GRAIN` preparation lifecycle.
+- native `specgrain shape`, `specgrain refine`, and `specgrain grain` commands for the exact `DRAFT -> SHAPED -> REFINING -> GRAIN` preparation lifecycle;
+- preset-compatible read-only Spec Kit import for bounded official template-light feature layouts while preserving source binding and refusing preset/hook execution;
+- native read-only WorkPacket export for dependency-eligible `GRAIN` specifications with explicit context-source accounting and no execution side effects;
+- project-scoped non-blocking serialization for supported pre-Grain writers;
+- shared supported-writer coordination between pre-Grain persistence and native child authoring;
+- `ExecutionAttemptRecord` and `ExecutionAttemptStatus` as a portable deterministic occurrence-identity contract for distinguishing repeated execution attempts without changing existing WorkPacket, AgentRequest, or ExecutionResult v1 content identities.
 
 ### Changed
 
 - current source can populate one existing DRAFT with explicit readiness-relevant declarations through exact-preimage single-file mutation;
 - state-only SHAPED-to-REFINING and readiness-gated REFINING-to-GRAIN transitions preserve the semantic revision digest;
 - failed Grain promotion reports deterministic readiness blockers and leaves canonical state unchanged;
-- public documentation now distinguishes current-source Specification 022 commands from the historical v0.3.0 release contract.
+- supported pre-Grain and child-authoring mutations now share one project-scoped advisory coordination boundary while preserving existing journal recovery and fail-closed pre/postimage checks;
+- developer-facing documentation now distinguishes the historical `v0.3.0` release from all later current-source capabilities and reflects the canonical post-Specification-027 frontier.
 
 ### Evidence boundary
 
-These are unreleased current-source changes. The historical `v0.3.0` tag and GitHub Release remain unchanged and do not contain `shape`, `refine`, or `grain`. Specification 022 adds no `GRAIN -> READY`, WorkPacket execution, agent/provider orchestration, verification execution, evidence mutation, runtime dependency, or release/version bump.
+These are unreleased current-source changes delivered through Specifications 022–027. The historical `v0.3.0` tag and GitHub Release remain unchanged.
+
+Current `main` does not imply a newer release and adds no automatic `GRAIN -> READY` transition, executor/provider invocation, agent orchestration, retry scheduling, verification/evidence mutation, hosted control plane, runtime dependency, or benchmark-winner claim.
 
 ## [0.3.0] — 2026-08-29
 
