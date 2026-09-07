@@ -1,5 +1,11 @@
 """SpecGrain deterministic core primitives."""
 
+from .attempt import (
+    EXECUTION_ATTEMPT_VERSION,
+    ExecutionAttemptRecord,
+    ExecutionAttemptStatus,
+    ExecutionAttemptValidationError,
+)
 from .context import (
     ContextBudgetError,
     ContextBudgetIssue,
@@ -167,6 +173,10 @@ from .verification import (
 )
 
 __all__ = [
+    "EXECUTION_ATTEMPT_VERSION",
+    "ExecutionAttemptRecord",
+    "ExecutionAttemptStatus",
+    "ExecutionAttemptValidationError",
     "DEFAULT_ARTIFACT_LIMIT_BYTES",
     "SPECKIT_IMPORT_VERSION",
     "ImportNotice",
