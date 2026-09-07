@@ -81,6 +81,7 @@ All of these operations are local and deterministic. `draft` creates only `DRAFT
 | Read-only WorkPacket export | — | ✓ |
 | Supported pre-Grain writer serialization | — | ✓ |
 | Shared coordination between supported pre-Grain and child writers | — | ✓ |
+| Portable execution-attempt identity | — | ✓ |
 
 To try current source behavior from a checkout:
 
@@ -168,6 +169,26 @@ specgrain packet SG-000001 specgrain-demo \
 
 No `GRAIN -> READY`, WorkPacket execution, agent/provider orchestration, execution-result ingestion, verification execution, or evidence mutation is authorized by these native commands.
 
+### Represent a distinct execution attempt
+
+Current `main` also exposes a separate immutable occurrence-identity contract for execution attempts without changing existing WorkPacket, AgentRequest, or ExecutionResult v1 content identities:
+
+```python
+from specgrain import ExecutionAttemptRecord, ExecutionAttemptStatus
+
+attempt = ExecutionAttemptRecord(
+    attempt_id="EA-550e8400-e29b-41d4-a716-446655440000",
+    packet_digest="sha256:" + "a" * 64,
+    request_digest="sha256:" + "b" * 64,
+    status=ExecutionAttemptStatus.SUCCEEDED,
+    result_digest="sha256:" + "c" * 64,
+)
+
+print(attempt.attempt_digest)
+```
+
+Two separate attempts may bind identical packet/request/result digests while remaining distinguishable by `attempt_id` and `attempt_digest`. The record is descriptive only: it does not persist attempts, invoke an executor/provider, retry work, mutate SpecNode lifecycle state, or confer verification authority.
+
 ## Supported CLI
 
 ### Published v0.3.0 CLI
@@ -230,6 +251,8 @@ Executor self-report is never verification authority. Independent verification b
 - acceptance checks;
 - evidence checks.
 
+`ExecutionAttemptRecord` provides a separate deterministic occurrence identity around execution content without granting verification authority. This keeps repeated execution occurrences distinguishable while preserving the existing content-addressed packet/request/result contracts.
+
 Evidence records are append-oriented and hash chained. Concurrent evidence forks fail closed rather than being silently accepted.
 
 Run the repository's end-to-end API example:
@@ -271,6 +294,7 @@ Recursive SpecNode
   -> Brownfield repository map
   -> Context budget
   -> WorkPacket + agent-neutral adapter
+  -> Execution-attempt occurrence identity
   -> Independent verification + evidence
   -> Method profiles + drift/metrics
   -> Spec Kit import
@@ -292,6 +316,7 @@ The deterministic kernel owns correctness-sensitive decisions. LLMs, coding agen
 | Dependency ordering | [`src/specgrain/dependency.py`](src/specgrain/dependency.py) |
 | Context budgeting | [`src/specgrain/context.py`](src/specgrain/context.py) |
 | WorkPacket and execution-result contracts | [`src/specgrain/packet.py`](src/specgrain/packet.py) |
+| Execution-attempt occurrence identity | [`src/specgrain/attempt.py`](src/specgrain/attempt.py) |
 | Independent verification and evidence | [`src/specgrain/verification.py`](src/specgrain/verification.py) |
 | Brownfield repository scanning | [`src/specgrain/repository.py`](src/specgrain/repository.py) |
 | Benchmark framework | [`src/specgrain/benchmark.py`](src/specgrain/benchmark.py) |
