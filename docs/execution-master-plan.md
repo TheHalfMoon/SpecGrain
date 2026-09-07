@@ -32,13 +32,14 @@ Green CI is necessary where configured but not alone sufficient. Exact head/base
 Specifications 000–027 are `CLOSED_CANONICAL`.
 
 ```text
-canonical_main = 86ad90e97d9addfc0e7125a9753e1da6fb838005
 active_product_specification = none
+last_closed_product_specification = 027-execution-attempt-identity
 program_state = POST_027_OBSERVATION
-latest_canonical_ci = 34166425318 = completed/success 5/5
-latest_release_verification = 34166752932 = completed/success
+live_truth_source = canonical GitHub main plus exact verification evidence
 published_release = v0.3.0
 ```
+
+Current canonical commit and latest workflow identifiers are deliberately resolved from live GitHub truth rather than embedded in this live-state header. Historical evidence identifiers remain recorded where they are stable evidence rather than a self-referential current-state claim.
 
 Specification 027 selected and closed a reproducible occurrence-identity gap between deterministic execution content identity and separate execution occurrences. Its canonical product merge is `08f3ca9e6bb46386e23a196339d7157362b2a9b6`; canonical closeout merge is `c778080105fca899a9837d9c832dddff7812e599`.
 
