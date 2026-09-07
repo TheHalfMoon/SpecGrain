@@ -1,176 +1,209 @@
 # SpecGrain Execution Master Plan
 
-This document is the durable continuation plan for SpecGrain. `specs/CURRENT.md` owns the active frontier, and live GitHub state overrides stale text when they disagree.
+## Mission
 
-## Canonical reading order
+Build SpecGrain as a deterministic, agent-neutral delivery control plane that turns software work into small, bounded, independently verifiable changes.
 
-Before changing the repository, read:
-
-1. `AGENTS.md`;
-2. `specs/CURRENT.md`;
-3. `.specify/memory/constitution.md`;
-4. this file;
-5. the active `spec.md`, `plan.md`, and `tasks.md` when an active specification exists;
-6. referenced ADRs, contracts, research, evidence, and implementation files.
-
-## Product objective
-
-> Make every software change small enough to understand, execute, verify, recover, measure, and prove.
-
-SpecGrain is an independent, agent-neutral delivery system built around recursively refined specifications. Probabilistic systems may propose work; deterministic validation owns correctness-sensitive state transitions.
-
-## Canonical initial program sequence
+The canonical high-level flow remains:
 
 ```text
-001 SpecNode schema
-  -> 002 lifecycle state
-  -> 003 refinement tree
-  -> 004 Grain readiness
-  -> 005 CLI/local store
-  -> 006 dependency graph
-  -> 007 repository scan
-  -> 008 context budget
-  -> 009 WorkPacket
-  -> 010 verification/evidence
-  -> 011 method profiles
-  -> 012 diff/drift/metrics
-  -> 013 Spec Kit import
-  -> 014 agent adapters
-  -> 015 SpecGrainBench
-  -> 016 public launch
+Intent / Import
+  -> SpecNode refinement
+  -> Grain readiness
+  -> WorkPacket
+  -> execution outside or around the deterministic core
+  -> ExecutionResult
+  -> independent VerificationReport
+  -> EvidenceRecord
 ```
 
-Specification 000 established the project foundation and constitution. Specifications 000 through 025 are `CLOSED_CANONICAL`. Specification 026 is in its terminal final reconciliation gate; no further Specification 026 product work is authorized.
+Specification 027 adds only a missing occurrence-identity contract around one execution attempt. It does not turn the core into an executor or orchestration engine.
 
-## Versioned product history
+## Governance order
 
-- `v0.1.0` product source: `5eb46db0479cb8707afe070027dab4f3c558849a`; initial program closeout: `7c343841424ca48207f9c42eae725a53213d19e5`.
-- Specification 017 — Native DRAFT CLI: `CLOSED_CANONICAL`.
-- Specification 018 — v0.2.0 Authoring Release: `CLOSED_CANONICAL`.
-- Specification 019 — Native Child-DRAFT Authoring: `CLOSED_CANONICAL`.
-- Specification 020 — v0.3.0 Recursive Authoring Release: `CLOSED_CANONICAL`; release source `70dd66aba0e68ae710e6ef12605ed153d107bab4`; Release `378962445`.
-- Specifications 021–025: `CLOSED_CANONICAL`.
-- Specification 026 — Supported Mutation Cross-Writer Coordination: product and closeout canonical; final reconciliation pending.
+For every unit:
 
-The latest published release remains historical `v0.3.0` at exact source `70dd66aba0e68ae710e6ef12605ed153d107bab4` / Release `378962445`.
+1. read `AGENTS.md`;
+2. read `specs/CURRENT.md`;
+3. read `.specify/memory/constitution.md`;
+4. read this master plan;
+5. read the active specification, plan, tasks, review, and referenced evidence;
+6. reverify live GitHub/repository truth before trusting cached state.
 
-## Specification 026 selection and shaping proof
+Live repository truth overrides stale prose, remembered hashes, old reviews, old CI state, and previous completion claims.
+
+## Permanent acceptance discipline
+
+Configured permanent CI matrix:
 
 ```text
-canonical_base = 1931d5a90ded5f7b2d4f5ea0f0ccffa03e2affc1
-observation_head = 3b557f91ec80c147b30f797198d736c2b6b42518
-fixture_blob = ba8cea9510d09415a5bd4d2f123a72f5c8affee8
-observation_ci = 33441481985
-reproduced_gap = SUPPORTED_CHILD_PRE_GRAIN_CROSS_WRITER_PARTIAL_MUTATION
-
-shaping_head = 51079a25cdd0f90a9af1cc34ae7577c72ecdf2d6
-shaping_push_ci = 33441902147
-shaping_pr = 59
-shaping_pr_ci = 33442057984
-shaping_merge = d27e000728823e93d2fce9ecd669629a839bfdb3
-post_shaping_ci = 33442261877
+ubuntu-latest / Python 3.11
+ubuntu-latest / Python 3.12
+ubuntu-latest / Python 3.13
+macos-latest / Python 3.11
+windows-latest / Python 3.11
 ```
 
-The qualifying fixture used only supported public `shape_draft_spec` and `create_child_draft_spec` APIs. The earlier observation head `975c47b288cddbfbde34fbbca06afa77ee86f9af` / CI `33441425481` remains non-selection evidence because Ruff stopped before the fixture executed.
+Green CI is necessary where configured but is not alone sufficient. Exact head/base/scope, canonical authority, review state, evidence origin, release preservation, and explicit completion conditions must also be satisfied.
 
-Selection record: `docs/research/post-025-supported-cross-writer-reproduction-2026-09-01.md`.  
-Architectural decision: `docs/adr/0021-supported-mutation-cross-writer-coordination.md`.
+Unavailable, skipped, neutral, descriptive, or billing-blocked review systems are not PASS.
 
-## Specification 026 product proof
+## Completed program frontier
 
-Delivered product surface:
+Specifications 000–026 are `CLOSED_CANONICAL` under their recorded closure conditions.
+
+Specification 026 terminal reconciliation became canonical before the program returned to `POST_026_OBSERVATION`. Later repository-presentation and donor-reference documentation changes did not reopen product authority.
+
+Historical release remains:
 
 ```text
-src/specgrain/store.py
-src/specgrain/pregrain.py
-tests/test_pregrain_serialization.py
+tag = v0.3.0
+source = 70dd66aba0e68ae710e6ef12605ed153d107bab4
+release_id = 378962445
+wheel_sha256 = b4f724e5ae187db28053c264cf9b9612f864fe5052459c7341a7f470602fb817
+source_sha256 = e7dc5484b8439cf8a6c594c65b454e141fef7c94a7edb0c7cb4edfc839007835
 ```
 
-The implementation shares one project-scoped non-blocking advisory lock between supported pre-Grain persistence and native child authoring. `create_child_draft_spec` acquires the shared lock before journal creation; pre-Grain `_persist` retains its complete critical section. The historical lock anchor, standard-library platform primitives, unsafe-anchor rejection, descriptor/process ownership, exact-preimage/postimage defenses, separate child-authoring journal/recovery contract, lifecycle behavior, read-only behavior, and zero runtime dependencies are preserved.
+No current work may silently mutate or republish that release.
+
+## Active unit — Specification 027 shaping
+
+Fresh post-026 evidence:
 
 ```text
-first_final_logic_head = fd27a146b8c39c777b5fb3f1611b2689a1fad3d5
-first_final_logic_ci = 33442865903
-first_final_logic_result = Ruff failure before tests; not acceptance evidence
-
-final_product_head = 24728cd52b2daef2c83c5b83f084421b8096a11f
-product_push_ci = 33443061640
-product_pr = 60
-product_pr_ci = 33443161567
-product_merge = 69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b
-post_product_ci = 33485603844
+canonical_base = e4fb1bf5463c72f164ffb842088a07df4a63abb2
+observation_branch = obs/post-026-execution-attempt-identity
+observation_head = 67f8562c30f7e2adfa3d93a82ca3cf0091c6f4e6
+fixture_blob = 4613b5cea6ee86a9a17bd459de70bee47e7dfe24
+observation_ci = 34163498855
+observation_result = completed/success across all five permanent cells
+reproduced_gap = REPEATED_PACKET_EXECUTION_ATTEMPT_IDENTITY_COLLAPSE
 ```
 
-Final push CI, PR CI, and canonical post-product CI completed `success` across all five permanent cells. PR #60 merged with expected-head protection after exact gate qualification; unavailable/skipped/neutral review systems were not treated as PASS.
+The evidence demonstrates that repeated executions of identical content cannot be represented as separate occurrences by the existing deterministic request/result contracts.
 
-## Specification 026 canonical closeout proof
+### Selected bounded product shape
+
+Specification 027 will add a separate `ExecutionAttemptRecord` identity contract no broader than:
 
 ```text
-closeout_base = 69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b
-closeout_head = 9b6cd1769c24688172ca435b2a77118fa6f4228c
-closeout_push_ci = 33486149999
-closeout_pr = 61
-closeout_pr_ci = 33486307568
-closeout_merge = 2c9b18afb74e2254beb254bb84d9c07feec68aa0
-post_closeout_ci = 33486523094
+attempt_version
+attempt_id
+packet_digest
+request_digest?
+status
+result_digest?
+error_code?
+attempt_digest
 ```
 
-The closeout diff changed exactly eight documentation/governance/evidence paths and no product/test/workflow/dependency/release surface. Push CI, PR CI, and canonical post-closeout CI all completed `success` across the permanent five-cell matrix.
+Attempt status is descriptive and separate from SpecNode lifecycle state.
 
-At the final PR #61 gate, exact base/head/eight-path scope remained unchanged, `mergeable=true`, submitted reviews and inline review threads were zero, Qodo was billing-blocked, CodeRabbit automatic review was skipped by repository-star policy, and Cubic produced no submitted approval. None was treated as PASS.
+Current v1 WorkPacket/AgentRequest/ExecutionResult schemas and digests remain stable.
 
-PR #61 was merged by concurrent activity as signed GitHub merge `2c9b18afb74e2254beb254bb84d9c07feec68aa0`, with exact parents `69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b` and `9b6cd1769c24688172ca435b2a77118fa6f4228c`. GitHub REST proves the exact qualified closeout head was merged but does not expose whether the concurrent caller supplied an `expected_head_sha` parameter; this plan makes no claim about that unobservable mechanism.
+### Why persistence is not included
 
-## Historical release preservation
+The observation proves an identity-contract gap. It does not prove failure of a native attempt store because no such store is currently owned by the product.
 
-Historical `v0.3.0` remains unchanged after canonical closeout:
+Therefore the first product unit does not add `.specgrain` attempt persistence, append logs, transaction recovery, or writer coordination. Those require separate evidence if needed later.
 
-- source `70dd66aba0e68ae710e6ef12605ed153d107bab4`;
-- Release `378962445`;
-- wheel asset `535129008`, digest `sha256:b4f724e5ae187db28053c264cf9b9612f864fe5052459c7341a7f470602fb817`;
-- source asset `535129009`, digest `sha256:e7dc5484b8439cf8a6c594c65b454e141fef7c94a7edb0c7cb4edfc839007835`.
+### Why orchestration is not included
 
-Specification 026 did not authorize release work.
+SpecGrain remains agent/vendor neutral. The deterministic core must not require Claude, Cursor, Codex, model providers, hosted services, or a particular runtime.
 
-## Delivered boundary and explicit non-authority
+Specification 027 does not invoke executors, models, providers, subprocesses, or external tools.
 
-Specification 026 delivered only cooperative mutual exclusion between pre-Grain persistence and native child authoring through one existing project-scoped non-blocking advisory lock while preserving the journal as the separate durable recovery mechanism.
+## Specification 027 shaping gate
 
-It does not authorize arbitrary external writer coordination, universal transaction management, journal schema/version/recovery redesign, distributed locking, blocking waits/retries/timeouts/leases, runtime dependencies, lifecycle expansion, executor/provider/result/verification/evidence orchestration, automatic context/network/model behavior, Spec Kit runtime adoption, release publication, hosted scope, benchmark/superiority claims, or any use of the invalidated `SGB-EXP-001` hidden scorer.
+Current authority:
 
-## Final reconciliation gate
+```text
+SHAPING_JUSTIFIED = true
+SHAPED_CANDIDATE = true
+IMPLEMENTATION_AUTHORIZED = false
+```
 
-This reconciliation is the terminal Specification 026 documentation/evidence unit. No further product mutation is authorized.
+Required order before product work:
 
-Required live sequence:
+1. finish exact documentation/governance/evidence shaping package;
+2. verify shaping diff contains no source/tests/workflows/dependencies/release mutation;
+3. require exact-head push CI success across all five permanent cells;
+4. open shaping PR against exact canonical base;
+5. require exact-head PR CI success across all five permanent cells;
+6. recheck reviews, issue comments, review threads, mergeability, and review-system availability;
+7. resolve genuine findings without broadening scope;
+8. merge with expected-head protection;
+9. require canonical post-shaping CI success across all five permanent cells;
+10. re-read canonical authority and historical-release identity.
 
-1. verify the exact final reconciliation diff from closeout merge `2c9b18afb74e2254beb254bb84d9c07feec68aa0` is exactly eight documentation/governance/evidence paths;
-2. require permanent push CI success across all five cells on the exact final head;
-3. open/update the final reconciliation PR and recheck exact head/base/scope/PR CI/reviews/comments/threads/mergeability;
-4. record unavailable/skipped/neutral review systems accurately and never treat them as PASS;
-5. merge only with expected-head protection;
-6. require canonical post-reconciliation CI success across all five permanent cells;
-7. reverify historical `v0.3.0` unchanged and re-read canonical authority;
-8. if all prior conditions hold, realize `CLOSED_CANONICAL`, set the program state to `POST_026_OBSERVATION`, and perform a bounded observation pass;
-9. do not create another documentation-only PR merely to record the final reconciliation merge SHA, post-reconciliation CI run ID, or to flip a stale task checkbox;
-10. do not invent Specification 027 merely to continue activity—shape a successor only when fresh reproducible evidence against live canonical truth independently selects a bounded product gap.
+Only after step 10 does bounded product implementation become authorized.
 
-## Cross-spec execution rules
+## Planned Specification 027 product unit
 
-1. Live GitHub/repository truth overrides chat handoffs.
-2. No force-push, rebase, or destructive shared-history rewriting.
-3. Use bounded feature branches and pull requests.
-4. Verify exact PR head, checks, threads, comments, scope, and mergeability before merge.
-5. Merge with expected-head protection where available.
-6. Never claim PASS, VERIFIED, MERGED, COMPLETE, or `CLOSED_CANONICAL` without exact evidence.
-7. Re-read canonical `main` after every merge.
-8. Prefer smaller native implementations over dependencies without demonstrated need.
-9. Do not execute untrusted repository commands merely to inspect a brownfield project.
-10. Do not make AI reasoning transcripts repository authority.
-11. Preserve residual risks and blockers.
-12. External ideas/code require license-aware provenance.
-13. Post-v0.1 product work requires a newly shaped specification derived from live reproducible evidence; deferred roadmap categories, audits, external reviewers, and upstream-tool comparisons are not implicit implementation authority.
+Preferred implementation branch:
 
-## Program continuation rule
+```text
+feat/027-execution-attempt-identity
+```
 
-Complete the exact final reconciliation gate. If its canonical post-merge CI succeeds and release/governance truth remains intact, Specification 026 is closed by the condition recorded in this reconciliation and the program returns to bounded observation. Do not create a recursive meta-closeout solely to record that the condition was realized.
+Preferred product surface:
+
+```text
+src/specgrain/attempt.py
+src/specgrain/__init__.py
+tests/test_attempt.py
+```
+
+Implementation requirements:
+
+- standard-library only;
+- strict `EA-<lowercase canonical UUID>` validation;
+- portable attempt status `STARTED | SUCCEEDED | FAILED | BLOCKED | INTERRUPTED`;
+- strict lowercase SHA-256 binding validation;
+- deterministic serialization and digest recomputation;
+- strict status/result/error invariants;
+- no `verified` field or verification authority;
+- unchanged existing packet/request/result v1 serialized identity;
+- focused and full regression proof;
+- permanent five-cell exact-head CI;
+- expected-head merge and canonical post-product CI;
+- historical release preservation.
+
+## Product verification order
+
+After shaping authority becomes live:
+
+1. branch from exact canonical post-shaping main;
+2. implement only shaped attempt contract;
+3. run focused attempt tests;
+4. run packet/adapter/result compatibility tests;
+5. run full regression;
+6. run Ruff source/tests/examples;
+7. verify tracked-tree cleanliness;
+8. compile;
+9. source CLI smoke;
+10. build package;
+11. reinstall built wheel with no dependencies;
+12. installed CLI smoke;
+13. inspect exact base-to-head diff;
+14. require exact product-head five-cell CI;
+15. open/update PR and recheck all review/merge gates;
+16. expected-head merge;
+17. canonical post-product five-cell CI;
+18. reverify `v0.3.0` unchanged;
+19. perform documentation-only closeout/reconciliation if required by the active tasks;
+20. re-read canonical authority and return to observation when closure conditions hold.
+
+## Explicit non-goals for Specification 027
+
+No attempt persistence, automatic attempt-ID generation, executor/provider/model invocation, agent orchestration, lifecycle mutation, automatic retries, sleeps/backoff/timeouts/leases/heartbeats, verification/evidence mutation, hidden reasoning storage, hidden benchmark/evaluation access, fixed donor stage taxonomy, networking, hosted/account/dashboard scope, runtime dependencies, or release publication.
+
+## Benchmark boundary
+
+The invalidated `SGB-EXP-001` experiment remains `INVALIDATED_ORACLE_REVEALED_PRE_FREEZE`. Its hidden scorer remains outside inspection/search/materialization/reproduction/use authority. No current product decision or comparative claim may use it.
+
+## Continuation rule
+
+Do not create work merely to keep the project busy.
+
+After the active unit closes, perform bounded observation against live canonical truth. Shape a successor only if fresh reproducible evidence independently selects another concrete bounded product gap.
