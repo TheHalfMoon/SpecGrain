@@ -7,12 +7,14 @@ The roadmap is progressive and evidence-shaped. Only selected work receives impl
 Specifications 000–027 are `CLOSED_CANONICAL`.
 
 ```text
-canonical_main = 86ad90e97d9addfc0e7125a9753e1da6fb838005
 active_product_specification = none
+last_closed_product_specification = 027-execution-attempt-identity
 program_state = POST_027_OBSERVATION
-latest_canonical_ci = 34166425318 = completed/success across all five permanent cells
+live_truth_source = canonical GitHub main plus exact verification evidence
 published_release = v0.3.0
 ```
+
+Current canonical commit and latest workflow identifiers are intentionally resolved from live GitHub truth rather than embedded in this live-state header, which would become stale as soon as the documentation itself is merged.
 
 No Specification 028 is preselected.
 
