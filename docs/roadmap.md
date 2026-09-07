@@ -1,10 +1,16 @@
 # Roadmap
 
-The roadmap is intentionally progressive. Only the nearest active specification should have implementation-level detail. Future work is shaped from current evidence rather than pre-authorized by stale backlog detail.
+The roadmap is intentionally progressive. Only the nearest active specification receives implementation-level detail. Future work is shaped from current evidence rather than pre-authorized by a stale backlog.
 
-**Current program state:** Specifications 000–025 are `CLOSED_CANONICAL`. Specification 026 — Supported Mutation Cross-Writer Coordination — is in its terminal final reconciliation. It has `CLOSED_CANONICAL` disposition if and only if this exact reconciliation becomes canonical and canonical post-reconciliation CI succeeds across all five permanent cells. No further Specification 026 product work is authorized. The latest published release remains GitHub Release `378962445` / tag `v0.3.0` at exact historical source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
+## Current program state
 
-## M0–M7 canonical program
+Specifications 000–026 are `CLOSED_CANONICAL`.
+
+Fresh post-026 evidence has selected **027 — Execution Attempt Identity Contract** as a `SHAPED_CANDIDATE`. Product implementation is blocked until the shaping package becomes canonical and canonical post-shaping CI succeeds across all five permanent cells.
+
+The latest published release remains GitHub Release `378962445` / tag `v0.3.0` at exact historical source `70dd66aba0e68ae710e6ef12605ed153d107bab4`.
+
+## Canonical program
 
 - **000 — Foundation:** `CLOSED_CANONICAL`.
 - **001 — SpecNode Schema:** `CLOSED_CANONICAL`.
@@ -21,91 +27,92 @@ The roadmap is intentionally progressive. Only the nearest active specification 
 - **012 — Diff, Drift, and Metrics:** `CLOSED_CANONICAL`.
 - **013 — Spec Kit Import:** `CLOSED_CANONICAL`.
 - **014 — Agent Adapters:** `CLOSED_CANONICAL`.
-- **015 — SpecGrainBench:** `CLOSED_CANONICAL` as the repository benchmark framework; invalidated SGB-EXP-001 provides no comparative authority.
+- **015 — SpecGrainBench:** `CLOSED_CANONICAL` as framework only; invalidated `SGB-EXP-001` provides no comparative authority.
 - **016 — Public Launch:** `CLOSED_CANONICAL`.
-
-## Post-v0.1 evidence-shaped product adoption
-
 - **017 — Native DRAFT CLI:** `CLOSED_CANONICAL`.
 - **018 — v0.2.0 Authoring Release:** `CLOSED_CANONICAL`.
 - **019 — Native Child-DRAFT Authoring:** `CLOSED_CANONICAL`.
-- **020 — v0.3.0 Recursive Authoring Release:** `CLOSED_CANONICAL`; source `70dd66aba0e68ae710e6ef12605ed153d107bab4`; Release `378962445`.
+- **020 — v0.3.0 Recursive Authoring Release:** `CLOSED_CANONICAL`.
 - **021 — Public Launch Readiness Hardening:** `CLOSED_CANONICAL`.
 - **022 — Native Grain Preparation:** `CLOSED_CANONICAL`.
 - **023 — Spec Kit Preset-Compatible Import:** `CLOSED_CANONICAL`.
 - **024 — Native WorkPacket Export:** `CLOSED_CANONICAL`.
 - **025 — Supported Pre-Grain Writer Serialization:** `CLOSED_CANONICAL`.
-- **026 — Supported Mutation Cross-Writer Coordination:** product and closeout are canonical; final reconciliation is the only remaining gate.
+- **026 — Supported Mutation Cross-Writer Coordination:** `CLOSED_CANONICAL`.
+- **027 — Execution Attempt Identity Contract:** `SHAPED_CANDIDATE`; implementation blocked pending canonical shaping qualification.
 
-## Specification 026 selection proof
-
-```text
-canonical_base = 1931d5a90ded5f7b2d4f5ea0f0ccffa03e2affc1
-observation_head = 3b557f91ec80c147b30f797198d736c2b6b42518
-fixture_blob = ba8cea9510d09415a5bd4d2f123a72f5c8affee8
-observation_ci = 33441481985
-reproduced_gap = SUPPORTED_CHILD_PRE_GRAIN_CROSS_WRITER_PARTIAL_MUTATION
-```
-
-The qualifying fixture used only supported public APIs. A supported child writer could complete between the pre-Grain writer's final exact preimage check and `os.replace`; the pre-Grain writer could then overwrite that successful parent postimage and leave structurally invalid refinement before failing full-project validation.
-
-The earlier observation head `975c47b288cddbfbde34fbbca06afa77ee86f9af` / run `33441425481` stopped at Ruff before test execution and remains non-selection evidence.
-
-## Specification 026 shaping and product proof
+## Specification 027 selection proof
 
 ```text
-shaping_head = 51079a25cdd0f90a9af1cc34ae7577c72ecdf2d6
-shaping_push_ci = 33441902147
-shaping_pr = 59
-shaping_pr_ci = 33442057984
-shaping_merge = d27e000728823e93d2fce9ecd669629a839bfdb3
-post_shaping_ci = 33442261877
-
-final_product_head = 24728cd52b2daef2c83c5b83f084421b8096a11f
-product_push_ci = 33443061640
-product_pr = 60
-product_pr_ci = 33443161567
-product_merge = 69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b
-post_product_ci = 33485603844
+canonical_base = e4fb1bf5463c72f164ffb842088a07df4a63abb2
+observation_head = 67f8562c30f7e2adfa3d93a82ca3cf0091c6f4e6
+fixture_blob = 4613b5cea6ee86a9a17bd459de70bee47e7dfe24
+observation_ci = 34163498855
+observation_result = completed/success across all five permanent cells
+reproduced_gap = REPEATED_PACKET_EXECUTION_ATTEMPT_IDENTITY_COLLAPSE
 ```
 
-Exact product scope was `src/specgrain/store.py`, `src/specgrain/pregrain.py`, and `tests/test_pregrain_serialization.py`. Delivered behavior is one shared project-scoped non-blocking advisory lock for existing supported pre-Grain persistence and native child authoring, with the existing lock anchor, separate authoring journal/recovery mechanism, Specification 025 preimage/postimage/platform/lifetime/unsafe-anchor/read-only guarantees, lifecycle semantics, and zero runtime dependencies preserved.
+The current packet/request/result digests are deterministic content identities. The reproduced gap is that separate retries of identical content have no separate portable occurrence identity.
 
-The superseded final-logic head `fd27a146b8c39c777b5fb3f1611b2689a1fad3d5` / CI `33442865903` remains non-acceptance evidence because Ruff stopped before tests. Final product push, PR, and canonical post-product CI all completed `success` across the permanent five-cell matrix. PR #60 merged with expected-head protection after exact gate qualification; unavailable/skipped/neutral review systems were not treated as PASS.
+## Specification 027 bounded outcome
 
-## Specification 026 canonical closeout proof
+Add a separate immutable/versioned `ExecutionAttemptRecord` that can bind one caller-supplied `attempt_id` to exact existing packet/request/result content identities without changing v1 schemas or granting lifecycle/verification authority.
+
+Expected first implementation surface:
 
 ```text
-closeout_base = 69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b
-closeout_head = 9b6cd1769c24688172ca435b2a77118fa6f4228c
-closeout_push_ci = 33486149999
-closeout_pr = 61
-closeout_pr_ci = 33486307568
-closeout_merge = 2c9b18afb74e2254beb254bb84d9c07feec68aa0
-post_closeout_ci = 33486523094
+src/specgrain/attempt.py
+src/specgrain/__init__.py
+tests/test_attempt.py
 ```
 
-The closeout changed exactly eight documentation/governance/evidence paths. Push CI, PR CI, and canonical post-closeout CI completed `success` across the permanent five-cell matrix. At the final PR #61 gate, exact base/head/eight-path scope remained unchanged, `mergeable=true`, submitted reviews and inline review threads were zero, Qodo was billing-blocked, CodeRabbit automatic review was skipped by repository-star policy, and Cubic produced no submitted approval. None was treated as PASS.
+Still explicitly deferred:
 
-PR #61 was merged by concurrent activity as GitHub-signature-verified merge `2c9b18afb74e2254beb254bb84d9c07feec68aa0`, with exact parents `69c6cc8a2cbc3b666dbda0150f65a9440acd0c0b` and `9b6cd1769c24688172ca435b2a77118fa6f4228c`. GitHub REST confirms the exact qualified head was merged but does not expose whether the concurrent caller supplied `expected_head_sha`; no claim is made about that unobservable parameter.
+- attempt persistence or append ledgers;
+- executor/provider/model invocation;
+- orchestration and automatic retries;
+- lifecycle mutation;
+- verification/evidence mutation;
+- hidden reasoning or hidden evaluation access;
+- fixed donor workflow stages;
+- networking/hosted scope;
+- runtime dependencies;
+- release publication.
+
+## Why this is next
+
+LoopForge and SkillHone were qualified only as design references. Their presence did not select work.
+
+The successor was selected only after a local observation fixture against exact live SpecGrain reproduced a correctness-relevant representational gap and succeeded across the permanent cross-platform CI matrix.
+
+The smallest repair is identity-only. Durable repository persistence remains a future evidence-shaped decision rather than being bundled into this specification.
+
+## Shaping-to-product gate
+
+Implementation begins only after:
+
+1. documentation/governance/evidence-only shaping diff is exact;
+2. shaping push CI succeeds across all five cells;
+3. shaping PR CI succeeds across all five cells;
+4. reviews/comments/threads/mergeability are rechecked;
+5. skipped/unavailable review systems are not treated as PASS;
+6. expected-head shaping merge succeeds;
+7. canonical post-shaping CI succeeds across all five cells;
+8. canonical authority is reread;
+9. `v0.3.0` remains unchanged.
 
 ## Historical release preservation
 
-Historical `v0.3.0` remains unchanged after canonical closeout:
+```text
+release = 378962445
+tag = v0.3.0
+source = 70dd66aba0e68ae710e6ef12605ed153d107bab4
+wheel_sha256 = b4f724e5ae187db28053c264cf9b9612f864fe5052459c7341a7f470602fb817
+source_sha256 = e7dc5484b8439cf8a6c594c65b454e141fef7c94a7edb0c7cb4edfc839007835
+```
 
-- source `70dd66aba0e68ae710e6ef12605ed153d107bab4`;
-- Release `378962445`;
-- wheel asset `535129008`, digest `sha256:b4f724e5ae187db28053c264cf9b9612f864fe5052459c7341a7f470602fb817`;
-- source asset `535129009`, digest `sha256:e7dc5484b8439cf8a6c594c65b454e141fef7c94a7edb0c7cb4edfc839007835`.
+No Specification 027 shaping or product work authorizes release publication.
 
-## Still unselected
+## Continuation discipline
 
-Arbitrary external/manual writer coordination, universal project transaction management, child-authoring journal redesign, distributed/network locking, blocking waits/retries/leases/timeouts, lifecycle expansion, executor/provider/result/verification/evidence orchestration, automatic context/network/model behavior, new runtime dependencies, broader package publication, hosted/account/dashboard scope, Spec Kit runtime adoption, release publication, empirical benchmark superiority claims, and use of the invalidated `SGB-EXP-001` hidden scorer remain unselected.
-
-## Final reconciliation and continuation discipline
-
-The terminal reconciliation must remain documentation/governance/evidence only and change exactly eight paths. It must receive exact-head push CI and PR CI success across all five permanent cells, unchanged head/base/scope, rechecked reviews/comments/threads/mergeability, and an expected-head merge followed by canonical post-reconciliation five-cell CI.
-
-If those live gates succeed and `v0.3.0` remains unchanged, Specification 026 is `CLOSED_CANONICAL` and the program enters `POST_026_OBSERVATION` without another meta-closeout PR solely to restate merge/CI facts.
-
-After closure, perform a bounded observation/evidence pass against live canonical `main`. Do not invent Specification 027 merely to continue activity; shape a successor only when fresh reproducible evidence independently selects another bounded product gap.
+Follow the active specification and task ledger. After closure, return to bounded observation. Do not create the next specification merely to continue activity.
