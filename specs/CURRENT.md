@@ -1,63 +1,50 @@
 # Current Specification
 
-## Live program state represented by this closeout candidate
+## Canonical program state
 
-Specifications 000–026 are `CLOSED_CANONICAL`.
+Specifications 000–027 are `CLOSED_CANONICAL`.
 
-Specification 027 — Execution Attempt Identity Contract has completed product implementation and canonical post-product qualification. This branch contains its documentation-only closeout candidate.
+There is no active product specification. The program is in bounded post-027 observation and no successor specification is preselected.
 
 ```text
-CANONICAL_PRODUCT_MAIN = 08f3ca9e6bb46386e23a196339d7157362b2a9b6
-ACTIVE_PRODUCT_SPECIFICATION = 027-execution-attempt-identity
-PRODUCT_COMPLETE = true
-POST_PRODUCT_CI = 34164674946 = completed/success 5/5
-PROGRAM_STATE = SPEC_027_CLOSEOUT
-CLOSED_CANONICAL = false until live closeout conditions are realized
+CANONICAL_MAIN = 86ad90e97d9addfc0e7125a9753e1da6fb838005
+ACTIVE_PRODUCT_SPECIFICATION = none
+PROGRAM_STATE = POST_027_OBSERVATION
+LATEST_CANONICAL_CI = 34166425318 = completed/success 5/5
+LATEST_RELEASE_VERIFICATION = 34166752932 = completed/success
 PUBLISHED_RELEASE = v0.3.0
 ```
 
 Live GitHub/repository truth overrides this file if branch, merge, CI, review, or release state changes after it was written.
 
-## Specification 027 exact evidence
+## Specification 027 — Execution Attempt Identity Contract
+
+Specification 027 is `CLOSED_CANONICAL`.
+
+Its delivered product boundary is a separate portable immutable execution occurrence identity contract through `ExecutionAttemptRecord`. Existing WorkPacket, AgentRequest, and ExecutionResult v1 schemas and content digests remain unchanged.
+
+Specification 027 does not own attempt persistence, orchestration, executor/provider invocation, lifecycle mutation, retry scheduling, verification/evidence mutation, hidden reasoning/evaluation access, networking, hosted scope, runtime dependencies, or release publication.
+
+Canonical product evidence includes:
 
 ```text
 selection_observation_head = 67f8562c30f7e2adfa3d93a82ca3cf0091c6f4e6
 selection_ci = 34163498855 = success 5/5
-shaping_head = e43a6680808b155010d2a4adeb7839fc417fe086
-shaping_push_ci = 34163943883 = success 5/5
-shaping_pr = 65
-shaping_pr_ci = 34164096581 = success 5/5
 shaping_merge = c1853d5b547c1f1ec14b5042917e824f4ad3975e
 post_shaping_ci = 34164197679 = success 5/5
-product_head = a795ac0de30ff254ce1697c49690a5f741c75fbe
-product_push_ci = 34164406219 = success 5/5
-product_pr = 66
-product_pr_ci = 34164578794 = success 5/5
 product_merge = 08f3ca9e6bb46386e23a196339d7157362b2a9b6
 post_product_ci = 34164674946 = success 5/5
+closeout_merge = c778080105fca899a9837d9c832dddff7812e599
+post_closeout_ci = 34165959588 = success 5/5
 ```
 
-Detailed evidence is in `specs/027-execution-attempt-identity/verification.md`.
+Detailed evidence is preserved in `specs/027-execution-attempt-identity/`.
 
-## Delivered product boundary
+## Post-027 repository reconciliation
 
-SpecGrain now has a separate portable immutable execution occurrence identity contract through `ExecutionAttemptRecord`. Existing WorkPacket/AgentRequest/ExecutionResult v1 schemas and content digests remain unchanged.
+The developer-facing README was reconciled with the already-canonical execution-attempt capability through merge `86ad90e97d9addfc0e7125a9753e1da6fb838005`. Canonical CI `34166425318` passed across all five permanent cells, and Release workflow `34166752932` completed successfully without changing the historical release.
 
-Specification 027 does not own attempt persistence, orchestration, executor/provider invocation, lifecycle mutation, retry scheduling, verification/evidence mutation, hidden reasoning/evaluation access, networking, hosted scope, runtime dependencies, or release publication.
-
-## Closeout realization rule
-
-Specification 027 becomes `CLOSED_CANONICAL` and the program becomes `POST_027_OBSERVATION` iff all live conditions below hold:
-
-1. this exact closeout package is merged with expected-head protection;
-2. exact closeout diff remains documentation/governance/evidence only;
-3. closeout push and PR CI succeed across all five permanent cells;
-4. there are no unresolved genuine review findings/threads at the merge gate;
-5. canonical post-closeout CI succeeds across all five permanent cells;
-6. historical `v0.3.0` remains unchanged;
-7. canonical governance/authority is reread after merge.
-
-Once those conditions hold, no additional PR is required merely to replace this conditional state with historical merge/run identifiers.
+This documentation reconciliation adds no product authority and selects no successor specification.
 
 ## Historical release preservation
 
@@ -73,14 +60,6 @@ source_sha256 = e7dc5484b8439cf8a6c594c65b454e141fef7c94a7edb0c7cb4edfc839007835
 
 ## Continuation discipline
 
-After closeout conditions are realized:
-
-```text
-SPECIFICATION_027 = CLOSED_CANONICAL
-ACTIVE_PRODUCT_SPECIFICATION = none
-PROGRAM_STATE = POST_027_OBSERVATION
-```
-
-Do not invent Specification 028. Shape a successor only if fresh reproducible evidence against the then-live canonical repository independently selects another bounded gap.
+Do not invent Specification 028 merely to continue activity. Shape a successor only if fresh reproducible evidence against the then-live canonical repository independently selects another bounded gap.
 
 The invalidated `SGB-EXP-001` hidden scorer remains outside inspection/search/materialization/reproduction/use authority.
