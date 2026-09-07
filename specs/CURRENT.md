@@ -7,15 +7,14 @@ Specifications 000–027 are `CLOSED_CANONICAL`.
 There is no active product specification. The program is in bounded post-027 observation and no successor specification is preselected.
 
 ```text
-CANONICAL_MAIN = 86ad90e97d9addfc0e7125a9753e1da6fb838005
 ACTIVE_PRODUCT_SPECIFICATION = none
+LAST_CLOSED_PRODUCT_SPECIFICATION = 027-execution-attempt-identity
 PROGRAM_STATE = POST_027_OBSERVATION
-LATEST_CANONICAL_CI = 34166425318 = completed/success 5/5
-LATEST_RELEASE_VERIFICATION = 34166752932 = completed/success
+LIVE_TRUTH_SOURCE = canonical GitHub main plus exact verification evidence
 PUBLISHED_RELEASE = v0.3.0
 ```
 
-Live GitHub/repository truth overrides this file if branch, merge, CI, review, or release state changes after it was written.
+Live GitHub/repository truth overrides this file if branch, merge, CI, review, or release state changes after it was written. Current canonical commit and latest workflow identifiers are intentionally not embedded in this live-state header because committing such identifiers would make the header self-stale.
 
 ## Specification 027 — Execution Attempt Identity Contract
 
